@@ -1,0 +1,1 @@
+dotnet publish VYgo.csproj -c ExportRelease -f net9.0 -o ./bin/ExportRelease/net9.0/publish

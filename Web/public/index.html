@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VYgo 卡牌管理后台</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>VYgo 卡牌管理后台</h1>
+            <nav>
+                <button class="nav-btn active" data-tab="cards">卡牌管理</button>
+                <button class="nav-btn" data-tab="config">配置中心</button>
+            </nav>
+        </header>
+
+        <main>
+            <!-- 卡牌管理模块 -->
+            <section id="cards-tab" class="tab-content active">
+                <div class="card-search">
+                    <h2>导入卡牌</h2>
+                    <div class="search-box">
+                        <input type="text" id="cardIdInput" placeholder="输入卡牌ID (如: 70095154)" />
+                        <button id="queryBtn">查询</button>
+                    </div>
+                </div>
+
+                <!-- 查询结果面板 -->
+                <div id="queryResult" class="query-result hidden">
+                    <div class="result-grid">
+                        <!-- API 信息 -->
+                        <div class="api-info-panel">
+                            <h3>API 信息</h3>
+                            <div id="apiInfoContent">
+                                <p><strong>中文名：</strong> <span id="infoCnName">-</span></p>
+                                <p><strong>英文名：</strong> <span id="infoEnName">-</span></p>
+                                <p><strong>清洗后英文名：</strong> <span id="infoCleanEnName">-</span></p>
+                                <p><strong>类型：</strong> <span id="infoTypes">-</span></p>
+                                <p><strong>描述：</strong> <span id="infoDesc">-</span></p>
+                                <p><strong>ATK/DEF：</strong> <span id="infoStats">-</span></p>
+                            </div>
+                            <div class="panel-actions">
+                                <button id="genLocaleBtn" class="btn-secondary" disabled>生成本地化</button>
+                            </div>
+                        </div>
+
+                        <!-- 卡图裁剪 -->
+                        <div class="crop-panel">
+                            <h3>卡图裁剪 <span id="cropStatus" class="status-badge"></span></h3>
+                            <div id="cropContainer" class="crop-container hidden">
+                                <div class="crop-wrapper">
+                                    <canvas id="cropCanvas"></canvas>
+                                    <div class="crop-overlay">
+                                        <div class="crop-frame"></div>
+                                    </div>
+                                </div>
+                                <p class="crop-hint">鼠标滚轮缩放，拖拽移动，将需要的部分对准裁剪框</p>
+                                <div class="crop-controls">
+                                    <button id="resetCropBtn" class="btn-secondary">重置视图</button>
+                                    <button id="generateCardBtn" class="btn-primary">生成卡牌</button>
+                                </div>
+                            </div>
+                            <div id="noCardImage" class="no-resource">
+                                <p>未找到外部卡图</p>
+                            </div>
+                        </div>
+
+                        <!-- 立绘信息 -->
+                        <div class="portrait-panel">
+                            <h3>立绘 <span id="portraitStatus" class="status-badge"></span></h3>
+                            <div id="portraitPreview" class="portrait-preview hidden">
+                                <img id="portraitImg" src="" alt="立绘预览">
+                            </div>
+                            <div id="noPortrait" class="no-resource">
+                                <p>未找到外部立绘</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-list">
+                    <h2>已添加卡牌</h2>
+                    <div class="actions">
+                        <button id="refreshBtn" class="btn-secondary">刷新列表</button>
+                        <button id="generateLocaleBtn" class="btn-secondary">全量生成本地化</button>
+                    </div>
+                    <div id="cardsContainer" class="cards-container">
+                        <p class="empty">暂无卡牌数据</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 配置中心模块 -->
+            <section id="config-tab" class="tab-content">
+                <div class="config-section">
+                    <h2>外部资源目录</h2>
+                    <div class="dir-form">
+                        <input type="text" id="dirPath" placeholder="目录路径 (如: D:/YGOImages)" />
+                        <select id="dirType">
+                            <option value="card_image">卡图</option>
+                            <option value="portrait">立绘</option>
+                            <option value="other">其他</option>
+                        </select>
+                        <input type="number" id="dirPriority" placeholder="优先级" value="0" />
+                        <input type="text" id="dirDesc" placeholder="描述" />
+                        <button id="addDirBtn">添加目录</button>
+                    </div>
+                    <div id="dirsList" class="dirs-list">
+                        <!-- 目录列表 -->
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h2>项目设置</h2>
+                    <div class="settings-form">
+                        <label>
+                            Mod ID:
+                            <input type="text" id="modId" />
+                        </label>
+                        <label>
+                            本地化前缀:
+                            <input type="text" id="localePrefix" />
+                        </label>
+                        <button id="saveSettingsBtn">保存设置</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>

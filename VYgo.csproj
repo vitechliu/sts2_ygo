@@ -1,0 +1,86 @@
+<Project Sdk="Godot.NET.Sdk/4.5.1">
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <EnableDynamicLoading>true</EnableDynamicLoading>
+        <ImplicitUsings>true</ImplicitUsings>
+        <LangVersion>12.0</LangVersion>
+        <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+    <PropertyGroup>
+        <IsWindows>false</IsWindows>
+        <IsOSX>false</IsOSX>
+        <IsWindows Condition="$([MSBuild]::IsOSPlatform('Windows'))">true</IsWindows>
+        <IsOSX Condition="$([MSBuild]::IsOSPlatform('OSX'))">true</IsOSX>
+    </PropertyGroup>
+    <Import Project="env.props" Condition="Exists('env.props')"/>
+    <ItemGroup>
+        <Reference Include="sts2">
+            <HintPath>$(Sts2DllDir)\sts2.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="0Harmony">
+            <HintPath>$(Sts2DataDir)\0Harmony.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Krafs.Publicizer" Version="2.3.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="STS2.RitsuLib" Version="0.4.10" />
+        <PackageReference Include="FuYnAloft.Sts2.MinionLib" Version="0.4.5" />
+        <PackageReference Include="FuYnAloft.Sts2.MinionLib.RitsuAdapters" Version="0.4.5" />
+    </ItemGroup>
+    <ItemGroup>
+        <Publicize Include="sts2" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include=".gitignore"/>
+        <Content Include="CHANGELOG.md"/>
+        <Content Include="env.props"/>
+        <Content Include="env.props.example_mac"/>
+        <Content Include="env.props.example_windows"/>
+        <Content Include="export_presets.cfg"/>
+        <Content Include="opencode.json"/>
+        <Content Include="publish.bat"/>
+        <Content Include="publish.sh"/>
+        <Content Include="README.md"/>
+        <Content Include="VYgo\localization\zhs\cards.json" />
+        <Content Include="VYgo\localization\zhs\powers.json" />
+        <Content Include="VYgo\localization\zhs\static_hover_tips.json" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Remove="Scripts\**\*.uid" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Web\" />
+      <Folder Include="VYgo\images\cards\" />
+      <Folder Include="Scripts\Relics\" />
+      <Folder Include="VYgo\images\monster\" />
+    </ItemGroup>
+    <PropertyGroup>
+        <NoWarn>$(NoWarn);MSB3270;CS0162;CS1998;CS8600;CS8602;CS8603;CS8604;CS8618;CS8620;CS8622;CS8625;CS0436</NoWarn>
+    </PropertyGroup>
+    
+    
+
+    <Target Name="Copy Mod" AfterTargets="PostBuildEvent">
+        <Message Text="Copying mod to Slay the Spire 2 mods folder..." Importance="high" />
+        <MakeDir Directories="$(Sts2Dir)\mods\" />
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(Sts2ModDir)/VYgo/" />
+        <Copy SourceFiles="VYgo.json" DestinationFolder="$(Sts2ModDir)/VYgo/" />
+    </Target>
+
+    <Target Name="GodotPublish" AfterTargets="Publish" Condition="'$(GodotPath)' != '' and Exists('$(GodotPath)') and '$(IsInnerGodotExport)' != 'true'">
+        <Message Text="Exporting Godot .pck to mods folder" Importance="high"/>
+        <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;$(GodotPreset)&quot; &quot;$(Sts2ModDir)/VYgo/VYgo.pck&quot;"
+              EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1"
+              ContinueOnError="WarnAndContinue"/>
+    </Target>
+
+    <Target Name="GodotPublishSkipped" AfterTargets="Publish" Condition="'$(GodotPath)' == '' or !Exists('$(GodotPath)')">
+        <Message Text="Skipping Godot .pck export because GodotPath is not configured." Importance="high"/>
+    </Target>
+</Project>
