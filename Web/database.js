@@ -48,6 +48,7 @@ function initTables() {
                 card_id INTEGER UNIQUE NOT NULL,
                 name TEXT NOT NULL,
                 cn_name TEXT,
+                en_name TEXT,
                 types TEXT,
                 description TEXT,
                 atk INTEGER,

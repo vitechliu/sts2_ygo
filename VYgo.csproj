@@ -55,6 +55,8 @@
         <Content Remove="Scripts\**\*.uid" />
     </ItemGroup>
     <ItemGroup>
+      <Folder Include="Characters\" />
+      <Folder Include="Scripts\Cards\Category\Samples\" />
       <Folder Include="Web\" />
       <Folder Include="VYgo\images\cards\" />
       <Folder Include="Scripts\Relics\" />

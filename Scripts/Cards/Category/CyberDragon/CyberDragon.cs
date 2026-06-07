@@ -6,10 +6,11 @@ using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Powers;
 using VYgo.Scripts.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
+using VYgo.Scripts.Pools;
 
 namespace VYgo.Scripts.Cards.Single;
 
-[RegisterCard(typeof(RegentCardPool))]
+[RegisterCard(typeof(RedhatCardPool))]
 public class CyberDragon() : BaseVYgoCard(energyCost, type, rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 70095154;
     

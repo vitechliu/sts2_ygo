@@ -152,9 +152,9 @@ router.post('/', async (req, res) => {
 
         // 插入数据库
         const result = await run(
-            `INSERT INTO cards (card_id, name, cn_name, types, description, atk, def, level, attribute, race, raw_data, image_path) 
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [cardId, name, cnName, types, description, atk, def, level, attribute, race, rawData, finalImagePath]
+            `INSERT INTO cards (card_id, name, cn_name, en_name, types, description, atk, def, level, attribute, race, raw_data, image_path) 
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [cardId, name, cnName, enName, types, description, atk, def, level, attribute, race, rawData, finalImagePath]
         );
 
         res.json({ 
@@ -329,14 +329,15 @@ async function generateLocalization() {
         const config = {};
         settings.forEach(s => config[s.key] = s.value);
         
-        const prefix = config.locale_prefix || 'REGENT_PLUS_CARD_';
+        const prefix = config.locale_prefix || 'V_YGO_CARD_';
         const cards = await all('SELECT * FROM cards ORDER BY card_id');
         
         const localization = {};
         cards.forEach(card => {
-            const key = `${prefix}${card.card_id}`;
-            localization[`${key}.title`] = card.cn_name || card.name;
-            localization[`${key}.description`] = card.description || '';
+            const name = card.en_name.toUpperCase()
+            const key = `${prefix}${name}`;
+            localization[`${key}.title`] = card.cn_name;
+            localization[`${key}.description`] = '';
         });
 
         const localeDir = path.join(__dirname, '..', '..', 'VYgo', 'localization', 'zhs');

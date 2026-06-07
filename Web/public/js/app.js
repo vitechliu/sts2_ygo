@@ -259,18 +259,13 @@ function resetCropView() {
     const img = cropState.image;
     const canvas = cropState.canvas;
     
-    // 计算初始缩放，使图片能完整显示且裁剪框能被填满
-    const scaleX = canvas.width / img.width;
-    const scaleY = canvas.height / img.height;
-    const baseScale = Math.max(scaleX, scaleY);
-    
-    // 限制最小缩放，确保裁剪框有意义
+    // 计算最小缩放：使图片刚好填满裁剪框，不留 gap
     const minScale = Math.max(
         cropState.cropWidth / img.width,
         cropState.cropHeight / img.height
     );
     
-    cropState.scale = Math.max(baseScale, minScale * 1.2);
+    cropState.scale = minScale;
     
     // 居中
     cropState.offsetX = canvas.width / 2 - img.width * cropState.scale / 2;
@@ -343,18 +338,26 @@ function handleCropWheel(e) {
     const newScale = scale * delta;
     
     // 限制缩放范围
+    let finalScale = newScale;
+    let finalOffsetX = mx * (1 - delta) + offsetX * delta;
+    let finalOffsetY = my * (1 - delta) + offsetY * delta;
+
     if (image) {
         const minScale = Math.max(
             cropState.cropWidth / image.width,
             cropState.cropHeight / image.height
         );
-        if (newScale < minScale) return;
+        if (newScale < minScale) {
+            // 吸附到最小：刚好填满裁剪框
+            finalScale = minScale;
+            finalOffsetX = canvas.width / 2 - image.width * minScale / 2;
+            finalOffsetY = canvas.height / 2 - image.height * minScale / 2;
+        }
     }
-    
-    // 以鼠标位置为中心缩放
-    cropState.offsetX = mx * (1 - delta) + offsetX * delta;
-    cropState.offsetY = my * (1 - delta) + offsetY * delta;
-    cropState.scale = newScale;
+
+    cropState.offsetX = finalOffsetX;
+    cropState.offsetY = finalOffsetY;
+    cropState.scale = finalScale;
     
     drawCropCanvas();
 }
