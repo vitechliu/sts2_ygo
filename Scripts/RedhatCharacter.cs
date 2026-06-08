@@ -32,25 +32,25 @@ public class RedhatCharacter : ModCharacterTemplate<RedhatCardPool, IroncladReli
         new(
             Scenes: new(
                 // 人物模型tscn路径。
-                VisualsPath: "res://Ygo/scenes/character/test_character.tscn",
+                VisualsPath: "res://VYgo/scenes/character/test_character.tscn",
                 // // 能量表盘tscn路径。
                 // EnergyCounterPath: "res://Test/scenes/test_energy_counter.tscn",
                 // // 商店人物场景。
-                MerchantAnimPath: "res://Ygo/scenes/character/test_character_merchant.tscn",
+                MerchantAnimPath: "res://VYgo/scenes/character/test_character_merchant.tscn",
                 // // 篝火休息场景。
-                RestSiteAnimPath: "res://Ygo/scenes/character/test_character_rest_site.tscn"
+                RestSiteAnimPath: "res://VYgo/scenes/character/test_character_rest_site.tscn"
             ),
             Ui: new(
                 // // 人物头像路径。自适应大小。
                 IconTexturePath: "res://icon.svg",
                 // // 游戏左上角头像、角色统计页头像、每日挑战角色头像。这个是场景而不是图片。参考下方附赠资源搭建。
-                IconPath: "res://Ygo/scenes/character/test_icon.tscn",
+                IconPath: "res://VYgo/scenes/character/test_icon.tscn",
                 // // 人物选择背景。
-                CharacterSelectBgPath: "res://Ygo/scenes/character/test_bg.tscn",
+                CharacterSelectBgPath: "res://VYgo/scenes/character/test_bg.tscn",
                 // // 人物选择图标。
-                CharacterSelectIconPath: "res://Ygo/images/char_select_redhat.png",
+                CharacterSelectIconPath: "res://VYgo/images/char_select_redhat.png",
                 // // 人物选择图标-锁定状态。
-                CharacterSelectLockedIconPath: "res://Ygo/images/char_select_redhat_locked.png"
+                CharacterSelectLockedIconPath: "res://VYgo/images/char_select_redhat_locked.png"
                 // // 人物选择过渡动画。
                 // // CharacterSelectTransitionPath: "res://materials/transitions/ironclad_transition_mat.tres",
                 // // 地图上的角色标记图标、表情轮盘上的角色头像。
@@ -99,7 +99,7 @@ public class RedhatCharacter : ModCharacterTemplate<RedhatCardPool, IroncladReli
     public override float CastAnimDelay => 0f;
 
     // 如果你的人物不需要时间线小故事，加上这句。
-    // public override bool RequiresEpochAndTimeline => false;
+    public override bool RequiresEpochAndTimeline => false;
 
     // 自动转换人物场景，让你不需要手动挂脚本。复制即可。
     protected override NCreatureVisuals? TryCreateCreatureVisuals() => RitsuGodotNodeFactories.CreateFromScenePath<NCreatureVisuals>(AssetProfile.Scenes!.VisualsPath!);
