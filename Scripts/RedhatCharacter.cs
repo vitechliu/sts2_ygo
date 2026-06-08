@@ -3,12 +3,14 @@ using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models.PotionPools;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Characters;
 using STS2RitsuLib.Scaffolding.Godot;
 using VYgo.Scripts.Pools;
 
 namespace VYgo.Scripts;
 
+[RegisterCharacter]
 public class RedhatCharacter : ModCharacterTemplate<RedhatCardPool, IroncladRelicPool, IroncladPotionPool>
 {
     // 角色名称颜色
@@ -30,25 +32,25 @@ public class RedhatCharacter : ModCharacterTemplate<RedhatCardPool, IroncladReli
         new(
             Scenes: new(
                 // 人物模型tscn路径。
-                VisualsPath: "res://Test/scenes/test_character.tscn",
+                VisualsPath: "res://Ygo/scenes/character/test_character.tscn",
                 // // 能量表盘tscn路径。
                 // EnergyCounterPath: "res://Test/scenes/test_energy_counter.tscn",
                 // // 商店人物场景。
-                // MerchantAnimPath: "res://Test/scenes/test_character_merchant.tscn",
+                MerchantAnimPath: "res://Ygo/scenes/character/test_character_merchant.tscn",
                 // // 篝火休息场景。
-                // RestSiteAnimPath: "res://Test/scenes/test_character_rest_site.tscn"
+                RestSiteAnimPath: "res://Ygo/scenes/character/test_character_rest_site.tscn"
             ),
             Ui: new(
                 // // 人物头像路径。自适应大小。
-                // IconTexturePath: "res://icon.svg",
+                IconTexturePath: "res://icon.svg",
                 // // 游戏左上角头像、角色统计页头像、每日挑战角色头像。这个是场景而不是图片。参考下方附赠资源搭建。
-                // IconPath: "res://Test/scenes/test_icon.tscn",
+                IconPath: "res://Ygo/scenes/character/test_icon.tscn",
                 // // 人物选择背景。
-                // CharacterSelectBgPath: "res://Test/scenes/test_bg.tscn",
+                CharacterSelectBgPath: "res://Ygo/scenes/character/test_bg.tscn",
                 // // 人物选择图标。
-                // CharacterSelectIconPath: "res://Test/images/char_select_test.png",
+                CharacterSelectIconPath: "res://Ygo/images/char_select_redhat.png",
                 // // 人物选择图标-锁定状态。
-                // CharacterSelectLockedIconPath: "res://Test/images/char_select_test_locked.png",
+                CharacterSelectLockedIconPath: "res://Ygo/images/char_select_redhat_locked.png"
                 // // 人物选择过渡动画。
                 // // CharacterSelectTransitionPath: "res://materials/transitions/ironclad_transition_mat.tres",
                 // // 地图上的角色标记图标、表情轮盘上的角色头像。

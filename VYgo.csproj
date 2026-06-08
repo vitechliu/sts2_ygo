@@ -30,8 +30,7 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="STS2.RitsuLib" Version="0.4.10" />
-        <PackageReference Include="FuYnAloft.Sts2.MinionLib" Version="0.4.5" />
-        <PackageReference Include="FuYnAloft.Sts2.MinionLib.RitsuAdapters" Version="0.4.5" />
+        <PackageReference Include="FuYnAloft.Sts2.MinionLib" Version="0.5.0" />
     </ItemGroup>
     <ItemGroup>
         <Publicize Include="sts2" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false" />
@@ -48,6 +47,7 @@
         <Content Include="publish.sh"/>
         <Content Include="README.md"/>
         <Content Include="VYgo\localization\zhs\cards.json" />
+        <Content Include="VYgo\localization\zhs\characters.json" />
         <Content Include="VYgo\localization\zhs\powers.json" />
         <Content Include="VYgo\localization\zhs\static_hover_tips.json" />
     </ItemGroup>
@@ -57,6 +57,7 @@
     <ItemGroup>
       <Folder Include="Characters\" />
       <Folder Include="Scripts\Cards\Category\Samples\" />
+      <Folder Include="Scripts\Monsters\YGO\" />
       <Folder Include="Web\" />
       <Folder Include="VYgo\images\cards\" />
       <Folder Include="Scripts\Relics\" />

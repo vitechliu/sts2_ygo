@@ -1,0 +1,17 @@
+{
+  "V_YGO_CHARACTER_REDHAT.aromaPrinciple": "[sine][blue]……等待……[/blue][/sine]",
+  "V_YGO_CHARACTER_REDHAT.banter.alive.endTurnPing": "……",
+  "V_YGO_CHARACTER_REDHAT.banter.dead.endTurnPing": "……",
+  "V_YGO_CHARACTER_REDHAT.cardsModifierDescription": "小红帽的卡牌现在会出现在奖励和商店中。",
+  "V_YGO_CHARACTER_REDHAT.cardsModifierTitle": "小红帽卡牌",
+  "V_YGO_CHARACTER_REDHAT.description": "一个在无尽等待中的存在。\n时间对[gold]小红帽[/gold]而言，不过是另一种形式的永恒。",
+  "V_YGO_CHARACTER_REDHAT.eventDeathPrevention": "我还得继续等下去……",
+  "V_YGO_CHARACTER_REDHAT.goldMonologue": "[sine]这些金币……也许能派上用场……[/sine]",
+  "V_YGO_CHARACTER_REDHAT.possessiveAdjective": "他的",
+  "V_YGO_CHARACTER_REDHAT.pronounObject": "他",
+  "V_YGO_CHARACTER_REDHAT.pronounPossessive": "他的",
+  "V_YGO_CHARACTER_REDHAT.pronounSubject": "他",
+  "V_YGO_CHARACTER_REDHAT.title": "小红帽",
+  "V_YGO_CHARACTER_REDHAT.titleObject": "小红帽",
+  "V_YGO_CHARACTER_REDHAT.unlockText": "用[pink]{Prerequisite}[/pink]进行一局游戏来解锁这个角色。"
+}
