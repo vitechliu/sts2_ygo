@@ -7,21 +7,25 @@
 script = ExtResource("1_afkfe")
 
 [node name="Visuals" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(7, -138)
 
 [node name="Image" type="Sprite2D" parent="Visuals"]
 texture = ExtResource("2_lcyt5")
 
 [node name="Bounds" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
-offset_left = -111.0
-offset_top = -120.0
-offset_right = 105.0
-offset_bottom = 136.0
+offset_left = -104.0
+offset_top = -258.0
+offset_right = 112.0
+offset_bottom = -2.0
 
 [node name="CenterPos" type="Marker2D" parent="."]
-visible = false
-position = Vector2(2, 29)
+unique_name_in_owner = true
+position = Vector2(3, -129)
 
 [node name="IntentPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(1, -131)
