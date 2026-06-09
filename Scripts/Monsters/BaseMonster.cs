@@ -1,6 +1,7 @@
 ﻿using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MinionLib.Minion;
 
@@ -13,7 +14,10 @@ public abstract class BaseMonster: MinionModel
     protected override string VisualsPath => "res://Example/MinionTest/scenes/creature_visuals/pettest_attackaka.tscn"; // 随从的视觉资源路径，tscn 格式，建议参考原版游戏的怪物
     
     // 召唤时执行的代码，通常用来设置血量、应用初始能力等，options 是在召唤随从时传入的参数
-    public override async Task OnSummon(Player owner, Creature self, MinionSummonOptions options) // 注意使用 self 而非 this
+    public override async Task OnSummon(
+        PlayerChoiceContext choiceContext,
+        Player owner,
+        MinionSummonOptions options) // 注意使用 self 而非 this
     {
         // if (options.MaxHp is decimal maxHp)
         //     await CreatureCmd.SetMaxAndCurrentHp(self, maxHp); // 设置血量

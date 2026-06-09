@@ -1,6 +1,12 @@
 {
-    "V_YGO_CARD_PROTOCYBERDRAGON.title": "原始电子龙",
-    "V_YGO_CARD_PROTOCYBERDRAGON.description": "",
-    "V_YGO_CARD_CYBERDRAGON.title": "电子龙",
-    "V_YGO_CARD_CYBERDRAGON.description": ""
+  "V_YGO_CARD_PROTOCYBERDRAGON.title": "原始电子龙",
+  "V_YGO_CARD_PROTOCYBERDRAGON.description": "",
+  "V_YGO_CARD_CYBERDRAGON.title": "电子龙",
+  "V_YGO_CARD_CYBERDRAGON.description": "",
+  
+  
+  "V_YGO_CARD_DEFENSE_BASIC.title": "占位符",
+  "V_YGO_CARD_DEFENSE_BASIC.description": "占位符",
+  "V_YGO_CARD_ATTACK_BASIC.title": "占位符",
+  "V_YGO_CARD_ATTACK_BASIC.description": "占位符"
 }

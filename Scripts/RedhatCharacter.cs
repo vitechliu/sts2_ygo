@@ -2,6 +2,7 @@
 using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models.PotionPools;
 using MegaCrit.Sts2.Core.Models.RelicPools;
+using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Characters;
@@ -109,10 +110,9 @@ public class RedhatCharacter : ModCharacterTemplate<RedhatCardPool, IroncladReli
     //     new(typeof(TestCard), 5)
     // ];
 
-    // 初始遗物，或者在遗物类上用RegisterCharacterStarterRelic就不用写这个
-    // protected override IEnumerable<Type> StartingRelicTypes => [
-    //     typeof(Akabeko)
-    // ];
+    protected override IEnumerable<Type> StartingRelicTypes => [
+        typeof(BurningBlood)
+    ];
 
     // 攻击建筑师的攻击特效列表
     public override List<string> GetArchitectAttackVfx() => [
