@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://dvryxcg27iy3b"]
+
+[ext_resource type="Script" uid="uid://1mpwaocidu" path="res://Core/NCreatureVisualsMapping.cs" id="1_afkfe"]
+[ext_resource type="Texture2D" uid="uid://u3km0unt6w65" path="res://VYgo/images/monster/70095154.png" id="2_lcyt5"]
+
+[node name="Monster" type="Node2D"]
+script = ExtResource("1_afkfe")
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Image" type="Sprite2D" parent="Visuals"]
+texture = ExtResource("2_lcyt5")
+
+[node name="Bounds" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -111.0
+offset_top = -120.0
+offset_right = 105.0
+offset_bottom = 136.0
+
+[node name="CenterPos" type="Marker2D" parent="."]
+visible = false
+position = Vector2(2, 29)
+
+[node name="IntentPos" type="Marker2D" parent="."]
+position = Vector2(1, -131)

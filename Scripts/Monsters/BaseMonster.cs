@@ -5,14 +5,15 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MinionLib.Minion;
 using MinionLib.Powers;
+using VYgo.Core;
 
 namespace VYgo.Scripts.Monsters;
 
-public abstract class BaseMonster: MinionModel
+public abstract class BaseMonster: MinionModel, IYgoId
 {
     public override int MinInitialHp => 6; // 作为敌方方怪物生成时的血量，通常无需在意
     public override int MaxInitialHp => 6; // 作为敌方方怪物生成时的血量，通常无需在意
-    protected override string VisualsPath => "res://Example/MinionTest/scenes/creature_visuals/pettest_attackaka.tscn"; // 随从的视觉资源路径，tscn 格式，建议参考原版游戏的怪物
+    protected override string VisualsPath => $"res://VYgo/scenes/monsters/{CardId}.tscn";
     
     public virtual bool IsGuardian {
         get;
@@ -32,4 +33,6 @@ public abstract class BaseMonster: MinionModel
         if (options.PrimaryStatAmount is { } strength && strength > 0m)
             await PowerCmd.Apply<StrengthPower>(choiceContext, Creature, strength, owner.Creature, options.Source);
     }
+
+    public abstract int CardId { get; }
 }

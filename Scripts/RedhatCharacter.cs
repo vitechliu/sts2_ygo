@@ -103,7 +103,8 @@ public class RedhatCharacter : ModCharacterTemplate<RedhatCardPool, IroncladReli
     public override bool RequiresEpochAndTimeline => false;
 
     // 自动转换人物场景，让你不需要手动挂脚本。复制即可。
-    protected override NCreatureVisuals? TryCreateCreatureVisuals() => RitsuGodotNodeFactories.CreateFromScenePath<NCreatureVisuals>(AssetProfile.Scenes!.VisualsPath!);
+    protected override NCreatureVisuals? TryCreateCreatureVisuals() 
+        => RitsuGodotNodeFactories.CreateFromScenePath<NCreatureVisuals>(AssetProfile.Scenes!.VisualsPath!);
 
     // 初始卡组，或者在卡牌类上用RegisterCharacterStarterCard就不用写这个
     // protected override IEnumerable<StartingDeckEntry> StartingDeckEntries => [

@@ -1,21 +1,25 @@
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MinionLib.Commands;
 using MinionLib.Minion;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Scripts.Monsters.YGO;
 using VYgo.Scripts.Pools;
+using VYgo.Utils;
 
 namespace VYgo.Scripts.Cards.Category.CyberDragon;
 
 [RegisterCard(typeof(RedhatCardPool))]
 [RegisterCharacterStarterCard(typeof(RedhatCharacter), 3)]
-public class CyberDragon() : BaseVYgoCard(energyCost, type, rarity, targetType, shouldShowInCardLibrary) {
+public class CyberDragon() : BaseMonsterCard(energyCost, type, rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 70095154;
-    
-    private const int energyCost = 2;
+
+    private const int energyCost = 1;
     private const CardType type = CardType.Skill;
     private const CardRarity rarity = CardRarity.Common;
     private const TargetType targetType = TargetType.None;
@@ -27,8 +31,8 @@ public class CyberDragon() : BaseVYgoCard(energyCost, type, rarity, targetType, 
         // HoverTipFactory.FromPower<VigorPower>(),
         // HoverTipFactory.FromPower<StarscourgePower>(),
     ];
-    
-    
+
+
     // protected override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>();{
     //     HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
     // }
@@ -43,9 +47,9 @@ public class CyberDragon() : BaseVYgoCard(energyCost, type, rarity, targetType, 
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         _ = await MinionCmd.AddMinion<CyberDragonMinion>(choiceContext, Owner, new MinionSummonOptions(
-            MaxHp: 1m,  // 血量
-            PrimaryStatAmount: 2m, // 主要参数（具体内容在随从的 OnSummon 里定义），还有次要参数等可以按需传入
-            Source: this,  // 召唤来源（通常是这张牌）
+            MaxHp: 1m, // 血量
+            PrimaryStatAmount: 3m, // 主要参数（具体内容在随从的 OnSummon 里定义），还有次要参数等可以按需传入
+            Source: this, // 召唤来源（通常是这张牌）
             Position: MinionPosition.Front)
         );
     }
@@ -54,4 +58,22 @@ public class CyberDragon() : BaseVYgoCard(energyCost, type, rarity, targetType, 
         // base.DynamicVars["VigorPower"].UpgradeValueBy(5);
     }
 
+    bool active() {
+        return Owner.MinionCount() <= 0;
+    }
+    public override Task AfterCardEnteredCombat(CardModel card) {
+        if (card != this || this.IsClone)
+            return Task.CompletedTask;
+        if (active())
+            EnergyCost.SetUntilPlayed(0);
+        return Task.CompletedTask;
+    }
+
+    public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+        if (cardPlay.Card.Owner != this.Owner || cardPlay.Card.Type != CardType.Skill)
+            return Task.CompletedTask;
+        if (active())
+            EnergyCost.SetUntilPlayed(0);
+        return Task.CompletedTask;
+    }
 }

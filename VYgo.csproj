@@ -29,11 +29,11 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="STS2.RitsuLib" Version="0.4.10" />
-        <PackageReference Include="FuYnAloft.Sts2.MinionLib" Version="0.5.1" />
+        <PackageReference Include="STS2.RitsuLib" Version="0.4.15"/>
+        <PackageReference Include="FuYnAloft.Sts2.MinionLib" Version="0.5.2"/>
     </ItemGroup>
     <ItemGroup>
-        <Publicize Include="sts2" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false" />
+        <Publicize Include="sts2" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false"/>
     </ItemGroup>
     <ItemGroup>
         <Content Include=".gitignore"/>
@@ -46,33 +46,33 @@
         <Content Include="publish.bat"/>
         <Content Include="publish.sh"/>
         <Content Include="README.md"/>
-        <Content Include="Scripts\Cards\.gdignore" />
-        <Content Include="VYgo\localization\zhs\cards.json" />
-        <Content Include="VYgo\localization\zhs\characters.json" />
-        <Content Include="VYgo\localization\zhs\powers.json" />
-        <Content Include="VYgo\localization\zhs\static_hover_tips.json" />
+        <Content Include="Scripts\Cards\.gdignore"/>
+        <Content Include="VYgo\localization\zhs\cards.json"/>
+        <Content Include="VYgo\localization\zhs\characters.json"/>
+        <Content Include="VYgo\localization\zhs\powers.json"/>
+        <Content Include="VYgo\localization\zhs\static_hover_tips.json"/>
     </ItemGroup>
     <ItemGroup>
-        <Content Remove="Scripts\**\*.uid" />
+        <Content Remove="Scripts\**\*.uid"/>
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Characters\" />
-      <Folder Include="Web\" />
-      <Folder Include="VYgo\images\cards\" />
-      <Folder Include="Scripts\Relics\" />
-      <Folder Include="VYgo\images\monster\" />
+        <Folder Include="Characters\"/>
+        <Folder Include="Scripts\Powers\" />
+        <Folder Include="Web\"/>
+        <Folder Include="VYgo\images\cards\"/>
+        <Folder Include="Scripts\Relics\"/>
+        <Folder Include="VYgo\images\monster\"/>
     </ItemGroup>
     <PropertyGroup>
         <NoWarn>$(NoWarn);MSB3270;CS0162;CS1998;CS8600;CS8602;CS8603;CS8604;CS8618;CS8620;CS8622;CS8625;CS0436</NoWarn>
     </PropertyGroup>
-    
-    
+
 
     <Target Name="Copy Mod" AfterTargets="PostBuildEvent">
-        <Message Text="Copying mod to Slay the Spire 2 mods folder..." Importance="high" />
-        <MakeDir Directories="$(Sts2Dir)\mods\" />
-        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(Sts2ModDir)/VYgo/" />
-        <Copy SourceFiles="VYgo.json" DestinationFolder="$(Sts2ModDir)/VYgo/" />
+        <Message Text="Copying mod to Slay the Spire 2 mods folder..." Importance="high"/>
+        <MakeDir Directories="$(Sts2Dir)\mods\"/>
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(Sts2ModDir)/VYgo/"/>
+        <Copy SourceFiles="VYgo.json" DestinationFolder="$(Sts2ModDir)/VYgo/"/>
     </Target>
 
     <Target Name="GodotPublish" AfterTargets="Publish" Condition="'$(GodotPath)' != '' and Exists('$(GodotPath)') and '$(IsInnerGodotExport)' != 'true'">
