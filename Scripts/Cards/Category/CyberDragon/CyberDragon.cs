@@ -58,6 +58,8 @@ public class CyberDragon() : BaseMonsterCard(energyCost, type, rarity, targetTyp
         // base.DynamicVars["VigorPower"].UpgradeValueBy(5);
     }
 
+    protected override bool ShouldGlowGoldInternal => active();
+    
     bool active() {
         return Owner.MinionCount() <= 0;
     }
