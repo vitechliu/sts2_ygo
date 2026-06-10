@@ -10,15 +10,15 @@ public class RedhatCardPool : TypeListCardPoolModel {
     public override string EnergyColorName => "redhat";
 
     // 描述中使用的能量图标。大小为24x24。
-    public override string? TextEnergyIconPath => "res://VYGO/images/energy_test.png";
+    public override string? TextEnergyIconPath => "res://VYgo/images/energy_test.png";
     // // tooltip和卡牌左上角的能量图标。大小为74x74。
-    public override string? BigEnergyIconPath => "res://VYGO/images/energy_star_big.png";
+    public override string? BigEnergyIconPath => "res://VYgo/images/energy_star_big.png";
 
     // 卡池的主题色。
     public override Color DeckEntryCardColor => new(0.5f, 0.5f, 1f);
 
     // 能量表盘文字轮廓颜色
-    public override Color EnergyOutlineColor => new(0.5f, 0.5f, 1f);
+    public override Color EnergyOutlineColor => new(0.1f, 0.1f, 0.5f);
 
     // 根据你使用的卡框决定使用哪个Material
     private static readonly Material?

@@ -10,6 +10,7 @@ using MinionLib.Minion;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Scripts.Monsters.YGO;
 using VYgo.Scripts.Pools;
+using VYgo.Scripts.Var;
 using VYgo.Utils;
 
 namespace VYgo.Scripts.Cards.Category.CyberDragon;
@@ -38,11 +39,8 @@ public class CyberDragon() : BaseMonsterCard(energyCost, type, rarity, targetTyp
     // }
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        // new StarsVar(1),
-        // new CalculationBaseVar(0m),
-        // new CalculationExtraVar(15m),
-        // new PowerVar<VigorPower>(15m),
-        // new CalculatedVar("CalculatedVigor").WithMultiplier((_, c) => GetStarCards(c.Player).Count())
+        new AttackVar(3),
+        new LifeVar(1)
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
@@ -55,27 +53,27 @@ public class CyberDragon() : BaseMonsterCard(energyCost, type, rarity, targetTyp
     }
 
     protected override void OnUpgrade() {
-        // base.DynamicVars["VigorPower"].UpgradeValueBy(5);
+        DynamicVars["Life"].UpgradeValueBy(1);
+        DynamicVars["Attack"].UpgradeValueBy(1);
     }
 
-    protected override bool ShouldGlowGoldInternal => active();
+    protected override bool ShouldGlowGoldInternal => Active;
     
-    bool active() {
-        return Owner.MinionCount() <= 0;
+    bool Active => Owner.MinionCount() <= 0;
+
+    void FlushCost() {
+        EnergyCost.SetUntilPlayed(Active ? 0 : 1);
     }
     public override Task AfterCardEnteredCombat(CardModel card) {
         if (card != this || this.IsClone)
             return Task.CompletedTask;
-        if (active())
-            EnergyCost.SetUntilPlayed(0);
+        FlushCost();
         return Task.CompletedTask;
     }
 
     public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        if (cardPlay.Card.Owner != this.Owner || cardPlay.Card.Type != CardType.Skill)
-            return Task.CompletedTask;
-        if (active())
-            EnergyCost.SetUntilPlayed(0);
+        if (cardPlay.Card.Owner != this.Owner) return Task.CompletedTask;
+        FlushCost();
         return Task.CompletedTask;
     }
 }

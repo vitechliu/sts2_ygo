@@ -2,7 +2,7 @@
   "V_YGO_CARD_PROTO_CYBER_DRAGON.title": "原始电子龙",
   "V_YGO_CARD_PROTO_CYBER_DRAGON.description": "",
   "V_YGO_CARD_CYBER_DRAGON.title": "电子龙",
-  "V_YGO_CARD_CYBER_DRAGON.description": "召唤(3/1),如果你没有控制任何随从，可以[gold]特招[/gold]",
+  "V_YGO_CARD_CYBER_DRAGON.description": "[gold]召唤[/gold]({Attack:diff()}/{Life:diff()}),如果你没有控制任何随从，可以[gold]特招[/gold]",
   
   
   "V_YGO_CARD_DEFENSE_BASIC.title": "占位符",

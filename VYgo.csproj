@@ -57,6 +57,7 @@
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Characters\"/>
+        <Folder Include="Core\Summon\" />
         <Folder Include="Scripts\Powers\" />
         <Folder Include="Web\"/>
         <Folder Include="VYgo\images\cards\"/>
