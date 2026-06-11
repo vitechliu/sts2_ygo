@@ -38,4 +38,16 @@
 - 每层[无效]会抵消敌人的1次强化或削弱（不包含回血/获得护甲）
 - 有的[无效]需要支付代价才能生效
 
-### 
+
+
+## Web卡牌自动导入工具
+
+ 自动导入工具能够输入卡片id自动从外部资源目录导入卡图、立绘，并从ygocdb api接口获取卡片名称翻译等
+ 
+### 配置与使用
+
+- 首先从萌卡clone两个仓库：
+- 立绘：https://code.moenext.com/mycard/ygopro2-closeup
+- 高清卡图：https://code.moenext.com/mycard/hd-arts
+- 执行` node ./Web/server.js `，后访问[http://localhost:3000](http://localhost:3000)配置路径即可使用。
+- 感谢 [苍蓝coccvo](https://code.moenext.com/coccvo) 对ygopro2中立绘的制作和对本项目的授权
