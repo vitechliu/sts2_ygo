@@ -14,6 +14,9 @@ public abstract class BaseVYgoCard(
         IYgoId {
     public abstract int CardId { get; }
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"res://VYgo/images/cards/{CardId}.png"
+        PortraitPath: $"res://VYgo/images/cards/{CardId}.png",
+        FramePath: $"res://VYgo/images/frame/card_frame_{CardYgoType.ToString()}.png"
     );
+    
+    protected virtual YgoType CardYgoType => YgoType.effect;
 }

@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Models;
 using MinionLib.Commands;
 using MinionLib.Minion;
 using STS2RitsuLib.Interop.AutoRegistration;
+using VYgo.Core;
 using VYgo.Scripts.Monsters.YGO;
 using VYgo.Scripts.Pools;
 using VYgo.Scripts.Var;
@@ -19,7 +20,8 @@ namespace VYgo.Scripts.Cards.Category.CyberDragon;
 [RegisterCharacterStarterCard(typeof(RedhatCharacter), 1)]
 public class CyberDragonSieger() : BaseMonsterCard(energyCost, type, rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 46724542;
-
+    protected override YgoType CardYgoType => YgoType.link;
+    
     private const int energyCost = 1;
     private const CardType type = CardType.Skill;
     private const CardRarity rarity = CardRarity.Common;
@@ -57,25 +59,5 @@ public class CyberDragonSieger() : BaseMonsterCard(energyCost, type, rarity, tar
     protected override void OnUpgrade() {
         DynamicVars["Life"].UpgradeValueBy(1);
         DynamicVars["Attack"].UpgradeValueBy(1);
-    }
-
-    protected override bool ShouldGlowGoldInternal => Active;
-    
-    bool Active => Owner.MinionCount() <= 0;
-
-    void FlushCost() {
-        EnergyCost.SetUntilPlayed(Active ? 0 : 1);
-    }
-    public override Task AfterCardEnteredCombat(CardModel card) {
-        if (card != this || this.IsClone)
-            return Task.CompletedTask;
-        FlushCost();
-        return Task.CompletedTask;
-    }
-
-    public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        if (cardPlay.Card.Owner != this.Owner) return Task.CompletedTask;
-        FlushCost();
-        return Task.CompletedTask;
     }
 }

@@ -1,4 +1,5 @@
 using System.Reflection;
+using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -23,12 +24,15 @@ public static class Entry {
     public static void Initialize() {
         var assembly = Assembly.GetExecutingAssembly();
         Logger = RitsuLibFramework.CreateLogger(ModId);
+        var harmony = new Harmony("sts2.vitech." + ModId.ToLowerInvariant());
+        harmony.PatchAll();
         
         RegisterCardPile();
         SubscribeEvents();
         
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
+        
         Logger.Info("VYgo initialized.");
     }
 
@@ -46,21 +50,22 @@ public static class Entry {
     }
 
     static void SubscribeEvents() {
-        RitsuLibFramework.SubscribeLifecycle<CombatStartingEvent>((@event, disposable) => {
-            var combatState = @event.CombatState;
-            foreach (var p in combatState.Players) {
-                if (p.Character is RedhatCharacter) {
-                    Logger.Info("Found Redhat Character");
-                    //查找额外卡牌
-                    if (p.PlayerCombatState == null) continue;
-                    foreach (var card in p.PlayerCombatState.DrawPile.Cards) {
-                        Logger.Info("Found Redhat Character Card:" + card.Title);
-                        if (card is BaseMonsterCard monsterCard && monsterCard.IsExtra) {
-                            CardPileCmd.Add(card, ExtraPile);
-                        }
-                    }
-                }
-            }
-        });
+        // RitsuLibFramework.SubscribeLifecycle<CombatStartingEvent>((@event, disposable) => {
+        //     Logger.Info("CombatStarting");
+        //     var combatState = @event.CombatState;
+        //     foreach (var p in combatState.Players) {
+        //         if (p.Character is RedhatCharacter) {
+        //             Logger.Info("Found Redhat Character");
+        //             //查找额外卡牌
+        //             if (p.PlayerCombatState == null) continue;
+        //             foreach (var card in p.PlayerCombatState.AllCards) {
+        //                 Logger.Info("Found Redhat Character Card:" + card.Title);
+        //                 if (card is BaseMonsterCard monsterCard && monsterCard.IsExtra) {
+        //                     CardPileCmd.Add(card, ExtraPile);
+        //                 }
+        //             }
+        //         }
+        //     }
+        // });
     }
 }

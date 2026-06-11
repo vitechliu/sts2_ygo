@@ -1,7 +1,6 @@
 {
-  "V_YGO_CARD_ATTACK_BASIC.description": "占位符",
-  
-  "CYBER_DRAGON_MINION.name": "电子龙",
-  "PROTO_CYBER_DRAGON.name": "原始电子龙",
-  "CYBER_DRAGON_SIEGER.name": "电子龙·凯旋"
+    "CYBER_DRAGON_INFINITY_MINION.name": "电子龙·无限",
+    "PROTO_CYBER_DRAGON_MINION.name": "原始电子龙",
+    "CYBER_DRAGON_SIEGER_MINION.name": "电子龙·凯旋",
+    "CYBER_DRAGON_MINION.name": "电子龙"
 }
