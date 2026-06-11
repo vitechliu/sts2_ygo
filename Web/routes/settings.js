@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { run, get, all } = require('../database');
+const { runConfig, getConfig, allConfig } = require('../database');
 
 // 获取所有设置
 router.get('/', async (req, res) => {
     try {
-        const settings = await all('SELECT * FROM settings');
+        const settings = await allConfig('SELECT * FROM settings');
         const result = {};
         settings.forEach(s => {
             result[s.key] = s.value;
@@ -26,7 +26,7 @@ router.put('/:key', async (req, res) => {
             return res.status(400).json({ success: false, error: 'Value is required' });
         }
 
-        await run(
+        await runConfig(
             'INSERT OR REPLACE INTO settings (key, value, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP)',
             [key, value]
         );
@@ -43,7 +43,7 @@ router.put('/', async (req, res) => {
         const settings = req.body;
         
         for (const [key, value] of Object.entries(settings)) {
-            await run(
+            await runConfig(
                 'INSERT OR REPLACE INTO settings (key, value, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP)',
                 [key, value]
             );

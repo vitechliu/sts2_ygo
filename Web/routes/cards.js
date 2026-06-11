@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { run, get, all } = require('../database');
+const { runCards, getCards, allCards, allConfig } = require('../database');
 const ygoApiService = require('../services/ygoApiService');
 const imageService = require('../services/imageService');
 const fs = require('fs');
@@ -9,7 +9,7 @@ const path = require('path');
 // 获取所有卡牌
 router.get('/', async (req, res) => {
     try {
-        const cards = await all('SELECT * FROM cards ORDER BY created_at DESC');
+        const cards = await allCards('SELECT * FROM cards ORDER BY created_at DESC');
         res.json({ success: true, data: cards });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
@@ -49,7 +49,7 @@ router.get('/query/:cardId', async (req, res) => {
             result.apiData = ygoApiService.parseCardData(apiData);
             
             // 检查是否已存在
-            const existingCard = await get('SELECT * FROM cards WHERE card_id = ?', [cardId]);
+            const existingCard = await getCards('SELECT * FROM cards WHERE card_id = ?', [cardId]);
             result.apiData.exists = !!existingCard;
         }
 
@@ -120,7 +120,7 @@ router.post('/', async (req, res) => {
         } = req.body;
 
         // 检查是否已存在
-        const existing = await get('SELECT * FROM cards WHERE card_id = ?', [cardId]);
+        const existing = await getCards('SELECT * FROM cards WHERE card_id = ?', [cardId]);
         if (existing) {
             return res.status(400).json({ success: false, error: 'Card already exists' });
         }
@@ -151,10 +151,10 @@ router.post('/', async (req, res) => {
         }
 
         // 插入数据库
-        const result = await run(
-            `INSERT INTO cards (card_id, name, cn_name, en_name, types, description, atk, def, level, attribute, race, raw_data, image_path) 
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [cardId, name, cnName, enName, types, description, atk, def, level, attribute, race, rawData, finalImagePath]
+        const result = await runCards(
+            `INSERT INTO cards (card_id, name, cn_name, en_name, types, description, atk, def, level, attribute, race, raw_data) 
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [cardId, name, cnName, enName, types, description, atk, def, level, attribute, race, rawData]
         );
 
         res.json({ 
@@ -178,13 +178,13 @@ router.delete('/:cardId', async (req, res) => {
         const { cardId } = req.params;
         
         // 先获取卡牌信息（用于本地化删除）
-        const card = await get('SELECT en_name FROM cards WHERE card_id = ?', [cardId]);
+        const card = await getCards('SELECT en_name FROM cards WHERE card_id = ?', [cardId]);
         
         // 从本地化文件中移除
         await removeLocalizationEntry(cardId, card?.en_name);
         
         // 删除数据库记录
-        await run('DELETE FROM cards WHERE card_id = ?', [cardId]);
+        await runCards('DELETE FROM cards WHERE card_id = ?', [cardId]);
         
         // 删除卡图文件
         const imagePath = imageService.getImagePath(cardId);
@@ -237,7 +237,7 @@ router.get('/image-preview', async (req, res) => {
 router.get('/:cardId', async (req, res) => {
     try {
         const { cardId } = req.params;
-        const card = await get('SELECT * FROM cards WHERE card_id = ?', [cardId]);
+        const card = await getCards('SELECT * FROM cards WHERE card_id = ?', [cardId]);
         
         if (!card) {
             return res.status(404).json({ success: false, error: 'Card not found' });
@@ -260,7 +260,7 @@ function toUpperSnakeCase(str) {
 
 // 辅助函数：添加单条本地化条目
 async function addLocalizationEntry(cardId, enName, cnName) {
-    const settings = await all('SELECT * FROM settings');
+    const settings = await allConfig('SELECT * FROM settings');
     const config = {};
     settings.forEach(s => config[s.key] = s.value);
     
@@ -290,7 +290,7 @@ async function addLocalizationEntry(cardId, enName, cnName) {
 
     cardsLocalization[`${key}.title`] = cnName || enName;
     // 描述留空或从数据库获取
-    const card = await get('SELECT description FROM cards WHERE card_id = ?', [cardId]);
+    const card = await getCards('SELECT description FROM cards WHERE card_id = ?', [cardId]);
     cardsLocalization[`${key}.description`] = card?.description || '';
 
     fs.writeFileSync(cardsLocalePath, JSON.stringify(cardsLocalization, null, 4), 'utf8');
@@ -317,7 +317,7 @@ async function addLocalizationEntry(cardId, enName, cnName) {
 
 // 辅助函数：移除单条本地化条目
 async function removeLocalizationEntry(cardId, enName) {
-    const settings = await all('SELECT * FROM settings');
+    const settings = await allConfig('SELECT * FROM settings');
     const config = {};
     settings.forEach(s => config[s.key] = s.value);
     
@@ -382,12 +382,12 @@ async function removeLocalizationEntry(cardId, enName) {
 // 全量生成本地化 JSON
 async function generateLocalization() {
     try {
-        const settings = await all('SELECT * FROM settings');
+        const settings = await allConfig('SELECT * FROM settings');
         const config = {};
         settings.forEach(s => config[s.key] = s.value);
         
         const prefix = config.locale_prefix || 'V_YGO_CARD_';
-        const cards = await all('SELECT * FROM cards ORDER BY card_id');
+        const cards = await allCards('SELECT * FROM cards ORDER BY card_id');
         
         const cardsLocalization = {};
         const monstersLocalization = {};

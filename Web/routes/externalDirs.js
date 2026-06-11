@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { run, get, all } = require('../database');
+const { runConfig, getConfig, allConfig } = require('../database');
 
 // 获取所有外部目录
 router.get('/', async (req, res) => {
     try {
-        const dirs = await all('SELECT * FROM external_dirs ORDER BY priority DESC, id ASC');
+        const dirs = await allConfig('SELECT * FROM external_dirs ORDER BY priority DESC, id ASC');
         res.json({ success: true, data: dirs });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ success: false, error: 'Path and type are required' });
         }
 
-        const result = await run(
+        const result = await runConfig(
             'INSERT INTO external_dirs (path, type, priority, description) VALUES (?, ?, ?, ?)',
             [path, type, priority || 0, description || '']
         );
@@ -38,7 +38,7 @@ router.put('/:id', async (req, res) => {
         const { id } = req.params;
         const { path, type, priority, description } = req.body;
 
-        await run(
+        await runConfig(
             'UPDATE external_dirs SET path = ?, type = ?, priority = ?, description = ? WHERE id = ?',
             [path, type, priority, description, id]
         );
@@ -53,7 +53,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        await run('DELETE FROM external_dirs WHERE id = ?', [id]);
+        await runConfig('DELETE FROM external_dirs WHERE id = ?', [id]);
         res.json({ success: true, message: 'Directory deleted' });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });

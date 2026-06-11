@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
-const { all } = require('../database');
+const { allConfig } = require('../database');
 
 class ImageService {
     constructor() {
@@ -9,7 +9,7 @@ class ImageService {
     }
 
     async findImageFile(cardId) {
-        const dirs = await all(
+        const dirs = await allConfig(
             'SELECT * FROM external_dirs WHERE type = ? ORDER BY priority DESC',
             ['card_image']
         );
@@ -31,7 +31,7 @@ class ImageService {
     }
 
     async findPortraitFile(cardId) {
-        const dirs = await all(
+        const dirs = await allConfig(
             'SELECT * FROM external_dirs WHERE type = ? ORDER BY priority DESC',
             ['portrait']
         );
