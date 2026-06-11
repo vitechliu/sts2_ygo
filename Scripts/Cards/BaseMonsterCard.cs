@@ -13,4 +13,10 @@ public abstract class BaseMonsterCard(
     
     //最大随从数量限制
     protected override bool IsPlayable => Owner.MinionCount() < MinionUtil.MAX_MINION_COUNT;
+
+    public virtual bool IsExtra => false;
+
+
+    public int Life => DynamicVars["Life"].IntValue;
+    public int Attack => DynamicVars["Attack"].IntValue;
 }

@@ -16,11 +16,11 @@ using VYgo.Utils;
 namespace VYgo.Scripts.Cards.Category.CyberDragon;
 
 [RegisterCard(typeof(RedhatCardPool))]
-[RegisterCharacterStarterCard(typeof(RedhatCharacter), 3)]
-public class CyberDragon() : BaseMonsterCard(energyCost, type, rarity, targetType, shouldShowInCardLibrary) {
-    public override int CardId => 70095154;
+[RegisterCharacterStarterCard(typeof(RedhatCharacter), 1)]
+public class ProtoCyberDragon() : BaseMonsterCard(energyCost, type, rarity, targetType, shouldShowInCardLibrary) {
+    public override int CardId => 26439287;
 
-    private const int energyCost = 2;
+    private const int energyCost = 0;
     private const CardType type = CardType.Skill;
     private const CardRarity rarity = CardRarity.Common;
     private const TargetType targetType = TargetType.None;
@@ -34,13 +34,9 @@ public class CyberDragon() : BaseMonsterCard(energyCost, type, rarity, targetTyp
     ];
 
 
-    // protected override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>();{
-    //     HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
-    // }
-
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new AttackVar(7),
-        new LifeVar(5)
+        new AttackVar(3),
+        new LifeVar(2)
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
@@ -55,25 +51,5 @@ public class CyberDragon() : BaseMonsterCard(energyCost, type, rarity, targetTyp
     protected override void OnUpgrade() {
         DynamicVars["Life"].UpgradeValueBy(1);
         DynamicVars["Attack"].UpgradeValueBy(1);
-    }
-
-    protected override bool ShouldGlowGoldInternal => Active;
-    
-    bool Active => Owner.MinionCount() <= 0;
-
-    void FlushCost() {
-        EnergyCost.SetUntilPlayed(Active ? 0 : 1);
-    }
-    public override Task AfterCardEnteredCombat(CardModel card) {
-        if (card != this || this.IsClone)
-            return Task.CompletedTask;
-        FlushCost();
-        return Task.CompletedTask;
-    }
-
-    public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        if (cardPlay.Card.Owner != this.Owner) return Task.CompletedTask;
-        FlushCost();
-        return Task.CompletedTask;
     }
 }

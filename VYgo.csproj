@@ -56,7 +56,6 @@
         <Content Remove="Scripts\**\*.uid"/>
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="Characters\"/>
         <Folder Include="Core\Summon\" />
         <Folder Include="Scripts\Powers\" />
         <Folder Include="Web\"/>

@@ -16,15 +16,17 @@ using VYgo.Utils;
 namespace VYgo.Scripts.Cards.Category.CyberDragon;
 
 [RegisterCard(typeof(RedhatCardPool))]
-[RegisterCharacterStarterCard(typeof(RedhatCharacter), 3)]
-public class CyberDragon() : BaseMonsterCard(energyCost, type, rarity, targetType, shouldShowInCardLibrary) {
-    public override int CardId => 70095154;
+[RegisterCharacterStarterCard(typeof(RedhatCharacter), 1)]
+public class CyberDragonSieger() : BaseMonsterCard(energyCost, type, rarity, targetType, shouldShowInCardLibrary) {
+    public override int CardId => 46724542;
 
-    private const int energyCost = 2;
+    private const int energyCost = 1;
     private const CardType type = CardType.Skill;
     private const CardRarity rarity = CardRarity.Common;
     private const TargetType targetType = TargetType.None;
     private const bool shouldShowInCardLibrary = true;
+
+    public override bool IsExtra => true;
 
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
@@ -39,8 +41,8 @@ public class CyberDragon() : BaseMonsterCard(energyCost, type, rarity, targetTyp
     // }
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new AttackVar(7),
-        new LifeVar(5)
+        new AttackVar(5),
+        new LifeVar(4)
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {

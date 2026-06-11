@@ -177,6 +177,12 @@ router.delete('/:cardId', async (req, res) => {
     try {
         const { cardId } = req.params;
         
+        // 先获取卡牌信息（用于本地化删除）
+        const card = await get('SELECT en_name FROM cards WHERE card_id = ?', [cardId]);
+        
+        // 从本地化文件中移除
+        await removeLocalizationEntry(cardId, card?.en_name);
+        
         // 删除数据库记录
         await run('DELETE FROM cards WHERE card_id = ?', [cardId]);
         
@@ -191,9 +197,6 @@ router.delete('/:cardId', async (req, res) => {
         if (fs.existsSync(portraitPath)) {
             fs.unlinkSync(portraitPath);
         }
-
-        // 从本地化文件中移除
-        await removeLocalizationEntry(cardId);
 
         res.json({ success: true, message: 'Card deleted' });
     } catch (error) {
@@ -246,80 +249,134 @@ router.get('/:cardId', async (req, res) => {
     }
 });
 
+// 辅助函数：将驼峰命名转换为大写下划线命名
+function toUpperSnakeCase(str) {
+    if (!str) return '';
+    return str
+        .replace(/([A-Z])/g, '_$1')
+        .toUpperCase()
+        .replace(/^_/, '');
+}
+
 // 辅助函数：添加单条本地化条目
 async function addLocalizationEntry(cardId, enName, cnName) {
     const settings = await all('SELECT * FROM settings');
     const config = {};
     settings.forEach(s => config[s.key] = s.value);
     
-    const prefix = config.locale_prefix || 'REGENT_PLUS_CARD_';
+    const prefix = config.locale_prefix || 'V_YGO_CARD_';
     const localeDir = path.join(__dirname, '..', '..', 'VYgo', 'localization', 'zhs');
     
     if (!fs.existsSync(localeDir)) {
         fs.mkdirSync(localeDir, { recursive: true });
     }
 
-    const localePath = path.join(localeDir, 'cards.json');
-    let localization = {};
+    // 转换为大写下划线格式
+    const upperSnakeName = toUpperSnakeCase(enName);
+    const key = `${prefix}${upperSnakeName}`;
+
+    // 更新 cards.json
+    const cardsLocalePath = path.join(localeDir, 'cards.json');
+    let cardsLocalization = {};
     
-    // 读取现有文件
-    if (fs.existsSync(localePath)) {
+    if (fs.existsSync(cardsLocalePath)) {
         try {
-            const content = fs.readFileSync(localePath, 'utf8');
-            localization = JSON.parse(content);
+            const content = fs.readFileSync(cardsLocalePath, 'utf8');
+            cardsLocalization = JSON.parse(content);
         } catch (e) {
-            console.log('Failed to parse existing localization, creating new');
+            console.log('Failed to parse existing cards localization, creating new');
         }
     }
 
-    // 添加/更新条目
-    const key = `${prefix}${enName}`;
-    localization[`${key}.title`] = cnName || enName;
+    cardsLocalization[`${key}.title`] = cnName || enName;
     // 描述留空或从数据库获取
     const card = await get('SELECT description FROM cards WHERE card_id = ?', [cardId]);
-    localization[`${key}.description`] = card?.description || '';
+    cardsLocalization[`${key}.description`] = card?.description || '';
 
-    // 写入文件
-    fs.writeFileSync(localePath, JSON.stringify(localization, null, 4), 'utf8');
+    fs.writeFileSync(cardsLocalePath, JSON.stringify(cardsLocalization, null, 4), 'utf8');
+
+    // 更新 monsters.json
+    const monstersLocalePath = path.join(localeDir, 'monsters.json');
+    let monstersLocalization = {};
+    
+    if (fs.existsSync(monstersLocalePath)) {
+        try {
+            const content = fs.readFileSync(monstersLocalePath, 'utf8');
+            monstersLocalization = JSON.parse(content);
+        } catch (e) {
+            console.log('Failed to parse existing monsters localization, creating new');
+        }
+    }
+
+    monstersLocalization[`${upperSnakeName}_MINION.name`] = cnName || enName;
+    fs.writeFileSync(monstersLocalePath, JSON.stringify(monstersLocalization, null, 4), 'utf8');
     
     console.log(`Localization entry added: ${key}`);
-    return localePath;
+    return cardsLocalePath;
 }
 
 // 辅助函数：移除单条本地化条目
-async function removeLocalizationEntry(cardId) {
+async function removeLocalizationEntry(cardId, enName) {
     const settings = await all('SELECT * FROM settings');
     const config = {};
     settings.forEach(s => config[s.key] = s.value);
     
-    const prefix = config.locale_prefix || 'REGENT_PLUS_CARD_';
+    const prefix = config.locale_prefix || 'V_YGO_CARD_';
     const localeDir = path.join(__dirname, '..', '..', 'VYgo', 'localization', 'zhs');
-    const localePath = path.join(localeDir, 'cards.json');
     
-    if (!fs.existsSync(localePath)) return;
-
-    try {
-        const content = fs.readFileSync(localePath, 'utf8');
-        const localization = JSON.parse(content);
-        
-        // 查找并删除该cardId相关的条目（需要知道enName，这里简单处理：删除所有匹配cardId的键）
-        // 实际上我们需要通过数据库查询获取enName
-        const card = await get('SELECT card_id FROM cards WHERE card_id = ?', [cardId]);
-        
-        // 由于我们不知道enName，这里简单删除所有以该cardId结尾的键
-        // 更准确的方案：从cards表查询en_name字段，但表结构没有en_name字段
-        // 临时方案：读取所有键，查找包含cardId的键
-        Object.keys(localization).forEach(key => {
-            if (key.includes(cardId)) {
-                delete localization[key];
+    // 从 cards.json 中移除
+    const cardsLocalePath = path.join(localeDir, 'cards.json');
+    if (fs.existsSync(cardsLocalePath)) {
+        try {
+            const content = fs.readFileSync(cardsLocalePath, 'utf8');
+            const localization = JSON.parse(content);
+            
+            if (enName) {
+                const upperSnakeName = toUpperSnakeCase(enName);
+                const key = `${prefix}${upperSnakeName}`;
+                delete localization[`${key}.title`];
+                delete localization[`${key}.description`];
+            } else {
+                // 如果没有 enName，回退到旧逻辑
+                Object.keys(localization).forEach(key => {
+                    if (key.includes(cardId)) {
+                        delete localization[key];
+                    }
+                });
             }
-        });
 
-        fs.writeFileSync(localePath, JSON.stringify(localization, null, 4), 'utf8');
-        console.log(`Localization entries removed for card ${cardId}`);
-    } catch (e) {
-        console.error('Failed to remove localization entry:', e);
+            fs.writeFileSync(cardsLocalePath, JSON.stringify(localization, null, 4), 'utf8');
+        } catch (e) {
+            console.error('Failed to remove cards localization entry:', e);
+        }
     }
+    
+    // 从 monsters.json 中移除
+    const monstersLocalePath = path.join(localeDir, 'monsters.json');
+    if (fs.existsSync(monstersLocalePath)) {
+        try {
+            const content = fs.readFileSync(monstersLocalePath, 'utf8');
+            const localization = JSON.parse(content);
+            
+            if (enName) {
+                const upperSnakeName = toUpperSnakeCase(enName);
+                delete localization[`${upperSnakeName}_MINION.name`];
+            } else {
+                // 如果没有 enName，回退到旧逻辑
+                Object.keys(localization).forEach(key => {
+                    if (key.includes(cardId)) {
+                        delete localization[key];
+                    }
+                });
+            }
+
+            fs.writeFileSync(monstersLocalePath, JSON.stringify(localization, null, 4), 'utf8');
+        } catch (e) {
+            console.error('Failed to remove monsters localization entry:', e);
+        }
+    }
+    
+    console.log(`Localization entries removed for card ${cardId}`);
 }
 
 // 全量生成本地化 JSON
@@ -332,12 +389,16 @@ async function generateLocalization() {
         const prefix = config.locale_prefix || 'V_YGO_CARD_';
         const cards = await all('SELECT * FROM cards ORDER BY card_id');
         
-        const localization = {};
+        const cardsLocalization = {};
+        const monstersLocalization = {};
+        
         cards.forEach(card => {
-            const name = card.en_name.toUpperCase()
-            const key = `${prefix}${name}`;
-            localization[`${key}.title`] = card.cn_name;
-            localization[`${key}.description`] = '';
+            const upperSnakeName = toUpperSnakeCase(card.en_name);
+            const key = `${prefix}${upperSnakeName}`;
+            cardsLocalization[`${key}.title`] = card.cn_name;
+            cardsLocalization[`${key}.description`] = '';
+            
+            monstersLocalization[`${upperSnakeName}_MINION.name`] = card.cn_name;
         });
 
         const localeDir = path.join(__dirname, '..', '..', 'VYgo', 'localization', 'zhs');
@@ -345,10 +406,13 @@ async function generateLocalization() {
             fs.mkdirSync(localeDir, { recursive: true });
         }
 
-        const localePath = path.join(localeDir, 'cards.json');
-        fs.writeFileSync(localePath, JSON.stringify(localization, null, 4), 'utf8');
+        const cardsLocalePath = path.join(localeDir, 'cards.json');
+        fs.writeFileSync(cardsLocalePath, JSON.stringify(cardsLocalization, null, 4), 'utf8');
         
-        console.log(`Localization file generated: ${localePath}`);
+        const monstersLocalePath = path.join(localeDir, 'monsters.json');
+        fs.writeFileSync(monstersLocalePath, JSON.stringify(monstersLocalization, null, 4), 'utf8');
+        
+        console.log(`Localization files generated: ${cardsLocalePath}, ${monstersLocalePath}`);
     } catch (error) {
         console.error('Failed to generate localization:', error);
     }
