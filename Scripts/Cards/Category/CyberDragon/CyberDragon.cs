@@ -17,11 +17,10 @@ namespace VYgo.Scripts.Cards.Category.CyberDragon;
 
 [RegisterCard(typeof(RedhatCardPool))]
 [RegisterCharacterStarterCard(typeof(RedhatCharacter), 3)]
-public class CyberDragon() : BaseMonsterCard(energyCost, type, rarity, targetType, shouldShowInCardLibrary) {
+public class CyberDragon() : BaseMonsterCard(energyCost, rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 70095154;
 
     private const int energyCost = 2;
-    private const CardType type = CardType.Skill;
     private const CardRarity rarity = CardRarity.Common;
     private const TargetType targetType = TargetType.None;
     private const bool shouldShowInCardLibrary = true;
