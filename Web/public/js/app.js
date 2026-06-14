@@ -476,6 +476,7 @@ async function generateCard() {
         loadCards();
     } catch (error) {
         showToast(error.message, 'error');
+    } finally {
         document.getElementById('generateCardBtn').disabled = false;
         document.getElementById('generateCardBtn').textContent = '生成卡牌';
     }
