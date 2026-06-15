@@ -43,7 +43,7 @@ public class CyberDragon() : BaseMonsterCard(energyCost, rarity, targetType, sho
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        _ = await MinionCmd.AddMinion<CyberDragonMinion>(choiceContext, Owner, new MinionSummonOptions(
+        _ = await MinionUtil.AddMinionInstant<CyberDragonMinion>(choiceContext, Owner, new MinionSummonOptions(
             MaxHp: Life, // 血量
             PrimaryStatAmount: Attack, // 主要参数（具体内容在随从的 OnSummon 里定义），还有次要参数等可以按需传入
             Source: this, // 召唤来源（通常是这张牌）

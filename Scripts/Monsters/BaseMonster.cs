@@ -6,14 +6,15 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MinionLib.Minion;
 using MinionLib.Powers;
 using VYgo.Core;
+using VYgo.RitsuAdapters;
 
 namespace VYgo.Scripts.Monsters;
 
-public abstract class BaseMonster: MinionModel, IYgoId
+public abstract class BaseMonster: ModMinionTemplate, IYgoId
 {
-    public override int MinInitialHp => 6; // 作为敌方方怪物生成时的血量，通常无需在意
-    public override int MaxInitialHp => 6; // 作为敌方方怪物生成时的血量，通常无需在意
-    protected override string VisualsPath => $"res://VYgo/scenes/monsters/{CardId}.tscn";
+    public override int MinInitialHp => 1; // 作为敌方方怪物生成时的血量，通常无需在意
+    public override int MaxInitialHp => 1; // 作为敌方方怪物生成时的血量，通常无需在意
+    public override string? CustomVisualsPath => $"res://VYgo/scenes/monsters/{CardId}.tscn";
     
     public virtual bool IsGuardian {
         get;

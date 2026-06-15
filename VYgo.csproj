@@ -34,6 +34,7 @@
     </ItemGroup>
     <ItemGroup>
         <Publicize Include="sts2" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false"/>
+        <Publicize Include="MinionLib" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false"/>
     </ItemGroup>
     <ItemGroup>
         <Content Include=".gitignore"/>
