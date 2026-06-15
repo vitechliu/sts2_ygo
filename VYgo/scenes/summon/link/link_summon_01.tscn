@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=3 uid="uid://h2iqhpdaowl2"]
+
+[ext_resource type="PackedScene" uid="uid://tgrtpn7c8i2o" path="res://VYgo/scenes/summon/link/link_trail.tscn" id="1_aksnn"]
+
+[sub_resource type="World3D" id="World3D_de186"]
+
+[sub_resource type="Environment" id="Environment_de186"]
+
+[node name="LinkSummon01" type="Node2D"]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+own_world_3d = true
+world_3d = SubResource("World3D_de186")
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="LinkTrail" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_aksnn")]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
+environment = SubResource("Environment_de186")
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.6548193)

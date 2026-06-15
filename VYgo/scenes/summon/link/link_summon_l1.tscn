@@ -1,0 +1,74 @@
+[gd_scene load_steps=6 format=3 uid="uid://cg26wlfqlkhiv"]
+
+[ext_resource type="PackedScene" uid="uid://tgrtpn7c8i2o" path="res://VYgo/scenes/summon/link/link_trail.tscn" id="1_3ox1e"]
+[ext_resource type="Script" uid="uid://cdyuiseaer84g" path="res://Core/Effects/NLinkSummonManager.cs" id="1_4kbqu"]
+[ext_resource type="Texture2D" uid="uid://8l3ph33wqnr3" path="res://VYgo/scenes/summon/link/assets/EtLinkGateSquare01.png" id="2_kie51"]
+
+[sub_resource type="Animation" id="Animation_3ox1e"]
+resource_name = "main"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kie51"]
+_data = {
+&"main": SubResource("Animation_3ox1e")
+}
+
+[node name="LinkSummonL1" type="Node3D"]
+script = ExtResource("1_4kbqu")
+
+[node name="GatePre" type="Sprite3D" parent="."]
+transform = Transform3D(20.5, 0, 0, 0, -8.9608346e-07, -20.5, 0, 20.5, -8.9608346e-07, 0, -3.4295807, 0)
+render_priority = -99
+texture = ExtResource("2_kie51")
+
+[node name="LinkTrails" type="Node" parent="."]
+
+[node name="LinkTrail1" parent="LinkTrails" instance=ExtResource("1_3ox1e")]
+unique_name_in_owner = true
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, -43.911, 0, -43.911)
+visible = false
+
+[node name="LinkTrail2" parent="LinkTrails" instance=ExtResource("1_3ox1e")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -51.81231)
+visible = false
+
+[node name="LinkTrail3" parent="LinkTrails" instance=ExtResource("1_3ox1e")]
+unique_name_in_owner = true
+transform = Transform3D(0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, 0.7071067, 43.911, 0, -43.911)
+visible = false
+
+[node name="LinkTrail4" parent="LinkTrails" instance=ExtResource("1_3ox1e")]
+unique_name_in_owner = true
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -51.812, 0, 0)
+visible = false
+
+[node name="LinkTrail5" parent="LinkTrails" instance=ExtResource("1_3ox1e")]
+unique_name_in_owner = true
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 51.812, 0, 0)
+visible = false
+
+[node name="LinkTrail6" parent="LinkTrails" instance=ExtResource("1_3ox1e")]
+unique_name_in_owner = true
+transform = Transform3D(-0.7071067, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, -0.7071067, -43.911, 0, 43.911)
+visible = false
+
+[node name="LinkTrail7" parent="LinkTrails" instance=ExtResource("1_3ox1e")]
+unique_name_in_owner = true
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 51.812)
+visible = false
+
+[node name="LinkTrail8" parent="LinkTrails" instance=ExtResource("1_3ox1e")]
+unique_name_in_owner = true
+transform = Transform3D(-0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, -0.7071067, 43.911, 0, 43.911)
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_kie51")
+}
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 192.6925, 0)
+current = true
+fov = 56.2
+near = 0.013
