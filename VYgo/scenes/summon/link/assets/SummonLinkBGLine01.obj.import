@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cpqphkd7u421"
+path="res://.godot/imported/SummonLinkBGLine01.obj-281c3336111f0395484ebf3fe9480b97.mesh"
+
+[deps]
+
+files=["res://.godot/imported/SummonLinkBGLine01.obj-281c3336111f0395484ebf3fe9480b97.mesh"]
+
+source_file="res://VYgo/scenes/summon/link/assets/SummonLinkBGLine01.obj"
+dest_files=["res://.godot/imported/SummonLinkBGLine01.obj-281c3336111f0395484ebf3fe9480b97.mesh", "res://.godot/imported/SummonLinkBGLine01.obj-281c3336111f0395484ebf3fe9480b97.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

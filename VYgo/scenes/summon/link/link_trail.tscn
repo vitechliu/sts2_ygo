@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://tgrtpn7c8i2o"]
+[gd_scene load_steps=18 format=3 uid="uid://tgrtpn7c8i2o"]
 
 [ext_resource type="Shader" uid="uid://cefkj2kafhal7" path="res://VYgo/shaders/link_trail.gdshader" id="1_7jopo"]
 [ext_resource type="Script" uid="uid://ccc1s7f61txsu" path="res://Core/Effects/NLinkTrailManager.cs" id="1_oi7dd"]
@@ -72,7 +72,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0.6, 0.9),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(25, 25, 25), Vector3(40, 40, 40)]
+"values": [Vector3(22, 22, 22), Vector3(36, 36, 36)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -86,25 +86,23 @@ tracks/5/keys = {
 "update": 1,
 "values": [false, true]
 }
-
-[sub_resource type="Animation" id="Animation_8ipmt"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../Marker:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("..")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.6333333),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"values": [{
+"args": [],
+"method": &"hit"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_30ube"]
 _data = {
-&"RESET": SubResource("Animation_8ipmt"),
 &"link_trail": SubResource("Animation_uvygu")
 }
 
@@ -334,13 +332,13 @@ visible = false
 size = Vector3(34.866333, 22.127075, 37.24414)
 
 [node name="Marker" type="Sprite3D" parent="."]
-transform = Transform3D(-25, -3.774895e-06, 1.6500591e-13, 0, -1.0927847e-06, -25, 3.774895e-06, -25, 1.0927847e-06, 0, 0, 0)
+transform = Transform3D(-20, -3.019916e-06, 1.3200472e-13, 0, -8.742278e-07, -20, 3.019916e-06, -20, 8.742278e-07, 0, 0, 0)
 visible = false
 sorting_offset = 25.0
 texture = ExtResource("10_8ipmt")
 
 [node name="MarkerAnim" type="Sprite3D" parent="."]
-transform = Transform3D(-12, -1.8119497e-06, 7.920283e-14, 0, -5.2453663e-07, -12, 1.8119497e-06, -12, 5.2453663e-07, 0, 0, 0)
+transform = Transform3D(-22, -3.3219076e-06, 1.4520519e-13, 0, -9.616506e-07, -22, 3.3219076e-06, -22, 9.616506e-07, 0, 0, 0)
 sorting_offset = 50.0
 modulate = Color(1, 1, 1, 0)
 texture = ExtResource("6_tws0t")

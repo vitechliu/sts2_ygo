@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cg26wlfqlkhiv"]
+[gd_scene load_steps=13 format=3 uid="uid://cg26wlfqlkhiv"]
 
 [ext_resource type="PackedScene" uid="uid://tgrtpn7c8i2o" path="res://VYgo/scenes/summon/link/link_trail.tscn" id="1_3ox1e"]
 [ext_resource type="Script" uid="uid://cdyuiseaer84g" path="res://Core/Effects/NLinkSummonManager.cs" id="1_4kbqu"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://c1ey7nsbmwjqg" path="res://VYgo/scenes/summon/link/assets/gatelines.png" id="6_qb0k6"]
 [ext_resource type="Texture2D" uid="uid://bqs6nlujpe0gb" path="res://VYgo/scenes/summon/link/assets/EtLinkGateRound01_02.png" id="7_x6g16"]
 [ext_resource type="Texture2D" uid="uid://dujbuv42p0p5t" path="res://VYgo/scenes/summon/link/assets/EtLinkGateSquare02.png" id="8_x6g16"]
+[ext_resource type="PackedScene" uid="uid://sf2qu0t6edk0" path="res://VYgo/scenes/summon/link/line_effect.tscn" id="10_lkyu7"]
 
 [sub_resource type="Animation" id="Animation_3ox1e"]
 resource_name = "main"
@@ -141,26 +142,28 @@ texture = ExtResource("2_kie51")
 metadata/_edit_lock_ = true
 
 [node name="Gate" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.066364, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.119953, 0)
 
 [node name="Group" type="Node3D" parent="Gate"]
+transform = Transform3D(0.99003375, -0.14083023, 0, 0.14083023, 0.99003375, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="Shadow" type="Sprite3D" parent="Gate/Group"]
 transform = Transform3D(50, 0, 0, 0, -2.1855694e-06, -50, 0, 50, -2.1855694e-06, 0, -29.8, 0)
-modulate = Color(1, 1, 1, 0.271)
+modulate = Color(1, 1, 1, 0.18970002)
 texture = ExtResource("3_lufxn")
 
 [node name="GateRound1" type="Sprite3D" parent="Gate/Group"]
 transform = Transform3D(16.667, 0, 0, 0, -7.285377e-07, -16.667, 0, 16.667, -7.285377e-07, 0, -9.612526, 0)
+modulate = Color(1, 1, 1, 0.7023412)
 texture = ExtResource("4_neu80")
 
 [node name="GateRoundLight" type="Sprite3D" parent="Gate/Group"]
 transform = Transform3D(20, 0, 0, 0, -8.742278e-07, -20, 0, 20, -8.742278e-07, 0, 1.835, 0)
-modulate = Color(1, 1, 1, 0.46603537)
+modulate = Color(1, 1, 1, 0)
 texture = ExtResource("5_atesk")
 
 [node name="GateLines" type="Sprite3D" parent="Gate/Group"]
-transform = Transform3D(19.16, 0, 0, 0, -8.375102e-07, -19.16, 0, 19.16, -8.375102e-07, 0, 6, 0)
+transform = Transform3D(19.16, 0, 0, 0, -8.375102e-07, -19.16, 0, 19.16, -8.375102e-07, 0, 5.159055, 0)
 texture = ExtResource("6_qb0k6")
 
 [node name="GateRound3" type="Sprite3D" parent="Gate/Group"]
@@ -168,12 +171,13 @@ transform = Transform3D(20, 0, 0, 0, -8.742278e-07, -20, 0, 20, -8.742278e-07, 0
 texture = ExtResource("7_x6g16")
 
 [node name="GateSquare" type="Sprite3D" parent="Gate/Group"]
-transform = Transform3D(19.2, 0, 0, 0, -8.392587e-07, -19.2, 0, 19.2, -8.392587e-07, 0, 10, 0)
+transform = Transform3D(18.393787, 0, 0, 0, -8.04018e-07, -18.393787, 0, 18.393787, -8.04018e-07, 0, 8.471009, 0)
 texture = ExtResource("2_kie51")
 
 [node name="GateSquare2" type="Sprite3D" parent="Gate/Group"]
+unique_name_in_owner = true
 transform = Transform3D(19.2, 0, 0, 0, -8.392587e-07, -19.2, 0, 19.2, -8.392587e-07, 0, 10, 0)
-visible = false
+modulate = Color(1, 1, 1, 0)
 texture = ExtResource("8_x6g16")
 
 [node name="LinkTrails" type="Node3D" parent="."]
@@ -219,3 +223,9 @@ transform = Transform3D(-0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, -0.707
 visible = false
 
 [node name="PostLinkFX" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 55.81208, 0)
+
+[node name="LineEffect" parent="PostLinkFX" instance=ExtResource("10_lkyu7")]
+transform = Transform3D(0.42, 0, 0, 0, 0.42, 0, 0, 0, 0.42, 0, -100.21352, 0)
+
+[editable path="PostLinkFX/LineEffect"]
