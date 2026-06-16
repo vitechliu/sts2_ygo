@@ -32,7 +32,7 @@ tracks/1/path = NodePath("Gate/Group/GateLines:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.4329, 0.999),
+"times": PackedFloat32Array(0.53333336, 0.999),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [1.6, 6.0]
@@ -144,25 +144,23 @@ metadata/_edit_lock_ = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.066364, 0)
 
 [node name="Group" type="Node3D" parent="Gate"]
-transform = Transform3D(0.0007962743, -0.9999997, 0, 0.9999997, 0.0007962743, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="Shadow" type="Sprite3D" parent="Gate/Group"]
 transform = Transform3D(50, 0, 0, 0, -2.1855694e-06, -50, 0, 50, -2.1855694e-06, 0, -29.8, 0)
-modulate = Color(1, 1, 1, 0)
+modulate = Color(1, 1, 1, 0.271)
 texture = ExtResource("3_lufxn")
 
 [node name="GateRound1" type="Sprite3D" parent="Gate/Group"]
 transform = Transform3D(16.667, 0, 0, 0, -7.285377e-07, -16.667, 0, 16.667, -7.285377e-07, 0, -9.612526, 0)
-modulate = Color(1, 1, 1, 0)
 texture = ExtResource("4_neu80")
 
 [node name="GateRoundLight" type="Sprite3D" parent="Gate/Group"]
 transform = Transform3D(20, 0, 0, 0, -8.742278e-07, -20, 0, 20, -8.742278e-07, 0, 1.835, 0)
-modulate = Color(1, 1, 1, 0)
+modulate = Color(1, 1, 1, 0.46603537)
 texture = ExtResource("5_atesk")
 
 [node name="GateLines" type="Sprite3D" parent="Gate/Group"]
-transform = Transform3D(19.16, 0, 0, 0, -8.375102e-07, -19.16, 0, 19.16, -8.375102e-07, 0, 1.6, 0)
+transform = Transform3D(19.16, 0, 0, 0, -8.375102e-07, -19.16, 0, 19.16, -8.375102e-07, 0, 6, 0)
 texture = ExtResource("6_qb0k6")
 
 [node name="GateRound3" type="Sprite3D" parent="Gate/Group"]
@@ -170,7 +168,7 @@ transform = Transform3D(20, 0, 0, 0, -8.742278e-07, -20, 0, 20, -8.742278e-07, 0
 texture = ExtResource("7_x6g16")
 
 [node name="GateSquare" type="Sprite3D" parent="Gate/Group"]
-transform = Transform3D(13.17, 0, 0, 0, -5.75679e-07, -13.17, 0, 13.17, -5.75679e-07, 0, 9.6, 0)
+transform = Transform3D(19.2, 0, 0, 0, -8.392587e-07, -19.2, 0, 19.2, -8.392587e-07, 0, 10, 0)
 texture = ExtResource("2_kie51")
 
 [node name="GateSquare2" type="Sprite3D" parent="Gate/Group"]
