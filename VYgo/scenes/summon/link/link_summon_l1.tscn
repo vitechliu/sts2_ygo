@@ -1,11 +1,115 @@
-[gd_scene load_steps=6 format=3 uid="uid://cg26wlfqlkhiv"]
+[gd_scene load_steps=11 format=3 uid="uid://cg26wlfqlkhiv"]
 
 [ext_resource type="PackedScene" uid="uid://tgrtpn7c8i2o" path="res://VYgo/scenes/summon/link/link_trail.tscn" id="1_3ox1e"]
 [ext_resource type="Script" uid="uid://cdyuiseaer84g" path="res://Core/Effects/NLinkSummonManager.cs" id="1_4kbqu"]
 [ext_resource type="Texture2D" uid="uid://8l3ph33wqnr3" path="res://VYgo/scenes/summon/link/assets/EtLinkGateSquare01.png" id="2_kie51"]
+[ext_resource type="Texture2D" uid="uid://5bsvgc07do3o" path="res://VYgo/scenes/summon/link/assets/EtLinkGateShadow.png" id="3_lufxn"]
+[ext_resource type="Texture2D" uid="uid://dk6p08n2t8k1k" path="res://VYgo/scenes/summon/link/assets/EtLinkGateRound01_04.png" id="4_neu80"]
+[ext_resource type="Texture2D" uid="uid://2kka8367fxcu" path="res://VYgo/scenes/summon/link/assets/EtLinkGateRound01_03.png" id="5_atesk"]
+[ext_resource type="Texture2D" uid="uid://c1ey7nsbmwjqg" path="res://VYgo/scenes/summon/link/assets/gatelines.png" id="6_qb0k6"]
+[ext_resource type="Texture2D" uid="uid://bqs6nlujpe0gb" path="res://VYgo/scenes/summon/link/assets/EtLinkGateRound01_02.png" id="7_x6g16"]
 
 [sub_resource type="Animation" id="Animation_3ox1e"]
 resource_name = "main"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Gate/Group:rotation:z")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.5699999999999998, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Gate/Group/GateLines:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5328, 0.999),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.6, 6.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Gate/Group/GateRoundLight:modulate:a")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.999, 1.1322, 1.4652),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.5, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Gate/Group/GateRound1:modulate:a")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.7, 0.999),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Gate/Group/Shadow:modulate:a")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.7, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.271]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Gate/Group/GateSquare:position:y")
+tracks/5/interp = 2
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.53333336, 0.999),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [9.6, 2.0, 10.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Gate/Group/GateSquare:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.33333334, 0.999),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(13.17, 13.17, 13.17), Vector3(19.2, 19.2, 19.2)]
+}
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0.999),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"PlayLink"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kie51"]
 _data = {
@@ -17,7 +121,42 @@ script = ExtResource("1_4kbqu")
 
 [node name="GatePre" type="Sprite3D" parent="."]
 transform = Transform3D(20.5, 0, 0, 0, -8.9608346e-07, -20.5, 0, 20.5, -8.9608346e-07, 0, -3.4295807, 0)
+visible = false
 render_priority = -99
+texture = ExtResource("2_kie51")
+metadata/_edit_lock_ = true
+
+[node name="Gate" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.409, 0)
+
+[node name="Group" type="Node3D" parent="Gate"]
+transform = Transform3D(0.44217524, -0.89692867, 0, 0.89692867, 0.44217524, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Shadow" type="Sprite3D" parent="Gate/Group"]
+transform = Transform3D(50, 0, 0, 0, -2.1855694e-06, -50, 0, 50, -2.1855694e-06, 0, -29.8, 0)
+modulate = Color(1, 1, 1, 0)
+texture = ExtResource("3_lufxn")
+
+[node name="GateRound1" type="Sprite3D" parent="Gate/Group"]
+transform = Transform3D(16.667, 0, 0, 0, -7.285377e-07, -16.667, 0, 16.667, -7.285377e-07, 0, -9.612526, 0)
+modulate = Color(1, 1, 1, 0)
+texture = ExtResource("4_neu80")
+
+[node name="GateRoundLight" type="Sprite3D" parent="Gate/Group"]
+transform = Transform3D(20, 0, 0, 0, -8.742278e-07, -20, 0, 20, -8.742278e-07, 0, 1.835, 0)
+modulate = Color(1, 1, 1, 0)
+texture = ExtResource("5_atesk")
+
+[node name="GateLines" type="Sprite3D" parent="Gate/Group"]
+transform = Transform3D(19.16, 0, 0, 0, -8.375102e-07, -19.16, 0, 19.16, -8.375102e-07, 0, 1.6, 0)
+texture = ExtResource("6_qb0k6")
+
+[node name="GateRound3" type="Sprite3D" parent="Gate/Group"]
+transform = Transform3D(20, 0, 0, 0, -8.742278e-07, -20, 0, 20, -8.742278e-07, 0, 0.038681984, 0)
+texture = ExtResource("7_x6g16")
+
+[node name="GateSquare" type="Sprite3D" parent="Gate/Group"]
+transform = Transform3D(13.383587, 0, 0, 0, -5.850152e-07, -13.383587, 0, 13.383587, -5.850152e-07, 0, 3.744819, 0)
 texture = ExtResource("2_kie51")
 
 [node name="LinkTrails" type="Node" parent="."]
@@ -66,6 +205,8 @@ visible = false
 libraries = {
 &"": SubResource("AnimationLibrary_kie51")
 }
+autoplay = "main"
+speed_scale = 2.0
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 192.6925, 0)

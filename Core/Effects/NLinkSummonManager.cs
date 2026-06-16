@@ -33,10 +33,13 @@ public partial class NLinkSummonManager: Node3D {
 			linkTrailPlayers.Add(animationPlayer);
 		}
 
-		TaskHelper.RunSafely(play());
+		// TaskHelper.RunSafely(play());
 	}
 
-	async Task play() {
+	public void PlayLink() {
+		TaskHelper.RunSafely(play());
+	}
+	public async Task play() {
 		foreach (var player in linkTrailPlayers) {
 			if (player.GetParent() is not Node3D pNode) continue;
 			pNode.SetVisible(true);

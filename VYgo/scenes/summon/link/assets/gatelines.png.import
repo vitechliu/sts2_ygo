@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5bsvgc07do3o"
-path.s3tc="res://.godot/imported/EtLinkGateShadow.png-0969fec8216c70bdf3aa4ec4ec816529.s3tc.ctex"
+uid="uid://c1ey7nsbmwjqg"
+path.s3tc="res://.godot/imported/gatelines.png-46edbfd7396305f07dcbb9f010a7c942.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://VYgo/scenes/summon/link/assets/EtLinkGateShadow.png"
-dest_files=["res://.godot/imported/EtLinkGateShadow.png-0969fec8216c70bdf3aa4ec4ec816529.s3tc.ctex"]
+source_file="res://VYgo/scenes/summon/link/assets/gatelines.png"
+dest_files=["res://.godot/imported/gatelines.png-46edbfd7396305f07dcbb9f010a7c942.s3tc.ctex"]
 
 [params]
 

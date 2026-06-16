@@ -1,10 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://tgrtpn7c8i2o"]
+[gd_scene load_steps=16 format=3 uid="uid://tgrtpn7c8i2o"]
 
 [ext_resource type="Shader" uid="uid://cefkj2kafhal7" path="res://VYgo/shaders/link_trail.gdshader" id="1_7jopo"]
 [ext_resource type="ArrayMesh" uid="uid://drfanwmu4iu18" path="res://VYgo/scenes/summon/link/assets/SummonLinkTrail02_converted.obj" id="1_ojwqh"]
 [ext_resource type="Texture2D" uid="uid://286bhsowx2k5" path="res://VYgo/scenes/summon/link/assets/CardTrail05.png" id="2_uvygu"]
 [ext_resource type="Texture2D" uid="uid://bcfbbdn4dgbas" path="res://VYgo/scenes/summon/link/assets/flare007.png" id="3_flare"]
 [ext_resource type="Shader" uid="uid://bl6a8kwvcll51" path="res://VYgo/shaders/flare_particle.gdshader" id="4_flare_shader"]
+[ext_resource type="Shader" uid="uid://c0barkpxrc4rv" path="res://VYgo/scenes/summon/link/assets/link_trail_flare.gdshader" id="4_w537f"]
+[ext_resource type="Texture2D" uid="uid://dhcagk150pe7j" path="res://VYgo/scenes/summon/link/color_ramp.tres" id="5_kr1w3"]
 [ext_resource type="Texture2D" uid="uid://b4ffwrlfh2rfn" path="res://VYgo/scenes/summon/link/assets/EtLinkMarkerOn02.png" id="6_tws0t"]
 
 [sub_resource type="Animation" id="Animation_uvygu"]
@@ -83,21 +85,86 @@ shader_parameter/albedo_tex = ExtResource("2_uvygu")
 shader_parameter/uv_tiling = Vector2(1.96, 1)
 shader_parameter/uv_offset = Vector2(-1.95, 0)
 
-[sub_resource type="Gradient" id="Gradient_yogqb"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_tws0t"]
-gradient = SubResource("Gradient_yogqb")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7yr6v"]
-particle_flag_rotate_y = true
-angle_min = -133.29999
-angle_max = 106.70001
-angular_velocity_min = -10.000016
-angular_velocity_max = 9.999984
-scale_min = 47.3
-scale_max = 96.27
-color_ramp = SubResource("GradientTexture1D_tws0t")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kr1w3"]
+shader = ExtResource("4_w537f")
+shader_parameter/use_color_ramp = true
+shader_parameter/emission_shape = 0
+shader_parameter/has_emission_color = false
+shader_parameter/sub_emitter_mode = 0
+shader_parameter/collision_mode = 0
+shader_parameter/attractor_enabled = true
+shader_parameter/turbulence_enabled = false
+shader_parameter/use_limiter_curve = false
+shader_parameter/use_alpha_curve = false
+shader_parameter/use_emission_curve = false
+shader_parameter/has_initial_ramp = false
+shader_parameter/orbit_uses_curve_xyz = false
+shader_parameter/use_tex_param = [false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false]
+shader_parameter/particle_flags = [false, true, false, false]
+shader_parameter/direction = Vector3(1, 0, 0)
+shader_parameter/spread = 45.0
+shader_parameter/flatness = 0.0
+shader_parameter/inherit_emitter_velocity_ratio = 0.0
+shader_parameter/initial_linear_velocity_min = 0.0
+shader_parameter/initial_linear_velocity_max = 0.0
+shader_parameter/directional_velocity_min = 1.0
+shader_parameter/directional_velocity_max = 1.0
+shader_parameter/angular_velocity_min = -10.000016
+shader_parameter/angular_velocity_max = 9.999984
+shader_parameter/orbit_velocity_min = 0.0
+shader_parameter/orbit_velocity_max = 0.0
+shader_parameter/radial_velocity_min = 0.0
+shader_parameter/radial_velocity_max = 0.0
+shader_parameter/linear_accel_min = 0.0
+shader_parameter/linear_accel_max = 0.0
+shader_parameter/radial_accel_min = 0.0
+shader_parameter/radial_accel_max = 0.0
+shader_parameter/tangent_accel_min = 0.0
+shader_parameter/tangent_accel_max = 0.0
+shader_parameter/damping_min = 0.0
+shader_parameter/damping_max = 0.0
+shader_parameter/initial_angle_min = -133.29999
+shader_parameter/initial_angle_max = 106.70001
+shader_parameter/scale_min = 47.3
+shader_parameter/scale_max = 96.27
+shader_parameter/start_size_min = Vector3(35, 47.3, 80)
+shader_parameter/start_size_max = Vector3(180, 96.27, 80)
+shader_parameter/use_start_size_3d = true
+shader_parameter/hue_variation_min = 0.0
+shader_parameter/hue_variation_max = 0.0
+shader_parameter/anim_speed_min = 0.0
+shader_parameter/anim_speed_max = 0.0
+shader_parameter/anim_offset_min = 0.0
+shader_parameter/anim_offset_max = 0.0
+shader_parameter/lifetime_randomness = 0.0
+shader_parameter/emission_shape_offset = Vector3(0, 0, 0)
+shader_parameter/emission_shape_scale = Vector3(1, 1, 1)
+shader_parameter/velocity_pivot = Vector3(0, 0, 0)
+shader_parameter/scale_over_velocity_min = 0.0
+shader_parameter/scale_over_velocity_max = 5.0
+shader_parameter/emission_sphere_radius = 1.0
+shader_parameter/emission_box_extents = Vector3(1, 1, 1)
+shader_parameter/emission_texture_point_count = 0
+shader_parameter/emission_ring_axis = Vector3(0, 0, 1)
+shader_parameter/emission_ring_height = 1.0
+shader_parameter/emission_ring_radius = 1.0
+shader_parameter/emission_ring_inner_radius = 0.0
+shader_parameter/emission_ring_cone_angle = 90.0
+shader_parameter/sub_emitter_frequency = 0.25
+shader_parameter/sub_emitter_amount_at_end = 1
+shader_parameter/sub_emitter_amount_at_start = 1
+shader_parameter/sub_emitter_keep_velocity = false
+shader_parameter/color_value = Color(1, 1, 1, 1)
+shader_parameter/gravity = Vector3(0, -9.8, 0)
+shader_parameter/color_ramp = ExtResource("5_kr1w3")
+shader_parameter/turbulence_noise_strength = 1.0
+shader_parameter/turbulence_noise_scale = -0.10398507
+shader_parameter/turbulence_influence_min = 0.1
+shader_parameter/turbulence_influence_max = 0.1
+shader_parameter/turbulence_initial_displacement_min = 0.0
+shader_parameter/turbulence_initial_displacement_max = 0.0
+shader_parameter/turbulence_noise_speed_random = 0.2
+shader_parameter/turbulence_noise_speed = Vector3(0, 0, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sx7on"]
 render_priority = 0
@@ -110,6 +177,87 @@ material = SubResource("ShaderMaterial_sx7on")
 size = Vector2(1, 5)
 center_offset = Vector3(0, 0, -2.5)
 orientation = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oi7dd"]
+shader = ExtResource("4_w537f")
+shader_parameter/use_color_ramp = true
+shader_parameter/emission_shape = 0
+shader_parameter/has_emission_color = false
+shader_parameter/sub_emitter_mode = 0
+shader_parameter/collision_mode = 0
+shader_parameter/attractor_enabled = true
+shader_parameter/turbulence_enabled = false
+shader_parameter/use_limiter_curve = false
+shader_parameter/use_alpha_curve = false
+shader_parameter/use_emission_curve = false
+shader_parameter/has_initial_ramp = false
+shader_parameter/orbit_uses_curve_xyz = false
+shader_parameter/use_tex_param = [false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false]
+shader_parameter/particle_flags = [false, true, false, false]
+shader_parameter/direction = Vector3(1, 0, 0)
+shader_parameter/spread = 45.0
+shader_parameter/flatness = 0.0
+shader_parameter/inherit_emitter_velocity_ratio = 0.0
+shader_parameter/initial_linear_velocity_min = 0.0
+shader_parameter/initial_linear_velocity_max = 0.0
+shader_parameter/directional_velocity_min = 1.0
+shader_parameter/directional_velocity_max = 1.0
+shader_parameter/angular_velocity_min = -10.000016
+shader_parameter/angular_velocity_max = 9.999984
+shader_parameter/orbit_velocity_min = 0.0
+shader_parameter/orbit_velocity_max = 0.0
+shader_parameter/radial_velocity_min = 0.0
+shader_parameter/radial_velocity_max = 0.0
+shader_parameter/linear_accel_min = 0.0
+shader_parameter/linear_accel_max = 0.0
+shader_parameter/radial_accel_min = 0.0
+shader_parameter/radial_accel_max = 0.0
+shader_parameter/tangent_accel_min = 0.0
+shader_parameter/tangent_accel_max = 0.0
+shader_parameter/damping_min = 0.0
+shader_parameter/damping_max = 0.0
+shader_parameter/initial_angle_min = -133.29999
+shader_parameter/initial_angle_max = 106.70001
+shader_parameter/scale_min = 47.3
+shader_parameter/scale_max = 96.27
+shader_parameter/start_size_min = Vector3(35, 47.3, 80)
+shader_parameter/start_size_max = Vector3(180, 96.27, 80)
+shader_parameter/use_start_size_3d = true
+shader_parameter/hue_variation_min = 0.0
+shader_parameter/hue_variation_max = 0.0
+shader_parameter/anim_speed_min = 0.0
+shader_parameter/anim_speed_max = 0.0
+shader_parameter/anim_offset_min = 0.0
+shader_parameter/anim_offset_max = 0.0
+shader_parameter/lifetime_randomness = 0.0
+shader_parameter/emission_shape_offset = Vector3(0, 0, 0)
+shader_parameter/emission_shape_scale = Vector3(1, 1, 1)
+shader_parameter/velocity_pivot = Vector3(0, 0, 0)
+shader_parameter/scale_over_velocity_min = 0.0
+shader_parameter/scale_over_velocity_max = 5.0
+shader_parameter/emission_sphere_radius = 1.0
+shader_parameter/emission_box_extents = Vector3(1, 1, 1)
+shader_parameter/emission_texture_point_count = 0
+shader_parameter/emission_ring_axis = Vector3(0, 0, 1)
+shader_parameter/emission_ring_height = 1.0
+shader_parameter/emission_ring_radius = 1.0
+shader_parameter/emission_ring_inner_radius = 0.0
+shader_parameter/emission_ring_cone_angle = 90.0
+shader_parameter/sub_emitter_frequency = 0.25
+shader_parameter/sub_emitter_amount_at_end = 1
+shader_parameter/sub_emitter_amount_at_start = 1
+shader_parameter/sub_emitter_keep_velocity = false
+shader_parameter/color_value = Color(1, 1, 1, 0.36078432)
+shader_parameter/gravity = Vector3(0, -9.8, 0)
+shader_parameter/color_ramp = ExtResource("5_kr1w3")
+shader_parameter/turbulence_noise_strength = 1.0
+shader_parameter/turbulence_noise_scale = -0.10398507
+shader_parameter/turbulence_influence_min = 0.1
+shader_parameter/turbulence_influence_max = 0.1
+shader_parameter/turbulence_initial_displacement_min = 0.0
+shader_parameter/turbulence_initial_displacement_max = 0.0
+shader_parameter/turbulence_noise_speed_random = 0.2
+shader_parameter/turbulence_noise_speed = Vector3(0, 0, 0)
 
 [node name="LinkTrail" type="Node3D"]
 
@@ -134,18 +282,25 @@ explosiveness = 1.0
 use_fixed_seed = true
 seed = 2532473519
 local_coords = true
-process_material = SubResource("ParticleProcessMaterial_7yr6v")
+process_material = SubResource("ShaderMaterial_kr1w3")
+draw_pass_1 = SubResource("QuadMesh_yogqb")
+
+[node name="Flare2" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 4
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.1
+use_fixed_seed = true
+seed = 2532473535
+local_coords = true
+process_material = SubResource("ShaderMaterial_oi7dd")
 draw_pass_1 = SubResource("QuadMesh_yogqb")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(0.59102815, 0, 0.806651, 0, 1, 0, -0.806651, 0, 0.59102815, 0, -11.320772, 0)
 visible = false
 size = Vector3(34.866333, 22.127075, 37.24414)
-
-[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 2.9802322e-08, 0, 1, 0, -2.9802322e-08, 0, 1, 24.300377, 0, 2.097928)
-visible = false
-size = Vector3(34.866333, 22.127075, 6.4157715)
 
 [node name="Marker" type="Sprite3D" parent="."]
 transform = Transform3D(-12, -1.8119497e-06, 7.920283e-14, 0, -5.2453663e-07, -12, 1.8119497e-06, -12, 5.2453663e-07, 0, 0, 0)
