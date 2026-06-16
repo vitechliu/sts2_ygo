@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d0gf2ck37orqg"
-path="res://.godot/imported/EtLinkMarkerOn.png-88cbb6c9c17c77dfabe409b08d5e563e.ctex"
+path.s3tc="res://.godot/imported/EtLinkMarkerOn.png-88cbb6c9c17c77dfabe409b08d5e563e.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://VYgo/scenes/summon/link/assets/EtLinkMarkerOn.png"
-dest_files=["res://.godot/imported/EtLinkMarkerOn.png-88cbb6c9c17c77dfabe409b08d5e563e.ctex"]
+dest_files=["res://.godot/imported/EtLinkMarkerOn.png-88cbb6c9c17c77dfabe409b08d5e563e.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -37,4 +38,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0
