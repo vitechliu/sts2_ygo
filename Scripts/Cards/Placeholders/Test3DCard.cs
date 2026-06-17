@@ -10,6 +10,7 @@ using VYgo.Scripts.Pools;
 namespace VYgo.Scripts.Cards.Placeholders;
 
 [RegisterCard(typeof(RedhatCardPool))]
+[RegisterCharacterStarterCard(typeof(RedhatCharacter), 1)]
 public class Test3DCard() : BasePlaceholder(CardType.Skill, CardRarity.Common) {
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         await base.OnPlay(choiceContext, cardPlay);
@@ -21,7 +22,6 @@ public class Test3DCard() : BasePlaceholder(CardType.Skill, CardRarity.Common) {
         if (node == null || !GodotObject.IsInstanceValid(node) || !node.IsInsideTree()) {
             return;
         }
-
         node.PlayPileTween?.FastForwardToCompletion();
         Vector2 screenCenter = node.GetViewportRect().Size * 0.5f;
 

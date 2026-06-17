@@ -16,12 +16,14 @@ public sealed record Card3DEffectContext(
     NCard Source,
     Vector2 DisplaySize,
     Vector2I CaptureViewportSize,
-    Vector2I FxViewportSize
+    Vector2I FxViewportSize,
+    MeshInstance3D CardMesh,
+    StandardMaterial3D CardMaterial
 );
 
 public static class Card3DEffectUtil {
-    private const float CapturePadding = 40f;
-    private const float RotationPaddingRatio = 0.6f;
+    private const float CapturePadding = 80f;
+    private const float RotationPaddingRatio = 1.2f;
     private const int ReadyWaitFrames = 5;
 
     private static readonly PackedScene _flipperScene = GD.Load<PackedScene>("res://VYgo/scenes/vfx/Card3DFlipper.tscn");
@@ -36,44 +38,90 @@ public static class Card3DEffectUtil {
             return;
         }
 
-        CardModel model = source.Model;
+        await RunMultipleCard3DEffect(
+            new[] { source.Model },
+            async (ctxs, _) => {
+                if (ctxs.Count > 0) {
+                    await animate(ctxs[0]);
+                }
+            },
+            centerPosition,
+            scaleMultiplier,
+            horizontalSpacing: 0f
+        );
+    }
+
+    public static async Task RunMultipleCard3DEffect(
+        IEnumerable<CardModel> models,
+        Func<IReadOnlyList<Card3DEffectContext>, Vector2, Task> animate,
+        Vector2? centerPosition = null,
+        float scaleMultiplier = 1.4f,
+        float horizontalSpacing = 360f
+    ) {
+        List<CardModel> modelList = models.Where(m => m != null).ToList();
+        if (modelList.Count == 0) {
+            return;
+        }
 
         if (_flipperScene == null) {
             Entry.Logger.Error("Card3DEffectUtil: failed to load Card3DFlipper.tscn");
             return;
         }
 
-        var flipper = _flipperScene.Instantiate<Card3DFlipper>();
-        if (flipper == null) {
-            Entry.Logger.Error("Card3DEffectUtil: failed to instantiate Card3DFlipper");
-            return;
+        Vector2 targetGlobalPos = centerPosition ?? (NCombatRoom.Instance?.GetGlobalMousePosition() ?? Vector2.Zero);
+        if (centerPosition == null && modelList.FirstOrDefault() is CardModel firstModel) {
+            NCard? firstNode = NCard.FindOnTable(firstModel);
+            if (firstNode != null) {
+                targetGlobalPos = firstNode.GlobalPosition;
+            }
         }
 
-        if (NCombatRoom.Instance != null) {
-            NCombatRoom.Instance.AddChild(flipper);
-        }
-
-        // Wait for _Ready() to resolve child nodes.
-        for (int i = 0; i < 2; i++) {
-            await flipper.ToSignal(flipper.GetTree(), SceneTree.SignalName.ProcessFrame);
-        }
-
-        Vector2 targetGlobalPos = centerPosition ?? source.GlobalPosition;
-        source.Visible = false;
+        List<Card3DFlipper> flippers = new();
+        List<Card3DEffectContext> contexts = new();
 
         try {
-            Card3DEffectContext ctx = await BuildContext(flipper, source, model, targetGlobalPos, scaleMultiplier);
-            await animate(ctx);
+            for (int i = 0; i < modelList.Count; i++) {
+                var flipper = _flipperScene.Instantiate<Card3DFlipper>();
+                if (flipper == null) {
+                    Entry.Logger.Error("Card3DEffectUtil: failed to instantiate Card3DFlipper");
+                    continue;
+                }
+                if (NCombatRoom.Instance != null) {
+                    NCombatRoom.Instance.AddChild(flipper);
+                }
+                flippers.Add(flipper);
+            }
+
+            for (int i = 0; i < 2; i++) {
+                if (flippers.Count > 0) {
+                    await flippers[0].ToSignal(flippers[0].GetTree(), SceneTree.SignalName.ProcessFrame);
+                }
+            }
+
+            int count = flippers.Count;
+            float totalWidth = (count - 1) * horizontalSpacing;
+            for (int i = 0; i < count; i++) {
+                CardModel model = modelList[i];
+                Card3DFlipper flipper = flippers[i];
+                Vector2 offset = new((i * horizontalSpacing) - totalWidth * 0.5f, 0f);
+                Vector2 cardGlobalPos = targetGlobalPos + offset;
+                Card3DEffectContext ctx = await BuildContext(flipper, model, cardGlobalPos, scaleMultiplier);
+                contexts.Add(ctx);
+            }
+
+            await animate(contexts, targetGlobalPos);
         }
         finally {
-            source.Visible = true;
-            flipper.QueueFree();
+            foreach (var flipper in flippers) {
+                if (GodotObject.IsInstanceValid(flipper)) {
+                    flipper.QueueFree();
+                }
+            }
         }
     }
 
     static async Task<Card3DEffectContext> BuildContext(
         Card3DFlipper flipper,
-        NCard source,
         CardModel model,
         Vector2 targetGlobalPos,
         float scaleMultiplier
@@ -85,7 +133,7 @@ public static class Card3DEffectUtil {
         Camera3D camera = flipper.Camera;
         Sprite2D displaySprite = flipper.DisplaySprite;
 
-        Vector2 cardRenderScale = source.Scale * scaleMultiplier;
+        Vector2 cardRenderScale = Vector2.One * scaleMultiplier;
         Vector2 displaySize = NCard.defaultSize * cardRenderScale;
 
         Vector2 captureDisplaySize = displaySize + Vector2.One * CapturePadding * 2f;
@@ -104,6 +152,11 @@ public static class Card3DEffectUtil {
         captureVp.Size = captureVpSize;
         captureVp.RenderTargetUpdateMode = SubViewport.UpdateMode.Always;
         captureVp.TransparentBg = true;
+
+        NCard? sourceNode = NCard.FindOnTable(model);
+        if (sourceNode != null) {
+            sourceNode.Visible = false;
+        }
 
         NCard? clone = NCard.Create(model);
         if (clone == null) {
@@ -136,13 +189,18 @@ public static class Card3DEffectUtil {
             throw new InvalidOperationException("CardMesh.Mesh is null.");
         }
         ((QuadMesh)cardMesh.Mesh).Size = displaySize;
-        cardMesh.MaterialOverride = new StandardMaterial3D {
+
+        var material = new StandardMaterial3D {
             AlbedoTexture = frontTex,
             CullMode = BaseMaterial3D.CullModeEnum.Disabled,
             ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded,
             Transparency = BaseMaterial3D.TransparencyEnum.Alpha,
-            TextureFilter = BaseMaterial3D.TextureFilterEnum.Linear
+            TextureFilter = BaseMaterial3D.TextureFilterEnum.Linear,
+            EmissionEnabled = true,
+            Emission = new Color(1f, 0.9f, 0.6f),
+            EmissionEnergyMultiplier = 0.6f
         };
+        cardMesh.MaterialOverride = material;
 
         camera.Projection = Camera3D.ProjectionType.Perspective;
         camera.Fov = 60f;
@@ -165,10 +223,18 @@ public static class Card3DEffectUtil {
             Pivot: pivot,
             Camera: camera,
             DisplaySprite: displaySprite,
-            Source: source,
+            Source: clone,
             DisplaySize: displaySize,
             CaptureViewportSize: captureVpSize,
-            FxViewportSize: fxVpSize
+            FxViewportSize: fxVpSize,
+            CardMesh: cardMesh,
+            CardMaterial: material
         );
+    }
+
+    public static void SetGlowIntensity(Card3DEffectContext ctx, float intensity) {
+        if (GodotObject.IsInstanceValid(ctx.CardMaterial)) {
+            ctx.CardMaterial.EmissionEnergyMultiplier = intensity;
+        }
     }
 }
