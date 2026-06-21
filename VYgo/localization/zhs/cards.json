@@ -10,5 +10,9 @@
   "V_YGO_CARD_CYBER_DRAGON_SIEGER.title": "电子龙·凯旋",
   "V_YGO_CARD_CYBER_DRAGON_SIEGER.description": "连接召唤:包含「电子龙」的机械族怪兽2只。",
   "V_YGO_CARD_CYBER_DRAGON.title": "电子龙",
-  "V_YGO_CARD_CYBER_DRAGON.description": "[gold]召唤[/gold]({Attack:diff()}/{Life:diff()}),如果你没有控制任何随从，可以[gold]特招[/gold]"
+  "V_YGO_CARD_CYBER_DRAGON.description": "[gold]召唤[/gold]({Attack:diff()}/{Life:diff()}),如果你没有控制任何随从，可以[gold]特招[/gold]",
+  "V_YGO_CARD_TEST3_D_CARD.title": "oiiaiooiiai",
+  "V_YGO_CARD_TEST3_D_CARD.description": "喵喵喵。",
+  "V_YGO_CARD_LINK_SUMMON.title": "连接召唤",
+  "V_YGO_CARD_LINK_SUMMON.description": "进行一次[gold]连接召唤[/gold]。"
 }
