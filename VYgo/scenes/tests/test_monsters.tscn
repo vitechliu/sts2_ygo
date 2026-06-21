@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cuiltjlgfxj06"]
+
+[ext_resource type="PackedScene" uid="uid://dvryxcg27iy3b" path="res://VYgo/scenes/monsters/70095154.tscn" id="1_8w2ca"]
+
+[node name="TestMonsters" type="Node2D"]
+
+[node name="Monster" parent="." instance=ExtResource("1_8w2ca")]
+unique_name_in_owner = true
+position = Vector2(505, 509)

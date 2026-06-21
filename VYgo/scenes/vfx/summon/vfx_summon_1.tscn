@@ -1,0 +1,78 @@
+[gd_scene load_steps=15 format=3 uid="uid://dfo2qc64c33gc"]
+
+[ext_resource type="Texture2D" uid="uid://7yb5vgnqmwnr" path="res://VYgo/images/textures/EFF_flrstr_03_TEX.png" id="1_ty2ta"]
+[ext_resource type="Texture2D" uid="uid://ci1i45avh723" path="res://VYgo/images/textures/EFF_flsbg_01_TEX.png" id="2_ioini"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ioini"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="Curve_ioini"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.64285713, 0.80406284), -0.5523905, -0.5523905, 0, 0, Vector2(1, 0), -4.6422033, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_jr0a7"]
+curve = SubResource("Curve_ioini")
+
+[sub_resource type="Curve" id="Curve_ty2ta"]
+_data = [Vector2(0, 0.48034072), 0.0, 0.9995628, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ioini"]
+curve = SubResource("Curve_ty2ta")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ty2ta"]
+particle_flag_disable_z = true
+angle_min = 1.0728835e-05
+angle_max = 328.80002
+gravity = Vector3(0, 0, 0)
+scale_max = 1.66
+scale_curve = SubResource("CurveTexture_ioini")
+color = Color(0.9998649, 0.63580054, 0.9999997, 1)
+alpha_curve = SubResource("CurveTexture_jr0a7")
+hue_variation_min = -0.09000002
+hue_variation_max = 0.10999998
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jr0a7"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="Curve_vhduv"]
+_data = [Vector2(0, 0.98296195), 0.0, -0.5382261, 0, 0, Vector2(0.987013, 0.028833508), -1.2594496, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_s5j2v"]
+curve = SubResource("Curve_vhduv")
+
+[sub_resource type="Curve" id="Curve_jr0a7"]
+_data = [Vector2(0, 0.7188728), 0.0, 0.93104523, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_vhduv"]
+curve = SubResource("Curve_jr0a7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_s5j2v"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_min = 3.0
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_vhduv")
+color = Color(1, 0.8352941, 1, 1)
+alpha_curve = SubResource("CurveTexture_s5j2v")
+
+[node name="VfxSummon1" type="Node2D"]
+
+[node name="Flare1" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_ioini")
+emitting = false
+amount = 3
+texture = ExtResource("1_ty2ta")
+one_shot = true
+explosiveness = 0.69
+process_material = SubResource("ParticleProcessMaterial_ty2ta")
+
+[node name="Glow" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_jr0a7")
+emitting = false
+amount = 1
+texture = ExtResource("2_ioini")
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_s5j2v")
