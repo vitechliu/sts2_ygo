@@ -379,27 +379,15 @@ async function removeLocalizationEntry(cardId, enName) {
     console.log(`Localization entries removed for card ${cardId}`);
 }
 
-// 全量生成本地化 JSON
+// 增量生成本地化 JSON：只插入不存在的键，不更新已有键
 async function generateLocalization() {
     try {
         const settings = await allConfig('SELECT * FROM settings');
         const config = {};
         settings.forEach(s => config[s.key] = s.value);
-        
+
         const prefix = config.locale_prefix || 'V_YGO_CARD_';
         const cards = await allCards('SELECT * FROM cards ORDER BY card_id');
-        
-        const cardsLocalization = {};
-        const monstersLocalization = {};
-        
-        cards.forEach(card => {
-            const upperSnakeName = toUpperSnakeCase(card.en_name);
-            const key = `${prefix}${upperSnakeName}`;
-            cardsLocalization[`${key}.title`] = card.cn_name;
-            cardsLocalization[`${key}.description`] = '';
-            
-            monstersLocalization[`${upperSnakeName}_MINION.name`] = card.cn_name;
-        });
 
         const localeDir = path.join(__dirname, '..', '..', 'VYgo', 'localization', 'zhs');
         if (!fs.existsSync(localeDir)) {
@@ -407,14 +395,51 @@ async function generateLocalization() {
         }
 
         const cardsLocalePath = path.join(localeDir, 'cards.json');
-        fs.writeFileSync(cardsLocalePath, JSON.stringify(cardsLocalization, null, 4), 'utf8');
-        
+        const cardsLocalization = loadJson(cardsLocalePath);
+
         const monstersLocalePath = path.join(localeDir, 'monsters.json');
+        const monstersLocalization = loadJson(monstersLocalePath);
+
+        let insertedCount = 0;
+
+        cards.forEach(card => {
+            const upperSnakeName = toUpperSnakeCase(card.en_name);
+            const key = `${prefix}${upperSnakeName}`;
+            const titleKey = `${key}.title`;
+            const descKey = `${key}.description`;
+            const monsterKey = `${upperSnakeName}_MINION.name`;
+
+            // 只在键不存在时插入
+            if (!cardsLocalization.hasOwnProperty(titleKey)) {
+                cardsLocalization[titleKey] = card.cn_name;
+                insertedCount++;
+            }
+            if (!cardsLocalization.hasOwnProperty(descKey)) {
+                cardsLocalization[descKey] = '';
+            }
+
+            if (!monstersLocalization.hasOwnProperty(monsterKey)) {
+                monstersLocalization[monsterKey] = card.cn_name;
+            }
+        });
+
+        fs.writeFileSync(cardsLocalePath, JSON.stringify(cardsLocalization, null, 4), 'utf8');
         fs.writeFileSync(monstersLocalePath, JSON.stringify(monstersLocalization, null, 4), 'utf8');
-        
-        console.log(`Localization files generated: ${cardsLocalePath}, ${monstersLocalePath}`);
+
+        console.log(`Localization files updated incrementally: ${insertedCount} new entries inserted.`);
     } catch (error) {
         console.error('Failed to generate localization:', error);
+    }
+}
+
+function loadJson(filePath) {
+    if (!fs.existsSync(filePath)) return {};
+    try {
+        const content = fs.readFileSync(filePath, 'utf8');
+        return JSON.parse(content);
+    } catch (e) {
+        console.log('Failed to parse JSON, returning empty object:', filePath);
+        return {};
     }
 }
 
