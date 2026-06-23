@@ -516,6 +516,7 @@ function displayCards(cards) {
                 <p>ID: ${card.card_id}</p>
             </div>
             <div class="card-item-actions">
+                <button onclick="generateScene(${card.card_id})" class="scene-btn">生成场景</button>
                 <button onclick="deleteCard(${card.card_id})" class="delete-btn">删除</button>
             </div>
         </div>
@@ -538,6 +539,24 @@ async function deleteCard(cardId) {
 
         showToast('卡牌已删除');
         loadCards();
+    } catch (error) {
+        showToast(error.message, 'error');
+    }
+}
+
+async function generateScene(cardId) {
+    try {
+        const response = await fetch(`${API_BASE}/cards/${cardId}/scene`, {
+            method: 'POST'
+        });
+
+        const result = await response.json();
+
+        if (!result.success) {
+            throw new Error(result.error);
+        }
+
+        showToast(`场景已生成: ${cardId}.tscn`);
     } catch (error) {
         showToast(error.message, 'error');
     }

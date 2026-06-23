@@ -1,12 +1,17 @@
 ﻿using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MinionLib.Minion;
 using MinionLib.Powers;
 using VYgo.Core;
 using VYgo.RitsuAdapters;
+using VYgo.Scripts.Cards;
+using VYgo.Scripts.Cards.Category.CyberDragon;
 
 namespace VYgo.Scripts.Monsters;
 
@@ -15,7 +20,9 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
     public override int MinInitialHp => 1; // 作为敌方方怪物生成时的血量，通常无需在意
     public override int MaxInitialHp => 1; // 作为敌方方怪物生成时的血量，通常无需在意
     public override string? CustomVisualsPath => $"res://VYgo/scenes/monsters/{CardId}.tscn";
-    
+
+    //防止多次死亡结算
+    protected bool PileSent;
     public virtual bool IsGuardian {
         get;
         set;
@@ -27,6 +34,7 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
         Player owner,
         MinionSummonOptions options) // 注意使用 self 而非 this
     {
+        PileSent = false;
         if (options.MaxHp is { } maxHp)
             await CreatureCmd.SetMaxAndCurrentHp(Creature, maxHp); // 设置血量
         if (IsGuardian)
@@ -36,4 +44,32 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
     }
 
     public abstract int CardId { get; }
+
+    public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength) {
+        //怪兽死亡后，对应的怪兽卡置入弃牌堆
+        if (!PileSent && creature == Creature) {
+            Entry.Logger.Info("AfterDeath:" + GetType().Name);
+            var card = YgoModelDb.GetCard(CardId);
+            if (card != null) {
+                var owner = creature.PetOwner;
+                if (owner != null) {
+                    TaskHelper.RunSafely(ReturnCard(owner, card));
+                }
+            }
+            else {
+                Entry.Logger.Error("ReturnCardError: No Card found for " + GetType().Name);
+            }
+            PileSent = true;
+        }
+        return base.AfterDeath(choiceContext, creature, wasRemovalPrevented, deathAnimLength);
+    }
+
+    private async Task ReturnCard(Player player, BaseVYgoCard card) {
+        //会报错：Model id=CARD.CYBER_DRAGON not found
+        //       at MegaCrit.Sts2.Core.Models.ModelDb.GetById[T](ModelId id)
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(CombatState.CreateCard(card, player), PileType.Discard,  player));
+        
+        //可以运行
+        // await CardPileCmd.AddGeneratedCardToCombat(CombatState.CreateCard<CyberDragon>(player), PileType.Discard,  player);
+    }
 }

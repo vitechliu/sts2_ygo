@@ -25,12 +25,12 @@ public class ProtoCyberDragon() : BaseMonsterCard(energyCost,rarity, targetType,
     private const TargetType targetType = TargetType.None;
     private const bool shouldShowInCardLibrary = true;
 
-
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        // HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
-        // HoverTipFactory.FromPower<VigorPower>(),
-        // HoverTipFactory.FromPower<StarscourgePower>(),
-    ];
+    //
+    // protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+    //     // HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
+    //     // HoverTipFactory.FromPower<VigorPower>(),
+    //     // HoverTipFactory.FromPower<StarscourgePower>(),
+    // ];
 
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
@@ -39,10 +39,10 @@ public class ProtoCyberDragon() : BaseMonsterCard(energyCost,rarity, targetType,
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        _ = await MinionCmd.AddMinion<CyberDragonMinion>(choiceContext, Owner, new MinionSummonOptions(
-            MaxHp: Life, // 血量
-            PrimaryStatAmount: Attack, // 主要参数（具体内容在随从的 OnSummon 里定义），还有次要参数等可以按需传入
-            Source: this, // 召唤来源（通常是这张牌）
+        _ = await MinionCmd.AddMinion<ProtoCyberDragonMinion>(choiceContext, Owner, new MinionSummonOptions(
+            MaxHp: Life,
+            PrimaryStatAmount: Attack,
+            Source: this,
             Position: MinionPosition.Front)
         );
     }

@@ -332,6 +332,7 @@ button:disabled {
     padding: 10px;
     display: flex;
     justify-content: flex-end;
+    gap: 8px;
 }
 
 .card-item-actions button {
@@ -345,6 +346,14 @@ button:disabled {
 
 .delete-btn:hover {
     background: #c0392b;
+}
+
+.scene-btn {
+    background: #0f3460;
+}
+
+.scene-btn:hover {
+    background: #1a4a7a;
 }
 
 /* 配置页面 */

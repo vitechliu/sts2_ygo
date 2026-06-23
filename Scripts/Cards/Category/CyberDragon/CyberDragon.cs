@@ -26,13 +26,6 @@ public class CyberDragon() : BaseMonsterCard(energyCost, rarity, targetType, sho
     private const bool shouldShowInCardLibrary = true;
 
 
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        // HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
-        // HoverTipFactory.FromPower<VigorPower>(),
-        // HoverTipFactory.FromPower<StarscourgePower>(),
-    ];
-
-
     // protected override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>();{
     //     HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
     // }

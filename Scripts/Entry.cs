@@ -5,10 +5,13 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
+using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib;
 using STS2RitsuLib.CardPiles;
 using STS2RitsuLib.Interop;
+using VYgo.Core;
 using VYgo.Scripts.Cards;
+using VYgo.Scripts.Monsters;
 
 namespace VYgo.Scripts;
 
@@ -20,6 +23,9 @@ public static class Entry {
 
     public static Logger Logger { get; private set; } = null!;
     public static PileType ExtraPile;
+
+    public static Dictionary<int, BaseVYgoCard> CardYgoIdCache { get; private set; } = new();
+    public static Dictionary<int, BaseMonster> MonsterYgoIdCache { get; private set; } = new();
     
     public static void Initialize() {
         var assembly = Assembly.GetExecutingAssembly();
@@ -29,6 +35,7 @@ public static class Entry {
         
         RegisterCardPile();
         SubscribeEvents();
+        
         
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
@@ -50,6 +57,11 @@ public static class Entry {
     }
 
     static void SubscribeEvents() {
+        
+        RitsuLibFramework.SubscribeLifecycleOnce<ModelIdsInitializedEvent>(_ =>
+        {
+            BuildYgoIdCaches();
+        });
         // RitsuLibFramework.SubscribeLifecycle<CombatStartingEvent>((@event, disposable) => {
         //     Logger.Info("CombatStarting");
         //     var combatState = @event.CombatState;
@@ -67,5 +79,50 @@ public static class Entry {
         //         }
         //     }
         // });
+    }
+
+    static void BuildYgoIdCaches() {
+        CardYgoIdCache = BuildYgoIdCache<BaseVYgoCard>(static () => {
+            try {
+                return ModelDb.AllCards.OfType<BaseVYgoCard>();
+            } catch {
+                return Enumerable.Empty<BaseVYgoCard>();
+            }
+        });
+
+        MonsterYgoIdCache = BuildYgoIdCache<BaseMonster>();
+
+        Logger.Info($"Built YGO ID caches: {CardYgoIdCache.Count} cards, {MonsterYgoIdCache.Count} monsters.");
+    }
+
+    static Dictionary<int, T> BuildYgoIdCache<T>(Func<IEnumerable<T>>? tryGetFromModelDb = null) where T : class, IYgoId {
+        var cache = new Dictionary<int, T>();
+        var assembly = Assembly.GetExecutingAssembly();
+
+        if (tryGetFromModelDb != null) {
+            try {
+                foreach (var item in tryGetFromModelDb()) {
+                    cache[item.CardId] = item;
+                }
+            } catch (Exception ex) {
+                Logger.Warn($"Failed to build {typeof(T).Name} cache from ModelDb: {ex.Message}");
+            }
+        }
+
+        foreach (var type in assembly.GetTypes()) {
+            if (type.IsAbstract || !typeof(T).IsAssignableFrom(type) || !typeof(IYgoId).IsAssignableFrom(type))
+                continue;
+
+            try {
+                var instance = (T?)Activator.CreateInstance(type);
+                if (instance != null) {
+                    cache[instance.CardId] = instance;
+                }
+            } catch (Exception ex) {
+                Logger.Warn($"Failed to instantiate {type.Name} for YGO ID cache: {ex.Message}");
+            }
+        }
+
+        return cache;
     }
 }

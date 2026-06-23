@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const { exec } = require('child_process');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,9 +27,22 @@ app.use((err, req, res, next) => {
     res.status(500).json({ success: false, error: 'Internal server error' });
 });
 
+function openBrowser(url) {
+    const command = process.platform === 'win32' ? `start "" "${url}"` :
+                    process.platform === 'darwin' ? `open "${url}"` :
+                    `xdg-open "${url}"`;
+    exec(command, (err) => {
+        if (err) {
+            console.log(`Could not open browser automatically: ${err.message}`);
+        }
+    });
+}
+
 app.listen(PORT, () => {
-    console.log(`VYgo Card Manager running at http://localhost:${PORT}`);
+    const url = `http://localhost:${PORT}`;
+    console.log(`VYgo Card Manager running at ${url}`);
     console.log(`Press Ctrl+C to stop.`);
+    openBrowser(url);
 });
 
 module.exports = app;

@@ -204,6 +204,39 @@ router.delete('/:cardId', async (req, res) => {
     }
 });
 
+// 生成 Godot 场景
+router.post('/:cardId/scene', async (req, res) => {
+    try {
+        const { cardId } = req.params;
+        const sceneDir = path.join(__dirname, '..', '..', 'VYgo', 'scenes', 'monsters');
+        const samplePath = path.join(sceneDir, '0_sample.tscn');
+        const targetPath = path.join(sceneDir, `${cardId}.tscn`);
+
+        if (!fs.existsSync(samplePath)) {
+            return res.status(404).json({ success: false, error: 'Scene template not found' });
+        }
+
+        if (!fs.existsSync(sceneDir)) {
+            fs.mkdirSync(sceneDir, { recursive: true });
+        }
+
+        let content = fs.readFileSync(samplePath, 'utf8');
+        // 移除场景 uid，让 Godot 重新生成
+        content = content.replace(/\[gd_scene load_steps=(\d+) format=(\d+) uid="[^"]+"\]/, '[gd_scene load_steps=$1 format=$2]');
+        // 替换图片路径并移除 Texture2D ext_resource 的 uid
+        content = content.replace(
+            /\[ext_resource type="Texture2D" uid="[^"]+" path="res:\/\/VYgo\/images\/monster\/[^"]+" id="([^"]+)"\]/,
+            `[ext_resource type="Texture2D" path="res://VYgo/images/monster/${cardId}.png" id="$1"]`
+        );
+
+        fs.writeFileSync(targetPath, content, 'utf8');
+
+        res.json({ success: true, data: { scenePath: targetPath } });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
 // 手动触发本地化生成（全量重新生成）
 router.post('/localization/generate', async (req, res) => {
     try {
