@@ -5,9 +5,10 @@ using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core.Effects;
+using VYgo.Scripts.Cards.Placeholders;
 using VYgo.Scripts.Pools;
 
-namespace VYgo.Scripts.Cards.Placeholders;
+namespace VYgo.Scripts.Cards.Test;
 
 [RegisterCard(typeof(RedhatCardPool))]
 [RegisterCharacterStarterCard(typeof(RedhatCharacter), 1)]
@@ -35,7 +36,7 @@ public class Test3DCard() : BasePlaceholder(CardType.Skill, CardRarity.Common) {
                 await tween.AwaitFinished(ctx.Pivot);
             },
             screenCenter,
-            scaleMultiplier: 1.5f
+            scaleMultiplier: 1f
         );
     }
 }

@@ -14,16 +14,12 @@ public sealed record Card3DEffectContext(
     Camera3D Camera,
     Sprite2D DisplaySprite,
     NCard Source,
-    Vector2 DisplaySize,
-    Vector2I CaptureViewportSize,
-    Vector2I FxViewportSize,
-    MeshInstance3D CardMesh,
-    StandardMaterial3D CardMaterial
+    Vector2 DisplaySize
 );
 
 public static class Card3DEffectUtil {
-    private const float CapturePadding = 80f;
-    private const float RotationPaddingRatio = 1.2f;
+    private const float CapturePadding = 120f;
+    private const float RotationPaddingRatio = 1.5f;
     private const int ReadyWaitFrames = 5;
 
     private static readonly PackedScene _flipperScene = GD.Load<PackedScene>("res://VYgo/scenes/vfx/Card3DFlipper.tscn");
@@ -69,44 +65,35 @@ public static class Card3DEffectUtil {
         }
 
         Vector2 targetGlobalPos = centerPosition ?? (NCombatRoom.Instance?.GetGlobalMousePosition() ?? Vector2.Zero);
-        if (centerPosition == null && modelList.FirstOrDefault() is CardModel firstModel) {
-            NCard? firstNode = NCard.FindOnTable(firstModel);
-            if (firstNode != null) {
-                targetGlobalPos = firstNode.GlobalPosition;
-            }
-        }
 
         List<Card3DFlipper> flippers = new();
         List<Card3DEffectContext> contexts = new();
+        Dictionary<CardModel, NCard> hiddenSourceNodes = new();
 
         try {
-            for (int i = 0; i < modelList.Count; i++) {
-                var flipper = _flipperScene.Instantiate<Card3DFlipper>();
-                if (flipper == null) {
-                    Entry.Logger.Error("Card3DEffectUtil: failed to instantiate Card3DFlipper");
-                    continue;
-                }
-                if (NCombatRoom.Instance != null) {
-                    NCombatRoom.Instance.AddChild(flipper);
-                }
-                flippers.Add(flipper);
-            }
-
-            for (int i = 0; i < 2; i++) {
-                if (flippers.Count > 0) {
-                    await flippers[0].ToSignal(flippers[0].GetTree(), SceneTree.SignalName.ProcessFrame);
-                }
-            }
-
-            int count = flippers.Count;
+            int count = modelList.Count;
             float totalWidth = (count - 1) * horizontalSpacing;
+
             for (int i = 0; i < count; i++) {
                 CardModel model = modelList[i];
-                Card3DFlipper flipper = flippers[i];
                 Vector2 offset = new((i * horizontalSpacing) - totalWidth * 0.5f, 0f);
                 Vector2 cardGlobalPos = targetGlobalPos + offset;
-                Card3DEffectContext ctx = await BuildContext(flipper, model, cardGlobalPos, scaleMultiplier);
-                contexts.Add(ctx);
+
+                Card3DFlipper? flipper = CreateAndAttachFlipper();
+                if (flipper == null) {
+                    continue;
+                }
+
+                await WaitFrames(flipper, 1);
+
+                NCard? sourceNode = NCard.FindOnTable(model);
+                if (sourceNode != null && GodotObject.IsInstanceValid(sourceNode)) {
+                    sourceNode.Visible = false;
+                    hiddenSourceNodes[model] = sourceNode;
+                }
+
+                contexts.Add(await BuildContext(flipper, model, cardGlobalPos, scaleMultiplier));
+                flippers.Add(flipper);
             }
 
             await animate(contexts, targetGlobalPos);
@@ -117,6 +104,28 @@ public static class Card3DEffectUtil {
                     flipper.QueueFree();
                 }
             }
+            foreach (var pair in hiddenSourceNodes) {
+                if (GodotObject.IsInstanceValid(pair.Value)) {
+                    pair.Value.Visible = true;
+                }
+            }
+        }
+    }
+
+    static Card3DFlipper? CreateAndAttachFlipper() {
+        var flipper = _flipperScene.Instantiate<Card3DFlipper>();
+        if (flipper == null) {
+            Entry.Logger.Error("Card3DEffectUtil: failed to instantiate Card3DFlipper");
+            return null;
+        }
+
+        NCombatRoom.Instance?.AddChild(flipper);
+        return flipper;
+    }
+
+    static async Task WaitFrames(Node node, int frames) {
+        for (int i = 0; i < frames; i++) {
+            await node.ToSignal(node.GetTree(), SceneTree.SignalName.ProcessFrame);
         }
     }
 
@@ -133,78 +142,29 @@ public static class Card3DEffectUtil {
         Camera3D camera = flipper.Camera;
         Sprite2D displaySprite = flipper.DisplaySprite;
 
-        Vector2 cardRenderScale = Vector2.One * scaleMultiplier;
-        Vector2 displaySize = NCard.defaultSize * cardRenderScale;
+        Vector2 displaySize = NCard.defaultSize * scaleMultiplier;
 
-        Vector2 captureDisplaySize = displaySize + Vector2.One * CapturePadding * 2f;
-        Vector2I captureVpSize = new(
-            Mathf.RoundToInt(captureDisplaySize.X),
-            Mathf.RoundToInt(captureDisplaySize.Y)
-        );
-
-        float rotationPadding = Mathf.Max(displaySize.X, displaySize.Y) * RotationPaddingRatio;
-        Vector2 fxDisplaySize = displaySize + Vector2.One * rotationPadding * 2f;
-        Vector2I fxVpSize = new(
-            Mathf.RoundToInt(fxDisplaySize.X),
-            Mathf.RoundToInt(fxDisplaySize.Y)
-        );
-
-        captureVp.Size = captureVpSize;
+        captureVp.Size = RoundToSize(displaySize + Vector2.One * CapturePadding * 2f);
         captureVp.RenderTargetUpdateMode = SubViewport.UpdateMode.Always;
         captureVp.TransparentBg = true;
 
-        NCard? sourceNode = NCard.FindOnTable(model);
-        if (sourceNode != null) {
-            sourceNode.Visible = false;
-        }
-
-        NCard? clone = NCard.Create(model);
-        if (clone == null) {
-            throw new InvalidOperationException("Failed to create NCard clone for 3D effect.");
-        }
-
-        clone.Visibility = ModelVisibility.Visible;
-        clone.UpdateVisuals(PileType.Play, CardPreviewMode.Normal);
-        clone.Reload();
-        clone.Scale = cardRenderScale;
-        clone.Position = (Vector2)captureVpSize * 0.5f;
-        captureVp.AddChild(clone);
-
-        for (int i = 0; i < ReadyWaitFrames; i++) {
-            await flipper.ToSignal(flipper.GetTree(), SceneTree.SignalName.ProcessFrame);
-        }
-
-        if (!GodotObject.IsInstanceValid(clone) || !clone.IsNodeReady()) {
-            throw new InvalidOperationException("NCard clone failed to initialize.");
-        }
-        clone.UpdateVisuals(PileType.Play, CardPreviewMode.Normal);
-
-        ViewportTexture frontTex = captureVp.GetTexture();
-
-        fxVp.Size = fxVpSize;
+        fxVp.Size = RoundToSize(displaySize + Vector2.One * Mathf.Max(displaySize.X, displaySize.Y) * RotationPaddingRatio * 2f);
         fxVp.RenderTargetUpdateMode = SubViewport.UpdateMode.Always;
         fxVp.TransparentBg = true;
 
-        if (cardMesh.Mesh == null) {
-            throw new InvalidOperationException("CardMesh.Mesh is null.");
+        NCard? clone = CreateCardClone(model, captureVp.Size, scaleMultiplier);
+        if (clone == null) {
+            throw new InvalidOperationException("Failed to create NCard clone for 3D effect.");
         }
-        ((QuadMesh)cardMesh.Mesh).Size = displaySize;
+        captureVp.AddChild(clone);
 
-        var material = new StandardMaterial3D {
-            AlbedoTexture = frontTex,
-            CullMode = BaseMaterial3D.CullModeEnum.Disabled,
-            ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded,
-            Transparency = BaseMaterial3D.TransparencyEnum.Alpha,
-            TextureFilter = BaseMaterial3D.TextureFilterEnum.Linear,
-            EmissionEnabled = true,
-            Emission = new Color(1f, 0.9f, 0.6f),
-            EmissionEnergyMultiplier = 0.6f
-        };
-        cardMesh.MaterialOverride = material;
+        await WaitFrames(flipper, ReadyWaitFrames);
+        clone.UpdateVisuals(PileType.Play, CardPreviewMode.Normal);
 
-        camera.Projection = Camera3D.ProjectionType.Perspective;
-        camera.Fov = 60f;
-        camera.Position = new Vector3(0f, 0f, displaySize.Y * 0.9f);
+        SetupCardMesh(cardMesh, captureVp.GetTexture(), displaySize);
+        SetupCamera(camera, displaySize);
+
+        await WaitFrames(flipper, 1);
 
         displaySprite.Texture = fxVp.GetTexture();
         displaySprite.FlipH = true;
@@ -213,9 +173,7 @@ public static class Card3DEffectUtil {
         displaySprite.ZIndex = 1000;
         displaySprite.ZAsRelative = false;
 
-        for (int i = 0; i < 2; i++) {
-            await flipper.ToSignal(flipper.GetTree(), SceneTree.SignalName.ProcessFrame);
-        }
+        await WaitFrames(flipper, 1);
 
         pivot.Rotation = Vector3.Zero;
 
@@ -224,17 +182,46 @@ public static class Card3DEffectUtil {
             Camera: camera,
             DisplaySprite: displaySprite,
             Source: clone,
-            DisplaySize: displaySize,
-            CaptureViewportSize: captureVpSize,
-            FxViewportSize: fxVpSize,
-            CardMesh: cardMesh,
-            CardMaterial: material
+            DisplaySize: displaySize
         );
     }
 
-    public static void SetGlowIntensity(Card3DEffectContext ctx, float intensity) {
-        if (GodotObject.IsInstanceValid(ctx.CardMaterial)) {
-            ctx.CardMaterial.EmissionEnergyMultiplier = intensity;
+    static Vector2I RoundToSize(Vector2 size) {
+        return new(Mathf.RoundToInt(size.X), Mathf.RoundToInt(size.Y));
+    }
+
+    static NCard? CreateCardClone(CardModel model, Vector2I viewportSize, float scale) {
+        NCard? clone = NCard.Create(model);
+        if (clone == null) {
+            return null;
         }
+
+        clone.Visibility = ModelVisibility.Visible;
+        clone.UpdateVisuals(PileType.Play, CardPreviewMode.Normal);
+        clone.Reload();
+        clone.Scale = Vector2.One * scale;
+        clone.Position = (Vector2)viewportSize * 0.5f;
+        return clone;
+    }
+
+    static void SetupCardMesh(MeshInstance3D cardMesh, ViewportTexture texture, Vector2 displaySize) {
+        if (cardMesh.Mesh == null) {
+            throw new InvalidOperationException("CardMesh.Mesh is null.");
+        }
+
+        ((QuadMesh)cardMesh.Mesh).Size = displaySize;
+        cardMesh.MaterialOverride = new StandardMaterial3D {
+            AlbedoTexture = texture,
+            CullMode = BaseMaterial3D.CullModeEnum.Disabled,
+            ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded,
+            Transparency = BaseMaterial3D.TransparencyEnum.Alpha,
+            TextureFilter = BaseMaterial3D.TextureFilterEnum.Linear
+        };
+    }
+
+    static void SetupCamera(Camera3D camera, Vector2 displaySize) {
+        camera.Projection = Camera3D.ProjectionType.Perspective;
+        camera.Fov = 60f;
+        camera.Position = new Vector3(0f, 0f, displaySize.Y * 0.9f);
     }
 }
