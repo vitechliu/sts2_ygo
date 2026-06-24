@@ -237,6 +237,30 @@ router.post('/:cardId/scene', async (req, res) => {
     }
 });
 
+// 导出所有卡牌数据为 JSON
+router.post('/export', async (req, res) => {
+    try {
+        const cards = await allCards('SELECT * FROM cards ORDER BY created_at DESC');
+        const vygoDir = path.join(__dirname, '..', '..', 'VYgo');
+        const exportPath = path.join(vygoDir, 'db.json');
+
+        if (!fs.existsSync(vygoDir)) {
+            fs.mkdirSync(vygoDir, { recursive: true });
+        }
+
+        const filteredCards = cards.map(card => {
+            const { raw_data, created_at, updated_at, ...rest } = card;
+            return rest;
+        });
+
+        fs.writeFileSync(exportPath, JSON.stringify(filteredCards, null, 4), 'utf8');
+
+        res.json({ success: true, data: { exportPath, count: filteredCards.length } });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
 // 手动触发本地化生成（全量重新生成）
 router.post('/localization/generate', async (req, res) => {
     try {

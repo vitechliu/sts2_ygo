@@ -65,6 +65,7 @@ function initCardSearch() {
     document.getElementById('generateCardBtn').addEventListener('click', generateCard);
     document.getElementById('refreshBtn').addEventListener('click', loadCards);
     document.getElementById('generateLocaleBtn').addEventListener('click', generateFullLocalization);
+    document.getElementById('exportCardsBtn').addEventListener('click', exportCards);
 }
 
 async function queryCard() {
@@ -584,7 +585,33 @@ async function generateFullLocalization() {
     } finally {
         const btn = document.getElementById('generateLocaleBtn');
         btn.disabled = false;
-        btn.textContent = '全量生成本地化';
+        btn.textContent = '生成本地化';
+    }
+}
+
+async function exportCards() {
+    try {
+        const btn = document.getElementById('exportCardsBtn');
+        btn.disabled = true;
+        btn.textContent = '导出中...';
+
+        const response = await fetch(`${API_BASE}/cards/export`, {
+            method: 'POST'
+        });
+
+        const result = await response.json();
+
+        if (!result.success) {
+            throw new Error(result.error);
+        }
+
+        showToast(`已导出 ${result.data.count} 张卡牌到 db.json`);
+    } catch (error) {
+        showToast(error.message, 'error');
+    } finally {
+        const btn = document.getElementById('exportCardsBtn');
+        btn.disabled = false;
+        btn.textContent = '生成卡牌数据';
     }
 }
 
