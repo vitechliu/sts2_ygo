@@ -111,7 +111,9 @@ public class RedhatCharacter : ModCharacterTemplate<RedhatCardPool, IroncladReli
 	//     new(typeof(TestCard), 5)
 	// ];
 
+#pragma warning disable CS0672 // Member overrides obsolete member
 	protected override IEnumerable<Type> StartingRelicTypes => [
+#pragma warning restore CS0672 // Member overrides obsolete member
 		typeof(BurningBlood)
 	];
 
