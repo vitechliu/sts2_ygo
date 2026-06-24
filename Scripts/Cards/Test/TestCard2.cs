@@ -41,7 +41,7 @@ public class TestCard2() : BasePlaceholder(CardType.Skill, CardRarity.Common) {
 
         try {
             await Card3DEffectUtil.RunMultipleCard3DEffect(
-                new CardModel[] { ModelDb.Card<CyberDragon>(), ModelDb.Card<ProtoCyberDragon>() },
+                [ModelDb.Card<CyberDragon>(), ModelDb.Card<ProtoCyberDragon>()],
                 AnimateSummonPreview,
                 node.GetViewportRect().Size * 0.5f,
                 scaleMultiplier: 0.7f,
@@ -110,7 +110,7 @@ public class TestCard2() : BasePlaceholder(CardType.Skill, CardRarity.Common) {
 
     static void AddFlyTween(Tween tween, Card3DEffectContext ctx, float distance, float zOffset, float duration) {
         Vector3 start = ctx.Pivot.Position;
-        tween.TweenProperty(ctx.Pivot, "position", new Vector3(start.X, start.Y + distance, start.Z + zOffset), duration)
+        tween.TweenProperty(ctx.Pivot, "position", new Vector3(start.X, start.Y, start.Z + zOffset), duration)
             .SetEase(Tween.EaseType.In)
             .SetTrans(Tween.TransitionType.Quad);
         tween.TweenProperty(ctx.DisplaySprite, "global_position:y", ctx.DisplaySprite.GlobalPosition.Y - distance, duration)

@@ -21,8 +21,9 @@ public sealed record Card3DEffectContext(
 );
 
 public static class Card3DEffectUtil {
-    private const float CapturePadding = 120f;
-    private const float RotationPaddingRatio = 1.5f;
+    private const float CapturePadding = 32f;
+    private const float FxHorizontalPadding = 96f;
+    private const float FxVerticalPadding = 190f;
     private const int ReadyWaitFrames = 5;
 
     private static readonly PackedScene _flipperScene = GD.Load<PackedScene>("res://VYgo/scenes/vfx/Card3DFlipper.tscn");
@@ -154,7 +155,10 @@ public static class Card3DEffectUtil {
         captureVp.RenderTargetUpdateMode = SubViewport.UpdateMode.Always;
         captureVp.TransparentBg = true;
 
-        fxVp.Size = RoundToSize(displaySize + Vector2.One * Mathf.Max(displaySize.X, displaySize.Y) * RotationPaddingRatio * 2f);
+        fxVp.Size = RoundToSize(new Vector2(
+            captureVp.Size.X + FxHorizontalPadding * 2f,
+            captureVp.Size.Y + FxVerticalPadding * 2f
+        ));
         fxVp.RenderTargetUpdateMode = SubViewport.UpdateMode.Always;
         fxVp.TransparentBg = true;
 
@@ -167,8 +171,12 @@ public static class Card3DEffectUtil {
         await WaitFrames(flipper, ReadyWaitFrames);
         clone.UpdateVisuals(PileType.Play, CardPreviewMode.Normal);
 
-        ShaderMaterial cardMaterial = SetupCardMesh(cardMesh, captureVp.GetTexture(), displaySize);
-        SetupCamera(camera, displaySize);
+        captureVp.RenderTargetUpdateMode = SubViewport.UpdateMode.Once;
+        await WaitFrames(flipper, 1);
+        captureVp.RenderTargetUpdateMode = SubViewport.UpdateMode.Disabled;
+
+        ShaderMaterial cardMaterial = SetupCardMesh(cardMesh, captureVp.GetTexture(), captureVp.Size);
+        SetupCamera(camera, fxVp.Size);
 
         await WaitFrames(flipper, 1);
 
@@ -215,7 +223,7 @@ public static class Card3DEffectUtil {
         return clone;
     }
 
-    static ShaderMaterial SetupCardMesh(MeshInstance3D cardMesh, ViewportTexture texture, Vector2 displaySize) {
+    static ShaderMaterial SetupCardMesh(MeshInstance3D cardMesh, ViewportTexture texture, Vector2 meshSize) {
         if (cardMesh.Mesh == null) {
             throw new InvalidOperationException("CardMesh.Mesh is null.");
         }
@@ -223,7 +231,7 @@ public static class Card3DEffectUtil {
             throw new InvalidOperationException("Failed to load card_3d_outline.gdshader.");
         }
 
-        ((QuadMesh)cardMesh.Mesh).Size = displaySize;
+        ((QuadMesh)cardMesh.Mesh).Size = meshSize;
         ShaderMaterial material = new() {
             Shader = _cardOutlineShader
         };
@@ -247,9 +255,10 @@ public static class Card3DEffectUtil {
         return material;
     }
 
-    static void SetupCamera(Camera3D camera, Vector2 displaySize) {
+    static void SetupCamera(Camera3D camera, Vector2I viewportSize) {
         camera.Projection = Camera3D.ProjectionType.Perspective;
         camera.Fov = 60f;
-        camera.Position = new Vector3(0f, 0f, displaySize.Y * 0.9f);
+        float distance = viewportSize.Y / (2f * Mathf.Tan(Mathf.DegToRad(camera.Fov * 0.5f)));
+        camera.Position = new Vector3(0f, 0f, distance);
     }
 }
