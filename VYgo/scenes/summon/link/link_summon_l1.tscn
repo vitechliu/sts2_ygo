@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://cg26wlfqlkhiv"]
+[gd_scene load_steps=14 format=3 uid="uid://cg26wlfqlkhiv"]
 
 [ext_resource type="PackedScene" uid="uid://tgrtpn7c8i2o" path="res://VYgo/scenes/summon/link/link_trail.tscn" id="1_3ox1e"]
 [ext_resource type="Script" uid="uid://cdyuiseaer84g" path="res://Core/Effects/NLinkSummonManager.cs" id="1_4kbqu"]
 [ext_resource type="Texture2D" uid="uid://8l3ph33wqnr3" path="res://VYgo/scenes/summon/link/assets/EtLinkGateSquare01.png" id="2_kie51"]
+[ext_resource type="AudioStream" uid="uid://dy6kn73qyng0v" path="res://VYgo/sounds/SE_SMN_LINK_01.ogg" id="2_n0ofk"]
 [ext_resource type="Texture2D" uid="uid://5bsvgc07do3o" path="res://VYgo/scenes/summon/link/assets/EtLinkGateShadow.png" id="3_lufxn"]
 [ext_resource type="Texture2D" uid="uid://dk6p08n2t8k1k" path="res://VYgo/scenes/summon/link/assets/EtLinkGateRound01_04.png" id="4_neu80"]
 [ext_resource type="Texture2D" uid="uid://2kka8367fxcu" path="res://VYgo/scenes/summon/link/assets/EtLinkGateRound01_03.png" id="5_atesk"]
@@ -112,6 +113,21 @@ tracks/7/keys = {
 "method": &"PlayLink"
 }]
 }
+tracks/8/type = "audio"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("L1Audio")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("2_n0ofk")
+}],
+"times": PackedFloat32Array(0.26666668)
+}
+tracks/8/use_blend = true
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kie51"]
 _data = {
@@ -145,16 +161,15 @@ metadata/_edit_lock_ = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.119953, 0)
 
 [node name="Group" type="Node3D" parent="Gate"]
-transform = Transform3D(0.99003375, -0.14083023, 0, 0.14083023, 0.99003375, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="Shadow" type="Sprite3D" parent="Gate/Group"]
 transform = Transform3D(50, 0, 0, 0, -2.1855694e-06, -50, 0, 50, -2.1855694e-06, 0, -29.8, 0)
-modulate = Color(1, 1, 1, 0.18970002)
+modulate = Color(1, 1, 1, 0.271)
 texture = ExtResource("3_lufxn")
 
 [node name="GateRound1" type="Sprite3D" parent="Gate/Group"]
 transform = Transform3D(16.667, 0, 0, 0, -7.285377e-07, -16.667, 0, 16.667, -7.285377e-07, 0, -9.612526, 0)
-modulate = Color(1, 1, 1, 0.7023412)
 texture = ExtResource("4_neu80")
 
 [node name="GateRoundLight" type="Sprite3D" parent="Gate/Group"]
@@ -163,7 +178,7 @@ modulate = Color(1, 1, 1, 0)
 texture = ExtResource("5_atesk")
 
 [node name="GateLines" type="Sprite3D" parent="Gate/Group"]
-transform = Transform3D(19.16, 0, 0, 0, -8.375102e-07, -19.16, 0, 19.16, -8.375102e-07, 0, 5.159055, 0)
+transform = Transform3D(19.16, 0, 0, 0, -8.375102e-07, -19.16, 0, 19.16, -8.375102e-07, 0, 6, 0)
 texture = ExtResource("6_qb0k6")
 
 [node name="GateRound3" type="Sprite3D" parent="Gate/Group"]
@@ -171,7 +186,7 @@ transform = Transform3D(20, 0, 0, 0, -8.742278e-07, -20, 0, 20, -8.742278e-07, 0
 texture = ExtResource("7_x6g16")
 
 [node name="GateSquare" type="Sprite3D" parent="Gate/Group"]
-transform = Transform3D(18.393787, 0, 0, 0, -8.04018e-07, -18.393787, 0, 18.393787, -8.04018e-07, 0, 8.471009, 0)
+transform = Transform3D(19.2, 0, 0, 0, -8.392587e-07, -19.2, 0, 19.2, -8.392587e-07, 0, 10, 0)
 texture = ExtResource("2_kie51")
 
 [node name="GateSquare2" type="Sprite3D" parent="Gate/Group"]
@@ -227,5 +242,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 55.81208, 0)
 
 [node name="LineEffect" parent="PostLinkFX" instance=ExtResource("10_lkyu7")]
 transform = Transform3D(0.42, 0, 0, 0, 0.42, 0, 0, 0, 0.42, 0, -100.21352, 0)
+
+[node name="L1Audio" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+bus = &"SFX"
 
 [editable path="PostLinkFX/LineEffect"]

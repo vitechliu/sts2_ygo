@@ -49,7 +49,7 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
         //怪兽死亡后，对应的怪兽卡置入弃牌堆
         if (!PileSent && creature == Creature) {
             Entry.Logger.Info("AfterDeath:" + GetType().Name);
-            var card = YgoModelDb.GetCard(CardId);
+            var card = this.YgoGetCard();
             if (card != null) {
                 var owner = creature.PetOwner;
                 if (owner != null) {

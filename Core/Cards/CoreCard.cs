@@ -1,5 +1,16 @@
 ﻿namespace VYgo.Core.Cards;
 
-public abstract record CoreCard() : IYgoId {
-    public abstract int CardId { get; }
-}
+public record CoreCard(
+    int Id,
+    int CardId,
+    string? Name,
+    string? CnName,
+    string? EnName,
+    string? Types,
+    string? Description,
+    int? Atk,
+    int? Def,
+    int? Level,
+    string? Attribute,
+    string? Race
+) : IYgoId;

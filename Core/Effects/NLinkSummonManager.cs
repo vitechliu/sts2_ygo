@@ -13,9 +13,15 @@ public partial class NLinkSummonManager: Node3D {
 	private Tween? _shineTween;
 
 	private AnimationPlayer _lineAnimationPlayer;
+	
+	private AudioStreamPlayer _audioStreamPlayer;
+
+	[Export] public AudioStreamOggVorbis _postSound1;
+	[Export] public AudioStreamOggVorbis _postSound2;
 
 	public override void _Ready() {
 		base._Ready();
+		_audioStreamPlayer = GetNode<AudioStreamPlayer>("%L1Audio");
 		_shineSquare = GetNode<Sprite3D>("%GateSquare2");
 		_lineAnimationPlayer = GetNode<AnimationPlayer>("PostLinkFX/LineEffect/LineEffectPlayer");
 		for (var i = 1; i <= 8; i++) {

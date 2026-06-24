@@ -1,9 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://tgrtpn7c8i2o"]
+[gd_scene load_steps=20 format=3 uid="uid://tgrtpn7c8i2o"]
 
 [ext_resource type="Shader" uid="uid://cefkj2kafhal7" path="res://VYgo/shaders/link_trail.gdshader" id="1_7jopo"]
 [ext_resource type="Script" uid="uid://ccc1s7f61txsu" path="res://Core/Effects/NLinkTrailManager.cs" id="1_oi7dd"]
 [ext_resource type="ArrayMesh" uid="uid://drfanwmu4iu18" path="res://VYgo/scenes/summon/link/assets/SummonLinkTrail02_converted.obj" id="1_ojwqh"]
+[ext_resource type="AudioStream" uid="uid://d2e8ew2acvol7" path="res://VYgo/sounds/SE_SMN_LINK_03_01.ogg" id="2_ceytb"]
 [ext_resource type="Texture2D" uid="uid://286bhsowx2k5" path="res://VYgo/scenes/summon/link/assets/CardTrail05.png" id="2_uvygu"]
+[ext_resource type="AudioStream" uid="uid://dmdqkhfnbf5bp" path="res://VYgo/sounds/SE_SMN_LINK_02.ogg" id="3_c6mfl"]
 [ext_resource type="Texture2D" uid="uid://bcfbbdn4dgbas" path="res://VYgo/scenes/summon/link/assets/flare007.png" id="3_flare"]
 [ext_resource type="Shader" uid="uid://bl6a8kwvcll51" path="res://VYgo/shaders/flare_particle.gdshader" id="4_flare_shader"]
 [ext_resource type="Shader" uid="uid://c0barkpxrc4rv" path="res://VYgo/scenes/summon/link/assets/link_trail_flare.gdshader" id="4_w537f"]
@@ -13,7 +15,7 @@
 
 [sub_resource type="Animation" id="Animation_uvygu"]
 resource_name = "new_animation"
-length = 1.33
+length = 2.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -100,6 +102,36 @@ tracks/6/keys = {
 "method": &"hit"
 }]
 }
+tracks/7/type = "audio"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../AudioStreamPlayer")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("2_ceytb")
+}],
+"times": PackedFloat32Array(0.6333333)
+}
+tracks/7/use_blend = true
+tracks/8/type = "audio"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("../AudioStreamPlayer")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_c6mfl")
+}],
+"times": PackedFloat32Array(0.06666667)
+}
+tracks/8/use_blend = true
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_30ube"]
 _data = {
@@ -111,7 +143,7 @@ render_priority = 0
 shader = ExtResource("1_7jopo")
 shader_parameter/albedo_tex = ExtResource("2_uvygu")
 shader_parameter/uv_tiling = Vector2(1.96, 1)
-shader_parameter/uv_offset = Vector2(-1.95, 0)
+shader_parameter/uv_offset = Vector2(1.09, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kr1w3"]
 shader = ExtResource("4_w537f")
@@ -298,6 +330,7 @@ libraries = {
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.03, 0, 0, 0, 0.03, 0, 0, 0, 0.03, -0.964, 0, 49.75049)
+visible = false
 sorting_offset = 1.0
 material_override = SubResource("ShaderMaterial_ojwqh")
 mesh = ExtResource("1_ojwqh")
@@ -333,12 +366,14 @@ size = Vector3(34.866333, 22.127075, 37.24414)
 
 [node name="Marker" type="Sprite3D" parent="."]
 transform = Transform3D(-20, -3.019916e-06, 1.3200472e-13, 0, -8.742278e-07, -20, 3.019916e-06, -20, 8.742278e-07, 0, 0, 0)
-visible = false
 sorting_offset = 25.0
 texture = ExtResource("10_8ipmt")
 
 [node name="MarkerAnim" type="Sprite3D" parent="."]
-transform = Transform3D(-22, -3.3219076e-06, 1.4520519e-13, 0, -9.616506e-07, -22, 3.3219076e-06, -22, 9.616506e-07, 0, 0, 0)
+transform = Transform3D(-36, -5.435849e-06, 2.376085e-13, 0, -1.57361e-06, -36, 5.435849e-06, -36, 1.57361e-06, 0, 0, 0)
 sorting_offset = 50.0
 modulate = Color(1, 1, 1, 0)
 texture = ExtResource("6_tws0t")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"

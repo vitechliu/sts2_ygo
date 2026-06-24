@@ -9,9 +9,12 @@ using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib;
 using STS2RitsuLib.CardPiles;
 using STS2RitsuLib.Interop;
+using System.Text.Json;
 using VYgo.Core;
+using VYgo.Core.Cards;
 using VYgo.Scripts.Cards;
 using VYgo.Scripts.Monsters;
+using FileAccess = Godot.FileAccess;
 using Logger = MegaCrit.Sts2.Core.Logging.Logger;
 
 namespace VYgo.Scripts;
@@ -27,6 +30,7 @@ public static class Entry {
 
     public static Dictionary<int, BaseVYgoCard> CardYgoIdCache { get; private set; } = new();
     public static Dictionary<int, BaseMonster> MonsterYgoIdCache { get; private set; } = new();
+    public static Dictionary<int, CoreCard> CoreCardCache { get; private set; } = new();
     
     public static readonly System.Collections.Concurrent.ConcurrentDictionary<string, PackedScene> ModSceneCache = new();
     
@@ -64,6 +68,35 @@ public static class Entry {
         return [];
     }
 
+    public static void LoadCoreCards() {
+        const string path = $"{ResPath}/db.json";
+        try {
+            var json = FileAccess.GetFileAsString(path);
+            if (string.IsNullOrWhiteSpace(json)) {
+                Logger.Warn($"Core card database is empty or missing: {path}");
+                return;
+            }
+
+            var cards = JsonSerializer.Deserialize<List<CoreCard>>(json, new JsonSerializerOptions {
+                PropertyNameCaseInsensitive = true
+            });
+
+            if (cards == null) {
+                Logger.Warn($"Failed to deserialize core card database: {path}");
+                return;
+            }
+
+            CoreCardCache = new Dictionary<int, CoreCard>();
+            foreach (var card in cards) {
+                CoreCardCache[card.CardId] = card;
+            }
+
+            Logger.Info($"Loaded {CoreCardCache.Count} core cards from {path}");
+        } catch (Exception ex) {
+            Logger.Warn($"Failed to load core card database from {path}: {ex.Message}");
+        }
+    }
+
     public static void Initialize() {
         var assembly = Assembly.GetExecutingAssembly();
         Logger = RitsuLibFramework.CreateLogger(ModId);
@@ -72,6 +105,7 @@ public static class Entry {
         
         RegisterCardPile();
         SubscribeEvents();
+        LoadCoreCards();
         
         
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
@@ -127,39 +161,26 @@ public static class Entry {
             }
         });
 
-        MonsterYgoIdCache = BuildYgoIdCache<BaseMonster>();
+        MonsterYgoIdCache = BuildYgoIdCache<BaseMonster>(static () => {
+            try {
+                return ModelDb.Monsters.OfType<BaseMonster>();
+            } catch {
+                return Enumerable.Empty<BaseMonster>();
+            }
+        });
 
         Logger.Info($"Built YGO ID caches: {CardYgoIdCache.Count} cards, {MonsterYgoIdCache.Count} monsters.");
     }
 
-    static Dictionary<int, T> BuildYgoIdCache<T>(Func<IEnumerable<T>>? tryGetFromModelDb = null) where T : class, IYgoId {
+    static Dictionary<int, T> BuildYgoIdCache<T>(Func<IEnumerable<T>> tryGetFromModelDb = null) where T : class, IYgoId {
         var cache = new Dictionary<int, T>();
-        var assembly = Assembly.GetExecutingAssembly();
-
-        if (tryGetFromModelDb != null) {
-            try {
-                foreach (var item in tryGetFromModelDb()) {
-                    cache[item.CardId] = item;
-                }
-            } catch (Exception ex) {
-                Logger.Warn($"Failed to build {typeof(T).Name} cache from ModelDb: {ex.Message}");
+        try {
+            foreach (var item in tryGetFromModelDb()) {
+                cache[item.CardId] = item;
             }
+        } catch (Exception ex) {
+            Logger.Warn($"Failed to build {typeof(T).Name} cache from ModelDb: {ex.Message}");
         }
-
-        foreach (var type in assembly.GetTypes()) {
-            if (type.IsAbstract || !typeof(T).IsAssignableFrom(type) || !typeof(IYgoId).IsAssignableFrom(type))
-                continue;
-
-            try {
-                var instance = (T?)Activator.CreateInstance(type);
-                if (instance != null) {
-                    cache[instance.CardId] = instance;
-                }
-            } catch (Exception ex) {
-                Logger.Warn($"Failed to instantiate {type.Name} for YGO ID cache: {ex.Message}");
-            }
-        }
-
         return cache;
     }
 }
