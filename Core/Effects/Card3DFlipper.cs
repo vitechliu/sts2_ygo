@@ -12,6 +12,7 @@ public partial class Card3DFlipper : Node2D {
     public Node3D Pivot = null!;
     public Camera3D Camera = null!;
     public Sprite2D DisplaySprite = null!;
+    public Sprite2D GlowSprite = null!;
 
     public override void _Ready() {
         base._Ready();
@@ -21,5 +22,6 @@ public partial class Card3DFlipper : Node2D {
         Pivot = GetNode<Node3D>("FxViewport/Pivot");
         Camera = GetNode<Camera3D>("FxViewport/Camera3D");
         DisplaySprite = GetNode<Sprite2D>("DisplaySprite");
+        GlowSprite = GetNode<Sprite2D>("DisplaySprite/GlowSprite");
     }
 }

@@ -60,6 +60,9 @@ public class TestCard2() : BasePlaceholder(CardType.Skill, CardRarity.Common) {
 
         Card3DEffectContext left = ctxs[0];
         Card3DEffectContext right = ctxs[1];
+        Color magenta = new("ff00ff");
+        ConfigureCardEffect(left, magenta);
+        ConfigureCardEffect(right, magenta);
 
         const float HoverDuration = 2.0f;
         const float FlyDuration = 0.7f;
@@ -76,6 +79,18 @@ public class TestCard2() : BasePlaceholder(CardType.Skill, CardRarity.Common) {
         await fly.AwaitFinished(left.Pivot);
     }
 
+    static void ConfigureCardEffect(Card3DEffectContext ctx, Color glowColor) {
+        ctx.CardMaterial.SetShaderParameter("glow_color", glowColor);
+        ctx.CardMaterial.SetShaderParameter("outline_strength", 0f);
+        ctx.CardMaterial.SetShaderParameter("pulse_amount", 0f);
+
+        ctx.GlowMaterial.SetShaderParameter("glow_color", glowColor);
+        ctx.GlowMaterial.SetShaderParameter("glow_intensity", 1.2f);
+        ctx.GlowMaterial.SetShaderParameter("glow_opacity", 0f);
+        ctx.GlowMaterial.SetShaderParameter("pulse_amount", 0f);
+        ctx.GlowMaterial.SetShaderParameter("vertical_blur", 0f);
+    }
+
     static Tween CreateHoverTween(Card3DEffectContext ctx, float yawDeg, float pitchDeg, float duration) {
         Tween tween = ctx.Pivot.CreateTween().SetParallel();
         tween.TweenProperty(ctx.Pivot, "rotation:y", Mathf.DegToRad(yawDeg), duration)
@@ -84,6 +99,12 @@ public class TestCard2() : BasePlaceholder(CardType.Skill, CardRarity.Common) {
         tween.TweenProperty(ctx.Pivot, "rotation:x", Mathf.DegToRad(pitchDeg), duration * 0.7f)
             .SetEase(Tween.EaseType.InOut)
             .SetTrans(Tween.TransitionType.Sine);
+        TweenShaderFloat(tween, ctx.CardMaterial, "outline_strength", 0f, 1.8f, 0.35f)
+            .SetEase(Tween.EaseType.Out)
+            .SetTrans(Tween.TransitionType.Quad);
+        TweenShaderFloat(tween, ctx.GlowMaterial, "glow_opacity", 0f, 0.72f, 0.45f)
+            .SetEase(Tween.EaseType.Out)
+            .SetTrans(Tween.TransitionType.Quad);
         return tween;
     }
 
@@ -98,6 +119,41 @@ public class TestCard2() : BasePlaceholder(CardType.Skill, CardRarity.Common) {
         tween.TweenProperty(ctx.Pivot, "rotation:x", Mathf.DegToRad(-35f), duration)
             .SetEase(Tween.EaseType.In)
             .SetTrans(Tween.TransitionType.Quad);
+        TweenShaderFloat(tween, ctx.CardMaterial, "outline_strength", 1.8f, 3.4f, duration * 0.35f)
+            .SetEase(Tween.EaseType.Out)
+            .SetTrans(Tween.TransitionType.Quad);
+        TweenShaderFloat(tween, ctx.GlowMaterial, "glow_intensity", 1.2f, 2.6f, duration * 0.35f)
+            .SetEase(Tween.EaseType.Out)
+            .SetTrans(Tween.TransitionType.Quad);
+        TweenShaderFloat(tween, ctx.GlowMaterial, "glow_radius", 14f, 22f, duration)
+            .SetEase(Tween.EaseType.In)
+            .SetTrans(Tween.TransitionType.Quad);
+        TweenShaderFloat(tween, ctx.GlowMaterial, "vertical_blur", 0f, 1f, duration * 0.25f)
+            .SetEase(Tween.EaseType.Out)
+            .SetTrans(Tween.TransitionType.Quad);
+        TweenShaderFloat(tween, ctx.GlowMaterial, "vertical_blur_length", 90f, 150f, duration)
+            .SetEase(Tween.EaseType.In)
+            .SetTrans(Tween.TransitionType.Quad);
+        TweenShaderFloat(tween, ctx.GlowMaterial, "glow_opacity", 0.72f, 0f, duration * 0.5f)
+            .SetDelay(duration * 0.5f)
+            .SetEase(Tween.EaseType.In)
+            .SetTrans(Tween.TransitionType.Quad);
+    }
+
+    static MethodTweener TweenShaderFloat(
+        Tween tween,
+        ShaderMaterial material,
+        StringName parameter,
+        float from,
+        float to,
+        double duration
+    ) {
+        return tween.TweenMethod(
+            Callable.From<float>(value => material.SetShaderParameter(parameter, value)),
+            from,
+            to,
+            duration
+        );
     }
 
     static async Task AddSpawnedCardsToDiscardPile(Player owner, ICombatState combatState) {

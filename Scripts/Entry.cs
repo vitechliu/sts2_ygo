@@ -1,9 +1,9 @@
 using System.Reflection;
+using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib;
@@ -12,6 +12,7 @@ using STS2RitsuLib.Interop;
 using VYgo.Core;
 using VYgo.Scripts.Cards;
 using VYgo.Scripts.Monsters;
+using Logger = MegaCrit.Sts2.Core.Logging.Logger;
 
 namespace VYgo.Scripts;
 
@@ -27,6 +28,42 @@ public static class Entry {
     public static Dictionary<int, BaseVYgoCard> CardYgoIdCache { get; private set; } = new();
     public static Dictionary<int, BaseMonster> MonsterYgoIdCache { get; private set; } = new();
     
+    public static readonly System.Collections.Concurrent.ConcurrentDictionary<string, PackedScene> ModSceneCache = new();
+    
+    static void LoadScenes() {
+        try {
+            var paths = CollectAssetPathsSafely();
+            if (paths.Count > 0) {
+                Logger.Info($"Preloading {paths.Count} RegentFX assets synchronously");
+                int success = 0, fail = 0;
+                foreach (var path in paths) {
+                    try {
+                        if (ModSceneCache.ContainsKey(path)) continue;
+                        var scene = ResourceLoader.Load<PackedScene>(path, null, ResourceLoader.CacheMode.Reuse);
+                        if (scene != null) {
+                            ModSceneCache[path] = scene;
+                            success++;
+                        } else {
+                            fail++;
+                            Logger.Warn($"Failed to preload: {path}");
+                        }
+                    } catch (Exception ex) {
+                        fail++;
+                        Logger.Warn($"Error preloading {path}: {ex.Message}");
+                    }
+                }
+                Logger.Info($"Preloading complete: {success} succeeded, {fail} failed");
+            }
+        }
+        catch (Exception ex) {
+            Logger.Warn($"Failed to preload RegentFX assets: {ex.Message}");
+        }
+    }
+
+    private static List<string> CollectAssetPathsSafely() {
+        return [];
+    }
+
     public static void Initialize() {
         var assembly = Assembly.GetExecutingAssembly();
         Logger = RitsuLibFramework.CreateLogger(ModId);

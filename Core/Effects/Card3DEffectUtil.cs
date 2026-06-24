@@ -13,6 +13,9 @@ public sealed record Card3DEffectContext(
     Node3D Pivot,
     Camera3D Camera,
     Sprite2D DisplaySprite,
+    Sprite2D GlowSprite,
+    ShaderMaterial CardMaterial,
+    ShaderMaterial GlowMaterial,
     NCard Source,
     Vector2 DisplaySize
 );
@@ -23,6 +26,8 @@ public static class Card3DEffectUtil {
     private const int ReadyWaitFrames = 5;
 
     private static readonly PackedScene _flipperScene = GD.Load<PackedScene>("res://VYgo/scenes/vfx/Card3DFlipper.tscn");
+    private static readonly Shader _cardOutlineShader = GD.Load<Shader>("res://VYgo/shaders/card_3d_outline.gdshader");
+    private static readonly Shader _cardOuterGlowShader = GD.Load<Shader>("res://VYgo/shaders/card_outer_glow.gdshader");
 
     public static async Task RunCard3DEffect(
         NCard source,
@@ -141,6 +146,7 @@ public static class Card3DEffectUtil {
         Node3D pivot = flipper.Pivot;
         Camera3D camera = flipper.Camera;
         Sprite2D displaySprite = flipper.DisplaySprite;
+        Sprite2D glowSprite = flipper.GlowSprite;
 
         Vector2 displaySize = NCard.defaultSize * scaleMultiplier;
 
@@ -161,7 +167,7 @@ public static class Card3DEffectUtil {
         await WaitFrames(flipper, ReadyWaitFrames);
         clone.UpdateVisuals(PileType.Play, CardPreviewMode.Normal);
 
-        SetupCardMesh(cardMesh, captureVp.GetTexture(), displaySize);
+        ShaderMaterial cardMaterial = SetupCardMesh(cardMesh, captureVp.GetTexture(), displaySize);
         SetupCamera(camera, displaySize);
 
         await WaitFrames(flipper, 1);
@@ -173,6 +179,8 @@ public static class Card3DEffectUtil {
         displaySprite.ZIndex = 1000;
         displaySprite.ZAsRelative = false;
 
+        ShaderMaterial glowMaterial = SetupGlowSprite(glowSprite, fxVp.GetTexture());
+
         await WaitFrames(flipper, 1);
 
         pivot.Rotation = Vector3.Zero;
@@ -181,6 +189,9 @@ public static class Card3DEffectUtil {
             Pivot: pivot,
             Camera: camera,
             DisplaySprite: displaySprite,
+            GlowSprite: glowSprite,
+            CardMaterial: cardMaterial,
+            GlowMaterial: glowMaterial,
             Source: clone,
             DisplaySize: displaySize
         );
@@ -204,19 +215,36 @@ public static class Card3DEffectUtil {
         return clone;
     }
 
-    static void SetupCardMesh(MeshInstance3D cardMesh, ViewportTexture texture, Vector2 displaySize) {
+    static ShaderMaterial SetupCardMesh(MeshInstance3D cardMesh, ViewportTexture texture, Vector2 displaySize) {
         if (cardMesh.Mesh == null) {
             throw new InvalidOperationException("CardMesh.Mesh is null.");
         }
+        if (_cardOutlineShader == null) {
+            throw new InvalidOperationException("Failed to load card_3d_outline.gdshader.");
+        }
 
         ((QuadMesh)cardMesh.Mesh).Size = displaySize;
-        cardMesh.MaterialOverride = new StandardMaterial3D {
-            AlbedoTexture = texture,
-            CullMode = BaseMaterial3D.CullModeEnum.Disabled,
-            ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded,
-            Transparency = BaseMaterial3D.TransparencyEnum.Alpha,
-            TextureFilter = BaseMaterial3D.TextureFilterEnum.Linear
+        ShaderMaterial material = new() {
+            Shader = _cardOutlineShader
         };
+        material.SetShaderParameter("card_texture", texture);
+        cardMesh.MaterialOverride = material;
+        return material;
+    }
+
+    static ShaderMaterial SetupGlowSprite(Sprite2D glowSprite, ViewportTexture texture) {
+        if (_cardOuterGlowShader == null) {
+            throw new InvalidOperationException("Failed to load card_outer_glow.gdshader.");
+        }
+
+        ShaderMaterial material = new() {
+            Shader = _cardOuterGlowShader
+        };
+        glowSprite.Texture = texture;
+        glowSprite.FlipH = true;
+        glowSprite.FlipV = false;
+        glowSprite.Material = material;
+        return material;
     }
 
     static void SetupCamera(Camera3D camera, Vector2 displaySize) {
