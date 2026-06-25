@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="EventFolder" id="{ad697dbd-6232-40bc-94d6-9ac00b263b27}">
+		<property name="name">
+			<value>vygo</value>
+		</property>
+		<relationship name="folder">
+			<destination>{ebaa1a27-a00c-40d8-a27e-9a7d085900af}</destination>
+		</relationship>
+	</object>
+</objects>
