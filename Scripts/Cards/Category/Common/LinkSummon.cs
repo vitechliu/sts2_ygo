@@ -15,9 +15,7 @@ using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.TestSupport;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
-using VYgo.Core.Cards;
 using VYgo.Core.Effects;
-using VYgo.Scripts.Cards.Category.CyberDragon;
 using VYgo.Scripts.Monsters;
 using VYgo.Scripts.Pools;
 using VYgo.Utils;
@@ -173,27 +171,40 @@ public class LinkSummon() : BaseSummonCard(0, CardType.Skill, CardRarity.Basic, 
     }
 
     static async Task AnimateSummonPreview(IReadOnlyList<Card3DEffectContext> ctxs, Vector2 centerPos) {
-        if (ctxs.Count < 2) return;
+        if (ctxs.Count < 1) return;
 
-        Card3DEffectContext left = ctxs[0];
-        Card3DEffectContext right = ctxs[1];
         Color magenta = new("ff00ff");
-        ConfigureCardEffect(left, magenta);
-        ConfigureCardEffect(right, magenta);
+        foreach (var ctx in ctxs) {
+            ConfigureCardEffect(ctx, magenta);
+        }
 
         const float HoverDuration = 1f;
         const float FlyDuration = 0.15f;
         const float FlyDistance = 1600f;
         const float FlyZ = -1200f;
 
-        Tween leftHover = CreateHoverTween(left, 15f, -8f, HoverDuration);
-        Tween rightHover = CreateHoverTween(right, -15f, -8f, HoverDuration);
-        await leftHover.AwaitFinished(left.Pivot);
+        float[] yaws = DistributeYaws(ctxs.Count);
+        List<Tween> hoverTweens = new(ctxs.Count);
+        for (int i = 0; i < ctxs.Count; i++) {
+            hoverTweens.Add(CreateHoverTween(ctxs[i], yaws[i], -8f, HoverDuration));
+        }
+        await Task.WhenAll(Enumerable.Range(0, ctxs.Count).Select(i => hoverTweens[i].AwaitFinished(ctxs[i].Pivot)));
 
-        Tween fly = left.Pivot.CreateTween().SetParallel();
-        AddFlyTween(fly, left, FlyDistance, FlyZ, FlyDuration);
-        AddFlyTween(fly, right, FlyDistance, FlyZ, FlyDuration);
-        await fly.AwaitFinished(left.Pivot);
+        Tween fly = ctxs[0].Pivot.CreateTween().SetParallel();
+        foreach (var ctx in ctxs) {
+            AddFlyTween(fly, ctx, FlyDistance, FlyZ, FlyDuration);
+        }
+        await fly.AwaitFinished(ctxs[0].Pivot);
+    }
+
+    static float[] DistributeYaws(int count) {
+        if (count == 1) return new[] { 0f };
+        float[] yaws = new float[count];
+        for (int i = 0; i < count; i++) {
+            float t = (float)i / (count - 1);
+            yaws[i] = Mathf.Lerp(15f, -15f, t);
+        }
+        return yaws;
     }
 
     static void ConfigureCardEffect(Card3DEffectContext ctx, Color glowColor) {

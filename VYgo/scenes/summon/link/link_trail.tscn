@@ -114,7 +114,7 @@ render_priority = 0
 shader = ExtResource("1_7jopo")
 shader_parameter/albedo_tex = ExtResource("2_uvygu")
 shader_parameter/uv_tiling = Vector2(1.96, 1)
-shader_parameter/uv_offset = Vector2(-1.95, 0)
+shader_parameter/uv_offset = Vector2(1.09, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kr1w3"]
 shader = ExtResource("4_w537f")
@@ -298,9 +298,11 @@ root_node = NodePath("../MeshInstance3D")
 libraries = {
 &"": SubResource("AnimationLibrary_30ube")
 }
+speed_scale = 1.241
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.03, 0, 0, 0, 0.03, 0, 0, 0, 0.03, -0.964, 0, 49.75049)
+visible = false
 sorting_offset = 1.0
 material_override = SubResource("ShaderMaterial_ojwqh")
 mesh = ExtResource("1_ojwqh")
@@ -336,12 +338,11 @@ size = Vector3(34.866333, 22.127075, 37.24414)
 
 [node name="Marker" type="Sprite3D" parent="."]
 transform = Transform3D(-20, -3.019916e-06, 1.3200472e-13, 0, -8.742278e-07, -20, 3.019916e-06, -20, 8.742278e-07, 0, 0, 0)
-visible = false
 sorting_offset = 25.0
 texture = ExtResource("10_8ipmt")
 
 [node name="MarkerAnim" type="Sprite3D" parent="."]
-transform = Transform3D(-22, -3.3219076e-06, 1.4520519e-13, 0, -9.616506e-07, -22, 3.3219076e-06, -22, 9.616506e-07, 0, 0, 0)
+transform = Transform3D(-36, -5.435849e-06, 2.376085e-13, 0, -1.57361e-06, -36, 5.435849e-06, -36, 1.57361e-06, 0, 0, 0)
 sorting_offset = 50.0
 modulate = Color(1, 1, 1, 0)
 texture = ExtResource("6_tws0t")

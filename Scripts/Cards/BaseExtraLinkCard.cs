@@ -1,6 +1,5 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
 using VYgo.Core;
-using VYgo.Utils;
 
 namespace VYgo.Scripts.Cards;
 

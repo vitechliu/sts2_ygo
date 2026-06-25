@@ -1,5 +1,4 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Models.CardPools;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Scripts.Pools;
 
