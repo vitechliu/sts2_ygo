@@ -1,9 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://cg26wlfqlkhiv"]
+[gd_scene load_steps=13 format=3 uid="uid://cg26wlfqlkhiv"]
 
 [ext_resource type="PackedScene" uid="uid://tgrtpn7c8i2o" path="res://VYgo/scenes/summon/link/link_trail.tscn" id="1_3ox1e"]
 [ext_resource type="Script" uid="uid://cdyuiseaer84g" path="res://Core/Effects/NLinkSummonManager.cs" id="1_4kbqu"]
 [ext_resource type="Texture2D" uid="uid://8l3ph33wqnr3" path="res://VYgo/scenes/summon/link/assets/EtLinkGateSquare01.png" id="2_kie51"]
-[ext_resource type="AudioStream" uid="uid://dy6kn73qyng0v" path="res://VYgo/sounds/SE_SMN_LINK_01.ogg" id="2_n0ofk"]
 [ext_resource type="Texture2D" uid="uid://5bsvgc07do3o" path="res://VYgo/scenes/summon/link/assets/EtLinkGateShadow.png" id="3_lufxn"]
 [ext_resource type="Texture2D" uid="uid://dk6p08n2t8k1k" path="res://VYgo/scenes/summon/link/assets/EtLinkGateRound01_04.png" id="4_neu80"]
 [ext_resource type="Texture2D" uid="uid://2kka8367fxcu" path="res://VYgo/scenes/summon/link/assets/EtLinkGateRound01_03.png" id="5_atesk"]
@@ -106,28 +105,13 @@ tracks/7/path = NodePath(".")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0.999),
+"times": PackedFloat32Array(0.8666667),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": [],
-"method": &"PlayLink"
+"args": ["event:/vygo/sfx/link_summon_01"],
+"method": &"PlaySfx"
 }]
 }
-tracks/8/type = "audio"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("L1Audio")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"clips": [{
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("2_n0ofk")
-}],
-"times": PackedFloat32Array(0.26666668)
-}
-tracks/8/use_blend = true
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kie51"]
 _data = {
@@ -140,14 +124,14 @@ script = ExtResource("1_4kbqu")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 153.9021, 0)
 current = true
-fov = 47.4
+fov = 59.9
 near = 0.001
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="MainAnim" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
 libraries = {
 &"": SubResource("AnimationLibrary_kie51")
 }
-autoplay = "main"
 speed_scale = 2.0
 
 [node name="GatePre" type="Sprite3D" parent="."]
@@ -242,9 +226,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 55.81208, 0)
 
 [node name="LineEffect" parent="PostLinkFX" instance=ExtResource("10_lkyu7")]
 transform = Transform3D(0.42, 0, 0, 0, 0.42, 0, 0, 0, 0.42, 0, -100.21352, 0)
-
-[node name="L1Audio" type="AudioStreamPlayer" parent="."]
-unique_name_in_owner = true
-bus = &"SFX"
 
 [editable path="PostLinkFX/LineEffect"]
