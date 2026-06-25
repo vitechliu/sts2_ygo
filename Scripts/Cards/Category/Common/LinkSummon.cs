@@ -96,7 +96,7 @@ public class LinkSummon() : BaseSummonCard(0, CardType.Skill, CardRarity.Basic, 
             foreach (var material in materials) {
                 anim.Add(TaskHelper.RunSafely(MaterialSacrifice(material)));
             }
-            SFXUtil.PlayLoopIn("event:/vygo/sfx/material_01", 1.2f);
+            SFXUtil.Play("event:/vygo/sfx/material_shine");
             SFXUtil.PlayAfter("event:/vygo/sfx/material_01", 1.2f);
             await Task.WhenAll(anim);
 
