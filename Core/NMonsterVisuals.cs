@@ -7,7 +7,7 @@ namespace VYgo.Core;
 [ScriptPath("res://Core/NMonsterVisuals.cs")]
 public partial class NMonsterVisuals: NCreatureVisuals {
 	private const float MaterialVfxDuration = 1.3f;
-	private const float MaterialVfxCleanupDelay = 0.8f;
+	private const float MaterialVfxCleanupDelay = 3f;
 	private const float MaterialCompressDuration = 0.15f;
 	private const float MaterialFlyDuration = 0.20f;
 
@@ -34,14 +34,15 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 	public const string MATERIAL_VFX_PATH = "res://VYgo/scenes/vfx/summon/vfx_link_summon_material.tscn";
 
 	public async Task PlayMaterialVfx() {
+		float totalLifeTime = MaterialVfxDuration + (float)GD.RandRange(0.1f, 1f);
 		var node = VFXUtil.PlaySimple(
 			MATERIAL_VFX_PATH,
 			VfxSpawnPosition.GlobalPosition,
-			MaterialVfxDuration + MaterialVfxCleanupDelay
+			totalLifeTime + MaterialVfxCleanupDelay
 		);
 		if (node is null) return;
 
-		await VFXUtil.Wait(MaterialVfxDuration, ignoreCombatEnd: true);
+		await VFXUtil.Wait(totalLifeTime, ignoreCombatEnd: true);
 		if (!GodotObject.IsInstanceValid(node)) return;
 
 		foreach (var child in node.GetChildren()) {
@@ -81,6 +82,8 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 
 		if (!GodotObject.IsInstanceValid(mainSprite)) return;
 
+		SFXUtil.Play("event:/vygo/sfx/material_01");
+		CustomOriginalVFX.PlayLinkSummon(VfxSpawnPosition.GlobalPosition);
 		var viewportHeight = mainSprite.GetViewportRect().Size.Y;
 		var targetPosition = new Vector2(
 			mainSprite.GlobalPosition.X,

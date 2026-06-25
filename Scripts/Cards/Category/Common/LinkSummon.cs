@@ -95,7 +95,6 @@ public class LinkSummon() : BaseSummonCard(0, CardType.Skill, CardRarity.Basic, 
                 anim.Add(TaskHelper.RunSafely(MaterialSacrifice(material)));
             }
             SFXUtil.Play("event:/vygo/sfx/material_shine");
-            SFXUtil.PlayAfter("event:/vygo/sfx/material_01", 1.2f);
             await Task.WhenAll(anim);
 
             //第二步，播放卡片动画，并素材进入墓地
@@ -131,18 +130,37 @@ public class LinkSummon() : BaseSummonCard(0, CardType.Skill, CardRarity.Basic, 
                 var (trailAnim3, _) = resolveLink(linkMarkers, linkCount > 3 ? 2 : 1);
                 await mainAnim2D.manager.PlayLinks(trailAnim3);
             }
+
+            await VFXUtil.Wait(1f);
+            
+            
+            
             
             //第五步，弹出链接目标并播放粒子
+            SFXUtil.Play("event:/vygo/sfx/link_summon_04");
+            await VFXUtil.Wait(.5f);
+            var finalCard = cardModel.CreateClone();
+            await CardPileCmd.Add(finalCard, PileType.Play);
+            mainAnim2D.manager.PlayPostEffect();
+            if (!finalCard.Owner.Creature.IsDead)
+            {
+                await CardCmd.AutoPlay(choiceContext, finalCard, (Creature) null);
+            }
+            SFXUtil.Play("event:/vygo/sfx/link_summon_05");
             
             
             //第六步，生成
+            
+            await VFXUtil.Wait(.5f);
+            mainAnim2D.QueueFreeSafely();
+
+            await VFXUtil.Wait(1f);
 
             if (_node != null) {
                 _node.Visible = true;
                 _node = null;
             }
-            await VFXUtil.Wait(2f);
-            mainAnim2D.QueueFreeSafely();
+            
         }
         
     }

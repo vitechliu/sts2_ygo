@@ -70,6 +70,7 @@ public partial class NLinkSummonManager: Node3D {
 	
 	
 	public void PlayPostEffect() {
+		_shineSquare.Modulate = _shineSquare.Modulate with { A = 1f };
 		_lineAnimationPlayer.Play("line");
 	}
 }

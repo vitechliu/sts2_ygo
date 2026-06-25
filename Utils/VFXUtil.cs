@@ -181,6 +181,18 @@ public static class VFXUtil {
         }
         return null;
     }
+    
+    public static Node2D? PlayOriginalVfx(Vector2 position, string path)
+    {
+        if (!TestMode.IsOn && NCombatRoom.Instance != null) {
+            string scenePath = SceneHelper.GetScenePath(path);
+            Node2D node2D = PreloadManager.Cache.GetScene(scenePath).Instantiate<Node2D>(PackedScene.GenEditState.Disabled);
+            NCombatRoom.Instance.CombatVfxContainer.AddChildSafely(node2D);
+            node2D.GlobalPosition = position;
+            return node2D;
+        }
+        return null;
+    }
 
 
     public static bool IsCharacterFacingRight(Creature creature) {
