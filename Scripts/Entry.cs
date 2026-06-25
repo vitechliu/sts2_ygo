@@ -77,9 +77,7 @@ public static class Entry {
                 return;
             }
 
-            var cards = JsonSerializer.Deserialize<List<CoreCard>>(json, new JsonSerializerOptions {
-                PropertyNameCaseInsensitive = true
-            });
+            var cards = JsonSerializer.Deserialize<List<CoreCard>>(json);
 
             if (cards == null) {
                 Logger.Warn($"Failed to deserialize core card database: {path}");
