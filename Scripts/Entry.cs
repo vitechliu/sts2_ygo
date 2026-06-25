@@ -166,6 +166,7 @@ public static class Entry {
             ModelDb.Get<ProtoCyberDragonMinion>(),
             ModelDb.Get<CyberDragonCoreMinion>(),
             ModelDb.Get<CyberDragonSiegerMinion>(),
+            ModelDb.Get<SPLittleKnightMinion>(),
         ]);
 
         Logger.Info($"Built YGO ID caches: {CardYgoIdCache.Count} cards, {MonsterYgoIdCache.Count} monsters.");

@@ -66,7 +66,7 @@ public class LinkSummon() : BaseSummonCard(0, CardType.Skill, CardRarity.Basic, 
         if ((await CardSelectCmd.FromCombatPile(
                 prefs: new CardSelectorPrefs(base.SelectionScreenPrompt, 1),
                 context: choiceContext,
-                pile: pile, player: Owner))
+                pile: pile, player: Owner, filter: cm => cm is BaseExtraLinkCard))
             .FirstOrDefault() is not BaseExtraLinkCard cardModel) return;
         var coreCard = cardModel.YgoGetCore();
         if (coreCard is null) {
@@ -131,31 +131,24 @@ public class LinkSummon() : BaseSummonCard(0, CardType.Skill, CardRarity.Basic, 
                 await mainAnim2D.manager.PlayLinks(trailAnim3);
             }
 
-            await VFXUtil.Wait(1f);
-            
-            
+            await VFXUtil.Wait(.5f);
             
             
             //第五步，弹出链接目标并播放粒子
             SFXUtil.Play("event:/vygo/sfx/link_summon_04");
-            await VFXUtil.Wait(.5f);
+            await VFXUtil.Wait(.1f);
             var finalCard = cardModel.CreateClone();
             await CardPileCmd.Add(finalCard, PileType.Play);
+            SFXUtil.Play("event:/vygo/sfx/link_summon_05");
             mainAnim2D.manager.PlayPostEffect();
             if (!finalCard.Owner.Creature.IsDead)
             {
                 await CardCmd.AutoPlay(choiceContext, finalCard, (Creature) null);
             }
-            SFXUtil.Play("event:/vygo/sfx/link_summon_05");
-            
             
             //第六步，生成
-            
-            await VFXUtil.Wait(.5f);
+            await VFXUtil.Wait(.8f);
             mainAnim2D.QueueFreeSafely();
-
-            await VFXUtil.Wait(1f);
-
             if (_node != null) {
                 _node.Visible = true;
                 _node = null;
@@ -178,13 +171,13 @@ public class LinkSummon() : BaseSummonCard(0, CardType.Skill, CardRarity.Basic, 
                 cardModels,
                 AnimateSummonPreview,
                 NGame.Instance.GetViewportRect().Size * 0.5f,
-                scaleMultiplier: 0.8f,
+                scaleMultiplier: 1.1f,
                 horizontalSpacing: 380f,
                 initialOpacity: 0f
             );
         }
-        finally {
-  
+        catch(Exception ex) {
+            Entry.Logger.Warn("PlaySummonPreviewAnimation exception: " + ex);
         }
     }
 
