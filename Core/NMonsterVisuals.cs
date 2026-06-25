@@ -6,10 +6,10 @@ namespace VYgo.Core;
 
 [ScriptPath("res://Core/NMonsterVisuals.cs")]
 public partial class NMonsterVisuals: NCreatureVisuals {
-	private const float MaterialVfxDuration = 2f;
-	private const float MaterialVfxCleanupDelay = 1.1f;
+	private const float MaterialVfxDuration = 1.4f;
+	private const float MaterialVfxCleanupDelay = 0.7f;
 	private const float MaterialCompressDuration = 0.24f;
-	private const float MaterialFlyDuration = 0.36f;
+	private const float MaterialFlyDuration = 0.26f;
 
 	private const string MaterialShaderCode = """
 		shader_type canvas_item;

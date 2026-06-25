@@ -2,27 +2,29 @@ using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Helpers;
 using VYgo.Scripts;
+using VYgo.Utils;
 
 namespace VYgo.Core.Effects;
 
 public partial class NLinkSummonManager: Node3D {
-	private List<NLinkTrailManager> linkTrails = new();
+	private Dictionary<int, NLinkTrailManager> LinkTrails = new();
 
 	private Sprite3D _shineSquare;
 
 	private Tween? _shineTween;
 
+	private AnimationPlayer _mainAnimationPlayer;
+
 	private AnimationPlayer _lineAnimationPlayer;
 	
-	private AudioStreamPlayer _audioStreamPlayer;
 
 	[Export] public AudioStreamOggVorbis _postSound1;
 	[Export] public AudioStreamOggVorbis _postSound2;
 
 	public override void _Ready() {
 		base._Ready();
-		_audioStreamPlayer = GetNode<AudioStreamPlayer>("%L1Audio");
 		_shineSquare = GetNode<Sprite3D>("%GateSquare2");
+		_mainAnimationPlayer = GetNode<AnimationPlayer>("%MainAnim");
 		_lineAnimationPlayer = GetNode<AnimationPlayer>("PostLinkFX/LineEffect/LineEffectPlayer");
 		for (var i = 1; i <= 8; i++) {
 			var node = GetNode<NLinkTrailManager>((NodePath) "%LinkTrail" + i);
@@ -31,7 +33,7 @@ public partial class NLinkSummonManager: Node3D {
 				return;
 			}
 			node._parent = this;
-			linkTrails.Add(node);
+			LinkTrails.Add(i, node);
 		}
 	}
 
@@ -43,24 +45,32 @@ public partial class NLinkSummonManager: Node3D {
 			.SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Cubic);
 		// GD.Print("ShineSquare");
 	}
-	public void PlayLink() {
-		TaskHelper.RunSafely(play());
-	}
+	
 	public void onHit() {
 		ShineSquare(1f);
 	}
-	async Task play() {
-		foreach (var trails in linkTrails) {
-			trails.SetVisible(true);
-			trails.play();
-			await Cmd.Wait(.3f);
-			// trails.SetVisible(false);
-			// trails.QueueFreeSafely();
-		}
-		await Cmd.Wait(.6f);
-		PlayPostEffect();
+
+	public void PlaySfx(string path) {
+		SFXUtil.Play(path);
 	}
 
+	public async Task PlayAnimMain() {
+		await _mainAnimationPlayer.PlayAsync("main");
+	}
+
+	public async Task PlayLinks(List<int> links) {
+		List<Task> anim = new();
+		SFXUtil.Play("event:/vygo/sfx/link_summon_02");
+		SFXUtil.PlayAfter("event:/vygo/sfx/link_summon_03", .5f);
+		foreach (var linkIndex in links) {
+			var trailManager = LinkTrails[linkIndex];
+			trailManager.Visible = true;
+			anim.Add(trailManager.PlayAsync());
+		}
+		await Task.WhenAll(anim);
+	}
+	
+	
 	public void PlayPostEffect() {
 		_lineAnimationPlayer.Play("line");
 	}
