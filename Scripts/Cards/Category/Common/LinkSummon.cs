@@ -11,7 +11,7 @@ using VYgo.Scripts.Pools;
 namespace VYgo.Scripts.Cards.Category.Common;
 
 [RegisterCard(typeof(RedhatCardPool))]
-// [RegisterCharacterStarterCard(typeof(RedhatCharacter), 1)]
+[RegisterCharacterStarterCard(typeof(RedhatCharacter), 3)]
 public class LinkSummon() : BaseSummonCard(0, CardType.Skill, CardRarity.Basic, TargetType.None) {
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         var pile = Entry.ExtraPile.GetPile(Owner);
@@ -31,13 +31,23 @@ public class LinkSummon() : BaseSummonCard(0, CardType.Skill, CardRarity.Basic, 
         var materials = TrySelectLinkMaterials(coreCard);
         if (materials is null) return;
         
-        //第一步，为素材播放选中动画
+        //第一步，为素材播放选中动画,并处死
+        foreach (var material in materials) {
+            var nCreature = material.GetCreatureNode();
+            if (nCreature is null) continue;
+            var visuals = nCreature.Visuals as NMonsterVisuals;
+            if (visuals is null) continue;
+            
+            
+            //todo 播放动画
+        }
         
-        
-        //第二步，播放卡片动画
+        //第二步，播放卡片动画，并素材进入墓地
         
         //第三步，展开连接圆盘并播放圆盘动画
         
-        //第四步，弹出链接目标并
+        //第四步，弹出链接目标并播放粒子
+        
+        //第五步，生成
     }
 }

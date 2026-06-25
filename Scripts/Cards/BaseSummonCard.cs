@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using STS2RitsuLib.Scaffolding.Content;
 using VYgo.Core.Cards;
 using VYgo.Scripts.Monsters;
@@ -18,10 +19,9 @@ public abstract class BaseSummonCard(
     );
     
     
-    protected IEnumerable<BaseMonster> TrySelectLinkMaterials(CoreCard card) {
+    protected IEnumerable<Creature> TrySelectLinkMaterials(CoreCard card) {
         var monsters = Owner.Creature.Pets
-            .Select(c => c.Monster)
-            .OfType<BaseMonster>();
+            .Where(c => c.Monster is BaseMonster);
         //todo 判断
         return monsters;
     }

@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://h2iqhpdaowl2"]
+[gd_scene load_steps=4 format=3 uid="uid://h2iqhpdaowl2"]
 
 [ext_resource type="PackedScene" uid="uid://cg26wlfqlkhiv" path="res://VYgo/scenes/summon/link/link_summon_l1.tscn" id="1_t2tsf"]
+[ext_resource type="Script" uid="uid://ifqhq16e1n4f" path="res://Core/Effects/NLinkSummon2D.cs" id="1_uu3c4"]
 
 [sub_resource type="World3D" id="World3D_de186"]
 
-[node name="LinkSummon01" type="Node2D"]
+[node name="LinkSummon01" type="Node2D" node_paths=PackedStringArray("manager")]
+script = ExtResource("1_uu3c4")
+manager = NodePath("SubViewportContainer/SubViewport/LinkSummonL1")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 anchors_preset = 8

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://jeonic3vnhld"]
 
-[ext_resource type="Script" uid="uid://1mpwaocidu" path="res://Core/NCreatureVisualsMapping.cs" id="1_1rdtl"]
+[ext_resource type="Script" uid="uid://h0d6hoyg0e81" path="res://Core/NMonsterVisuals.cs" id="1_1rdtl"]
 [ext_resource type="Texture2D" uid="uid://bi1ngb5okrlvo" path="res://VYgo/images/monster/26439287.png" id="1_8kv8s"]
 
 [node name="Monster" type="Node2D"]
