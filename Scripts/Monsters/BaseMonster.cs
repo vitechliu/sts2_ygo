@@ -65,11 +65,7 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
     }
 
     private async Task ReturnCard(Player player, BaseVYgoCard card) {
-        //会报错：Model id=CARD.CYBER_DRAGON not found
-        //       at MegaCrit.Sts2.Core.Models.ModelDb.GetById[T](ModelId id)
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(CombatState.CreateCard(card, player), PileType.Discard,  player));
-        
-        //可以运行
-        // await CardPileCmd.AddGeneratedCardToCombat(CombatState.CreateCard<CyberDragon>(player), PileType.Discard,  player);
+        await CardPileCmd.AddGeneratedCardToCombat(CombatState.CreateCard(card, player), PileType.Discard,  player);
+        // CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(CombatState.CreateCard(card, player), PileType.Discard,  player), 0f);
     }
 }

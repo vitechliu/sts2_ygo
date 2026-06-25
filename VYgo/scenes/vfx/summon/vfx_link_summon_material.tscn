@@ -24,7 +24,8 @@ particle_flag_disable_z = true
 angle_min = 1.0728835e-05
 angle_max = 328.80002
 gravity = Vector3(0, 0, 0)
-scale_max = 1.66
+scale_min = 3.0
+scale_max = 5.0
 scale_curve = SubResource("CurveTexture_ioini")
 color = Color(0.9998649, 0.63580054, 0.9999997, 1)
 alpha_curve = SubResource("CurveTexture_jr0a7")
@@ -35,8 +36,6 @@ hue_variation_max = 0.10999998
 
 [node name="Flare1" type="GPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_ioini")
-emitting = false
-amount = 6
+amount = 4
 texture = ExtResource("1_7kwgp")
-one_shot = true
 process_material = SubResource("ParticleProcessMaterial_ji1dy")
