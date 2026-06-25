@@ -221,4 +221,10 @@ public static class VFXUtil {
     //         return null;
     //     }
     // }
+    
+    public static async Task PlayAsync(this AnimationPlayer player, string anim)
+    {
+        player.Play(anim);
+        await player.ToSignal(player, AnimationMixer.SignalName.AnimationFinished);
+    }
 }

@@ -18,9 +18,8 @@ namespace VYgo.Scripts.Cards.Category.CyberDragon;
 
 [RegisterCard(typeof(RedhatCardPool))]
 [RegisterCharacterStarterCard(typeof(RedhatCharacter), 1)]
-public class CyberDragonSieger() : BaseExtraCard(energyCost,rarity, targetType, shouldShowInCardLibrary) {
+public class CyberDragonSieger() : BaseExtraLinkCard(energyCost,rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 46724542;
-    protected override YgoType CardYgoType => YgoType.link;
     
     private const int energyCost = 1;
     private const CardRarity rarity = CardRarity.Common;

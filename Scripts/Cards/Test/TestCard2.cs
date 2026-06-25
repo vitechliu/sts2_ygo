@@ -28,7 +28,6 @@ public class TestCard2() : BasePlaceholder(CardType.Skill, CardRarity.Common) {
         if (node == null || !GodotObject.IsInstanceValid(node) || !node.IsInsideTree()) {
             return;
         }
-
         node.PlayPileTween?.FastForwardToCompletion();
         node.Visible = false;
 
@@ -45,7 +44,8 @@ public class TestCard2() : BasePlaceholder(CardType.Skill, CardRarity.Common) {
                 AnimateSummonPreview,
                 node.GetViewportRect().Size * 0.5f,
                 scaleMultiplier: 0.7f,
-                horizontalSpacing: 420f
+                horizontalSpacing: 420f,
+                initialOpacity: 0f
             );
         }
         finally {
@@ -99,6 +99,9 @@ public class TestCard2() : BasePlaceholder(CardType.Skill, CardRarity.Common) {
         tween.TweenProperty(ctx.Pivot, "rotation:x", Mathf.DegToRad(pitchDeg), duration * 0.7f)
             .SetEase(Tween.EaseType.InOut)
             .SetTrans(Tween.TransitionType.Sine);
+        tween.TweenProperty(ctx.DisplaySprite, "modulate:a", 1f, 0.2f)
+            .SetEase(Tween.EaseType.Out)
+            .SetTrans(Tween.TransitionType.Quad);
         TweenShaderFloat(tween, ctx.CardMaterial, "outline_strength", 0f, 1.8f, 0.35f)
             .SetEase(Tween.EaseType.Out)
             .SetTrans(Tween.TransitionType.Quad);

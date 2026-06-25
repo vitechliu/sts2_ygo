@@ -58,7 +58,8 @@ public static class Card3DEffectUtil {
         Func<IReadOnlyList<Card3DEffectContext>, Vector2, Task> animate,
         Vector2? centerPosition = null,
         float scaleMultiplier = 1.4f,
-        float horizontalSpacing = 360f
+        float horizontalSpacing = 360f,
+        float initialOpacity = 1f
     ) {
         List<CardModel> modelList = models.Where(m => m != null).ToList();
         if (modelList.Count == 0) {
@@ -98,7 +99,7 @@ public static class Card3DEffectUtil {
                     hiddenSourceNodes[model] = sourceNode;
                 }
 
-                contexts.Add(await BuildContext(flipper, model, cardGlobalPos, scaleMultiplier));
+                contexts.Add(await BuildContext(flipper, model, cardGlobalPos, scaleMultiplier, initialOpacity));
                 flippers.Add(flipper);
             }
 
@@ -139,7 +140,8 @@ public static class Card3DEffectUtil {
         Card3DFlipper flipper,
         CardModel model,
         Vector2 targetGlobalPos,
-        float scaleMultiplier
+        float scaleMultiplier,
+        float initialOpacity
     ) {
         SubViewport captureVp = flipper.CaptureViewport;
         SubViewport fxVp = flipper.FxViewport;
@@ -184,6 +186,7 @@ public static class Card3DEffectUtil {
         displaySprite.FlipH = true;
         displaySprite.FlipV = false;
         displaySprite.GlobalPosition = targetGlobalPos;
+        displaySprite.Modulate = new Color(1f, 1f, 1f, initialOpacity);
         displaySprite.ZIndex = 1000;
         displaySprite.ZAsRelative = false;
 
