@@ -65,3 +65,4 @@ env.props
 .claude
 /Web/node_modules
 /docs
+/addons

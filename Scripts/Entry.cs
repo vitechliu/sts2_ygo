@@ -10,6 +10,7 @@ using STS2RitsuLib;
 using STS2RitsuLib.CardPiles;
 using STS2RitsuLib.Interop;
 using System.Text.Json;
+using STS2RitsuLib.Audio;
 using VYgo.Core;
 using VYgo.Core.Cards;
 using VYgo.Scripts.Cards;
@@ -105,6 +106,8 @@ public static class Entry {
         SubscribeEvents();
         LoadCoreCards();
         
+        FmodStudioDeferredBankRegistration.RegisterBank("res://VYgo/banks/VYgo.bank");
+        FmodStudioDeferredBankRegistration.RegisterStudioGuidMappings("res://VYgo/banks/VYgo.guids.txt");
         
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
