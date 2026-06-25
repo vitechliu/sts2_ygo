@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://k37k7lacq7wj"]
+[gd_scene load_steps=3 format=3 uid="uid://bfdgj5y3uq3ao"]
 
 [ext_resource type="Script" uid="uid://h0d6hoyg0e81" path="res://Core/NMonsterVisuals.cs" id="1_1rdtl"]
-[ext_resource type="Texture2D" uid="uid://b7k63bqf2armx" path="res://VYgo/images/monster/23893227.png" id="1_8kv8s"]
+[ext_resource type="Texture2D" uid="uid://co7yp5m78v51g" path="res://VYgo/images/monster/29301450.png" id="1_8kv8s"]
 
 [node name="Monster" type="Node2D"]
 script = ExtResource("1_1rdtl")
@@ -12,16 +12,16 @@ position = Vector2(7, -138)
 
 [node name="Image" type="Sprite2D" parent="Visuals"]
 position = Vector2(-7, 51)
-scale = Vector2(0.6397059, 0.6397059)
+scale = Vector2(-0.64, 0.64)
 texture = ExtResource("1_8kv8s")
 
 [node name="Bounds" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
-offset_left = -73.0
-offset_top = -158.0
-offset_right = 79.0
+offset_left = -83.0
+offset_top = -190.0
+offset_right = 81.0
 
 [node name="CenterPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
