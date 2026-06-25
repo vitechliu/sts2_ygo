@@ -15,5 +15,7 @@
   "V_YGO_CARD_TEST3_D_CARD.description": "喵喵喵。",
   "V_YGO_CARD_LINK_SUMMON.title": "连接召唤",
   "V_YGO_CARD_LINK_SUMMON.description": "进行一次[gold]连接召唤[/gold]。",
-  "V_YGO_CARD_LINK_SUMMON.selectionScreenPrompt": "请选择需要召唤的卡牌。"
+  "V_YGO_CARD_LINK_SUMMON.selectionScreenPrompt": "请选择需要召唤的卡牌。",
+  "V_YGO_CARD_CYBER_DRAGON_CORE.title": "电子龙核",
+  "V_YGO_CARD_CYBER_DRAGON_CORE.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n从卡堆[gold]检索[/gold]一张带有「电子龙」的卡片。"
 }

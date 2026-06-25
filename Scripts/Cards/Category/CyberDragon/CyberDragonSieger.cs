@@ -1,18 +1,10 @@
-using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MinionLib.Commands;
 using MinionLib.Minion;
 using STS2RitsuLib.Interop.AutoRegistration;
-using VYgo.Core;
 using VYgo.Scripts.Monsters.YGO;
 using VYgo.Scripts.Pools;
-using VYgo.Scripts.Var;
-using VYgo.Utils;
 
 namespace VYgo.Scripts.Cards.Category.CyberDragon;
 
@@ -38,21 +30,8 @@ public class CyberDragonSieger() : BaseExtraLinkCard(energyCost,rarity, targetTy
     //     HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
     // }
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new AttackVar(21),
-        new LifeVar(1)
-    ];
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        _ = await MinionCmd.AddMinion<CyberDragonSiegerMinion>(choiceContext, Owner, new MinionSummonOptions(
-            MaxHp: Life, // 血量
-            PrimaryStatAmount: Attack, // 主要参数（具体内容在随从的 OnSummon 里定义），还有次要参数等可以按需传入
-            Source: this, // 召唤来源（通常是这张牌）
-            Position: MinionPosition.Front)
-        );
-    }
-
-    protected override void OnUpgrade() {
-        DynamicVars["Attack"].UpgradeValueBy(10);
-    }
+    public override int BaseAttackVar => 21;
+    public override int BaseLifeVar => 1;
+    public override int UpgradeAttackVar => 5;
+    public override int UpgradeLifeVar => 0;
 }

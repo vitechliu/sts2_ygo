@@ -1,6 +1,4 @@
 using Godot;
-using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Helpers;
 using VYgo.Scripts;
 using VYgo.Utils;
 

@@ -4,14 +4,12 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MinionLib.Minion;
 using MinionLib.Powers;
 using VYgo.Core;
 using VYgo.RitsuAdapters;
 using VYgo.Scripts.Cards;
-using VYgo.Scripts.Cards.Category.CyberDragon;
 
 namespace VYgo.Scripts.Monsters;
 

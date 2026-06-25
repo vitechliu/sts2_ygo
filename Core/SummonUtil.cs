@@ -1,7 +1,5 @@
 using VYgo.Core.Cards;
 using VYgo.Core.Effects;
-using VYgo.Scripts.Cards;
-using VYgo.Scripts.Monsters;
 
 namespace VYgo.Core;
 

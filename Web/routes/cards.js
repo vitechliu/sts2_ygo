@@ -350,7 +350,7 @@ async function addLocalizationEntry(cardId, enName, cnName) {
     const card = await getCards('SELECT description FROM cards WHERE card_id = ?', [cardId]);
     cardsLocalization[`${key}.description`] = card?.description || '';
 
-    fs.writeFileSync(cardsLocalePath, JSON.stringify(cardsLocalization, null, 4), 'utf8');
+    fs.writeFileSync(cardsLocalePath, JSON.stringify(cardsLocalization, null, 2), 'utf8');
 
     // 更新 monsters.json
     const monstersLocalePath = path.join(localeDir, 'monsters.json');
@@ -366,7 +366,7 @@ async function addLocalizationEntry(cardId, enName, cnName) {
     }
 
     monstersLocalization[`${upperSnakeName}_MINION.name`] = cnName || enName;
-    fs.writeFileSync(monstersLocalePath, JSON.stringify(monstersLocalization, null, 4), 'utf8');
+    fs.writeFileSync(monstersLocalePath, JSON.stringify(monstersLocalization, null, 2), 'utf8');
     
     console.log(`Localization entry added: ${key}`);
     return cardsLocalePath;
@@ -402,7 +402,7 @@ async function removeLocalizationEntry(cardId, enName) {
                 });
             }
 
-            fs.writeFileSync(cardsLocalePath, JSON.stringify(localization, null, 4), 'utf8');
+            fs.writeFileSync(cardsLocalePath, JSON.stringify(localization, null, 2), 'utf8');
         } catch (e) {
             console.error('Failed to remove cards localization entry:', e);
         }
@@ -427,7 +427,7 @@ async function removeLocalizationEntry(cardId, enName) {
                 });
             }
 
-            fs.writeFileSync(monstersLocalePath, JSON.stringify(localization, null, 4), 'utf8');
+            fs.writeFileSync(monstersLocalePath, JSON.stringify(localization, null, 2), 'utf8');
         } catch (e) {
             console.error('Failed to remove monsters localization entry:', e);
         }
@@ -480,8 +480,8 @@ async function generateLocalization() {
             }
         });
 
-        fs.writeFileSync(cardsLocalePath, JSON.stringify(cardsLocalization, null, 4), 'utf8');
-        fs.writeFileSync(monstersLocalePath, JSON.stringify(monstersLocalization, null, 4), 'utf8');
+        fs.writeFileSync(cardsLocalePath, JSON.stringify(cardsLocalization, null, 2), 'utf8');
+        fs.writeFileSync(monstersLocalePath, JSON.stringify(monstersLocalization, null, 2), 'utf8');
 
         console.log(`Localization files updated incrementally: ${insertedCount} new entries inserted.`);
     } catch (error) {

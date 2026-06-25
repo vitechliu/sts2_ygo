@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" uid="uid://h0d6hoyg0e81" path="res://Core/NMonsterVisuals.cs" id="1_1rdtl"]
+[ext_resource type="Texture2D" path="res://VYgo/images/monster/23893227.png" id="1_8kv8s"]
+
+[node name="Monster" type="Node2D"]
+script = ExtResource("1_1rdtl")
+
+[node name="Visuals" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(7, -138)
+
+[node name="Image" type="Sprite2D" parent="Visuals"]
+position = Vector2(-7, 51)
+scale = Vector2(0.6397059, 0.6397059)
+texture = ExtResource("1_8kv8s")
+
+[node name="Bounds" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = -65.0
+offset_top = -190.0
+offset_right = 65.0
+
+[node name="CenterPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -76)
+
+[node name="IntentPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(1, -166)

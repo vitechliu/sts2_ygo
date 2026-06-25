@@ -1,7 +1,4 @@
 using Godot;
-using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Nodes.Cards;
-using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 
 namespace VYgo.Core.Effects;
 
