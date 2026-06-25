@@ -13,6 +13,7 @@ using VYgo.Core;
 using VYgo.Core.Cards;
 using VYgo.Scripts.Cards;
 using VYgo.Scripts.Monsters;
+using VYgo.Scripts.Monsters.YGO;
 using FileAccess = Godot.FileAccess;
 using Logger = MegaCrit.Sts2.Core.Logging.Logger;
 
@@ -160,13 +161,12 @@ public static class Entry {
             }
         });
 
-        MonsterYgoIdCache = BuildYgoIdCache<BaseMonster>(static () => {
-            try {
-                return ModelDb.Monsters.OfType<BaseMonster>();
-            } catch {
-                return Enumerable.Empty<BaseMonster>();
-            }
-        });
+        MonsterYgoIdCache = BuildYgoIdCache<BaseMonster>(static () => [
+            ModelDb.Get<CyberDragonMinion>(),
+            ModelDb.Get<ProtoCyberDragonMinion>(),
+            ModelDb.Get<CyberDragonCoreMinion>(),
+            ModelDb.Get<CyberDragonSiegerMinion>(),
+        ]);
 
         Logger.Info($"Built YGO ID caches: {CardYgoIdCache.Count} cards, {MonsterYgoIdCache.Count} monsters.");
     }
