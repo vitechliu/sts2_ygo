@@ -86,7 +86,8 @@ public static class Entry {
 
     private static List<string> CollectAssetPathsSafely() {
         return [
-            
+            NMonsterVisuals.SUMMON_VFX_PATH,
+            NMonsterVisuals.MATERIAL_VFX_PATH,
         ];
     }
 
