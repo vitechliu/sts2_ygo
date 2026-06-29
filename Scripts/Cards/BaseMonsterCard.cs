@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using VYgo.Core.Effects;
 using MinionLib.Minion;
 using VYgo.Core;
 using VYgo.Scripts.Var;
@@ -42,7 +43,7 @@ public abstract class BaseMonsterCard(
         var c = this.YgoGetMonster();
         if (c == null) return;
         Entry.Logger.Info("findMonster");
-        _ = await MinionUtil.AddMinionInstant(
+        var summonedCreature = await MinionUtil.AddMinionInstant(
             c.GetType(),
             choiceContext,
             Owner,
@@ -53,6 +54,7 @@ public abstract class BaseMonsterCard(
                 Position: MinionPosition.Front
             )
         );
+        await MonsterCardVfx.PlaySummonCardFly(this, summonedCreature);
     }
 
     //怪兽卡打出后和能力卡一样消失，只有怪兽死亡后才会移入弃牌堆
