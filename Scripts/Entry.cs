@@ -34,6 +34,26 @@ public static class Entry {
     
     public static readonly System.Collections.Concurrent.ConcurrentDictionary<string, PackedScene> ModSceneCache = new();
     
+    public static void Initialize() {
+        var assembly = Assembly.GetExecutingAssembly();
+        Logger = RitsuLibFramework.CreateLogger(ModId);
+        var harmony = new Harmony("sts2.vitech." + ModId.ToLowerInvariant());
+        harmony.PatchAll();
+        
+        RegisterCardPile();
+        SubscribeEvents();
+        LoadCoreCards();
+        
+        FmodStudioDeferredBankRegistration.RegisterBank("res://VYgo/banks/VYgo.bank");
+        FmodStudioDeferredBankRegistration.RegisterStudioGuidMappings("res://VYgo/banks/VYgo.guids.txt");
+        
+        RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
+        ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
+        
+        Logger.Info("VYgo initialized.");
+    }
+
+    
     static void LoadScenes() {
         try {
             var paths = CollectAssetPathsSafely();
@@ -65,7 +85,9 @@ public static class Entry {
     }
 
     private static List<string> CollectAssetPathsSafely() {
-        return [];
+        return [
+            
+        ];
     }
 
     public static void LoadCoreCards() {
@@ -95,25 +117,7 @@ public static class Entry {
         }
     }
 
-    public static void Initialize() {
-        var assembly = Assembly.GetExecutingAssembly();
-        Logger = RitsuLibFramework.CreateLogger(ModId);
-        var harmony = new Harmony("sts2.vitech." + ModId.ToLowerInvariant());
-        harmony.PatchAll();
-        
-        RegisterCardPile();
-        SubscribeEvents();
-        LoadCoreCards();
-        
-        FmodStudioDeferredBankRegistration.RegisterBank("res://VYgo/banks/VYgo.bank");
-        FmodStudioDeferredBankRegistration.RegisterStudioGuidMappings("res://VYgo/banks/VYgo.guids.txt");
-        
-        RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
-        ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
-        
-        Logger.Info("VYgo initialized.");
-    }
-
+    
     //注册额外卡组
     static void RegisterCardPile() {
         var registry = ModCardPileRegistry.For(ModId);

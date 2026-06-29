@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bcfbbdn4dgbas" path="res://VYgo/scenes/summon/link/assets/flare007.png" id="3_flare"]
 [ext_resource type="Shader" uid="uid://bl6a8kwvcll51" path="res://VYgo/shaders/flare_particle.gdshader" id="4_flare_shader"]
 [ext_resource type="Shader" uid="uid://c0barkpxrc4rv" path="res://VYgo/scenes/summon/link/assets/link_trail_flare.gdshader" id="4_w537f"]
-[ext_resource type="Texture2D" uid="uid://dhcagk150pe7j" path="res://VYgo/scenes/summon/link/color_ramp.tres" id="5_kr1w3"]
+[ext_resource type="Texture2D" uid="uid://dhcagk150pe7j" path="res://VYgo/scenes/summon/link/assets/color_ramp.tres" id="5_kr1w3"]
 [ext_resource type="Texture2D" uid="uid://b4ffwrlfh2rfn" path="res://VYgo/scenes/summon/link/assets/EtLinkMarkerOn02.png" id="6_tws0t"]
 [ext_resource type="Texture2D" uid="uid://d0gf2ck37orqg" path="res://VYgo/scenes/summon/link/assets/EtLinkMarkerOn.png" id="10_8ipmt"]
 

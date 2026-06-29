@@ -32,7 +32,7 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 	}
 
 	public const string MATERIAL_VFX_PATH = "res://VYgo/scenes/vfx/summon/vfx_link_summon_material.tscn";
-
+	
 	public async Task PlayMaterialVfx() {
 		float totalLifeTime = MaterialVfxDuration + (float)GD.RandRange(0.1f, 1f);
 		var node = VFXUtil.PlaySimple(
