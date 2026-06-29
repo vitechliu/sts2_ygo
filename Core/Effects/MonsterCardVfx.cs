@@ -18,25 +18,30 @@ public static class MonsterCardVfx {
         var targetNode = NCombatRoom.Instance.GetCreatureNode(summonedCreature);
         if (targetNode == null) return;
 
-        var cardNode = NCard.FindOnTable(card, PileType.Play);
-        var duplicatedCardNode = false;
-        if (cardNode == null) {
-            cardNode = NCard.Create(card);
-            duplicatedCardNode = true;
-        }
-
+        var sourceNode = NCard.FindOnTable(card, PileType.Play);
+        var cardNode = NCard.Create(card);
         if (cardNode == null) return;
 
-        if (duplicatedCardNode) {
+        if (sourceNode != null && GodotObject.IsInstanceValid(sourceNode)) {
+            cardNode.GlobalPosition = sourceNode.GlobalPosition;
+            cardNode.Scale = sourceNode.Scale;
+            cardNode.Rotation = sourceNode.Rotation;
+            sourceNode.Visible = false;
+        }
+        else {
+            cardNode.GlobalPosition = PileType.Play.GetTargetPosition(cardNode);
+        }
+
+        NCombatRoom.Instance.CombatVfxContainer.AddChildSafely(cardNode);
+        cardNode.UpdateVisuals(PileType.Play, CardPreviewMode.Normal);
+
+        if (sourceNode == null) {
             var tween = cardNode.CreateTween();
             tween.Parallel().TweenProperty(cardNode, "scale", Vector2.One, 0.1f)
                 .From(Vector2.Zero)
                 .SetEase(Tween.EaseType.Out)
                 .SetTrans(Tween.TransitionType.Cubic);
 
-            NCombatRoom.Instance.CombatVfxContainer.AddChildSafely(cardNode);
-            cardNode.GlobalPosition = PileType.Play.GetTargetPosition(cardNode);
-            cardNode.UpdateVisuals(PileType.Play, CardPreviewMode.Normal);
             await Cmd.CustomScaledWait(0.1f, 0.8f);
         }
 

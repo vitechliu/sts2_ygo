@@ -54,4 +54,8 @@
 - 立绘：https://code.moenext.com/mycard/ygopro2-closeup
 - 高清卡图：https://code.moenext.com/mycard/hd-arts
 - 执行` node ./Web/server.js `，后访问[http://localhost:3000](http://localhost:3000)配置路径即可使用。
+
+
+### 鸣谢
 - 感谢 [苍蓝coccvo](https://code.moenext.com/coccvo) 对ygopro2中立绘的制作和对本项目的授权
+- 感谢 赤子奈落(MDPro3作者)的授权。
