@@ -12,6 +12,7 @@
             <h1>VYgo 卡牌管理后台</h1>
             <nav>
                 <button class="nav-btn active" data-tab="cards">卡牌管理</button>
+                <button class="nav-btn" data-tab="library">卡牌列表</button>
                 <button class="nav-btn" data-tab="config">配置中心</button>
             </nav>
         </header>
@@ -79,16 +80,45 @@
                         </div>
                     </div>
                 </div>
+            </section>
 
+            <!-- 卡牌列表模块 -->
+            <section id="library-tab" class="tab-content">
                 <div class="card-list">
-                    <h2>已添加卡牌</h2>
-                    <div class="actions">
-                        <button id="refreshBtn" class="btn-secondary">刷新列表</button>
-                        <button id="generateLocaleBtn" class="btn-secondary">生成本地化</button>
-                        <button id="exportCardsBtn" class="btn-secondary">生成卡牌数据</button>
+                    <div class="section-header">
+                        <h2>已添加卡牌</h2>
+                        <div class="actions">
+                            <button id="refreshBtn" class="btn-secondary">刷新列表</button>
+                            <button id="generateLocaleBtn" class="btn-secondary">生成本地化</button>
+                            <button id="exportCardsBtn" class="btn-secondary">生成卡牌数据</button>
+                        </div>
                     </div>
-                    <div id="cardsContainer" class="cards-container">
-                        <p class="empty">暂无卡牌数据</p>
+                    <div class="table-wrap">
+                        <table class="cards-table">
+                            <thead>
+                                <tr>
+                                    <th class="col-image">图片</th>
+                                    <th class="col-id">ID</th>
+                                    <th>标题</th>
+                                    <th class="col-status">卡图</th>
+                                    <th class="col-status">本地化</th>
+                                    <th class="col-status">卡牌数据</th>
+                                    <th class="col-status">卡牌立绘</th>
+                                    <th class="col-status">卡牌场景</th>
+                                    <th class="col-actions">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cardsTableBody">
+                                <tr>
+                                    <td colspan="9" class="empty-cell">暂无卡牌数据</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="cardsPagination" class="pagination hidden">
+                        <button id="prevCardsPageBtn" class="btn-secondary">上一页</button>
+                        <span id="cardsPageInfo" class="page-info">第 1 / 1 页</span>
+                        <button id="nextCardsPageBtn" class="btn-secondary">下一页</button>
                     </div>
                 </div>
             </section>

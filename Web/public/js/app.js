@@ -3,6 +3,11 @@ const API_BASE = '/api';
 
 // 全局状态
 let currentCardData = null;
+let cardsState = {
+    allCards: [],
+    currentPage: 1,
+    pageSize: 12
+};
 let cropState = {
     canvas: null,
     ctx: null,
@@ -41,6 +46,10 @@ function initTabs() {
             btn.classList.add('active');
             document.getElementById(`${tab}-tab`).classList.add('active');
 
+            if (tab === 'library') {
+                loadCards();
+            }
+
             if (tab === 'config') {
                 loadExternalDirs();
                 loadSettings();
@@ -66,6 +75,8 @@ function initCardSearch() {
     document.getElementById('refreshBtn').addEventListener('click', loadCards);
     document.getElementById('generateLocaleBtn').addEventListener('click', generateFullLocalization);
     document.getElementById('exportCardsBtn').addEventListener('click', exportCards);
+    document.getElementById('prevCardsPageBtn').addEventListener('click', () => changeCardsPage(-1));
+    document.getElementById('nextCardsPageBtn').addEventListener('click', () => changeCardsPage(1));
 }
 
 async function queryCard() {
@@ -501,27 +512,120 @@ async function loadCards() {
 }
 
 function displayCards(cards) {
-    const container = document.getElementById('cardsContainer');
+    cardsState.allCards = cards;
+    cardsState.currentPage = Math.min(
+        cardsState.currentPage,
+        Math.max(1, Math.ceil(cards.length / cardsState.pageSize))
+    );
+
+    renderCardsTable();
+}
+
+function renderCardsTable() {
+    const tbody = document.getElementById('cardsTableBody');
+    const pagination = document.getElementById('cardsPagination');
+    const pageInfo = document.getElementById('cardsPageInfo');
+    const prevBtn = document.getElementById('prevCardsPageBtn');
+    const nextBtn = document.getElementById('nextCardsPageBtn');
+    const cards = cardsState.allCards;
+
+    pagination.classList.toggle('hidden', cards.length === 0);
 
     if (cards.length === 0) {
-        container.innerHTML = '<p class="empty">暂无卡牌数据</p>';
+        tbody.innerHTML = '<tr><td colspan="9" class="empty-cell">暂无卡牌数据</td></tr>';
+        pageInfo.textContent = '第 1 / 1 页';
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
         return;
     }
 
-    container.innerHTML = cards.map(card => `
-        <div class="card-item">
-            <img src="/VYgo/images/cards/${card.card_id}.png" alt="${card.name}" 
-                 onerror="this.src='https://cdn.233.momobako.com/ygopro/pics/${card.card_id}.jpg'">
-            <div class="card-item-info">
-                <h4>${card.cn_name || card.name}</h4>
-                <p>ID: ${card.card_id}</p>
-            </div>
-            <div class="card-item-actions">
-                <button onclick="generateScene(${card.card_id})" class="scene-btn">生成场景</button>
-                <button onclick="deleteCard(${card.card_id})" class="delete-btn">删除</button>
-            </div>
-        </div>
+    const totalPages = Math.max(1, Math.ceil(cards.length / cardsState.pageSize));
+    cardsState.currentPage = Math.min(cardsState.currentPage, totalPages);
+    const start = (cardsState.currentPage - 1) * cardsState.pageSize;
+    const pageCards = cards.slice(start, start + cardsState.pageSize);
+
+    tbody.innerHTML = pageCards.map(card => `
+        <tr>
+            <td class="col-image">
+                <div class="card-thumb"
+                     style="background-image: url('/VYgo/images/cards/${card.card_id}.png'), url('https://cdn.233.momobako.com/ygopro/pics/${card.card_id}.jpg');"></div>
+            </td>
+            <td class="card-id">${card.card_id}</td>
+            <td class="card-title" title="${escapeHtml(card.cn_name || card.name || '')}">${escapeHtml(card.cn_name || card.name || '-')}</td>
+            <td>${renderResourceCell(card, 'cardImage', '生成卡图', 'card-image')}</td>
+            <td>${renderResourceCell(card, 'localization', '生成本地化', 'localization')}</td>
+            <td>${renderResourceCell(card, 'cardData', '生成数据', 'data')}</td>
+            <td>${renderResourceCell(card, 'portrait', '生成立绘', 'portrait')}</td>
+            <td>${renderResourceCell(card, 'scene', '生成场景', 'scene')}</td>
+            <td>
+                <div class="table-actions">
+                    <button onclick="deleteCard(${card.card_id})" class="delete-btn">删除</button>
+                </div>
+            </td>
+        </tr>
     `).join('');
+
+    pageInfo.textContent = `第 ${cardsState.currentPage} / ${totalPages} 页，共 ${cards.length} 张`;
+    prevBtn.disabled = cardsState.currentPage === 1;
+    nextBtn.disabled = cardsState.currentPage === totalPages;
+}
+
+function changeCardsPage(delta) {
+    const totalPages = Math.max(1, Math.ceil(cardsState.allCards.length / cardsState.pageSize));
+    const nextPage = Math.min(totalPages, Math.max(1, cardsState.currentPage + delta));
+    if (nextPage === cardsState.currentPage) return;
+
+    cardsState.currentPage = nextPage;
+    renderCardsTable();
+}
+
+function renderResourceCell(card, statusKey, actionText, actionType) {
+    if (card.resource_status?.[statusKey]) {
+        return '<span class="resource-status resource-ok">已存在</span>';
+    }
+
+    return `<button onclick="generateCardResource(${card.card_id}, '${actionType}')" class="resource-btn">${actionText}</button>`;
+}
+
+function escapeHtml(value) {
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+async function generateCardResource(cardId, resourceType) {
+    const resourceMap = {
+        'card-image': { label: '卡图', endpoint: `${API_BASE}/cards/${cardId}/card-image` },
+        localization: { label: '本地化', endpoint: `${API_BASE}/cards/${cardId}/localization` },
+        data: { label: '卡牌数据', endpoint: `${API_BASE}/cards/${cardId}/data` },
+        portrait: { label: '卡牌立绘', endpoint: `${API_BASE}/cards/${cardId}/portrait` },
+        scene: { label: '卡牌场景', endpoint: `${API_BASE}/cards/${cardId}/scene` }
+    };
+    const resource = resourceMap[resourceType];
+
+    if (!resource) {
+        showToast('未知资源类型', 'error');
+        return;
+    }
+
+    try {
+        const response = await fetch(resource.endpoint, {
+            method: 'POST'
+        });
+        const result = await response.json();
+
+        if (!result.success) {
+            throw new Error(result.error);
+        }
+
+        showToast(`${resource.label}已生成`);
+        loadCards();
+    } catch (error) {
+        showToast(`${resource.label}生成失败: ${error.message}`, 'error');
+    }
 }
 
 async function deleteCard(cardId) {
