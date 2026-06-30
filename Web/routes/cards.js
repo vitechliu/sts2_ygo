@@ -10,7 +10,13 @@ const path = require('path');
 router.get('/', async (req, res) => {
     try {
         const cards = await allCards('SELECT * FROM cards ORDER BY created_at DESC');
-        res.json({ success: true, data: cards });
+        const statusContext = await loadResourceStatusContext();
+        const cardsWithStatus = cards.map(card => ({
+            ...card,
+            resource_status: getCardResourceStatus(card, statusContext)
+        }));
+
+        res.json({ success: true, data: cardsWithStatus });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }
@@ -237,25 +243,75 @@ router.post('/:cardId/scene', async (req, res) => {
     }
 });
 
+// 生成卡图（从外部卡图目录按 cardId 查找并直接裁剪/缩放）
+router.post('/:cardId/card-image', async (req, res) => {
+    try {
+        const { cardId } = req.params;
+        const sourcePath = await imageService.findImageFile(cardId);
+
+        if (!sourcePath) {
+            return res.status(404).json({ success: false, error: 'External card image not found' });
+        }
+
+        const imagePath = await imageService.processCroppedImage(sourcePath, cardId, null);
+        res.json({ success: true, data: { imagePath } });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// 生成卡牌立绘（从外部立绘目录按 cardId 查找并复制）
+router.post('/:cardId/portrait', async (req, res) => {
+    try {
+        const { cardId } = req.params;
+        const sourcePath = await imageService.findPortraitFile(cardId);
+
+        if (!sourcePath) {
+            return res.status(404).json({ success: false, error: 'External portrait not found' });
+        }
+
+        const portraitPath = await imageService.copyPortrait(sourcePath, cardId);
+        res.json({ success: true, data: { portraitPath } });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// 生成单张卡牌本地化
+router.post('/:cardId/localization', async (req, res) => {
+    try {
+        const { cardId } = req.params;
+        const card = await getCards('SELECT * FROM cards WHERE card_id = ?', [cardId]);
+
+        if (!card) {
+            return res.status(404).json({ success: false, error: 'Card not found' });
+        }
+        if (!card.en_name) {
+            return res.status(400).json({ success: false, error: 'English name is required for localization' });
+        }
+
+        const localePath = await addLocalizationEntry(card.card_id, card.en_name, card.cn_name);
+        res.json({ success: true, data: { localePath } });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// 生成卡牌数据（刷新 VYgo/db.json）
+router.post('/:cardId/data', async (req, res) => {
+    try {
+        const result = await exportCardData();
+        res.json({ success: true, data: result });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
 // 导出所有卡牌数据为 JSON
 router.post('/export', async (req, res) => {
     try {
-        const cards = await allCards('SELECT * FROM cards ORDER BY created_at DESC');
-        const vygoDir = path.join(__dirname, '..', '..', 'VYgo');
-        const exportPath = path.join(vygoDir, 'db.json');
-
-        if (!fs.existsSync(vygoDir)) {
-            fs.mkdirSync(vygoDir, { recursive: true });
-        }
-
-        const filteredCards = cards.map(card => {
-            const { raw_data, created_at, updated_at, ...rest } = card;
-            return rest;
-        });
-
-        fs.writeFileSync(exportPath, JSON.stringify(filteredCards, null, 4), 'utf8');
-
-        res.json({ success: true, data: { exportPath, count: filteredCards.length } });
+        const result = await exportCardData();
+        res.json({ success: true, data: result });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }
@@ -310,7 +366,8 @@ router.get('/:cardId', async (req, res) => {
 function toUpperSnakeCase(str) {
     if (!str) return '';
     return str
-        .replace(/([A-Z])/g, '_$1')
+        .replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
+        .replace(/([a-z0-9])([A-Z])/g, '$1_$2')
         .toUpperCase()
         .replace(/^_/, '');
 }
@@ -350,7 +407,7 @@ async function addLocalizationEntry(cardId, enName, cnName) {
     const card = await getCards('SELECT description FROM cards WHERE card_id = ?', [cardId]);
     cardsLocalization[`${key}.description`] = card?.description || '';
 
-    fs.writeFileSync(cardsLocalePath, JSON.stringify(cardsLocalization, null, 2), 'utf8');
+    fs.writeFileSync(cardsLocalePath, JSON.stringify(cardsLocalization, null, 4), 'utf8');
 
     // 更新 monsters.json
     const monstersLocalePath = path.join(localeDir, 'monsters.json');
@@ -366,7 +423,7 @@ async function addLocalizationEntry(cardId, enName, cnName) {
     }
 
     monstersLocalization[`${upperSnakeName}_MINION.name`] = cnName || enName;
-    fs.writeFileSync(monstersLocalePath, JSON.stringify(monstersLocalization, null, 2), 'utf8');
+    fs.writeFileSync(monstersLocalePath, JSON.stringify(monstersLocalization, null, 4), 'utf8');
     
     console.log(`Localization entry added: ${key}`);
     return cardsLocalePath;
@@ -402,7 +459,7 @@ async function removeLocalizationEntry(cardId, enName) {
                 });
             }
 
-            fs.writeFileSync(cardsLocalePath, JSON.stringify(localization, null, 2), 'utf8');
+            fs.writeFileSync(cardsLocalePath, JSON.stringify(localization, null, 4), 'utf8');
         } catch (e) {
             console.error('Failed to remove cards localization entry:', e);
         }
@@ -427,7 +484,7 @@ async function removeLocalizationEntry(cardId, enName) {
                 });
             }
 
-            fs.writeFileSync(monstersLocalePath, JSON.stringify(localization, null, 2), 'utf8');
+            fs.writeFileSync(monstersLocalePath, JSON.stringify(localization, null, 4), 'utf8');
         } catch (e) {
             console.error('Failed to remove monsters localization entry:', e);
         }
@@ -480,8 +537,8 @@ async function generateLocalization() {
             }
         });
 
-        fs.writeFileSync(cardsLocalePath, JSON.stringify(cardsLocalization, null, 2), 'utf8');
-        fs.writeFileSync(monstersLocalePath, JSON.stringify(monstersLocalization, null, 2), 'utf8');
+        fs.writeFileSync(cardsLocalePath, JSON.stringify(cardsLocalization, null, 4), 'utf8');
+        fs.writeFileSync(monstersLocalePath, JSON.stringify(monstersLocalization, null, 4), 'utf8');
 
         console.log(`Localization files updated incrementally: ${insertedCount} new entries inserted.`);
     } catch (error) {
@@ -498,6 +555,64 @@ function loadJson(filePath) {
         console.log('Failed to parse JSON, returning empty object:', filePath);
         return {};
     }
+}
+
+async function loadResourceStatusContext() {
+    const settings = await allConfig('SELECT * FROM settings');
+    const config = {};
+    settings.forEach(s => config[s.key] = s.value);
+
+    const localeDir = path.join(__dirname, '..', '..', 'VYgo', 'localization', 'zhs');
+    const cardsLocale = loadJson(path.join(localeDir, 'cards.json'));
+    const dbCards = loadJson(path.join(__dirname, '..', '..', 'VYgo', 'db.json'));
+    const cardDataIds = new Set(
+        Array.isArray(dbCards)
+            ? dbCards.map(card => Number(card.card_id))
+            : []
+    );
+
+    return {
+        localePrefix: config.locale_prefix || 'V_YGO_CARD_',
+        cardsLocale,
+        cardDataIds
+    };
+}
+
+function getCardResourceStatus(card, context) {
+    const cardId = Number(card.card_id);
+    const upperSnakeName = toUpperSnakeCase(card.en_name);
+    const localizationKey = `${context.localePrefix}${upperSnakeName}.title`;
+
+    return {
+        cardImage: fs.existsSync(imageService.getImagePath(cardId)),
+        localization: !!upperSnakeName && Object.prototype.hasOwnProperty.call(context.cardsLocale, localizationKey),
+        cardData: context.cardDataIds.has(cardId),
+        portrait: fs.existsSync(imageService.getPortraitPath(cardId)),
+        scene: fs.existsSync(getScenePath(cardId))
+    };
+}
+
+function getScenePath(cardId) {
+    return path.join(__dirname, '..', '..', 'VYgo', 'scenes', 'monsters', `${cardId}.tscn`);
+}
+
+async function exportCardData() {
+    const cards = await allCards('SELECT * FROM cards ORDER BY created_at DESC');
+    const vygoDir = path.join(__dirname, '..', '..', 'VYgo');
+    const exportPath = path.join(vygoDir, 'db.json');
+
+    if (!fs.existsSync(vygoDir)) {
+        fs.mkdirSync(vygoDir, { recursive: true });
+    }
+
+    const filteredCards = cards.map(card => {
+        const { raw_data, created_at, updated_at, ...rest } = card;
+        return rest;
+    });
+
+    fs.writeFileSync(exportPath, JSON.stringify(filteredCards, null, 4), 'utf8');
+
+    return { exportPath, count: filteredCards.length };
 }
 
 module.exports = router;
