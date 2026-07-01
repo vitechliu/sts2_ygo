@@ -307,7 +307,7 @@ button:disabled {
 
 .cards-table {
     width: 100%;
-    min-width: 1060px;
+    min-width: 1160px;
     border-collapse: collapse;
     table-layout: fixed;
 }
@@ -403,6 +403,11 @@ button:disabled {
     background: rgba(46, 204, 113, 0.16);
     color: #72e7a0;
     box-shadow: inset 0 0 0 1px rgba(46, 204, 113, 0.32);
+}
+
+.resource-empty {
+    color: #687891;
+    font-size: 0.9em;
 }
 
 .resource-btn {
