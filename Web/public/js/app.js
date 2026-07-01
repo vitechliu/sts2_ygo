@@ -532,7 +532,7 @@ function renderCardsTable() {
     pagination.classList.toggle('hidden', cards.length === 0);
 
     if (cards.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="9" class="empty-cell">暂无卡牌数据</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="10" class="empty-cell">暂无卡牌数据</td></tr>';
         pageInfo.textContent = '第 1 / 1 页';
         prevBtn.disabled = true;
         nextBtn.disabled = true;
@@ -555,8 +555,9 @@ function renderCardsTable() {
             <td>${renderResourceCell(card, 'cardImage', '生成卡图', 'card-image')}</td>
             <td>${renderResourceCell(card, 'localization', '生成本地化', 'localization')}</td>
             <td>${renderResourceCell(card, 'cardData', '生成数据', 'data')}</td>
-            <td>${renderResourceCell(card, 'portrait', '生成立绘', 'portrait')}</td>
-            <td>${renderResourceCell(card, 'scene', '生成场景', 'scene')}</td>
+            <td>${renderResourceCell(card, 'portrait', '生成立绘', 'portrait', { monsterOnly: true })}</td>
+            <td>${renderResourceCell(card, 'scene', '生成场景', 'scene', { monsterOnly: true })}</td>
+            <td>${renderResourceCell(card, 'monsterScript', '生成脚本', 'monster-script', { monsterOnly: true })}</td>
             <td>
                 <div class="table-actions">
                     <button onclick="deleteCard(${card.card_id})" class="delete-btn">删除</button>
@@ -579,12 +580,20 @@ function changeCardsPage(delta) {
     renderCardsTable();
 }
 
-function renderResourceCell(card, statusKey, actionText, actionType) {
+function renderResourceCell(card, statusKey, actionText, actionType, options = {}) {
+    if (options.monsterOnly && !isMonsterCard(card)) {
+        return '<span class="resource-empty">-</span>';
+    }
+
     if (card.resource_status?.[statusKey]) {
         return '<span class="resource-status resource-ok">已存在</span>';
     }
 
     return `<button onclick="generateCardResource(${card.card_id}, '${actionType}')" class="resource-btn">${actionText}</button>`;
+}
+
+function isMonsterCard(card) {
+    return String(card.types || '').includes('怪兽');
 }
 
 function escapeHtml(value) {
@@ -602,7 +611,8 @@ async function generateCardResource(cardId, resourceType) {
         localization: { label: '本地化', endpoint: `${API_BASE}/cards/${cardId}/localization` },
         data: { label: '卡牌数据', endpoint: `${API_BASE}/cards/${cardId}/data` },
         portrait: { label: '卡牌立绘', endpoint: `${API_BASE}/cards/${cardId}/portrait` },
-        scene: { label: '卡牌场景', endpoint: `${API_BASE}/cards/${cardId}/scene` }
+        scene: { label: '卡牌场景', endpoint: `${API_BASE}/cards/${cardId}/scene` },
+        'monster-script': { label: '怪兽脚本', endpoint: `${API_BASE}/cards/${cardId}/monster-script` }
     };
     const resource = resourceMap[resourceType];
 

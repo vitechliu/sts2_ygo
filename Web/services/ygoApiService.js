@@ -53,8 +53,20 @@ class YgoApiService {
             level: data.level || 0,
             attribute: this.parseAttribute(data.attribute),
             race: this.parseRace(data.race),
-            rawData: JSON.stringify(apiData)
+            rawData: this.sanitizeRawData(apiData)
         };
+    }
+
+    sanitizeRawData(rawData) {
+        const data = typeof rawData === 'string' ? JSON.parse(rawData) : rawData;
+        const sanitized = { ...data };
+
+        delete sanitized.faqs;
+        delete sanitized.faqcount;
+        delete sanitized.jppacks;
+        delete sanitized.enpacks;
+
+        return JSON.stringify(sanitized);
     }
 
     parseAttribute(attr) {

@@ -148,7 +148,7 @@ router.post('/', async (req, res) => {
         }
 
         // 处理立绘（直接复制）
-        if (portraitPath && fs.existsSync(portraitPath)) {
+        if (isMonsterCard({ types }) && portraitPath && fs.existsSync(portraitPath)) {
             try {
                 finalPortraitPath = await imageService.copyPortrait(portraitPath, cardId);
             } catch (e) {
@@ -157,10 +157,11 @@ router.post('/', async (req, res) => {
         }
 
         // 插入数据库
+        const sanitizedRawData = rawData ? ygoApiService.sanitizeRawData(rawData) : null;
         const result = await runCards(
             `INSERT INTO cards (card_id, name, cn_name, en_name, types, description, atk, def, level, attribute, race, raw_data) 
              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [cardId, name, cnName, enName, types, description, atk, def, level, attribute, race, rawData]
+            [cardId, name, cnName, enName, types, description, atk, def, level, attribute, race, sanitizedRawData]
         );
 
         res.json({ 
@@ -214,6 +215,15 @@ router.delete('/:cardId', async (req, res) => {
 router.post('/:cardId/scene', async (req, res) => {
     try {
         const { cardId } = req.params;
+        const card = await getCards('SELECT card_id, types FROM cards WHERE card_id = ?', [cardId]);
+
+        if (!card) {
+            return res.status(404).json({ success: false, error: 'Card not found' });
+        }
+        if (!isMonsterCard(card)) {
+            return res.status(400).json({ success: false, error: 'Scene is only available for monster cards' });
+        }
+
         const sceneDir = path.join(__dirname, '..', '..', 'VYgo', 'scenes', 'monsters');
         const samplePath = path.join(sceneDir, '0_sample.tscn');
         const targetPath = path.join(sceneDir, `${cardId}.tscn`);
@@ -264,6 +274,15 @@ router.post('/:cardId/card-image', async (req, res) => {
 router.post('/:cardId/portrait', async (req, res) => {
     try {
         const { cardId } = req.params;
+        const card = await getCards('SELECT card_id, types FROM cards WHERE card_id = ?', [cardId]);
+
+        if (!card) {
+            return res.status(404).json({ success: false, error: 'Card not found' });
+        }
+        if (!isMonsterCard(card)) {
+            return res.status(400).json({ success: false, error: 'Portrait is only available for monster cards' });
+        }
+
         const sourcePath = await imageService.findPortraitFile(cardId);
 
         if (!sourcePath) {
@@ -273,6 +292,29 @@ router.post('/:cardId/portrait', async (req, res) => {
         const portraitPath = await imageService.copyPortrait(sourcePath, cardId);
         res.json({ success: true, data: { portraitPath } });
     } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// 生成怪兽脚本
+router.post('/:cardId/monster-script', async (req, res) => {
+    try {
+        const { cardId } = req.params;
+        const card = await getCards('SELECT card_id, en_name, types FROM cards WHERE card_id = ?', [cardId]);
+
+        if (!card) {
+            return res.status(404).json({ success: false, error: 'Card not found' });
+        }
+        if (!isMonsterCard(card)) {
+            return res.status(400).json({ success: false, error: 'Monster script is only available for monster cards' });
+        }
+
+        const scriptPath = createMonsterScript(card);
+        res.json({ success: true, data: { scriptPath } });
+    } catch (error) {
+        if (error.message === 'Invalid monster class name') {
+            return res.status(400).json({ success: false, error: error.message });
+        }
         res.status(500).json({ success: false, error: error.message });
     }
 });
@@ -297,12 +339,16 @@ router.post('/:cardId/localization', async (req, res) => {
     }
 });
 
-// 生成卡牌数据（刷新 VYgo/db.json）
+// 生成单张卡牌数据（只更新 VYgo/db.json 中当前卡牌）
 router.post('/:cardId/data', async (req, res) => {
     try {
-        const result = await exportCardData();
+        const { cardId } = req.params;
+        const result = await exportSingleCardData(cardId);
         res.json({ success: true, data: result });
     } catch (error) {
+        if (error.message === 'Card not found') {
+            return res.status(404).json({ success: false, error: error.message });
+        }
         res.status(500).json({ success: false, error: error.message });
     }
 });
@@ -582,18 +628,73 @@ function getCardResourceStatus(card, context) {
     const cardId = Number(card.card_id);
     const upperSnakeName = toUpperSnakeCase(card.en_name);
     const localizationKey = `${context.localePrefix}${upperSnakeName}.title`;
+    const isMonster = isMonsterCard(card);
 
     return {
         cardImage: fs.existsSync(imageService.getImagePath(cardId)),
         localization: !!upperSnakeName && Object.prototype.hasOwnProperty.call(context.cardsLocale, localizationKey),
         cardData: context.cardDataIds.has(cardId),
-        portrait: fs.existsSync(imageService.getPortraitPath(cardId)),
-        scene: fs.existsSync(getScenePath(cardId))
+        portrait: isMonster && fs.existsSync(imageService.getPortraitPath(cardId)),
+        scene: isMonster && fs.existsSync(getScenePath(cardId)),
+        monsterScript: isMonster && monsterScriptExists(card)
     };
+}
+
+function isMonsterCard(card) {
+    return String(card?.types || '').includes('怪兽');
 }
 
 function getScenePath(cardId) {
     return path.join(__dirname, '..', '..', 'VYgo', 'scenes', 'monsters', `${cardId}.tscn`);
+}
+
+function getMonsterScriptPath(card) {
+    return path.join(getMonsterScriptDir(), `${getMonsterClassName(card)}.cs`);
+}
+
+function getMonsterScriptDir() {
+    return path.join(__dirname, '..', '..', 'Scripts', 'Monsters', 'YGO');
+}
+
+function monsterScriptExists(card) {
+    try {
+        return fs.existsSync(getMonsterScriptPath(card));
+    } catch {
+        return false;
+    }
+}
+
+function createMonsterScript(card) {
+    const className = getMonsterClassName(card);
+    const scriptDir = getMonsterScriptDir();
+    const scriptPath = getMonsterScriptPath(card);
+
+    if (!fs.existsSync(scriptDir)) {
+        fs.mkdirSync(scriptDir, { recursive: true });
+    }
+    if (fs.existsSync(scriptPath)) {
+        return scriptPath;
+    }
+
+    const content = `namespace VYgo.Scripts.Monsters.YGO;
+
+public class ${className}: BaseMonster {
+    public override int CardId => ${Number(card.card_id)};
+}
+`;
+
+    fs.writeFileSync(scriptPath, content, { encoding: 'utf8', flag: 'wx' });
+    return scriptPath;
+}
+
+function getMonsterClassName(card) {
+    const className = `${card.en_name || ''}Minion`;
+
+    if (!card.en_name || !/^[A-Za-z_][A-Za-z0-9_]*$/.test(className)) {
+        throw new Error('Invalid monster class name');
+    }
+
+    return className;
 }
 
 async function exportCardData() {
@@ -605,14 +706,51 @@ async function exportCardData() {
         fs.mkdirSync(vygoDir, { recursive: true });
     }
 
-    const filteredCards = cards.map(card => {
-        const { raw_data, created_at, updated_at, ...rest } = card;
-        return rest;
-    });
+    const filteredCards = cards.map(toExportCardData);
 
     fs.writeFileSync(exportPath, JSON.stringify(filteredCards, null, 4), 'utf8');
 
     return { exportPath, count: filteredCards.length };
+}
+
+async function exportSingleCardData(cardId) {
+    const card = await getCards('SELECT * FROM cards WHERE card_id = ?', [cardId]);
+
+    if (!card) {
+        throw new Error('Card not found');
+    }
+
+    const vygoDir = path.join(__dirname, '..', '..', 'VYgo');
+    const exportPath = path.join(vygoDir, 'db.json');
+
+    if (!fs.existsSync(vygoDir)) {
+        fs.mkdirSync(vygoDir, { recursive: true });
+    }
+
+    const existingCards = loadJson(exportPath);
+    const exportedCards = Array.isArray(existingCards) ? existingCards : [];
+    const nextCard = toExportCardData(card);
+    const existingIndex = exportedCards.findIndex(item => Number(item.card_id) === Number(card.card_id));
+
+    if (existingIndex >= 0) {
+        exportedCards[existingIndex] = nextCard;
+    } else {
+        exportedCards.unshift(nextCard);
+    }
+
+    fs.writeFileSync(exportPath, JSON.stringify(exportedCards, null, 4), 'utf8');
+
+    return {
+        exportPath,
+        cardId: Number(card.card_id),
+        count: exportedCards.length,
+        updated: existingIndex >= 0
+    };
+}
+
+function toExportCardData(card) {
+    const { raw_data, created_at, updated_at, ...rest } = card;
+    return rest;
 }
 
 module.exports = router;
