@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Nodes.Combat;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Characters;
 using STS2RitsuLib.Scaffolding.Godot;
+using STS2RitsuLib.Scaffolding.Visuals.Definition;
 using VYgo.Scripts.Pools;
 
 namespace VYgo.Scripts;
@@ -33,7 +34,7 @@ public class RedhatCharacter : ModCharacterTemplate<RedhatCardPool, IroncladReli
 		new(
 			Scenes: new(
 				// 人物模型tscn路径。
-				VisualsPath: "res://VYgo/scenes/character/test_character.tscn",
+				// VisualsPath: "res://VYgo/scenes/character/test_character.tscn",
 				// // 能量表盘tscn路径。
 				// EnergyCounterPath: "res://Test/scenes/test_energy_counter.tscn",
 				// // 商店人物场景。
@@ -93,7 +94,12 @@ public class RedhatCharacter : ModCharacterTemplate<RedhatCardPool, IroncladReli
 			//     new (CharacterOwnedVanillaRelicModelId.YummyCookie, new("res://icon.svg")) // 美味饼干覆盖
 			// ],
 			// VanillaPotionVisualOverrides: []
-		));
+		) {
+			VisualCues = new VisualCueSet(
+				TexturePathByCue: new Dictionary<string, string>() {
+					["idle"] = "res://VYgo/images/redhat/idle.png"
+				})
+		});
 
 	// 攻击和施法动画延迟，以对齐动画
 	public override float AttackAnimDelay => 0f;
