@@ -11,4 +11,6 @@ public abstract class BaseExtraFusionCard(
     : BaseExtraCard(baseCost, rarity, target, showInCardLibrary) {
     
     protected override YgoType CardYgoType => YgoType.fusion;
+
+    public virtual int FusionMaterialCount => 2;
 }

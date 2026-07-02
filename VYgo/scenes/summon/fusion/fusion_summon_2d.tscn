@@ -1,0 +1,49 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://Core/Effects/NFusionSummon2D.cs" id="1_fusion2d"]
+[ext_resource type="Script" path="res://Core/Effects/NFusionSummonManager.cs" id="2_manager"]
+[ext_resource type="Texture2D" path="res://VYgo/scenes/summon/fusion/assets/EfFusion009.png" id="3_red"]
+[ext_resource type="Texture2D" path="res://VYgo/scenes/summon/fusion/assets/EfFusion010.png" id="4_blue"]
+[ext_resource type="Texture2D" path="res://VYgo/scenes/summon/fusion/assets/EfFusion011.png" id="5_core"]
+[ext_resource type="Texture2D" path="res://VYgo/scenes/summon/fusion/assets/EfFusion012.png" id="6_flash"]
+[ext_resource type="Texture2D" path="res://VYgo/scenes/summon/fusion/assets/EfThunder002.png" id="7_thunder"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_add"]
+blend_mode = 1
+
+[node name="FusionSummon2D" type="Node2D" node_paths=PackedStringArray("Manager")]
+z_index = 900
+script = ExtResource("1_fusion2d")
+Manager = NodePath("FusionSummonManager")
+
+[node name="FusionSummonManager" type="Node2D" parent="."]
+z_index = 900
+script = ExtResource("2_manager")
+
+[node name="VortexRed" type="Sprite2D" parent="FusionSummonManager"]
+z_index = 901
+material = SubResource("CanvasItemMaterial_add")
+texture = ExtResource("3_red")
+
+[node name="VortexBlue" type="Sprite2D" parent="FusionSummonManager"]
+z_index = 902
+material = SubResource("CanvasItemMaterial_add")
+texture = ExtResource("4_blue")
+
+[node name="VortexCore" type="Sprite2D" parent="FusionSummonManager"]
+z_index = 903
+material = SubResource("CanvasItemMaterial_add")
+texture = ExtResource("5_core")
+
+[node name="ParticleLayer" type="Node2D" parent="FusionSummonManager"]
+z_index = 904
+
+[node name="Thunder" type="Sprite2D" parent="FusionSummonManager"]
+z_index = 905
+material = SubResource("CanvasItemMaterial_add")
+texture = ExtResource("7_thunder")
+
+[node name="BurstFlash" type="Sprite2D" parent="FusionSummonManager"]
+z_index = 906
+material = SubResource("CanvasItemMaterial_add")
+texture = ExtResource("6_flash")
