@@ -140,13 +140,15 @@ public class LinkSummon() : BaseSummonCard(0, CardType.Skill, CardRarity.Basic, 
             var finalCard = cardModel.CreateClone();
             await CardPileCmd.Add(finalCard, PileType.Play);
             SFXUtil.Play("event:/vygo/sfx/link_summon_05");
+            //todo 卡牌3d飞出动画
             mainAnim2D.manager.PlayPostEffect();
+            
+            
+            //第六步，生成
             if (!finalCard.Owner.Creature.IsDead)
             {
                 await CardCmd.AutoPlay(choiceContext, finalCard, (Creature) null);
             }
-            
-            //第六步，生成
             await VFXUtil.Wait(.8f);
             mainAnim2D.QueueFreeSafely();
             if (_node != null) {
