@@ -225,6 +225,6 @@ visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 55.81208, 0)
 
 [node name="LineEffect" parent="PostLinkFX" instance=ExtResource("10_lkyu7")]
-transform = Transform3D(0.42, 0, 0, 0, 0.42, 0, 0, 0, 0.42, 0, -100.21352, 0)
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, -100.21352, 0)
 
 [editable path="PostLinkFX/LineEffect"]

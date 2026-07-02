@@ -1,5 +1,6 @@
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.PotionPools;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Models.Relics;
@@ -7,7 +8,9 @@ using MegaCrit.Sts2.Core.Nodes.Combat;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Characters;
 using STS2RitsuLib.Scaffolding.Godot;
+using STS2RitsuLib.Scaffolding.Visuals;
 using STS2RitsuLib.Scaffolding.Visuals.Definition;
+using STS2RitsuLib.Scaffolding.Visuals.StateMachine;
 using VYgo.Scripts.Pools;
 
 namespace VYgo.Scripts;
@@ -15,7 +18,14 @@ namespace VYgo.Scripts;
 [RegisterCharacter]
 public class RedhatCharacter : ModCharacterTemplate<RedhatCardPool, IroncladRelicPool, IroncladPotionPool>
 {
-	// 角色名称颜色
+	
+	protected override ModAnimStateMachine? SetupCustomCombatAnimationStateMachine(Node visualsRoot, CharacterModel character) {
+		return ModAnimStateMachines.StandardCue(
+			visualsRoot,
+			character,
+			idleName: "idle");
+	}
+
 	public override Color NameColor => new(0.5f, 0.5f, 1f);
 	// 能量图标轮廓颜色
 	public override Color EnergyLabelOutlineColor => new(0.5f, 0.5f, 1f);
@@ -34,7 +44,7 @@ public class RedhatCharacter : ModCharacterTemplate<RedhatCardPool, IroncladReli
 		new(
 			Scenes: new(
 				// 人物模型tscn路径。
-				// VisualsPath: "res://VYgo/scenes/character/test_character.tscn",
+				VisualsPath: "res://VYgo/scenes/character/test_character.tscn",
 				// // 能量表盘tscn路径。
 				// EnergyCounterPath: "res://Test/scenes/test_energy_counter.tscn",
 				// // 商店人物场景。
@@ -95,10 +105,9 @@ public class RedhatCharacter : ModCharacterTemplate<RedhatCardPool, IroncladReli
 			// ],
 			// VanillaPotionVisualOverrides: []
 		) {
-			VisualCues = new VisualCueSet(
-				TexturePathByCue: new Dictionary<string, string>() {
-					["idle"] = "res://VYgo/images/redhat/idle.png"
-				})
+			VisualCues = ModVisualCues.CueSet()
+				.Single("idle","res://VYgo/images/redhat/idle.png")
+				.Build()
 		});
 
 	// 攻击和施法动画延迟，以对齐动画
