@@ -23,11 +23,10 @@ using VYgo.Utils;
 namespace VYgo.Scripts.Cards.Category.Common;
 
 [RegisterCard(typeof(RedhatCardPool))]
-[RegisterCharacterStarterCard(typeof(RedhatCharacter), 3)]
+[RegisterCharacterStarterCard(typeof(RedhatCharacter), 1)]
 public class LinkSummon() : BaseSummonCard(0, CardType.Skill, CardRarity.Basic, TargetType.None) {
 
     public const string LINK_SUMMON_2D_ASSETS = "res://VYgo/scenes/summon/link/link_summon_2d.tscn";
-    
     
     private async Task MaterialSacrifice(Creature material) {
         var nCreature = material.GetCreatureNode();

@@ -15,7 +15,8 @@ public abstract class BaseSummonCard(
     : ModCardTemplate(baseCost, type, rarity, target, showInCardLibrary) {
 
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"res://VYgo/images/cards/{GetType().Name}.png"
+        PortraitPath: $"res://VYgo/images/cards/{GetType().Name}.png",
+        FramePath: $"res://VYgo/images/frame/card_frame_spell.png"
     );
     
     
