@@ -9,6 +9,7 @@ public enum YgoType {
     spell,
     trap,
     link,
+    fusion,
     xyz,
 }
 
