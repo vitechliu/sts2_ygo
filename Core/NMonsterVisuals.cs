@@ -29,7 +29,8 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 	public override void _Ready() {
 		base._Ready();
 		mainSprite = GetNode<Sprite2D>("./Visuals/Image");
-		VFXUtil.PlaySimple(SUMMON_VFX_PATH, VfxSpawnPosition.GlobalPosition, 3);
+		var node = VFXUtil.PlaySimple(SUMMON_VFX_PATH, VfxSpawnPosition.GlobalPosition, 3);
+		if (node != null) VFXUtil.ReplayAllParticles(node);
 	}
 
 	public const string MATERIAL_VFX_PATH = "res://VYgo/scenes/vfx/summon/vfx_link_summon_material.tscn";
