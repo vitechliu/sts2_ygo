@@ -66,3 +66,5 @@ env.props
 /Web/node_modules
 /docs
 /addons
+
+.direnv/
