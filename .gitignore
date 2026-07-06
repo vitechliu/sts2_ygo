@@ -68,3 +68,4 @@ env.props
 /addons
 
 .direnv/
+.omo/
