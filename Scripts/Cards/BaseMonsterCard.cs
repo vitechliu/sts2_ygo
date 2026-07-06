@@ -42,7 +42,7 @@ public abstract class BaseMonsterCard(
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         var c = this.YgoGetMonster();
         if (c == null) return;
-        Entry.Logger.Info("findMonster");
+        // Entry.Logger.Info("findMonster");
         var summonedCreature = await MinionUtil.AddMinionInstant(
             c.GetType(),
             choiceContext,
