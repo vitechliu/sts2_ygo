@@ -17,12 +17,9 @@ using VYgo.Core.Cards;
 using VYgo.Core.Effects;
 using VYgo.Scripts;
 using VYgo.Scripts.Cards;
-using VYgo.Scripts.Monsters;
 using VYgo.Utils;
 
 namespace VYgo.Core;
-
-public sealed record SummonMaterial(CardModel? Card, Creature? Creature = null);
 
 public sealed record FusionSummonRequest(
     CardModel SourceCard,
@@ -113,11 +110,18 @@ public static class SummonUtil {
             LogName: "LinkSummon"
         ));
     }
-
-    public static IReadOnlyList<SummonMaterial> SelectFieldMonsterMaterials(Player owner, int? count = null) {
+    public static IReadOnlyList<SummonMaterial> SelectFieldMonsterMaterials(
+        Player owner,
+        int? count = null,
+        Func<SummonMaterial, bool>? filter = null
+    ) {
         IEnumerable<SummonMaterial> materials = owner.Creature.Pets
-            .Where(creature => creature.Monster is BaseMonster)
-            .Select(CreateFieldMonsterMaterial);
+            .Where(SummonMaterial.IsFieldMonster)
+            .Select(SummonMaterial.FromFieldMonster);
+
+        if (filter != null) {
+            materials = materials.Where(filter);
+        }
 
         if (count is { } materialCount) {
             materials = materials.Take(materialCount);
@@ -126,13 +130,34 @@ public static class SummonUtil {
         return materials.ToList();
     }
 
-    public static SummonMaterial CreateFieldMonsterMaterial(Creature creature) {
-        CardModel? card = null;
-        if (creature.Monster is BaseMonster monster) {
-            card = monster.YgoGetCard();
+    public static IReadOnlyList<SummonMaterial> SelectFieldAndHandMonsterMaterials(
+        Player owner,
+        int count,
+        Func<SummonMaterial, bool>? filter = null
+    ) {
+        List<SummonMaterial> fieldMaterials = owner.Creature.Pets
+            .Where(SummonMaterial.IsFieldMonster)
+            .Select(SummonMaterial.FromFieldMonster)
+            .Where(material => filter?.Invoke(material) ?? true)
+            .ToList();
+
+        int requiredFieldMaterials = Math.Max(0, owner.MinionCount() + 1 - MinionUtil.MAX_MINION_COUNT);
+        if (fieldMaterials.Count < requiredFieldMaterials) {
+            return fieldMaterials;
         }
 
-        return new SummonMaterial(card, creature);
+        List<SummonMaterial> selected = fieldMaterials.Take(count).ToList();
+        if (selected.Count >= count) {
+            return selected;
+        }
+
+        IEnumerable<SummonMaterial> handMaterials = PileType.Hand.GetPile(owner).Cards
+            .Where(SummonMaterial.IsHandMonsterCard)
+            .Select(SummonMaterial.FromHandMonsterCard)
+            .Where(material => filter?.Invoke(material) ?? true);
+
+        selected.AddRange(handMaterials.Take(count - selected.Count));
+        return selected;
     }
 
     public static async Task ExecuteExtraDeckSummon(ExtraDeckSummonRequest request) {
@@ -178,7 +203,12 @@ public static class SummonUtil {
                 .OfType<CardModel>()
                 .ToList();
 
-            await (request.ConsumeMaterials ?? SacrificeCreatureMaterials)(materials);
+            if (request.ConsumeMaterials != null) {
+                await request.ConsumeMaterials(materials);
+            }
+            else {
+                await ConsumeSummonMaterials(request.ChoiceContext, materials);
+            }
 
             Vector2 screenCenterPos = NGame.Instance.GetViewportRect().Size * 0.5f;
             CardModel finalCard = selectedExtraCard.CreateClone();
@@ -235,25 +265,36 @@ public static class SummonUtil {
         }
 
         IReadOnlyList<SummonMaterial> materials = selectMaterials(linkCard, coreCard).ToList();
-        if (materials.Count <= 0) {
+        if (!linkCard.HasValidLinkMaterials(coreCard, materials)) {
             return new SummonSelection(materials, $"not enough materials for {linkCard.GetType().Name}");
         }
 
         return new SummonSelection(materials);
     }
 
-    private static async Task SacrificeCreatureMaterials(IReadOnlyList<SummonMaterial> materials) {
-        List<Task> sacrificeTasks = new();
+    private static async Task ConsumeSummonMaterials(
+        PlayerChoiceContext choiceContext,
+        IReadOnlyList<SummonMaterial> materials
+    ) {
+        List<Task> consumeTasks = new();
+        bool hasFieldMaterial = false;
         foreach (SummonMaterial material in materials) {
             if (material.Creature != null) {
-                sacrificeTasks.Add(TaskHelper.RunSafely(MaterialSacrifice(material.Creature)));
+                hasFieldMaterial = true;
+                consumeTasks.Add(TaskHelper.RunSafely(MaterialSacrifice(material.Creature)));
+            }
+            else if (material.Card != null) {
+                consumeTasks.Add(TaskHelper.RunSafely(CardCmd.Exhaust(choiceContext, material.Card)));
             }
         }
 
-        if (sacrificeTasks.Count <= 0) return;
+        if (consumeTasks.Count <= 0) return;
 
-        SFXUtil.Play("event:/vygo/sfx/material_shine");
-        await Task.WhenAll(sacrificeTasks);
+        if (hasFieldMaterial) {
+            SFXUtil.Play("event:/vygo/sfx/material_shine");
+        }
+
+        await Task.WhenAll(consumeTasks);
     }
 
     private static async Task MaterialSacrifice(Creature material) {

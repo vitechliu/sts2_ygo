@@ -2,31 +2,28 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
-using VYgo.Core.Cards;
 using VYgo.Scripts.Pools;
 
 namespace VYgo.Scripts.Cards.Category.Common;
 
 [RegisterCard(typeof(RedhatCardPool))]
 [RegisterCharacterStarterCard(typeof(RedhatCharacter), 1)]
-public class LinkSummon() : BaseSummonCard(0, CardType.Skill, CardRarity.Basic, TargetType.None) {
+public class FusionSubstitute()
+    : BaseVYgoCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.None) {
+    protected override YgoType CardYgoType => YgoType.spell;
+
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        return SummonUtil.ExecuteLinkSummon(new LinkSummonRequest(
+        return SummonUtil.ExecuteFusionSummon(new FusionSummonRequest(
             SourceCard: this,
             Owner: Owner,
             ChoiceContext: choiceContext,
             SelectionPrompt: SelectionScreenPrompt,
-            SelectMaterials: SelectLinkMaterials
+            SelectMaterials: fusionCard => SummonUtil.SelectFieldMonsterMaterials(Owner, fusionCard.FusionMaterialCount)
         ));
     }
 
-    private IReadOnlyList<SummonMaterial> SelectLinkMaterials(BaseExtraLinkCard linkCard, CoreCard coreCard) {
-        return SummonUtil.SelectFieldMonsterMaterials(
-            Owner,
-            linkCard.GetLinkMaterialCount(coreCard),
-            linkCard.CanUseLinkMaterial
-        );
-    }
+    public override int CardId => 74335036;
 }

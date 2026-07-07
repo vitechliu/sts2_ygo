@@ -12,6 +12,13 @@ public abstract class BaseVYgoCard(
     bool showInCardLibrary = true)
     : ModCardTemplate(baseCost, type, rarity, target, showInCardLibrary),
         IYgoId {
+
+    //字段
+    public virtual List<YgoArchetypes> ArchetypesList { get; set; } = [];
+    
+    public bool ContainArchetype(YgoArchetypes archetype) => ArchetypesList.Contains(archetype);
+    
+    
     public abstract int CardId { get; }
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://VYgo/images/cards/{CardId}.png",

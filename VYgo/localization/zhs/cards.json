@@ -21,12 +21,15 @@
     "V_YGO_CARD_SP_LITTLE_KNIGHT.title": "S：P小夜",
     "V_YGO_CARD_SP_LITTLE_KNIGHT.description": "[gold]连接召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]效果怪兽2只。[/aqua]\n[gold]召唤[/gold]:对随机一名敌人造成7点[gold]虚空[/gold]伤害。",
     "V_YGO_CARD_MONSTER_REBORN.title": "死者苏生",
-    "V_YGO_CARD_MONSTER_REBORN.description": "①：以自己或对方的墓地1只怪兽为对象才能发动。那只怪兽在自己场上特殊召唤。",
+    "V_YGO_CARD_MONSTER_REBORN.description": "从[gold]弃牌堆[/gold]复活1只怪兽。",
+    "V_YGO_CARD_MONSTER_REBORN.selectionScreenPrompt": "请选择需要复活的怪兽。",
     "V_YGO_CARD_CYBER_DRAGON_ZWEI.title": "电子龙二型",
-    "V_YGO_CARD_CYBER_DRAGON_ZWEI.description": "①：这张卡的卡名只要在墓地存在当作「电子龙」使用。\r\n②：1回合1次，把手卡1张魔法卡给对方观看才能发动。这张卡的卡名直到结束阶段当作「电子龙」使用。\r\n③：这张卡向对方怪兽攻击的伤害步骤内，这张卡的攻击力上升300。",
+    "V_YGO_CARD_CYBER_DRAGON_ZWEI.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n攻击后，获得3力量。",
     "V_YGO_CARD_CYBER_END_DRAGON.title": "电子终结龙",
-    "V_YGO_CARD_CYBER_END_DRAGON.description": "「电子龙」＋「电子龙」＋「电子龙」\r\n这张卡的融合召唤不用上记的卡不能进行。\r\n①：这张卡向守备表示怪兽攻击的场合，给与对方为攻击力超过那个守备力的数值的战斗伤害。",
+    "V_YGO_CARD_CYBER_END_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])",
     "V_YGO_CARD_POLYMERIZATION.title": "融合",
-    "V_YGO_CARD_POLYMERIZATION.description": "①：自己的手卡·场上的怪兽作为融合素材，把1只融合怪兽融合召唤。",
-    "V_YGO_CARD_POLYMERIZATION.selectionScreenPrompt": "请选择需要召唤的卡牌。"
+    "V_YGO_CARD_POLYMERIZATION.description": "以手卡·场上的怪兽作为融合素材，进行一次[gold]融合召唤[/gold]。",
+    "V_YGO_CARD_POLYMERIZATION.selectionScreenPrompt": "请选择需要召唤的卡牌。",
+    "V_YGO_CARD_FUSION_SUBSTITUTE.title": "置换融合",
+    "V_YGO_CARD_FUSION_SUBSTITUTE.description": "以场上的怪兽作为融合素材，进行一次[gold]融合召唤[/gold]。若成功召唤，抽1张牌"
 }

@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MinionLib.Commands;
 using MinionLib.Minion;
 using STS2RitsuLib.Interop.AutoRegistration;
+using VYgo.Core;
 using VYgo.Scripts.Monsters.YGO;
 using VYgo.Scripts.Pools;
 
@@ -34,4 +35,8 @@ public class SPLittleKnight() : BaseExtraLinkCard(energyCost,rarity, targetType,
     public override int BaseLifeVar => 1;
     public override int UpgradeAttackVar => 5;
     public override int UpgradeLifeVar => 0;
+
+    public override bool CanUseLinkMaterial(SummonMaterial material) {
+        return material.IsEffectMonster;
+    }
 }

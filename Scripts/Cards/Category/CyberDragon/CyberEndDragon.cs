@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
+using VYgo.Core;
 using VYgo.Scripts.Pools;
 using VYgo.Scripts.Var;
 
@@ -21,6 +22,11 @@ public class CyberEndDragon() : BaseExtraFusionCard(energyCost, rarity, targetTy
     // protected override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>();{
     //     HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
     // }
+
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [
+        YgoKeywords.Piercing
+    ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new AttackVar(25),
