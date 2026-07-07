@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.HoverTips;
 using VYgo.Core;
 using VYgo.Core.Cards;
 
@@ -12,6 +13,11 @@ public abstract class BaseExtraLinkCard(
     : BaseExtraCard(baseCost, rarity, target, showInCardLibrary) {
     
     protected override YgoType CardYgoType => YgoType.link;
+    
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        BaseSummonHoverTip,
+        YgoHoverTipConst.LinkSummon()
+    ];
 
     public virtual int GetLinkMaterialCount(CoreCard coreCard) {
         return Math.Max(1, coreCard.LinkCount ?? 1);

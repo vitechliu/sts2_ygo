@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
 using STS2RitsuLib.Interop.AutoRegistration;
+using VYgo.Core;
 using VYgo.Scripts.Pools;
 
 namespace VYgo.Scripts.Cards.Category.CyberDragon;
@@ -8,6 +9,8 @@ namespace VYgo.Scripts.Cards.Category.CyberDragon;
 [RegisterCharacterStarterCard(typeof(RedhatCharacter), 2)]
 public class CyberDragonCore() : BaseMonsterCard(energyCost,rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 23893227;
+    
+    public override List<YgoArchetypes> ArchetypesList => [YgoArchetypes.Cyber, YgoArchetypes.CyberDragon];
 
     private const int energyCost = 0;
     private const CardRarity rarity = CardRarity.Common;

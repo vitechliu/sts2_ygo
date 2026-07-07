@@ -67,7 +67,7 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
     }
 
     private async Task ReturnCard(Player player, BaseVYgoCard card) {
-        await CardPileCmd.AddGeneratedCardToCombat(CombatState.CreateCard(card, player), PileType.Discard,  player);
+        await CardPileCmd.AddGeneratedCardToCombat(CombatState.CreateCard(card, player), PileType.Discard, player);
         // CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(CombatState.CreateCard(card, player), PileType.Discard,  player), 0f);
     }
 }

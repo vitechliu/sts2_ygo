@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MinionLib.Commands;
 using MinionLib.Minion;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -13,6 +14,11 @@ namespace VYgo.Scripts.Cards.Category.Common;
 [RegisterCharacterStarterCard(typeof(RedhatCharacter), 1)]
 public class SPLittleKnight() : BaseExtraLinkCard(energyCost,rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 29301450;
+    
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        YgoHoverTipConst.LinkSummon(),
+        YgoHoverTipConst.VoidDamage()
+    ];
     
     private const int energyCost = 0;
     private const CardRarity rarity = CardRarity.Common;
