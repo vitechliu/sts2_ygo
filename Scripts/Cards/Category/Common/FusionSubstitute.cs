@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
@@ -12,8 +13,10 @@ namespace VYgo.Scripts.Cards.Category.Common;
 [RegisterCard(typeof(RedhatCardPool))]
 [RegisterCharacterStarterCard(typeof(RedhatCharacter), 1)]
 public class FusionSubstitute()
-    : BaseVYgoCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.None) {
-    protected override YgoType CardYgoType => YgoType.spell;
+    : BaseSpellCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.None) {
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        YgoHoverTipConst.FusionSummon()
+    ];
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         return SummonUtil.ExecuteFusionSummon(new FusionSummonRequest(

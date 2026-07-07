@@ -16,8 +16,8 @@ public abstract class BaseMonsterCard(
     TargetType target,
     bool showInCardLibrary = true)
     : BaseVYgoCard(baseCost, CardType.Skill, rarity, target, showInCardLibrary) {
-    protected List<IHoverTip> BaseSummonHoverTips => [YgoHoverTipConst.Summon(this)];
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips => BaseSummonHoverTips;
+    protected IHoverTip BaseSummonHoverTip => YgoHoverTipConst.Summon(this);
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [BaseSummonHoverTip];
 
     //最大随从数量限制
     protected override bool IsPlayable => Owner.MinionCount() < MinionUtil.MAX_MINION_COUNT;

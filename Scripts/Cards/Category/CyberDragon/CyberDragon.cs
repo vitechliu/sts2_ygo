@@ -1,7 +1,9 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
+using VYgo.Core;
 using VYgo.Scripts.Pools;
 using VYgo.Utils;
 
@@ -34,6 +36,9 @@ public class CyberDragon() : BaseMonsterCard(energyCost, rarity, targetType, sho
     void FlushCost() {
         EnergyCost.SetUntilPlayed(Active ? 0 : CanonicalEnergyCost);
     }
+
+    public override List<YgoArchetypes> ArchetypesList => [YgoArchetypes.Cyber, YgoArchetypes.CyberDragon];
+
     public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw) {
         if (card != this) return Task.CompletedTask;
         FlushCost();
@@ -50,4 +55,9 @@ public class CyberDragon() : BaseMonsterCard(energyCost, rarity, targetType, sho
         FlushCost();
         return Task.CompletedTask;
     }
+    
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        BaseSummonHoverTip,
+        YgoHoverTipConst.SpecialSummon()
+    ];
 }
