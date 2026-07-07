@@ -9,7 +9,6 @@ using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Characters;
 using STS2RitsuLib.Scaffolding.Godot;
 using STS2RitsuLib.Scaffolding.Visuals;
-using STS2RitsuLib.Scaffolding.Visuals.Definition;
 using STS2RitsuLib.Scaffolding.Visuals.StateMachine;
 using VYgo.Scripts.Pools;
 
@@ -129,7 +128,8 @@ public class RedhatCharacter : ModCharacterTemplate<RedhatCardPool, IroncladReli
 #pragma warning disable CS0672 // Member overrides obsolete member
 	protected override IEnumerable<Type> StartingRelicTypes => [
 #pragma warning restore CS0672 // Member overrides obsolete member
-		typeof(BurningBlood)
+		typeof(BagOfPreparation),
+		typeof(BagOfPreparation),
 	];
 
 	// 攻击建筑师的攻击特效列表

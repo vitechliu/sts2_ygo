@@ -21,7 +21,7 @@ public class Polymerization()
             Owner: Owner,
             ChoiceContext: choiceContext,
             SelectionPrompt: SelectionScreenPrompt,
-            SelectMaterials: fusionCard => SummonUtil.SelectFieldMonsterMaterials(Owner, fusionCard.FusionMaterialCount)
+            SelectMaterials: fusionCard => SummonUtil.SelectFieldAndHandMonsterMaterials(Owner, fusionCard.FusionMaterialCount)
         ));
     }
 

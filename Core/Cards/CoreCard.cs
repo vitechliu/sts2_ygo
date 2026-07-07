@@ -31,4 +31,6 @@ public record CoreCard(
             return linkCount;
         }
     }
+
+    public bool IsEffectMonster => Types != null && Types.Contains("效果");
 }

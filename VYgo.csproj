@@ -49,6 +49,7 @@
         <Content Include="README.md"/>
         <Content Include="Scripts\Cards\.gdignore"/>
         <Content Include="VYgo\localization\zhs\cards.json"/>
+        <Content Include="VYgo\localization\zhs\card_keywords.json" />
         <Content Include="VYgo\localization\zhs\characters.json"/>
         <Content Include="VYgo\localization\zhs\powers.json"/>
         <Content Include="VYgo\localization\zhs\static_hover_tips.json"/>
@@ -58,6 +59,7 @@
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Core\Summon\" />
+        <Folder Include="Scripts\Misc\" />
         <Folder Include="Scripts\Powers\" />
         <Folder Include="Web\"/>
         <Folder Include="VYgo\images\cards\"/>

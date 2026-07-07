@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
 using VYgo.Core;
+using VYgo.Core.Cards;
 
 namespace VYgo.Scripts.Cards;
 
@@ -11,4 +12,16 @@ public abstract class BaseExtraLinkCard(
     : BaseExtraCard(baseCost, rarity, target, showInCardLibrary) {
     
     protected override YgoType CardYgoType => YgoType.link;
+
+    public virtual int GetLinkMaterialCount(CoreCard coreCard) {
+        return Math.Max(1, coreCard.LinkCount ?? 1);
+    }
+
+    public virtual bool CanUseLinkMaterial(SummonMaterial material) {
+        return true;
+    }
+
+    public virtual bool HasValidLinkMaterials(CoreCard coreCard, IReadOnlyList<SummonMaterial> materials) {
+        return materials.Count >= GetLinkMaterialCount(coreCard);
+    }
 }

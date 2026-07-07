@@ -10,7 +10,7 @@ using VYgo.Scripts.Pools;
 
 namespace VYgo.Scripts.Cards.Test;
 
-[RegisterCard(typeof(RedhatCardPool))]
+// [RegisterCard(typeof(RedhatCardPool))]
 // [RegisterCharacterStarterCard(typeof(RedhatCharacter), 1)]
 public class Test3DCard() : BasePlaceholder(CardType.Skill, CardRarity.Common) {
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
