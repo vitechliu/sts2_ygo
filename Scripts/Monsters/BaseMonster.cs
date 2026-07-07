@@ -20,7 +20,7 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
     public override string? CustomVisualsPath => $"res://VYgo/scenes/monsters/{CardId}.tscn";
 
     
-    protected NMonsterVisuals? Visuals => Creature?.CreateVisuals() as NMonsterVisuals;
+    protected NMonsterVisuals? Visuals => Creature?.GetCreatureNode()?.Visuals as NMonsterVisuals;
     
     //防止多次死亡结算
     protected bool PileSent;
@@ -38,7 +38,7 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
         PileSent = false;
         if (options.MaxHp is { } maxHp)
             await CreatureCmd.SetMaxAndCurrentHp(Creature, maxHp); // 设置血量
-        Visuals?.PlaySummonVfx();
+        Visuals?.OnSummon();
         if (IsGuardian)
             await PowerCmd.Apply<MinionGuardianPower>(choiceContext, Creature, 1m, owner.Creature, options.Source);
         if (options.PrimaryStatAmount is { } strength && strength > 0m)

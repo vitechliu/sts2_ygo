@@ -24,9 +24,20 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 		}
 		""";
 
-	protected virtual void OnSummon() {}
+	public virtual void OnSummon() {
+		PlaySummonVfx();
+		//下一帧
+		// ExecuteOnNextFrame();
+	}
 
-	public void PlaySummonVfx() {
+	// protected async void ExecuteOnNextFrame() {
+	// 	// 1. 等待 SceneTree 触发 process_frame 信号（即下一帧）
+	// 	await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+	// 	// 2. 这里写你要在下一帧执行的代码
+	// 	PlaySummonVfx();
+	// }
+
+	protected void PlaySummonVfx() {
 		var node = VFXUtil.PlaySimple(SUMMON_VFX_PATH, VfxSpawnPosition.GlobalPosition, 3);
 		if (node != null) {
 			Entry.Logger.Info("Play NMonsterSummon VFX: " + VfxSpawnPosition.GlobalPosition);
