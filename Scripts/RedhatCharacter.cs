@@ -105,7 +105,7 @@ public class RedhatCharacter : ModCharacterTemplate<RedhatCardPool, IroncladReli
 			// VanillaPotionVisualOverrides: []
 		) {
 			VisualCues = ModVisualCues.CueSet()
-				.Single("idle","res://VYgo/images/redhat/idle.png")
+				.Single("idle","res://VYgo/images/redhat/idle_q.png")
 				.Build()
 		});
 
