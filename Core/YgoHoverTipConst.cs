@@ -4,6 +4,8 @@ using VYgo.Scripts.Cards;
 namespace VYgo.Core;
 
 public static class YgoHoverTipConst {
+    
+    
     public static IHoverTip Summon(BaseMonsterCard? card = null) {
         var str = "V_YGO_SUMMON";
         var title = HoverTipFactory.L10NStatic(str + ".title");
@@ -22,6 +24,9 @@ public static class YgoHoverTipConst {
         var title = HoverTipFactory.L10NStatic(str + ".title");
         var description = HoverTipFactory.L10NStatic(str + ".description");
         return new HoverTip(title, description);
+    }
+    public static IHoverTip SummonNormal() {
+        return Base("SUMMON_NORMAL");
     }
     public static IHoverTip SpecialSummon() {
         return Base("SPECIAL_SUMMON");

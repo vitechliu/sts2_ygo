@@ -3,7 +3,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MinionLib.Minion;
 using MinionLib.Powers;
@@ -47,27 +46,34 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
 
     public abstract int CardId { get; }
 
-    public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength) {
+    public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength) {
         //怪兽死亡后，对应的怪兽卡置入弃牌堆
         if (!PileSent && creature == Creature) {
+            PileSent = true;
             Entry.Logger.Info("AfterDeath:" + GetType().Name);
             var card = this.YgoGetCard();
             if (card != null) {
                 var owner = creature.PetOwner;
                 if (owner != null) {
-                    TaskHelper.RunSafely(ReturnCard(owner, card));
+                    await ReturnCard(owner, card);
                 }
             }
             else {
                 Entry.Logger.Error("ReturnCardError: No Card found for " + GetType().Name);
             }
-            PileSent = true;
         }
-        return base.AfterDeath(choiceContext, creature, wasRemovalPrevented, deathAnimLength);
+        await base.AfterDeath(choiceContext, creature, wasRemovalPrevented, deathAnimLength);
     }
 
     private async Task ReturnCard(Player player, BaseVYgoCard card) {
-        await CardPileCmd.AddGeneratedCardToCombat(CombatState.CreateCard(card, player), PileType.Discard, player);
+        var result = await CardPileCmd.AddGeneratedCardToCombat(
+            CombatState.CreateCard(card, player),
+            PileType.Discard,
+            player
+        );
+        if (result.success && result.oldPile == null && result.cardAdded.Pile?.Type == PileType.Discard) {
+            result.cardAdded.Pile.InvokeCardAddFinished();
+        }
         // CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(CombatState.CreateCard(card, player), PileType.Discard,  player), 0f);
     }
 }

@@ -15,7 +15,7 @@ public class MonsterReborn()
     : BaseSpellCard(0, CardType.Skill, CardRarity.Basic, TargetType.None) {
     
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        YgoHoverTipConst.Summon()
+        YgoHoverTipConst.SummonNormal()
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
