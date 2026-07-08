@@ -10,6 +10,7 @@ using STS2RitsuLib.Interop;
 using System.Text.Json;
 using STS2RitsuLib.Audio;
 using VYgo.Core;
+using VYgo.Core.CardPools;
 using VYgo.Core.Cards;
 using VYgo.Scripts.Cards;
 using VYgo.Scripts.Monsters;
@@ -37,6 +38,7 @@ public static class Entry {
     public static void Initialize() {
         var assembly = Assembly.GetExecutingAssembly();
         Logger = RitsuLibFramework.CreateLogger(ModId);
+        RegisterCharacterCardPoolLinks();
         var harmony = new Harmony("sts2.vitech." + ModId.ToLowerInvariant());
         harmony.PatchAll();
         
@@ -51,6 +53,12 @@ public static class Entry {
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
         
         Logger.Info("VYgo initialized.");
+    }
+
+    static void RegisterCharacterCardPoolLinks() {
+        // Register extra card pools here. The character's own CardPool is always included automatically.
+        // Example:
+        // CharacterCardPoolLinks.Register<RedhatCharacter, AnotherRedhatCardPool>();
     }
 
     
