@@ -3,6 +3,8 @@
   "V_YGO_CARDPILE_EXTRA_PILE.description": "携带的额外卡组",
   "V_YGO_CARDPILE_EXTRA_PILE.empty": "额外卡组是空的",
 
+  "V_YGO_SUMMON_NORMAL.title": "召唤",
+  "V_YGO_SUMMON_NORMAL.description": "将卡牌作为怪兽召唤到场上，怪兽死亡后卡牌进入弃牌堆。",
   "V_YGO_SUMMON.title": "召唤({Attack}/{Life})",
   "V_YGO_SUMMON.description": "以[blue]{Attack}[/blue]初始攻击、[blue]{Life}[/blue]点生命值召唤怪兽。",
   "V_YGO_SPECIAL_SUMMON.title": "特召",
