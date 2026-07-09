@@ -19,7 +19,11 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
     public override int MaxInitialHp => 1; // 作为敌方方怪物生成时的血量，通常无需在意
     public override string? CustomVisualsPath => $"res://VYgo/scenes/monsters/{CardId}.tscn";
 
-    
+
+    public virtual void SetUpgraded() {
+        Entry.Logger.Info("SetUpgraded:" + Title);
+    }
+
     protected NMonsterVisuals? Visuals => Creature?.GetCreatureNode()?.Visuals as NMonsterVisuals;
     
     //防止多次死亡结算
@@ -34,6 +38,13 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
         set;
     } = true;
 
+
+    public virtual Task OnSummonYgo(
+        PlayerChoiceContext choiceContext,
+        Player owner,
+        MinionSummonOptions options) {
+        return Task.CompletedTask;
+    }
     // 召唤时执行的代码，通常用来设置血量、应用初始能力等，options 是在召唤随从时传入的参数
     public override async Task OnSummon(
         PlayerChoiceContext choiceContext,
@@ -51,6 +62,7 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
         if (BasicAttackAction) {
             await PowerCmd.Apply<TargetingAttackAction>(choiceContext, Creature, 1m, owner.Creature, options.Source, true);
         }
+        await OnSummonYgo(choiceContext, owner, options);
     }
 
     public abstract int CardId { get; }
@@ -59,7 +71,7 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
         //怪兽死亡后，对应的怪兽卡置入弃牌堆
         if (!PileSent && creature == Creature) {
             PileSent = true;
-            Entry.Logger.Info("AfterDeath:" + GetType().Name);
+            // Entry.Logger.Info("AfterDeath:" + GetType().Name);
             var card = this.YgoGetCard();
             if (card != null) {
                 var owner = creature.PetOwner;

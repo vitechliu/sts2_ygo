@@ -40,4 +40,8 @@ public static class YgoHoverTipConst {
     public static IHoverTip FusionSummon() {
         return Base("FUSION_SUMMON");
     }
+    //送墓
+    public static IHoverTip SendToGraveyard() {
+        return Base("SEND_TO_GRAVYYARD");
+    }
 }
