@@ -8,6 +8,7 @@ using MinionLib.Minion;
 using MinionLib.Powers;
 using VYgo.Core;
 using VYgo.RitsuAdapters;
+using VYgo.Scripts.Actions;
 using VYgo.Scripts.Cards;
 
 namespace VYgo.Scripts.Monsters;
@@ -27,6 +28,11 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
         get;
         set;
     } = true;
+    
+    public virtual bool BasicAttackAction {
+        get;
+        set;
+    } = true;
 
     // 召唤时执行的代码，通常用来设置血量、应用初始能力等，options 是在召唤随从时传入的参数
     public override async Task OnSummon(
@@ -39,9 +45,12 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
             await CreatureCmd.SetMaxAndCurrentHp(Creature, maxHp); // 设置血量
         Visuals?.OnSummon();
         if (IsGuardian)
-            await PowerCmd.Apply<MinionGuardianPower>(choiceContext, Creature, 1m, owner.Creature, options.Source);
+            await PowerCmd.Apply<MinionGuardianPower>(choiceContext, Creature, 1m, owner.Creature, options.Source, true);
         if (options.PrimaryStatAmount is { } strength && strength > 0m)
             await PowerCmd.Apply<StrengthPower>(choiceContext, Creature, strength, owner.Creature, options.Source);
+        if (BasicAttackAction) {
+            await PowerCmd.Apply<TargetingAttackAction>(choiceContext, Creature, 1m, owner.Creature, options.Source, true);
+        }
     }
 
     public abstract int CardId { get; }
