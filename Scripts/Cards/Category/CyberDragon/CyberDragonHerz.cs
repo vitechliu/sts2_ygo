@@ -1,0 +1,28 @@
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.HoverTips;
+using STS2RitsuLib.Interop.AutoRegistration;
+using VYgo.Core;
+using VYgo.Scripts.Pools;
+
+namespace VYgo.Scripts.Cards.Category.CyberDragon;
+
+[RegisterCard(typeof(RedhatCardPool))]
+[RegisterCharacterStarterCard(typeof(RedhatCharacter), 2)]
+public class CyberDragonHerz() : BaseMonsterCard(energyCost,rarity, targetType, shouldShowInCardLibrary) {
+    public override int CardId => 56364287;
+    
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        BaseSummonHoverTip,
+        YgoHoverTipConst.SendToGraveyard()
+    ];
+    
+    public override List<YgoArchetypes> ArchetypesList => [YgoArchetypes.Cyber, YgoArchetypes.CyberDragon];
+
+    private const int energyCost = 0;
+    private const CardRarity rarity = CardRarity.Common;
+    private const TargetType targetType = TargetType.None;
+    private const bool shouldShowInCardLibrary = true;
+
+    public override int BaseAttackVar => 2;
+    public override int BaseLifeVar => 1;
+}

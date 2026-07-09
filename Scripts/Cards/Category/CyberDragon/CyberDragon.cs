@@ -24,8 +24,8 @@ public class CyberDragon() : BaseMonsterCard(energyCost, rarity, targetType, sho
     //     HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
     // }
 
-    public override int BaseAttackVar => 7;
-    public override int BaseLifeVar => 5;
+    public override int BaseAttackVar => 6;
+    public override int BaseLifeVar => 4;
     public override int UpgradeAttackVar => 2;
     public override int UpgradeLifeVar => 1;
 

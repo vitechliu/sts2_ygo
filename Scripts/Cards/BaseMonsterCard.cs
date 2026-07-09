@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using VYgo.Core.Effects;
 using MinionLib.Minion;
 using VYgo.Core;
+using VYgo.Scripts.Monsters;
 using VYgo.Scripts.Var;
 using VYgo.Utils;
 
@@ -54,6 +55,9 @@ public abstract class BaseMonsterCard(
                 Position: MinionPosition.Front
             )
         );
+        if (IsUpgraded && summonedCreature.Monster is BaseMonster m) {
+            m.SetUpgraded();
+        }
         await MonsterCardVfx.PlaySummonCardFly(this, summonedCreature);
     }
 
