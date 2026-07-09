@@ -30,10 +30,10 @@ public static class CharacterCardPoolMappingPatches {
     public static void ModifyCardRewardCreationOptionsPostfix(Player player, ref CardCreationOptions __result) {
         if (!CharacterCardPoolLinks.HasExtraPools(player.Character)) return;
         if (__result.Flags.HasFlag(CardCreationFlags.NoCardPoolModifications)) return;
-        if (__result.CustomCardPool != null) return;
+        // if (__result.CustomCardPool != null) return;
 
         var primaryPool = player.Character.CardPool;
-        if (!__result.CardPools.Any(pool => pool.Id == primaryPool.Id)) return;
+        if (__result.CardPools.All(pool => pool.Id != primaryPool.Id)) return;
 
         var mappedPools = CharacterCardPoolLinks.GetPoolsFor(player.Character);
         var expandedPools = __result.CardPools
@@ -41,7 +41,7 @@ public static class CharacterCardPoolMappingPatches {
             .DistinctBy(static pool => pool.Id)
             .ToList();
 
-        __result = __result.WithCardPools(expandedPools, __result.CardPoolFilter);
+        __result = __result.WithCardPools(expandedPools);
     }
 
     [HarmonyPrefix]

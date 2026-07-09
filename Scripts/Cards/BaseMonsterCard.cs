@@ -57,11 +57,16 @@ public abstract class BaseMonsterCard(
         await MonsterCardVfx.PlaySummonCardFly(this, summonedCreature);
     }
 
-    //怪兽卡打出后和能力卡一样消失，只有怪兽死亡后才会移入弃牌堆
-    protected override PileType GetResultPileTypeForCardPlay() {
-        return PileType.None;
-    }
+    // //0.107版本
+    // //怪兽卡打出后和能力卡一样消失，只有怪兽死亡后才会移入弃牌堆
+    // protected override PileType GetResultPileTypeForCardPlay() {
+    //     return PileType.None;
+    // }
 
+
+    protected override (PileType, CardPilePosition) GetResultPileTypeAndPositionForCardPlay() {
+        return (PileType.None, CardPilePosition.Bottom);
+    }
 
     public int Life => DynamicVars["Life"].IntValue;
     public int Attack => DynamicVars["Attack"].IntValue;

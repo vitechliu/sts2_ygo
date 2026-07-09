@@ -56,7 +56,6 @@ public sealed record SummonSelection(
 );
 
 public sealed record SummonAnimationContext(
-    CardModel SelectedExtraCard,
     CardModel FinalCard,
     IReadOnlyList<SummonMaterial> Materials,
     IReadOnlyList<CardModel> MaterialCards,
@@ -211,19 +210,18 @@ public static class SummonUtil {
             }
 
             Vector2 screenCenterPos = NGame.Instance.GetViewportRect().Size * 0.5f;
-            CardModel finalCard = selectedExtraCard.CreateClone();
-            await CardPileCmd.Add(finalCard, PileType.Play);
+            // CardModel finalCard = selectedExtraCard.CreateClone();
+            // await CardPileCmd.Add(finalCard, PileType.Play);
 
             await request.PlayAnimation(new SummonAnimationContext(
-                SelectedExtraCard: selectedExtraCard,
-                FinalCard: finalCard,
+                FinalCard: selectedExtraCard,
                 Materials: materials,
                 MaterialCards: materialCards,
                 ScreenCenterPos: screenCenterPos
             ));
 
-            if (!finalCard.Owner.Creature.IsDead) {
-                await CardCmd.AutoPlay(request.ChoiceContext, finalCard, (Creature)null);
+            if (!selectedExtraCard.Owner.Creature.IsDead) {
+                await CardCmd.AutoPlay(request.ChoiceContext, selectedExtraCard, (Creature)null);
             }
 
             await VFXUtil.Wait(request.FinalWaitSeconds);
@@ -496,7 +494,7 @@ public static class SummonUtil {
     }
 
     private static async Task PlayLinkSummonAnimation(SummonAnimationContext context) {
-        if (context.SelectedExtraCard is not BaseExtraLinkCard linkCard) return;
+        if (context.FinalCard is not BaseExtraLinkCard linkCard) return;
 
         CoreCard? coreCard = linkCard.YgoGetCore();
         if (coreCard?.Def == null || coreCard.LinkCount == null) {
