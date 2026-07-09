@@ -8,6 +8,8 @@ using STS2RitsuLib;
 using STS2RitsuLib.CardPiles;
 using STS2RitsuLib.Interop;
 using System.Text.Json;
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Audio;
 using VYgo.Core;
 using VYgo.Core.CardPools;
@@ -146,6 +148,24 @@ public static class Entry {
         {
             BuildYgoIdCaches();
         });
+        
+        //令额外卡组的卡永远不能出现在抽牌堆
+        RitsuLibFramework.SubscribeLifecycle<CardMovedBetweenPilesEvent>(
+            evt => {
+                var card = evt.Card;
+                var previousPile = evt.PreviousPile;
+                var curPile = card.Pile.Type;
+                if (
+                    curPile == PileType.Draw
+                    && card is BaseMonsterCard baseMonsterCard
+                    && baseMonsterCard.IsExtra) {
+                    card.Pile.RemoveInternal(card, silent:true);
+                    var pile = ExtraPile.GetPile(card.Owner);
+                    pile.AddInternal(card, silent:true);
+                    pile.InvokeCardAddFinished();
+                    Logger.Info("CardForceToExtra:" + evt.Card.Title + " From:" + previousPile);
+                }
+            });
         // RitsuLibFramework.SubscribeLifecycle<CombatStartingEvent>((@event, disposable) => {
         //     Logger.Info("CombatStarting");
         //     var combatState = @event.CombatState;

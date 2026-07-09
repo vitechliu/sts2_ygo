@@ -11,6 +11,17 @@ namespace VYgo.Patches;
 
 [HarmonyPatch]
 public class PlayerCardPatches {
+
+
+    public static void MoveExtraCardsToExtraPiles(Player player) {
+        var pile = Entry.ExtraPile.GetPile(player);
+        foreach (CardModel card in PileType.Draw.GetPile(player).Cards.ToList()) {
+            if (card is BaseMonsterCard mCard && mCard.IsExtra) {
+                pile.AddInternal(card, silent:true);
+            }
+        }
+    }
+    
     [HarmonyPrefix]
     [HarmonyPatch(typeof(Player), nameof(Player.PopulateCombatState))]
     public static bool PopulateCombatStatePatch(Player __instance, Rng rng, CombatState state) {

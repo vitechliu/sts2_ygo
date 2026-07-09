@@ -1,5 +1,7 @@
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.PotionPools;
 using MegaCrit.Sts2.Core.Models.RelicPools;
@@ -140,4 +142,10 @@ public class RedhatCharacter : ModCharacterTemplate<RedhatCardPool, IroncladReli
 		"vfx/vfx_bloody_impact",
         "vfx/vfx_rock_shatter"
 	];
+	
+	// //洗牌钩子
+	// public override Task AfterShuffle(PlayerChoiceContext choiceContext, Player shuffler) {
+	// 	Entry.Logger.Info("Shuffler: " + shuffler.Character.Title);
+	// 	return Task.CompletedTask;
+	// }
 }
