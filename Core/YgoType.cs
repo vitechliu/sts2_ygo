@@ -4,12 +4,15 @@ namespace VYgo.Core;
 /// 类型
 /// </summary>
 public enum YgoType {
-    effect,
     normal,
+    effect,
     spell,
     trap,
-    link,
-    fusion,
+    synchro,
     xyz,
+    fusion,
+    ritual,
+    link,
+    token,
 }
 

@@ -60,7 +60,6 @@
     <ItemGroup>
         <Folder Include="Core\Summon\" />
         <Folder Include="Scripts\Misc\" />
-        <Folder Include="Scripts\Powers\" />
         <Folder Include="Web\"/>
         <Folder Include="VYgo\images\cards\"/>
         <Folder Include="Scripts\Relics\"/>

@@ -17,12 +17,31 @@ public abstract class BaseVYgoCard(
     public virtual List<YgoArchetypes> ArchetypesList { get; set; } = [];
     
     public bool ContainArchetype(YgoArchetypes archetype) => ArchetypesList.Contains(archetype);
-    
+
+    private static readonly Dictionary<YgoType, string> PORTRAIT = new() {
+        [YgoType.normal] = "01",
+        [YgoType.effect] = "02",
+        [YgoType.spell] = "03",
+        [YgoType.trap] = "04",
+        [YgoType.synchro] = "05",
+        [YgoType.xyz] = "06",
+        [YgoType.ritual] = "07",
+        [YgoType.fusion] = "08",
+        [YgoType.link] = "09",
+        [YgoType.token] = "10",
+    };
+
+    protected virtual string YgoFramePath {
+        get {
+            var pNum = PORTRAIT.GetValueOrDefault(CardYgoType, "01");
+            return $"res://VYgo/images/cards/{type}/card_design00{pNum}.png";
+        }
+    }
     
     public abstract int CardId { get; }
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://VYgo/images/cards/{CardId}.png",
-        FramePath: $"res://VYgo/images/frame/card_frame_{CardYgoType.ToString()}.png"
+        FramePath: YgoFramePath
     );
     
     protected virtual YgoType CardYgoType => YgoType.effect;

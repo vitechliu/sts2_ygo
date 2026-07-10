@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ovw4pok41qnq"
-path="res://.godot/imported/card_frame_link.png-ea8b4efb60067586a3db61e53b34bc70.ctex"
+uid="uid://bnf0g5j3happa"
+path="res://.godot/imported/card_design0003.png-8caa1cd0d67060bdf47e71ca2223f3a6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://VYgo/images/frame/card_frame_link.png"
-dest_files=["res://.godot/imported/card_frame_link.png-ea8b4efb60067586a3db61e53b34bc70.ctex"]
+source_file="res://VYgo/images/frame/Skill/card_design0003.png"
+dest_files=["res://.godot/imported/card_design0003.png-8caa1cd0d67060bdf47e71ca2223f3a6.ctex"]
 
 [params]
 
