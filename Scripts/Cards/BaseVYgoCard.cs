@@ -34,7 +34,7 @@ public abstract class BaseVYgoCard(
     protected virtual string YgoFramePath {
         get {
             var pNum = PORTRAIT.GetValueOrDefault(CardYgoType, "01");
-            return $"res://VYgo/images/cards/{type}/card_design00{pNum}.png";
+            return $"res://VYgo/images/frame/{type}/card_design00{pNum}.png";
         }
     }
     
