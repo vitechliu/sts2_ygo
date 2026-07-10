@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0pweuoq2hgwd"
-path="res://.godot/imported/card_frame_spell.png-147af15e44214f65d9b96451d9b69c56.ctex"
+uid="uid://dy58urmeu4205"
+path="res://.godot/imported/card_design0010.png-342a572f5f17779616b3f9b015382062.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://VYgo/images/frame/card_frame_spell.png"
-dest_files=["res://.godot/imported/card_frame_spell.png-147af15e44214f65d9b96451d9b69c56.ctex"]
+source_file="res://VYgo/images/frame/Attack/card_design0010.png"
+dest_files=["res://.godot/imported/card_design0010.png-342a572f5f17779616b3f9b015382062.ctex"]
 
 [params]
 
