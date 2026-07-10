@@ -20,6 +20,7 @@ namespace VYgo.Scripts;
 public class RedhatCharacter : ModCharacterTemplate<RedhatCardPool, IroncladRelicPool, IroncladPotionPool>
 {
 	
+	
 	protected override ModAnimStateMachine? SetupCustomCombatAnimationStateMachine(Node visualsRoot, CharacterModel character) {
 		return ModAnimStateMachines.StandardCue(
 			visualsRoot,
@@ -47,7 +48,7 @@ public class RedhatCharacter : ModCharacterTemplate<RedhatCardPool, IroncladReli
 				// 人物模型tscn路径。
 				VisualsPath: "res://VYgo/scenes/character/test_character.tscn",
 				// // 能量表盘tscn路径。
-				// EnergyCounterPath: "res://Test/scenes/test_energy_counter.tscn",
+				EnergyCounterPath: "res://VYgo/scenes/character/test_energy_counter.tscn",
 				// // 商店人物场景。
 				MerchantAnimPath: "res://VYgo/scenes/character/test_character_merchant.tscn",
 				// // 篝火休息场景。

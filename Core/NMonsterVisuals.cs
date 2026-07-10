@@ -11,6 +11,7 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 	private const float MaterialVfxCleanupDelay = 3f;
 	private const float MaterialCompressDuration = 0.15f;
 	private const float MaterialFlyDuration = 0.20f;
+	private const string ActionReadyIconPath = "res://VYgo/images/energy_star_big.png";
 
 	private const string MaterialShaderCode = """
 		shader_type canvas_item;
@@ -46,10 +47,51 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 	}
 	
 	protected Sprite2D mainSprite;
+	private Sprite2D? actionReadyIcon;
+	private Tween? actionReadyTween;
+
 	public override void _Ready() {
 		base._Ready();
 		mainSprite = GetNode<Sprite2D>("./Visuals/Image");
-		
+		CreateActionReadyIcon();
+	}
+
+	public void SetActionReadyIndicatorVisible(bool visible) {
+		if (actionReadyIcon == null)
+			CreateActionReadyIcon();
+		if (actionReadyIcon == null) return;
+
+		if (actionReadyIcon.Visible == visible) return;
+
+		actionReadyIcon.Visible = visible;
+		actionReadyTween?.Kill();
+		actionReadyTween = null;
+
+		if (!visible) return;
+
+		actionReadyIcon.Modulate = Colors.White;
+		actionReadyIcon.Scale = Vector2.One * 0.28f;
+		actionReadyTween = actionReadyIcon.CreateTween().SetLoops();
+		actionReadyTween.TweenProperty(actionReadyIcon, "scale", Vector2.One * 0.34f, 0.45f)
+			.SetTrans(Tween.TransitionType.Sine)
+			.SetEase(Tween.EaseType.InOut);
+		actionReadyTween.TweenProperty(actionReadyIcon, "scale", Vector2.One * 0.28f, 0.45f)
+			.SetTrans(Tween.TransitionType.Sine)
+			.SetEase(Tween.EaseType.InOut);
+	}
+
+	private void CreateActionReadyIcon() {
+		if (actionReadyIcon != null || IntentPosition == null) return;
+
+		actionReadyIcon = new Sprite2D {
+			Name = "ActionReadyIcon",
+			Texture = ResourceLoader.Load<Texture2D>(ActionReadyIconPath),
+			Centered = true,
+			Visible = false,
+			ZIndex = 20,
+			Scale = Vector2.One * 0.28f
+		};
+		IntentPosition.AddChild(actionReadyIcon);
 	}
 
 	public const string MATERIAL_VFX_PATH = "res://VYgo/scenes/vfx/summon/vfx_link_summon_material.tscn";
