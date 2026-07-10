@@ -5,7 +5,7 @@ using VYgo.Scripts.Pools;
 namespace VYgo.Scripts.Cards.Category.CyberDragon;
 
 [RegisterCard(typeof(RedhatCardPool))]
-[RegisterCharacterStarterCard(typeof(RedhatCharacter), 1)]
+[RegisterCharacterStarterCard(typeof(RedhatCharacter), 3)]
 public class ProtoCyberDragon() : BaseMonsterCard(energyCost,rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 26439287;
 

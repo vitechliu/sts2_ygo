@@ -1,0 +1,4 @@
+interface:
+  display_name: "Draw STS2 Power Icons"
+  short_description: "Generate readable transparent STS2 Power icons"
+  default_prompt: "Use $draw-power-icons to create and integrate a readable Power icon for this mod."
