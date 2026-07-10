@@ -11,7 +11,7 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 	private const float MaterialVfxCleanupDelay = 3f;
 	private const float MaterialCompressDuration = 0.15f;
 	private const float MaterialFlyDuration = 0.20f;
-	private const string ActionReadyIconPath = "res://VYgo/images/energy_star_big.png";
+	private const string ActionReadyIconPath = "res://VYgo/images/intents/intent_attack_2.png";
 
 	private const string MaterialShaderCode = """
 		shader_type canvas_item;
@@ -88,7 +88,7 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 			Texture = ResourceLoader.Load<Texture2D>(ActionReadyIconPath),
 			Centered = true,
 			Visible = false,
-			ZIndex = 20,
+			ZIndex = 1,
 			Scale = Vector2.One * 0.28f
 		};
 		IntentPosition.AddChild(actionReadyIcon);

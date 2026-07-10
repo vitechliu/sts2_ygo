@@ -25,6 +25,10 @@ obj/
 *.pdb
 *.mdb
 
+# Python tooling caches
+__pycache__/
+*.py[cod]
+
 # IDE specific files
 .vs/
 .vscode/
@@ -66,6 +70,12 @@ env.props
 /Web/node_modules
 /docs
 /addons
+
+# Project-local Codex skills are intentionally versioned.
+!.agents/
+!.agents/skills/
+!.agents/skills/draw-power-icons/
+!.agents/skills/draw-power-icons/**
 
 .direnv/
 .omo/
