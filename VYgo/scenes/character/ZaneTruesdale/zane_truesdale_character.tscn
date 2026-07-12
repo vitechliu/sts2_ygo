@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://VYgo/images/zane_truesdale/idle.png" id="1_idle"]
+
+[node name="ZaneTruesdaleCharacter" type="Node2D"]
+
+[node name="Visuals" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -253)
+scale = Vector2(0.33, 0.33)
+texture = ExtResource("1_idle")
+
+[node name="Bounds" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -140.0
+offset_top = -505.0
+offset_right = 140.0
+offset_bottom = 0.0
+
+[node name="IntentPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -505)
+
+[node name="CenterPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -252)
+
+[node name="TalkPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(72, -370)

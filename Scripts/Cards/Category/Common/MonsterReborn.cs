@@ -5,12 +5,13 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
+using VYgo.Scripts.Characters;
 using VYgo.Scripts.Pools;
 
 namespace VYgo.Scripts.Cards.Category.Common;
 
-[RegisterCard(typeof(RedhatCardPool))]
-[RegisterCharacterStarterCard(typeof(RedhatCharacter), 1)]
+[RegisterCard(typeof(CommonCardPool))]
+[RegisterCharacterStarterCard(typeof(RedhatCharacter), 3)]
 public class MonsterReborn()
     : BaseSpellCard(0, CardType.Skill, CardRarity.Basic, TargetType.None) {
     

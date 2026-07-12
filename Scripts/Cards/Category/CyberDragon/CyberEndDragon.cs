@@ -2,13 +2,14 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
+using VYgo.Scripts.Characters;
 using VYgo.Scripts.Pools;
 using VYgo.Scripts.Var;
 
 namespace VYgo.Scripts.Cards.Category.CyberDragon;
 
-[RegisterCard(typeof(RedhatCardPool))]
-[RegisterCharacterStarterCard(typeof(RedhatCharacter), 1)]
+[RegisterCard(typeof(ZaneTruesdaleCardPool))]
+[RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 1)]
 public class CyberEndDragon() : BaseExtraFusionCard(energyCost, rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 1546123;
     public override int FusionMaterialCount => 3;

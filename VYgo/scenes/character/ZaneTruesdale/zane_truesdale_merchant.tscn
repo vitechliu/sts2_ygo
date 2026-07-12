@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://VYgo/images/zane_truesdale/idle.png" id="1_idle"]
+
+[node name="ZaneTruesdaleMerchant" type="Node2D"]
+
+[node name="Visuals" type="Sprite2D" parent="."]
+position = Vector2(0, -215)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("1_idle")

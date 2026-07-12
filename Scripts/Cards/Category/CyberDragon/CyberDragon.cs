@@ -4,13 +4,14 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
+using VYgo.Scripts.Characters;
 using VYgo.Scripts.Pools;
 using VYgo.Utils;
 
 namespace VYgo.Scripts.Cards.Category.CyberDragon;
 
-[RegisterCard(typeof(RedhatCardPool))]
-[RegisterCharacterStarterCard(typeof(RedhatCharacter), 3)]
+[RegisterCard(typeof(ZaneTruesdaleCardPool))]
+[RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 3)]
 public class CyberDragon() : BaseMonsterCard(energyCost, rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 70095154;
 

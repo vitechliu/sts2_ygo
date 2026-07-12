@@ -6,12 +6,13 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
+using VYgo.Scripts.Characters;
 using VYgo.Scripts.Pools;
 
 namespace VYgo.Scripts.Cards.Category.Common;
 
-[RegisterCard(typeof(RedhatCardPool))]
-[RegisterCharacterStarterCard(typeof(RedhatCharacter), 1)]
+[RegisterCard(typeof(FusionCardPool))]
+[RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 2)]
 public class Polymerization()
     : BaseSpellCard(0, CardType.Skill, CardRarity.Basic, TargetType.None) {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [

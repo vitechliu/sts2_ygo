@@ -1,7 +1,5 @@
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
-using MegaCrit.Sts2.Core.Entities.Players;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.PotionPools;
 using MegaCrit.Sts2.Core.Models.RelicPools;
@@ -14,10 +12,10 @@ using STS2RitsuLib.Scaffolding.Visuals;
 using STS2RitsuLib.Scaffolding.Visuals.StateMachine;
 using VYgo.Scripts.Pools;
 
-namespace VYgo.Scripts;
+namespace VYgo.Scripts.Characters;
 
 [RegisterCharacter]
-public class RedhatCharacter : ModCharacterTemplate<RedhatCardPool, IroncladRelicPool, IroncladPotionPool>
+public class RedhatCharacter : ModCharacterTemplate<RedhatCardPool, RedhatRelicPool, IroncladPotionPool>
 {
 	
 	

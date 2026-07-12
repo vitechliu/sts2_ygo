@@ -5,13 +5,15 @@ using MinionLib.Commands;
 using MinionLib.Minion;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
+using VYgo.Scripts.Characters;
 using VYgo.Scripts.Monsters.YGO;
 using VYgo.Scripts.Pools;
 
 namespace VYgo.Scripts.Cards.Category.Common;
 
-[RegisterCard(typeof(RedhatCardPool))]
-[RegisterCharacterStarterCard(typeof(RedhatCharacter), 1)]
+[RegisterCard(typeof(LinkCardPool))]
+[RegisterCharacterStarterCard(typeof(RedhatCharacter), 2)]
+[RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 1)]
 public class SPLittleKnight() : BaseExtraLinkCard(energyCost,rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 29301450;
     
