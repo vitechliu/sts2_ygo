@@ -4,15 +4,15 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Random;
+using VYgo.Core.Extensions;
 using VYgo.Scripts;
 using VYgo.Scripts.Cards;
+using VYgo.Scripts.Characters;
 
 namespace VYgo.Patches;
 
 [HarmonyPatch]
 public class PlayerCardPatches {
-
-
     public static void MoveExtraCardsToExtraPiles(Player player) {
         var pile = Entry.ExtraPile.GetPile(player);
         foreach (CardModel card in PileType.Draw.GetPile(player).Cards.ToList()) {
@@ -25,8 +25,7 @@ public class PlayerCardPatches {
     [HarmonyPrefix]
     [HarmonyPatch(typeof(Player), nameof(Player.PopulateCombatState))]
     public static bool PopulateCombatStatePatch(Player __instance, Rng rng, CombatState state) {
-        if (__instance.Character is not RedhatCharacter) return true;
-        Entry.Logger.Info("Patched PopulateCombatState");
+        if (!__instance.Character.GetType().IsGenericTypeOf(typeof(BaseYgoCharacter<,,>))) return true;
         foreach (CardModel mutableCard in __instance.Deck.Cards.ToList()) {
             CardModel card = state.CloneCard(mutableCard);
             card.DeckVersion = mutableCard;
