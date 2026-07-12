@@ -36,5 +36,7 @@
     "V_YGO_CARD_CYBER_DRAGON_HERZ.title": "电子龙芯",
     "V_YGO_CARD_CYBER_DRAGON_HERZ.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]送墓[/gold]：将{Cards:diff()}张随机「电子龙」牌添加到你的[gold]手牌[/gold]中。",
     "V_YGO_CARD_EVOLUTION_BURST.title": "进化光焰",
-    "V_YGO_CARD_EVOLUTION_BURST.description": "场上有「电子龙」怪兽存在的场合才能发动，造成10点伤害。"
+    "V_YGO_CARD_EVOLUTION_BURST.description": "场上有「电子龙」怪兽存在的场合才能发动，造成10点伤害。",
+    "V_YGO_CARD_POWER_BOND.title": "力量结合",
+    "V_YGO_CARD_POWER_BOND.description": "以手卡·场上的怪兽作为融合素材，进行一次[gold]融合召唤[/gold]。\n这个效果召唤的怪兽的[gold]力量[/gold]上升那个原本[gold]力量[/gold]数值。在你的回合结束时，你失去这个效果上升的数值点生命。"
 }
