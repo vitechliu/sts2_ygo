@@ -42,6 +42,6 @@ public static class YgoHoverTipConst {
     }
     //送墓
     public static IHoverTip SendToGraveyard() {
-        return Base("SEND_TO_GRAVYYARD");
+        return Base("SEND_TO_GRAVEYARD");
     }
 }

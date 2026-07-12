@@ -17,7 +17,7 @@ public partial class NLinkPostLinkCardVfx : Node2D {
     private static readonly Color LinkBlue = new("45d9ff");
     private static readonly Color LinkViolet = new("d05cff");
 
-    private const float FlightDuration = 2.58f;
+    private const float FlightDuration = 0.68f;
     private const float SettleDuration = 0.18f;
     private const int MaxTrailPoints = 14;
     private const float RectParticleTextureSize = 256f;
