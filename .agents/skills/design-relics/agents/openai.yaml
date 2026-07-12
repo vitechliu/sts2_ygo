@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design VYgo Relics"
+  short_description: "Implement and localize VYgo relics end to end"
+  default_prompt: "Use $design-relics to implement a VYgo relic from its name and effect, then create its icon when requested."
