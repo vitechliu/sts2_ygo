@@ -5,14 +5,15 @@ using MinionLib.Commands;
 using MinionLib.Minion;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
+using VYgo.Scripts.Characters;
 using VYgo.Scripts.Monsters.YGO;
 using VYgo.Scripts.Pools;
 using VYgo.Scripts.Var;
 
 namespace VYgo.Scripts.Cards.Category.CyberDragon;
 
-[RegisterCard(typeof(RedhatCardPool))]
-[RegisterCharacterStarterCard(typeof(RedhatCharacter), 1)]
+[RegisterCard(typeof(ZaneTruesdaleCardPool))]
+[RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 1)]
 public class CyberDragonInfinity() : BaseExtraCard(energyCost, rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 10443957;
     protected override YgoType CardYgoType => YgoType.xyz;

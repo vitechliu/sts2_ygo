@@ -3,13 +3,14 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MinionLib.Commands;
 using MinionLib.Minion;
 using STS2RitsuLib.Interop.AutoRegistration;
+using VYgo.Scripts.Characters;
 using VYgo.Scripts.Monsters.YGO;
 using VYgo.Scripts.Pools;
 
 namespace VYgo.Scripts.Cards.Category.CyberDragon;
 
-[RegisterCard(typeof(RedhatCardPool))]
-[RegisterCharacterStarterCard(typeof(RedhatCharacter), 1)]
+[RegisterCard(typeof(ZaneTruesdaleCardPool))]
+[RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 1)]
 public class CyberDragonSieger() : BaseExtraLinkCard(energyCost,rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 46724542;
     

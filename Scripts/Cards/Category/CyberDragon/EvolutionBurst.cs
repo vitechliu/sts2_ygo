@@ -7,12 +7,13 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
+using VYgo.Scripts.Characters;
 using VYgo.Scripts.Pools;
 
 namespace VYgo.Scripts.Cards.Category.CyberDragon;
 
-[RegisterCard(typeof(RedhatCardPool))]
-[RegisterCharacterStarterCard(typeof(RedhatCharacter), 2)]
+[RegisterCard(typeof(ZaneTruesdaleCardPool))]
+[RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 2)]
 public class EvolutionBurst() : BaseSpellCard(energyCost, CardType.Attack, rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 52875873;
 

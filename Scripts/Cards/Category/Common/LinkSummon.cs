@@ -6,12 +6,13 @@ using MegaCrit.Sts2.Core.HoverTips;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
 using VYgo.Core.Cards;
+using VYgo.Scripts.Characters;
 using VYgo.Scripts.Pools;
 
 namespace VYgo.Scripts.Cards.Category.Common;
 
-[RegisterCard(typeof(RedhatCardPool))]
-[RegisterCharacterStarterCard(typeof(RedhatCharacter), 1)]
+[RegisterCard(typeof(LinkCardPool))]
+[RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 1)]
 public class LinkSummon() : BaseSummonCard(0, CardType.Skill, CardRarity.Basic, TargetType.None) {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         YgoHoverTipConst.FusionSummon()

@@ -1,11 +1,12 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
 using STS2RitsuLib.Interop.AutoRegistration;
+using VYgo.Scripts.Characters;
 using VYgo.Scripts.Pools;
 
 namespace VYgo.Scripts.Cards.Category.CyberDragon;
 
-[RegisterCard(typeof(RedhatCardPool))]
-[RegisterCharacterStarterCard(typeof(RedhatCharacter), 3)]
+[RegisterCard(typeof(ZaneTruesdaleCardPool))]
+[RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 3)]
 public class ProtoCyberDragon() : BaseMonsterCard(energyCost,rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 26439287;
 

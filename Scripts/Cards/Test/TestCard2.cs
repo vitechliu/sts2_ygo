@@ -11,6 +11,7 @@ using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core.Effects;
 using VYgo.Scripts.Cards.Category.CyberDragon;
 using VYgo.Scripts.Cards.Placeholders;
+using VYgo.Scripts.Characters;
 using VYgo.Scripts.Pools;
 
 namespace VYgo.Scripts.Cards.Test;
