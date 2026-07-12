@@ -20,7 +20,7 @@ namespace VYgo.Scripts.Characters;
 /// </summary>
 [RegisterCharacter]
 public class ZaneTruesdaleCharacter
-    : BaseYgoCharacter<ZaneTruesdaleCardPool, IroncladRelicPool, IroncladPotionPool>
+    : BaseYgoCharacter<ZaneTruesdaleCardPool, ZaneTruesdaleRelicPool, IroncladPotionPool>
 {
     private const string AssetRoot = "res://VYgo/scenes/character/ZaneTruesdale";
     private const string ImageRoot = "res://VYgo/images/zane_truesdale";
@@ -60,11 +60,4 @@ public class ZaneTruesdaleCharacter
     public override float AttackAnimDelay => 0f;
     public override float CastAnimDelay => 0f;
     public override bool RequiresEpochAndTimeline => false;
-
-#pragma warning disable CS0672
-    protected override IEnumerable<Type> StartingRelicTypes => [
-#pragma warning restore CS0672
-        typeof(BagOfPreparation),
-        typeof(BagOfPreparation),
-    ];
 }

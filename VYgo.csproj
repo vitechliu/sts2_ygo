@@ -52,6 +52,7 @@
         <Content Include="VYgo\localization\zhs\card_keywords.json" />
         <Content Include="VYgo\localization\zhs\characters.json"/>
         <Content Include="VYgo\localization\zhs\powers.json"/>
+        <Content Include="VYgo\localization\zhs\relics.json" />
         <Content Include="VYgo\localization\zhs\static_hover_tips.json"/>
     </ItemGroup>
     <ItemGroup>

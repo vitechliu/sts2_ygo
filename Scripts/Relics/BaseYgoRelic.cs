@@ -1,14 +1,9 @@
-﻿using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Players;
-using MegaCrit.Sts2.Core.Entities.Relics;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
+﻿using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace VYgo.Scripts.Relics;
 
-public class BaseYgoRelic: ModRelicTemplate {
-    public override RelicRarity Rarity => RelicRarity.Starter;
+public abstract class BaseYgoRelic: ModRelicTemplate {
     
     // 遗物的数值。这里会替换本地化中的{Cards}。
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(1)];

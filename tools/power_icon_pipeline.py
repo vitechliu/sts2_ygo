@@ -55,7 +55,16 @@ def remove_key(
     source = image.convert("RGBA")
     output: list[tuple[int, int, int, int]] = []
     kr, kg, kb = key
-    dominant = max(range(3), key=lambda index: key[index])
+    key_peak = max(key)
+    key_floor = min(key)
+    key_channels = [
+        index
+        for index, value in enumerate(key)
+        if value >= key_peak - 8 and value >= key_floor + 64
+    ]
+    if not key_channels:
+        key_channels = [max(range(3), key=lambda index: key[index])]
+    non_key_channels = [index for index in range(3) if index not in key_channels]
 
     for red, green, blue, original_alpha in pixels(source):
         distance = math.sqrt((red - kr) ** 2 + (green - kg) ** 2 + (blue - kb) ** 2)
@@ -63,9 +72,10 @@ def remove_key(
         alpha = round(original_alpha * matte)
 
         channels = [red, green, blue]
-        if 0 < alpha < 255:
-            others = [channels[index] for index in range(3) if index != dominant]
-            channels[dominant] = min(channels[dominant], max(others))
+        if alpha > 0 and non_key_channels:
+            despill_ceiling = max(channels[index] for index in non_key_channels)
+            for index in key_channels:
+                channels[index] = min(channels[index], despill_ceiling)
         if alpha == 0:
             channels = [0, 0, 0]
         output.append((channels[0], channels[1], channels[2], alpha))
@@ -84,8 +94,8 @@ def premultiplied_resize(image: Image.Image, size: tuple[int, int]) -> Image.Ima
     return image.convert("RGBa").resize(size, Image.Resampling.LANCZOS).convert("RGBA")
 
 
-def normalize_canvas(image: Image.Image, padding: int) -> Image.Image:
-    bbox = alpha_bbox(image)
+def normalize_canvas(image: Image.Image, padding: int, crop_alpha_threshold: int = 8) -> Image.Image:
+    bbox = alpha_bbox(image, threshold=crop_alpha_threshold)
     if bbox is None:
         raise ValueError("no visible pixels remain after background removal")
 
@@ -152,7 +162,7 @@ def icon_report(image: Image.Image) -> dict[str, object]:
     }
 
 
-def validation_errors(report: dict[str, object]) -> list[str]:
+def validation_errors(report: dict[str, object], max_color_bins: int = 18) -> list[str]:
     errors: list[str] = []
     if report["size"] != [FINAL_SIZE, FINAL_SIZE]:
         errors.append("image must be exactly 256x256")
@@ -170,8 +180,11 @@ def validation_errors(report: dict[str, object]) -> list[str]:
         errors.append("visible content is too dense (coverage above 72%)")
     if float(report["partial_alpha_ratio"]) > 0.18:
         errors.append("too many semi-transparent pixels; check for glow, blur, or incomplete key removal")
-    if int(report["preview_effective_color_bins"]) > 18:
-        errors.append("too many effective colors at 64px; simplify gradients and texture")
+    if int(report["preview_effective_color_bins"]) > max_color_bins:
+        errors.append(
+            f"too many effective colors at 64px (limit {max_color_bins}); "
+            "simplify gradients and texture"
+        )
     return errors
 
 
@@ -192,7 +205,7 @@ def finalize(args: argparse.Namespace) -> int:
         key = border_key(rgba) if args.key == "auto" else ImageColor.getrgb(args.key)
         rgba = remove_key(rgba, key, args.transparent_threshold, args.opaque_threshold)
 
-    result = normalize_canvas(rgba, args.padding)
+    result = normalize_canvas(rgba, args.padding, args.crop_alpha_threshold)
     stroke_color = ImageColor.getcolor(args.stroke_color, "RGBA")
     result = add_outer_stroke(result, args.stroke, stroke_color)
     result = result.convert("RGBA")
@@ -208,14 +221,14 @@ def finalize(args: argparse.Namespace) -> int:
         preview.save(preview_path, format="PNG", optimize=True)
 
     report = icon_report(result)
-    report["errors"] = validation_errors(report)
+    report["errors"] = validation_errors(report, args.max_color_bins)
     write_json(Path(args.report) if args.report else None, report)
     return 1 if args.strict and report["errors"] else 0
 
 
 def check(args: argparse.Namespace) -> int:
     report = icon_report(Image.open(args.image))
-    report["errors"] = validation_errors(report)
+    report["errors"] = validation_errors(report, args.max_color_bins)
     write_json(None, report)
     return 1 if args.strict and report["errors"] else 0
 
@@ -234,6 +247,13 @@ def build_parser() -> argparse.ArgumentParser:
     final.add_argument("--transparent-threshold", type=float, default=16.0)
     final.add_argument("--opaque-threshold", type=float, default=180.0)
     final.add_argument("--padding", type=int, default=20)
+    final.add_argument(
+        "--crop-alpha-threshold",
+        type=int,
+        default=8,
+        help="ignore alpha at or below this value when finding the subject bounds",
+    )
+    final.add_argument("--max-color-bins", type=int, default=18)
     final.add_argument("--stroke", type=int, default=0, help="optional outer stroke width at 256px")
     final.add_argument("--stroke-color", default="#2b1720ff")
     final.add_argument("--strict", action="store_true")
@@ -241,6 +261,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     inspect = subparsers.add_parser("check", help="validate an existing final icon")
     inspect.add_argument("image", type=Path)
+    inspect.add_argument("--max-color-bins", type=int, default=18)
     inspect.add_argument("--strict", action="store_true")
     inspect.set_defaults(func=check)
     return parser

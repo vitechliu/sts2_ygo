@@ -4,12 +4,12 @@
 
 - Final asset: RGBA PNG, exactly 256x256.
 - Runtime reuse: the same asset must remain readable at 64x64 and roughly 85x85.
-- Canvas: transparent, with at least 12px clear padding at 256px.
-- Composition: one centered, tangible object occupying roughly 55-75% of the canvas.
+- Canvas: transparent, with 12-20px clear padding at 256px.
+- Composition: one centered, tangible object whose bounding box occupies roughly 85-92% of the canvas width or height after background removal.
 - Shape budget: 2-6 large masses; at most three large supporting accents.
-- Palette: about 4-10 perceptually distinct colors, dominated by broad color regions.
+- Palette: about 4-10 base colors with restrained highlight and shadow variants, dominated by broad color regions. The 64px report may contain up to 36 effective color bins because antialiasing and painted shading create intermediate colors.
 - Edges: dark, hand-drawn outlines with intentional antialiasing; no chroma fringe or fuzzy halo.
-- Depth: limited painted shading is allowed, but avoid noisy texture and realistic lighting.
+- Depth: retain deliberate painted highlights and shadows that describe material and curvature; avoid only noisy texture and photorealistic lighting.
 - Line weight: important outlines and gaps must resolve to at least 3px at 64px, equivalent to 12px in the 256px master.
 
 VYgo Power icons establish the readability baseline: bold silhouette, simple metaphor, thick outlines, and large color regions. Original icons in `D:/github/raw107/images/relics/` add the Relic grammar: a collectible physical object, slight hand-painted asymmetry, restrained highlights and shadows, and no surrounding badge. Use original icons only as structural reference; never copy an existing icon's subject or exact geometry.
@@ -42,7 +42,7 @@ Use case: stylized-concept
 Asset type: Slay the Spire 2 Relic UI icon, designed for small inventory display and delivered as a 256x256 transparent PNG
 Primary request: <one concrete collectible object whose altered feature communicates the relic effect>
 Style/medium: bold flat-color 2D game icon with restrained hand-painted shading, thick dark hand-drawn outline, 4-10 colors, slight asymmetry
-Composition/framing: centered isolated object, 70-80% of the square source, 2-6 large masses, generous clear padding
+Composition/framing: centered isolated object, 80-90% of the square source, 2-6 large masses, enough outer space for a clean chroma-key boundary
 Line/readability: silhouette and essential internal gaps must remain at least 3 pixels wide after reduction to 64x64; exaggerate the defining feature
 Color palette: <dominant color>, <secondary color>, <one high-contrast accent>
 Scene/backdrop: perfectly flat solid <#00ff00 or #ff00ff> chroma-key background
@@ -62,3 +62,4 @@ View the 64px preview at native size and at 4x nearest-neighbor zoom. Pass only 
 4. Foreground and internal gaps remain distinct.
 5. Transparent edges have no green, magenta, or black fringe.
 6. It still looks like a portable collectible object rather than a Power aura, card illustration, or miniature scene.
+7. Metallic, glass, stone, or organic material remains legible through intentional highlights and shadows; do not flatten the image solely to reduce reported color bins.

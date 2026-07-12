@@ -19,7 +19,7 @@ public class EvolutionBurst() : BaseSpellCard(energyCost, CardType.Attack, rarit
 
     private const int energyCost = 0;
     private const CardRarity rarity = CardRarity.Basic;
-    private const TargetType targetType = TargetType.None;
+    private const TargetType targetType = TargetType.AnyEnemy;
     private const bool shouldShowInCardLibrary = true;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [

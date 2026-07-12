@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://ce00tuqwjr2oj"]
 
-[ext_resource type="Texture2D" path="res://VYgo/images/zane_truesdale/character_select_bg.png" id="1_bg"]
+[ext_resource type="Texture2D" uid="uid://d2wn3ftwyag1d" path="res://VYgo/images/zane_truesdale/character_select_bg.png" id="1_bg"]
 
 [node name="ZaneTruesdaleBg" type="Control"]
 layout_mode = 3
@@ -33,9 +33,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1280.0
+offset_left = -1143.0
 offset_top = -600.0
-offset_right = 640.0
+offset_right = 777.0
 offset_bottom = 480.0
 grow_horizontal = 2
 grow_vertical = 2
