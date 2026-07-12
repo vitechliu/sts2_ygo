@@ -1,0 +1,4 @@
+interface:
+  display_name: "Draw STS2 Relic Icons"
+  short_description: "Generate readable transparent STS2 Relic icons"
+  default_prompt: "Use $draw-relic-icons to create and integrate a readable Relic icon for this mod."
