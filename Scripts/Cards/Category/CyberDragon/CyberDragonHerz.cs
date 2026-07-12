@@ -1,9 +1,11 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
 using VYgo.Scripts.Characters;
 using VYgo.Scripts.Pools;
+using VYgo.Scripts.Var;
 
 namespace VYgo.Scripts.Cards.Category.CyberDragon;
 
@@ -17,6 +19,12 @@ public class CyberDragonHerz() : BaseMonsterCard(energyCost,rarity, targetType, 
         YgoHoverTipConst.SendToGraveyard()
     ];
     
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new AttackVar(BaseAttackVar),
+        new LifeVar(BaseLifeVar),
+        new CardsVar(1),
+    ];
+    
     public override List<YgoArchetypes> ArchetypesList => [YgoArchetypes.Cyber, YgoArchetypes.CyberDragon];
 
     private const int energyCost = 0;
@@ -26,4 +34,8 @@ public class CyberDragonHerz() : BaseMonsterCard(energyCost,rarity, targetType, 
 
     public override int BaseAttackVar => 2;
     public override int BaseLifeVar => 1;
+
+    protected override void OnUpgrade() {
+        DynamicVars.Cards.UpgradeValueBy(1m);
+    }
 }

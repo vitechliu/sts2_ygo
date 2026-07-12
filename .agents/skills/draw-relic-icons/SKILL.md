@@ -22,15 +22,21 @@ Create one transparent 256x256 PNG per Relic. Save it as `VYgo/images/relics/<Re
      --input /tmp/vygo-relic-icons/<relic>-source.png \
      --output VYgo/images/relics/<RelicClassName>.png \
      --preview /tmp/vygo-relic-icons/<relic>-64.png \
-     --report /tmp/vygo-relic-icons/<relic>-report.json
+     --report /tmp/vygo-relic-icons/<relic>-report.json \
+     --transparent-threshold 32 \
+     --crop-alpha-threshold 24 \
+     --padding 12 \
+     --max-color-bins 36
    ```
 
-   The Power finalizer is intentionally shared because both asset types have the same transparency, 256px canvas, padding, and small-size readability requirements. If plain `python3` lacks Pillow in Codex desktop, call `codex_app__load_workspace_dependencies` and use its bundled Python executable.
-8. Inspect the 256 output and 64 preview. The 64px preview is a stricter proxy for the roughly 85x85 small Relic display. Reject ambiguous silhouettes, lost internal gaps, muddy gradients, color-key fringe, or outline segments thinner than about 3px.
+   The Power finalizer is intentionally shared because both asset types have the same transparency, 256px canvas, and small-size readability requirements. Relics deliberately use tighter padding and a higher color-bin limit to retain painted material shading. If faint keyed pixels make the subject unexpectedly small, raise `--transparent-threshold` or `--crop-alpha-threshold`; do not compensate by upscaling a badly cropped result. If plain `python3` lacks Pillow in Codex desktop, call `codex_app__load_workspace_dependencies` and use its bundled Python executable.
+8. Inspect the 256 output and 64 preview. The dominant subject should occupy about 85-92% of the canvas width or height after normalization. The 64px preview is a stricter proxy for the roughly 85x85 small Relic display. Reject ambiguous silhouettes, lost internal gaps, muddy gradients, color-key fringe, or outline segments thinner than about 3px.
 9. Run strict validation:
 
    ```bash
-   python3 tools/power_icon_pipeline.py check VYgo/images/relics/<RelicClassName>.png --strict
+   python3 tools/power_icon_pipeline.py check VYgo/images/relics/<RelicClassName>.png \
+     --max-color-bins 36 \
+     --strict
    ```
 
 10. Confirm the exact filename matches the Relic class used at runtime. `BaseYgoRelic` already provides the asset paths; only add or override `AssetProfile` when the class does not inherit that convention. Do not hand-write Godot `.import` or `.uid` files.
@@ -40,6 +46,7 @@ Create one transparent 256x256 PNG per Relic. Save it as `VYgo/images/relics/<Re
 
 - Fix semantic or composition failures by regenerating with one targeted prompt change.
 - Fix only outer silhouette thickness with `finalize --stroke 3 --stroke-color '#2b1720'`; do not use stroke as a substitute for a readable source design.
+- Never quantize, posterize, or reduce the palette merely to pass the color-bin heuristic. Preserve intentional highlights, shadows, and material depth; regenerate only when the shading is genuinely noisy or muddy at 64px.
 - Never upscale a small icon into the 256px master.
 - Never overwrite an existing icon unless the user asked for replacement; use a temporary candidate filename while comparing variants.
 - Keep only the final transparent 256px PNG in `VYgo/images/relics/`. Treat the 64px image and JSON report as disposable QA artifacts.
