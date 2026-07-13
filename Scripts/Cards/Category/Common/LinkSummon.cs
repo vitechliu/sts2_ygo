@@ -23,15 +23,11 @@ public class LinkSummon() : BaseSummonCard(0, CardType.Skill, CardRarity.Basic, 
             Owner: Owner,
             ChoiceContext: choiceContext,
             SelectionPrompt: SelectionScreenPrompt,
-            SelectMaterials: SelectLinkMaterials
+            GetAvailableMaterials: GetAvailableLinkMaterials
         ));
     }
 
-    private IReadOnlyList<SummonMaterial> SelectLinkMaterials(BaseExtraLinkCard linkCard, CoreCard coreCard) {
-        return SummonUtil.SelectFieldMonsterMaterials(
-            Owner,
-            linkCard.GetLinkMaterialCount(coreCard),
-            linkCard.CanUseLinkMaterial
-        );
+    private IReadOnlyList<SummonMaterial> GetAvailableLinkMaterials(BaseExtraLinkCard linkCard, CoreCard coreCard) {
+        return SummonUtil.GetFieldMonsterMaterials(Owner);
     }
 }

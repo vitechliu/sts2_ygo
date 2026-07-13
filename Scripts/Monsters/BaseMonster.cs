@@ -19,6 +19,7 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
     public override int MaxInitialHp => 1; // 作为敌方方怪物生成时的血量，通常无需在意
     public override string? CustomVisualsPath => $"res://VYgo/scenes/monsters/{CardId}.tscn";
 
+    
 
     public virtual void SetUpgraded() {
         Entry.Logger.Info("SetUpgraded:" + Title);

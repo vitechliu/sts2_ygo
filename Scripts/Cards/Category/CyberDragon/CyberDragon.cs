@@ -15,6 +15,8 @@ namespace VYgo.Scripts.Cards.Category.CyberDragon;
 public class CyberDragon() : BaseMonsterCard(energyCost, rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 70095154;
 
+    public override YgoMaterialNames? MaterialCardName => YgoMaterialNames.电子龙;
+    
     private const int energyCost = 2;
     private const CardRarity rarity = CardRarity.Common;
     private const TargetType targetType = TargetType.None;
@@ -25,10 +27,9 @@ public class CyberDragon() : BaseMonsterCard(energyCost, rarity, targetType, sho
     //     HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
     // }
 
-    public override int BaseAttackVar => 6;
-    public override int BaseLifeVar => 4;
+    public override int BaseAttackVar => 5;
+    public override int BaseLifeVar => 3;
     public override int UpgradeAttackVar => 2;
-    public override int UpgradeLifeVar => 1;
 
     protected override bool ShouldGlowGoldInternal => Active;
     

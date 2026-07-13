@@ -44,4 +44,13 @@ public static class YgoHoverTipConst {
     public static IHoverTip SendToGraveyard() {
         return Base("SEND_TO_GRAVEYARD");
     }
+    
+    //卡名替代
+    public static IHoverTip NameAs(YgoMaterialNames name) {
+        var str = "V_YGO_NAME_AS";
+        var title = HoverTipFactory.L10NStatic(str + ".title");
+        var description = HoverTipFactory.L10NStatic(str + ".description");
+        description.Add("YgoName", name.ToString());
+        return new HoverTip(title, description);
+    }
 }

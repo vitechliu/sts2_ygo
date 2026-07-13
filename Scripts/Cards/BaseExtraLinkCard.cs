@@ -23,11 +23,22 @@ public abstract class BaseExtraLinkCard(
         return Math.Max(1, coreCard.LinkCount ?? 1);
     }
 
+    public virtual int GetMinLinkMaterialCount(CoreCard coreCard) {
+        return GetLinkMaterialCount(coreCard);
+    }
+
+    // null means that every available material count at or above the minimum is allowed.
+    public virtual int? GetMaxLinkMaterialCount(CoreCard coreCard) {
+        return GetLinkMaterialCount(coreCard);
+    }
+
     public virtual bool CanUseLinkMaterial(SummonMaterial material) {
         return true;
     }
 
     public virtual bool HasValidLinkMaterials(CoreCard coreCard, IReadOnlyList<SummonMaterial> materials) {
-        return materials.Count >= GetLinkMaterialCount(coreCard);
+        return materials.Count >= GetMinLinkMaterialCount(coreCard)
+            && (GetMaxLinkMaterialCount(coreCard) is not { } maxCount || materials.Count <= maxCount)
+            && materials.All(CanUseLinkMaterial);
     }
 }

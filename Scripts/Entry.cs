@@ -15,8 +15,10 @@ using VYgo.Core;
 using VYgo.Core.CardPools;
 using VYgo.Core.Cards;
 using VYgo.Scripts.Cards;
+using VYgo.Scripts.Characters;
 using VYgo.Scripts.Monsters;
 using VYgo.Scripts.Monsters.YGO;
+using VYgo.Scripts.Pools;
 using FileAccess = Godot.FileAccess;
 using Logger = MegaCrit.Sts2.Core.Logging.Logger;
 
@@ -57,7 +59,15 @@ public static class Entry {
         Logger.Info("VYgo initialized.");
     }
 
+    //注册附属卡池
     static void RegisterCharacterCardPoolLinks() {
+        CharacterCardPoolLinks.Register<ZaneTruesdaleCharacter, CommonCardPool>();
+        CharacterCardPoolLinks.Register<ZaneTruesdaleCharacter, LinkCardPool>();
+        CharacterCardPoolLinks.Register<ZaneTruesdaleCharacter, FusionCardPool>();
+        
+        CharacterCardPoolLinks.Register<RedhatCharacter, CommonCardPool>();
+        CharacterCardPoolLinks.Register<RedhatCharacter, LinkCardPool>();
+        CharacterCardPoolLinks.Register<RedhatCharacter, FusionCardPool>();
         // Register extra card pools here. The character's own CardPool is always included automatically.
         // Example:
         // CharacterCardPoolLinks.Register<RedhatCharacter, AnotherRedhatCardPool>();

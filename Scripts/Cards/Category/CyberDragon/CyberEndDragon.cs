@@ -14,7 +14,7 @@ public class CyberEndDragon() : BaseExtraFusionCard(energyCost, rarity, targetTy
     public override int CardId => 1546123;
     public override int FusionMaterialCount => 3;
     
-    private const int energyCost = 1;
+    private const int energyCost = -1;
     private const CardRarity rarity = CardRarity.Uncommon;
     private const TargetType targetType = TargetType.None;
     private const bool shouldShowInCardLibrary = true;
@@ -37,5 +37,9 @@ public class CyberEndDragon() : BaseExtraFusionCard(energyCost, rarity, targetTy
     protected override void OnUpgrade() {
         DynamicVars["Life"].UpgradeValueBy(5);
         DynamicVars["Attack"].UpgradeValueBy(5);
+    }
+
+    public override bool CanUseFusionMaterial(SummonMaterial material) {
+        return material.VYgoCard?.MaterialCardName == YgoMaterialNames.电子龙;
     }
 }
