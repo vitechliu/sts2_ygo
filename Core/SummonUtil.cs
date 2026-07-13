@@ -26,7 +26,7 @@ public sealed record FusionSummonRequest(
     Player Owner,
     PlayerChoiceContext ChoiceContext,
     LocString SelectionPrompt,
-    Func<BaseExtraFusionCard, IReadOnlyList<SummonMaterial>> SelectMaterials
+    Func<BaseExtraFusionCard, IReadOnlyList<SummonMaterial>> GetAvailableMaterials
 );
 
 public sealed record LinkSummonRequest(
@@ -34,7 +34,7 @@ public sealed record LinkSummonRequest(
     Player Owner,
     PlayerChoiceContext ChoiceContext,
     LocString SelectionPrompt,
-    Func<BaseExtraLinkCard, CoreCard, IReadOnlyList<SummonMaterial>> SelectMaterials
+    Func<BaseExtraLinkCard, CoreCard, IReadOnlyList<SummonMaterial>> GetAvailableMaterials
 );
 
 public sealed record ExtraDeckSummonRequest(
@@ -46,8 +46,7 @@ public sealed record ExtraDeckSummonRequest(
     Func<CardModel, SummonSelection?> BuildSelection,
     Func<SummonAnimationContext, Task> PlayAnimation,
     Func<IReadOnlyList<SummonMaterial>, Task>? ConsumeMaterials = null,
-    float FinalWaitSeconds = 0.45f,
-    string LogName = "ExtraDeckSummon"
+    float FinalWaitSeconds = 0.45f
 );
 
 public sealed record SummonSelection(
@@ -89,10 +88,9 @@ public static class SummonUtil {
             ChoiceContext: request.ChoiceContext,
             SelectionPrompt: request.SelectionPrompt,
             ExtraCardFilter: card => card is BaseExtraFusionCard,
-            BuildSelection: card => BuildFusionSelection(card, request.SelectMaterials),
+            BuildSelection: card => BuildFusionSelection(card, request.Owner, request.GetAvailableMaterials),
             PlayAnimation: PlayFusionSummonAnimation,
-            FinalWaitSeconds: 0.45f,
-            LogName: "FusionSummon"
+            FinalWaitSeconds: 0.45f
         ));
     }
 
@@ -103,15 +101,13 @@ public static class SummonUtil {
             ChoiceContext: request.ChoiceContext,
             SelectionPrompt: request.SelectionPrompt,
             ExtraCardFilter: card => card is BaseExtraLinkCard,
-            BuildSelection: card => BuildLinkSelection(card, request.SelectMaterials),
+            BuildSelection: card => BuildLinkSelection(card, request.Owner, request.GetAvailableMaterials),
             PlayAnimation: PlayLinkSummonAnimation,
-            FinalWaitSeconds: 0.8f,
-            LogName: "LinkSummon"
+            FinalWaitSeconds: 0.8f
         ));
     }
-    public static IReadOnlyList<SummonMaterial> SelectFieldMonsterMaterials(
+    public static IReadOnlyList<SummonMaterial> GetFieldMonsterMaterials(
         Player owner,
-        int? count = null,
         Func<SummonMaterial, bool>? filter = null
     ) {
         IEnumerable<SummonMaterial> materials = owner.Creature.Pets
@@ -122,16 +118,11 @@ public static class SummonUtil {
             materials = materials.Where(filter);
         }
 
-        if (count is { } materialCount) {
-            materials = materials.Take(materialCount);
-        }
-
         return materials.ToList();
     }
 
-    public static IReadOnlyList<SummonMaterial> SelectFieldAndHandMonsterMaterials(
+    public static IReadOnlyList<SummonMaterial> GetFieldAndHandMonsterMaterials(
         Player owner,
-        int count,
         Func<SummonMaterial, bool>? filter = null
     ) {
         List<SummonMaterial> fieldMaterials = owner.Creature.Pets
@@ -140,49 +131,49 @@ public static class SummonUtil {
             .Where(material => filter?.Invoke(material) ?? true)
             .ToList();
 
-        int requiredFieldMaterials = Math.Max(0, owner.MinionCount() + 1 - MinionUtil.MAX_MINION_COUNT);
-        if (fieldMaterials.Count < requiredFieldMaterials) {
-            return fieldMaterials;
-        }
-
-        List<SummonMaterial> selected = fieldMaterials.Take(count).ToList();
-        if (selected.Count >= count) {
-            return selected;
-        }
-
         IEnumerable<SummonMaterial> handMaterials = PileType.Hand.GetPile(owner).Cards
             .Where(SummonMaterial.IsHandMonsterCard)
             .Select(SummonMaterial.FromHandMonsterCard)
             .Where(material => filter?.Invoke(material) ?? true);
 
-        selected.AddRange(handMaterials.Take(count - selected.Count));
-        return selected;
+        fieldMaterials.AddRange(handMaterials);
+        return fieldMaterials;
     }
 
     public static async Task ExecuteExtraDeckSummon(ExtraDeckSummonRequest request) {
         var pile = Entry.ExtraPile.GetPile(request.Owner);
         if (pile.Cards.Count <= 0) return;
 
+        List<CardModel> summonableCards = new();
+        Dictionary<CardModel, SummonSelection> selections = new();
+        foreach (CardModel extraCard in pile.Cards.Where(request.ExtraCardFilter)) {
+            SummonSelection? candidateSelection = request.BuildSelection(extraCard);
+            if (candidateSelection == null || !CanSummonWithSelection(request.Owner, candidateSelection)) {
+                continue;
+            }
+
+            summonableCards.Add(extraCard);
+            selections[extraCard] = candidateSelection;
+        }
+
+        if (summonableCards.Count <= 0) return;
+
         if ((await CardSelectCmd.FromCombatPile(
                 prefs: new CardSelectorPrefs(request.SelectionPrompt, 1),
                 context: request.ChoiceContext,
                 pile: pile,
                 player: request.Owner,
-                filter: request.ExtraCardFilter))
+                filter: card => summonableCards.Contains(card)))
             .FirstOrDefault() is not { } selectedExtraCard) {
             return;
         }
 
-        SummonSelection? selection = request.BuildSelection(selectedExtraCard);
-        if (selection == null) return;
-
-        if (!string.IsNullOrEmpty(selection.InvalidReason)) {
-            Entry.Logger.Info($"{request.LogName}: {selection.InvalidReason}");
+        if (!selections.TryGetValue(selectedExtraCard, out SummonSelection? selectedSelection)
+            || !CanSummonWithSelection(request.Owner, selectedSelection)) {
             return;
         }
 
-        List<SummonMaterial> materials = selection.Materials.ToList();
-        if (materials.Count <= 0) return;
+        List<SummonMaterial> materials = selectedSelection.Materials.ToList();
 
         if (TestMode.IsOn || NCombatRoom.Instance == null) {
             return;
@@ -233,17 +224,62 @@ public static class SummonUtil {
         }
     }
 
+    private static bool CanSummonWithSelection(Player owner, SummonSelection selection) {
+        if (!string.IsNullOrEmpty(selection.InvalidReason) || selection.Materials.Count <= 0) {
+            return false;
+        }
+
+        return CanSummonWithMaterials(owner, selection.Materials);
+    }
+
+    private static bool CanSummonWithMaterials(Player owner, IReadOnlyList<SummonMaterial> materials) {
+        HashSet<Creature> availableFieldMonsters = owner.Creature.Pets
+            .Where(SummonMaterial.IsFieldMonster)
+            .ToHashSet();
+        HashSet<CardModel> availableHandMonsters = PileType.Hand.GetPile(owner).Cards
+            .Where(SummonMaterial.IsHandMonsterCard)
+            .ToHashSet();
+        int consumedFieldMonsterCount = 0;
+
+        foreach (SummonMaterial material in materials) {
+            if (material.Creature is { } creature) {
+                if (!availableFieldMonsters.Remove(creature)) {
+                    return false;
+                }
+
+                consumedFieldMonsterCount++;
+                continue;
+            }
+
+            if (material.Card is not { } card || !availableHandMonsters.Remove(card)) {
+                return false;
+            }
+        }
+
+        return owner.MinionCount() - consumedFieldMonsterCount < MinionUtil.MAX_MINION_COUNT;
+    }
+
     private static SummonSelection? BuildFusionSelection(
         CardModel card,
-        Func<BaseExtraFusionCard, IReadOnlyList<SummonMaterial>> selectMaterials
+        Player owner,
+        Func<BaseExtraFusionCard, IReadOnlyList<SummonMaterial>> getAvailableMaterials
     ) {
         if (card is not BaseExtraFusionCard fusionCard) return null;
 
-        IReadOnlyList<SummonMaterial> materials = selectMaterials(fusionCard).ToList();
-        if (materials.Count < fusionCard.FusionMaterialCount) {
+        IReadOnlyList<SummonMaterial> availableMaterials = getAvailableMaterials(fusionCard)
+            .Where(fusionCard.CanUseFusionMaterial)
+            .ToList();
+        IReadOnlyList<SummonMaterial>? materials = FindValidMaterialCombination(
+            owner,
+            availableMaterials,
+            fusionCard.MinFusionMaterialCount,
+            fusionCard.MaxFusionMaterialCount,
+            fusionCard.HasValidFusionMaterials
+        );
+        if (materials == null) {
             return new SummonSelection(
-                materials,
-                $"not enough materials for {fusionCard.GetType().Name}"
+                [],
+                $"no valid material combination for {fusionCard.GetType().Name}"
             );
         }
 
@@ -252,7 +288,8 @@ public static class SummonUtil {
 
     private static SummonSelection? BuildLinkSelection(
         CardModel card,
-        Func<BaseExtraLinkCard, CoreCard, IReadOnlyList<SummonMaterial>> selectMaterials
+        Player owner,
+        Func<BaseExtraLinkCard, CoreCard, IReadOnlyList<SummonMaterial>> getAvailableMaterials
     ) {
         if (card is not BaseExtraLinkCard linkCard) return null;
 
@@ -262,12 +299,60 @@ public static class SummonUtil {
             return null;
         }
 
-        IReadOnlyList<SummonMaterial> materials = selectMaterials(linkCard, coreCard).ToList();
-        if (!linkCard.HasValidLinkMaterials(coreCard, materials)) {
-            return new SummonSelection(materials, $"not enough materials for {linkCard.GetType().Name}");
+        IReadOnlyList<SummonMaterial> availableMaterials = getAvailableMaterials(linkCard, coreCard)
+            .Where(linkCard.CanUseLinkMaterial)
+            .ToList();
+        IReadOnlyList<SummonMaterial>? materials = FindValidMaterialCombination(
+            owner,
+            availableMaterials,
+            linkCard.GetMinLinkMaterialCount(coreCard),
+            linkCard.GetMaxLinkMaterialCount(coreCard),
+            candidate => linkCard.HasValidLinkMaterials(coreCard, candidate)
+        );
+        if (materials == null) {
+            return new SummonSelection([], $"no valid material combination for {linkCard.GetType().Name}");
         }
 
         return new SummonSelection(materials);
+    }
+
+    private static IReadOnlyList<SummonMaterial>? FindValidMaterialCombination(
+        Player owner,
+        IReadOnlyList<SummonMaterial> availableMaterials,
+        int minCount,
+        int? maxCount,
+        Func<IReadOnlyList<SummonMaterial>, bool> isValidCombination
+    ) {
+        List<SummonMaterial> candidates = availableMaterials.Distinct().ToList();
+        int firstCount = Math.Max(1, minCount);
+        int lastCount = Math.Min(maxCount ?? candidates.Count, candidates.Count);
+        if (firstCount > lastCount) return null;
+
+        for (int count = firstCount; count <= lastCount; count++) {
+            List<SummonMaterial> current = new(count);
+            IReadOnlyList<SummonMaterial>? result = FindCombination(0, count);
+            if (result != null) return result;
+
+            IReadOnlyList<SummonMaterial>? FindCombination(int startIndex, int remainingCount) {
+                if (remainingCount == 0) {
+                    return isValidCombination(current) && CanSummonWithMaterials(owner, current)
+                        ? current.ToList()
+                        : null;
+                }
+
+                int lastStartIndex = candidates.Count - remainingCount;
+                for (int i = startIndex; i <= lastStartIndex; i++) {
+                    current.Add(candidates[i]);
+                    IReadOnlyList<SummonMaterial>? combination = FindCombination(i + 1, remainingCount - 1);
+                    current.RemoveAt(current.Count - 1);
+                    if (combination != null) return combination;
+                }
+
+                return null;
+            }
+        }
+
+        return null;
     }
 
     private static async Task ConsumeSummonMaterials(

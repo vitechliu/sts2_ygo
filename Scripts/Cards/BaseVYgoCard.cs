@@ -15,6 +15,8 @@ public abstract class BaseVYgoCard(
 
     //字段
     public virtual List<YgoArchetypes> ArchetypesList { get; set; } = [];
+
+    public virtual YgoMaterialNames? MaterialCardName => null; //简化的卡名，用于判断素材，检索等
     
     public bool ContainArchetype(YgoArchetypes archetype) => ArchetypesList.Contains(archetype);
 

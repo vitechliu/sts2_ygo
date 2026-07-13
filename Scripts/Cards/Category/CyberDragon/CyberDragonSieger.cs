@@ -14,7 +14,7 @@ namespace VYgo.Scripts.Cards.Category.CyberDragon;
 public class CyberDragonSieger() : BaseExtraLinkCard(energyCost,rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 46724542;
     
-    private const int energyCost = 1;
+    private const int energyCost = -1;
     private const CardRarity rarity = CardRarity.Common;
     private const TargetType targetType = TargetType.None;
     private const bool shouldShowInCardLibrary = true;

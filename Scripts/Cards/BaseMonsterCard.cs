@@ -27,8 +27,8 @@ public abstract class BaseMonsterCard(
 
     public virtual int BaseAttackVar => 1;
     public virtual int BaseLifeVar => 1;
-    public virtual int UpgradeAttackVar => 1;
-    public virtual int UpgradeLifeVar => 1;
+    public virtual int UpgradeAttackVar => 0;
+    public virtual int UpgradeLifeVar => 0;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new AttackVar(BaseAttackVar),

@@ -16,8 +16,11 @@ public class CyberDragonHerz() : BaseMonsterCard(energyCost,rarity, targetType, 
     
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         BaseSummonHoverTip,
-        YgoHoverTipConst.SendToGraveyard()
+        YgoHoverTipConst.SendToGraveyard(),
+        YgoHoverTipConst.NameAs(YgoMaterialNames.电子龙)
     ];
+    
+    public override YgoMaterialNames? MaterialCardName => YgoMaterialNames.电子龙;
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new AttackVar(BaseAttackVar),

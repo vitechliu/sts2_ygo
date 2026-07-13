@@ -26,7 +26,7 @@
     "V_YGO_CARD_CYBER_DRAGON_ZWEI.title": "电子龙二型",
     "V_YGO_CARD_CYBER_DRAGON_ZWEI.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n攻击后，获得3力量。",
     "V_YGO_CARD_CYBER_END_DRAGON.title": "电子终结龙",
-    "V_YGO_CARD_CYBER_END_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])",
+    "V_YGO_CARD_CYBER_END_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]「电子龙」＋「电子龙」＋「电子龙」[/aqua]\n[gold]穿甲[/gold]。",
     "V_YGO_CARD_POLYMERIZATION.title": "融合",
     "V_YGO_CARD_POLYMERIZATION.description": "以手卡·场上的怪兽作为融合素材，进行一次[gold]融合召唤[/gold]。",
     "V_YGO_CARD_POLYMERIZATION.selectionScreenPrompt": "请选择需要召唤的卡牌。",
@@ -38,5 +38,7 @@
     "V_YGO_CARD_EVOLUTION_BURST.title": "进化光焰",
     "V_YGO_CARD_EVOLUTION_BURST.description": "场上有「电子龙」怪兽存在的场合才能发动，造成10点伤害。",
     "V_YGO_CARD_POWER_BOND.title": "力量结合",
-    "V_YGO_CARD_POWER_BOND.description": "以手卡·场上的怪兽作为融合素材，进行一次[gold]融合召唤[/gold]。\n这个效果召唤的怪兽的[gold]力量[/gold]上升那个原本[gold]力量[/gold]数值。在你的回合结束时，你失去这个效果上升的数值点生命。"
+    "V_YGO_CARD_POWER_BOND.description": "以手卡·场上的怪兽作为融合素材，进行一次[gold]融合召唤[/gold]。\n这个效果召唤的怪兽的[gold]力量[/gold]上升那个原本[gold]力量[/gold]数值。在你的回合结束时，你失去这个效果上升的数值点生命。",
+    "V_YGO_CARD_CYBER_TWIN_DRAGON.title": "电子双生龙",
+    "V_YGO_CARD_CYBER_TWIN_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]「电子龙」＋「电子龙」[/aqua]\n可以攻击两次。"
 }

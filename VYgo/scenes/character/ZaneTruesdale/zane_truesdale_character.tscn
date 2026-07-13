@@ -7,25 +7,26 @@
 [node name="Visuals" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 texture_filter = 4
-position = Vector2(-0.99999994, -236.00002)
-scale = Vector2(-0.33, 0.33)
+position = Vector2(3, -163)
+scale = Vector2(-0.23, 0.23)
 texture = ExtResource("1_idle")
 
 [node name="Bounds" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -140.0
-offset_top = -474.0
-offset_right = 140.0
+offset_left = -86.0
+offset_top = -340.0
+offset_right = 94.0
+offset_bottom = 7.0
 
 [node name="IntentPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -505)
+position = Vector2(-1, -354)
 
 [node name="CenterPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -252)
+position = Vector2(11, -176)
 
 [node name="TalkPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(32, -420)
+position = Vector2(40, -295)

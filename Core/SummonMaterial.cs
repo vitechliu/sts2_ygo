@@ -25,6 +25,21 @@ public sealed record SummonMaterial(CardModel? Card, Creature? Creature = null) 
         }
     }
 
+    public BaseVYgoCard? VYgoCard {
+        get {
+            if (Card is BaseVYgoCard vYgoCard) return vYgoCard;
+            if (Creature?.Monster is IYgoId monster) {
+                return monster.YgoGetCard();
+            }
+            return null;
+        }
+    }
+
+    public int? CardId => CoreCard?.CardId;
+    public string? CardName => CoreCard is { } coreCard
+        ? new[] { coreCard.CnName, coreCard.Name, coreCard.EnName }.FirstOrDefault(name => !string.IsNullOrEmpty(name))
+        : null;
+    public string? Race => CoreCard?.Race;
     public bool IsEffectMonster => CoreCard?.IsEffectMonster == true;
 
     public static bool IsFieldMonster(Creature creature) {

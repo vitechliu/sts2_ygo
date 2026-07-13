@@ -10,7 +10,7 @@ public abstract class BaseExtraFusionCard(
     TargetType target,
     bool showInCardLibrary = true)
     : BaseExtraCard(baseCost, rarity, target, showInCardLibrary) {
-    
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         BaseSummonHoverTip,
         YgoHoverTipConst.FusionSummon()
@@ -18,4 +18,19 @@ public abstract class BaseExtraFusionCard(
     protected override YgoType CardYgoType => YgoType.fusion;
 
     public virtual int FusionMaterialCount => 2;
+
+    public virtual int MinFusionMaterialCount => FusionMaterialCount;
+
+    // null means that every available material count at or above the minimum is allowed.
+    public virtual int? MaxFusionMaterialCount => FusionMaterialCount;
+
+    public virtual bool CanUseFusionMaterial(SummonMaterial material) {
+        return true;
+    }
+
+    public virtual bool HasValidFusionMaterials(IReadOnlyList<SummonMaterial> materials) {
+        return materials.Count >= MinFusionMaterialCount
+            && (MaxFusionMaterialCount is not { } maxCount || materials.Count <= maxCount)
+            && materials.All(CanUseFusionMaterial);
+    }
 }
