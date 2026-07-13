@@ -16,7 +16,6 @@ public class PowerBond() : BaseSpellCard(energyCost, CardType.Skill, rarity, tar
     private const TargetType targetType = TargetType.None;
     private const bool shouldShowInCardLibrary = true;
     
-    
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
     }
     
