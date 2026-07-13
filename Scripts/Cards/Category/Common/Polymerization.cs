@@ -12,9 +12,9 @@ using VYgo.Scripts.Pools;
 namespace VYgo.Scripts.Cards.Category.Common;
 
 [RegisterCard(typeof(FusionCardPool))]
-[RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 2)]
+[RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 1)]
 public class Polymerization()
-    : BaseSpellCard(0, CardType.Skill, CardRarity.Basic, TargetType.None) {
+    : BaseSpellCard(2, CardType.Skill, CardRarity.Basic, TargetType.None) {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         YgoHoverTipConst.FusionSummon()
     ];

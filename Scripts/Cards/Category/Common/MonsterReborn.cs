@@ -11,7 +11,6 @@ using VYgo.Scripts.Pools;
 namespace VYgo.Scripts.Cards.Category.Common;
 
 [RegisterCard(typeof(CommonCardPool))]
-[RegisterCharacterStarterCard(typeof(RedhatCharacter), 3)]
 public class MonsterReborn()
     : BaseSpellCard(0, CardType.Skill, CardRarity.Basic, TargetType.None) {
     
@@ -30,7 +29,6 @@ public class MonsterReborn()
             .FirstOrDefault() is not { } selectedExtraCard) {
             return;
         }
-
         await CardCmd.AutoPlay(choiceContext, selectedExtraCard, null);
     }
 
