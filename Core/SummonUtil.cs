@@ -367,7 +367,7 @@ public static class SummonUtil {
                 consumeTasks.Add(TaskHelper.RunSafely(MaterialSacrifice(material.Creature)));
             }
             else if (material.Card != null) {
-                consumeTasks.Add(TaskHelper.RunSafely(CardCmd.Exhaust(choiceContext, material.Card)));
+                consumeTasks.Add(TaskHelper.RunSafely(CardCmd.Discard(choiceContext, material.Card)));
             }
         }
 
