@@ -54,6 +54,7 @@
         <Content Include="VYgo\localization\zhs\powers.json"/>
         <Content Include="VYgo\localization\zhs\relics.json" />
         <Content Include="VYgo\localization\zhs\static_hover_tips.json"/>
+        <Content Include="Web\.gdignore" />
     </ItemGroup>
     <ItemGroup>
         <Content Remove="Scripts\**\*.uid"/>
@@ -62,7 +63,6 @@
         <Folder Include="Core\Summon\" />
         <Folder Include="Scripts\Misc\" />
         <Folder Include="VYgo\images\relics\" />
-        <Folder Include="Web\"/>
         <Folder Include="VYgo\images\cards\"/>
         <Folder Include="VYgo\images\monster\"/>
     </ItemGroup>

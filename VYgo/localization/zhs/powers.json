@@ -1,2 +1,8 @@
 {
+  "V_YGO_POWER_ATTACK_POWER.title": "攻击力",
+  "V_YGO_POWER_ATTACK_POWER.description": "怪物使用主动攻击行为时造成的伤害。",
+  "V_YGO_POWER_ATTACK_POWER.smartDescription": "怪物使用主动攻击行为时造成的伤害。",
+  "V_YGO_POWER_YGO_POWER.title": "游戏王怪兽",
+  "V_YGO_POWER_YGO_POWER.description": "游戏王怪兽。(游戏中会展示具体参数)",
+  "V_YGO_POWER_YGO_POWER.smartDescription": "{YgoInfo}"
 }

@@ -3,9 +3,9 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using MinionLib.Commands;
+using VYgo.Scripts.Powers;
 
 namespace VYgo.Scripts.Actions;
 
@@ -14,7 +14,7 @@ public sealed class TargetingAttackAction : BasePerTurnMonsterAction {
 
     private int StrengthPowerAmount {
         get {
-            var power = Owner.Powers.OfType<StrengthPower>().FirstOrDefault();
+            var power = Owner.Powers.OfType<AttackPower>().FirstOrDefault();
             return power?.Amount ?? 0;
         }
     }

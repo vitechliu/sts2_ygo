@@ -15,17 +15,9 @@ using VYgo.Scripts.Pools;
 namespace VYgo.Scripts.Characters;
 
 [RegisterCharacter]
-public class RedhatCharacter : ModCharacterTemplate<RedhatCardPool, RedhatRelicPool, IroncladPotionPool>
+public class RedhatCharacter : BaseYgoCharacter<RedhatCardPool, RedhatRelicPool, IroncladPotionPool>
 {
 	
-	
-	protected override ModAnimStateMachine? SetupCustomCombatAnimationStateMachine(Node visualsRoot, CharacterModel character) {
-		return ModAnimStateMachines.StandardCue(
-			visualsRoot,
-			character,
-			idleName: "idle");
-	}
-
 	public override Color NameColor => new(0.5f, 0.5f, 1f);
 	// 能量图标轮廓颜色
 	public override Color EnergyLabelOutlineColor => new(0.5f, 0.5f, 1f);
@@ -110,41 +102,10 @@ public class RedhatCharacter : ModCharacterTemplate<RedhatCardPool, RedhatRelicP
 				.Build()
 		});
 
-	// 攻击和施法动画延迟，以对齐动画
-	public override float AttackAnimDelay => 0f;
-	public override float CastAnimDelay => 0f;
-
-	// 如果你的人物不需要时间线小故事，加上这句。
-	public override bool RequiresEpochAndTimeline => false;
-
-	// 自动转换人物场景，让你不需要手动挂脚本。复制即可。
-	protected override NCreatureVisuals? TryCreateCreatureVisuals() 
-		=> RitsuGodotNodeFactories.CreateFromScenePath<NCreatureVisuals>(AssetProfile.Scenes!.VisualsPath!);
-
-	// 初始卡组，或者在卡牌类上用RegisterCharacterStarterCard就不用写这个
-	// protected override IEnumerable<StartingDeckEntry> StartingDeckEntries => [
-	//     new(typeof(TestCard), 5)
-	// ];
-
 #pragma warning disable CS0672 // Member overrides obsolete member
 	protected override IEnumerable<Type> StartingRelicTypes => [
 #pragma warning restore CS0672 // Member overrides obsolete member
 		typeof(BagOfPreparation),
 		typeof(BagOfPreparation),
 	];
-
-	// 攻击建筑师的攻击特效列表
-	public override List<string> GetArchitectAttackVfx() => [
-		"vfx/vfx_attack_blunt",
-		"vfx/vfx_heavy_blunt",
-		"vfx/vfx_attack_slash",
-		"vfx/vfx_bloody_impact",
-        "vfx/vfx_rock_shatter"
-	];
-	
-	// //洗牌钩子
-	// public override Task AfterShuffle(PlayerChoiceContext choiceContext, Player shuffler) {
-	// 	Entry.Logger.Info("Shuffler: " + shuffler.Character.Title);
-	// 	return Task.CompletedTask;
-	// }
 }

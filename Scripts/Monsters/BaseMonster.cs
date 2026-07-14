@@ -10,6 +10,7 @@ using VYgo.Core;
 using VYgo.RitsuAdapters;
 using VYgo.Scripts.Actions;
 using VYgo.Scripts.Cards;
+using VYgo.Scripts.Powers;
 
 namespace VYgo.Scripts.Monsters;
 
@@ -57,10 +58,16 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
         if (options.MaxHp is { } maxHp)
             await CreatureCmd.SetMaxAndCurrentHp(Creature, maxHp); // 设置血量
         Visuals?.OnSummon();
+        var card = this.YgoGetCard();
+        var power = await PowerCmd.Apply<YgoPower>(choiceContext, Creature, 1m, owner.Creature, options.Source, true);
+        if (power != null && card != null) {
+            power.Card = card;
+            power.InitInfo();
+        }
         if (IsGuardian)
             await PowerCmd.Apply<MinionGuardianPower>(choiceContext, Creature, 1m, owner.Creature, options.Source, true);
         if (options.PrimaryStatAmount is { } strength && strength > 0m)
-            await PowerCmd.Apply<StrengthPower>(choiceContext, Creature, strength, owner.Creature, options.Source);
+            await PowerCmd.Apply<AttackPower>(choiceContext, Creature, strength, owner.Creature, options.Source);
         if (BasicAttackAction) {
             await PowerCmd.Apply<TargetingAttackAction>(choiceContext, Creature, 1m, owner.Creature, options.Source, true);
         }
