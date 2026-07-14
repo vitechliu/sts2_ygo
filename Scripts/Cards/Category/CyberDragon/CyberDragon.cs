@@ -1,10 +1,12 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
 using VYgo.Scripts.Characters;
+using VYgo.Scripts.Monsters;
 using VYgo.Scripts.Pools;
 using VYgo.Utils;
 
@@ -12,6 +14,7 @@ namespace VYgo.Scripts.Cards.Category.CyberDragon;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
 [RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 3)]
+[RegisterCharacterStarterCard(typeof(RedhatCharacter), 15)]
 public class CyberDragon() : BaseMonsterCard(energyCost, rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 70095154;
 
@@ -53,7 +56,7 @@ public class CyberDragon() : BaseMonsterCard(energyCost, rarity, targetType, sho
     }
 
     public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        if (cardPlay.Card.Owner != this.Owner) return Task.CompletedTask;
+        if (cardPlay.Card.Owner != Owner) return Task.CompletedTask;
         FlushCost();
         return Task.CompletedTask;
     }
@@ -62,4 +65,10 @@ public class CyberDragon() : BaseMonsterCard(energyCost, rarity, targetType, sho
         BaseSummonHoverTip,
         YgoHoverTipConst.SpecialSummon()
     ];
+
+
+    public static bool PlayerHasCyberDragon(Player player) {
+        return player.Creature.Pets.Count(c => c.Monster is BaseMonster bm 
+                                               && bm.YgoGetCard()?.MaterialCardName == YgoMaterialNames.电子龙) > 0;
+    }
 }

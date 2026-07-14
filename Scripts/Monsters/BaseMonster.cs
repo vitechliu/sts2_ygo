@@ -19,9 +19,10 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
     public override int MaxInitialHp => 1; // 作为敌方方怪物生成时的血量，通常无需在意
     public override string? CustomVisualsPath => $"res://VYgo/scenes/monsters/{CardId}.tscn";
 
-    
+    protected bool _upgraded;
 
     public virtual void SetUpgraded() {
+        _upgraded = true;
         Entry.Logger.Info("SetUpgraded:" + Title);
     }
 
@@ -68,6 +69,12 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
 
     public abstract int CardId { get; }
 
+    protected virtual async Task OnSendToGraveyard(
+        PlayerChoiceContext choiceContext, 
+        Creature creature,
+        Player owner
+        ) {}
+
     public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength) {
         //怪兽死亡后，对应的怪兽卡置入弃牌堆
         if (!PileSent && creature == Creature) {
@@ -78,6 +85,7 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
                 var owner = creature.PetOwner;
                 if (owner != null) {
                     await ReturnCard(owner, card);
+                    await OnSendToGraveyard(choiceContext, creature, owner);
                 }
             }
             else {

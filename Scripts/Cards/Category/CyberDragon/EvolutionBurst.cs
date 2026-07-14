@@ -14,6 +14,7 @@ namespace VYgo.Scripts.Cards.Category.CyberDragon;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
 [RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 2)]
+[RegisterCharacterStarterCard(typeof(RedhatCharacter), 3)]
 public class EvolutionBurst() : BaseSpellCard(energyCost, CardType.Attack, rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 52875873;
 
@@ -27,6 +28,7 @@ public class EvolutionBurst() : BaseSpellCard(energyCost, CardType.Attack, rarit
     ];
     
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+        if (!CyberDragon.PlayerHasCyberDragon(Owner)) return;
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue)
                 .FromCard(this, cardPlay)
@@ -39,4 +41,7 @@ public class EvolutionBurst() : BaseSpellCard(energyCost, CardType.Attack, rarit
     {
         DynamicVars.Damage.UpgradeValueBy(2m);
     }
+    
+    protected override bool ShouldGlowRedInternal => !CyberDragon.PlayerHasCyberDragon(Owner);
+    
 }

@@ -11,6 +11,7 @@ namespace VYgo.Scripts.Cards.Category.CyberDragon;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
 [RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 2)]
+[RegisterCharacterStarterCard(typeof(RedhatCharacter), 15)]
 public class CyberDragonHerz() : BaseMonsterCard(energyCost,rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 56364287;
     
@@ -30,7 +31,7 @@ public class CyberDragonHerz() : BaseMonsterCard(energyCost,rarity, targetType, 
     
     public override List<YgoArchetypes> ArchetypesList => [YgoArchetypes.Cyber, YgoArchetypes.CyberDragon];
 
-    private const int energyCost = 0;
+    private const int energyCost = 1;
     private const CardRarity rarity = CardRarity.Common;
     private const TargetType targetType = TargetType.None;
     private const bool shouldShowInCardLibrary = true;
