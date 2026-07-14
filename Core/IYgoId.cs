@@ -11,12 +11,24 @@ public interface IYgoId {
 
 public static class IYgoIdHelper {
     public static BaseVYgoCard? YgoGetCard(this IYgoId entry) {
-        return Entry.CardYgoIdCache.GetValueOrDefault(entry.CardId);
+        var res = Entry.CardYgoIdCache.GetValueOrDefault(entry.CardId);
+        if (res == null) {
+            Entry.Logger.Error("Cannot Find Ygo CardModel: " + entry.CardId);
+        }
+        return res;
     }
     public static BaseMonster? YgoGetMonster(this IYgoId entry) {
-        return Entry.MonsterYgoIdCache.GetValueOrDefault(entry.CardId);
+        var res = Entry.MonsterYgoIdCache.GetValueOrDefault(entry.CardId);
+        if (res == null) {
+            Entry.Logger.Error("Cannot Find Ygo Monster: " + entry.CardId);
+        }
+        return res;
     }
     public static CoreCard? YgoGetCore(this IYgoId entry) {
-        return Entry.CoreCardCache.GetValueOrDefault(entry.CardId);
+        var res = Entry.CoreCardCache.GetValueOrDefault(entry.CardId);
+        if (res == null) {
+            Entry.Logger.Error("Cannot Find Ygo Core Card: " + entry.CardId);
+        }
+        return res;
     }
 }
