@@ -6,7 +6,7 @@
   "V_YGO_SUMMON_NORMAL.title": "召唤",
   "V_YGO_SUMMON_NORMAL.description": "将卡牌作为怪兽召唤到场上，怪兽死亡后卡牌进入弃牌堆。",
   "V_YGO_SUMMON.title": "召唤({Attack}/{Life})",
-  "V_YGO_SUMMON.description": "以[blue]{Attack}[/blue]初始攻击、[blue]{Life}[/blue]点生命值召唤怪兽。",
+  "V_YGO_SUMMON.description": "以[blue]{Attack}[/blue]点攻击力、[blue]{Life}[/blue]点生命值召唤怪兽。",
   "V_YGO_SPECIAL_SUMMON.title": "特召",
   "V_YGO_SPECIAL_SUMMON.description": "特殊召唤。满足特招条件的手牌可以免费打出。",
   "V_YGO_LINK_SUMMON.title": "连接召唤",

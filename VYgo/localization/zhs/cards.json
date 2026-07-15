@@ -40,5 +40,7 @@
     "V_YGO_CARD_POWER_BOND.title": "力量结合",
     "V_YGO_CARD_POWER_BOND.description": "以手卡·场上的怪兽作为融合素材，进行一次[gold]融合召唤[/gold]。\n这个效果召唤的怪兽的[gold]力量[/gold]上升那个原本[gold]力量[/gold]数值。在你的回合结束时，你失去这个效果上升的数值点生命。",
     "V_YGO_CARD_CYBER_TWIN_DRAGON.title": "电子双生龙",
-    "V_YGO_CARD_CYBER_TWIN_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]「电子龙」＋「电子龙」[/aqua]\n可以攻击两次。"
+    "V_YGO_CARD_CYBER_TWIN_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]「电子龙」＋「电子龙」[/aqua]\n可以攻击两次。",
+    "V_YGO_CARD_CYBER_BARRIER_DRAGON.title": "电子障壁龙",
+    "V_YGO_CARD_CYBER_BARRIER_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])"
 }
