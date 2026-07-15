@@ -1,20 +1,17 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
 using VYgo.Scripts.Characters;
 using VYgo.Scripts.Pools;
 
-namespace VYgo.Scripts.Cards.Category.Common;
+namespace VYgo.Scripts.Cards.Category.Fusion;
 
 [RegisterCard(typeof(FusionCardPool))]
 [RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 1)]
-public class Polymerization()
-    : BaseSpellCard(2, CardType.Skill, CardRarity.Basic, TargetType.None) {
+public class FusionSubstitute()
+    : BaseSpellCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.None) {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         YgoHoverTipConst.FusionSummon()
     ];
@@ -25,9 +22,9 @@ public class Polymerization()
             Owner: Owner,
             ChoiceContext: choiceContext,
             SelectionPrompt: SelectionScreenPrompt,
-            GetAvailableMaterials: _ => SummonUtil.GetFieldAndHandMonsterMaterials(Owner)
+            GetAvailableMaterials: _ => SummonUtil.GetFieldMonsterMaterials(Owner)
         ));
     }
 
-    public override int CardId => 24094653;
+    public override int CardId => 74335036;
 }

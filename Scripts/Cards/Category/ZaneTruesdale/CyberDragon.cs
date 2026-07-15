@@ -10,7 +10,7 @@ using VYgo.Scripts.Monsters;
 using VYgo.Scripts.Pools;
 using VYgo.Utils;
 
-namespace VYgo.Scripts.Cards.Category.CyberDragon;
+namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
 [RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 3)]
