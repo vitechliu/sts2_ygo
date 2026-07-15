@@ -6,6 +6,11 @@ const imageService = require('../services/imageService');
 const fs = require('fs');
 const path = require('path');
 
+const projectRoot = path.join(__dirname, '..', '..');
+const cardCategoryDir = path.join(projectRoot, 'Scripts', 'Cards', 'Category');
+const cardTemplateDir = path.join(projectRoot, 'Scripts', 'Cards', 'Template');
+const cardPoolDir = path.join(projectRoot, 'Scripts', 'Pools');
+
 // 获取所有卡牌
 router.get('/', async (req, res) => {
     try {
@@ -313,6 +318,41 @@ router.post('/:cardId/monster-script', async (req, res) => {
         res.json({ success: true, data: { scriptPath } });
     } catch (error) {
         if (error.message === 'Invalid monster class name') {
+            return res.status(400).json({ success: false, error: error.message });
+        }
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// 获取卡牌脚本可用的卡池及对应目录
+router.get('/card-script-options', (req, res) => {
+    try {
+        res.json({ success: true, data: getCardScriptOptions() });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// 根据卡牌类型和所选卡池生成卡牌脚本
+router.post('/:cardId/card-script', async (req, res) => {
+    try {
+        const { cardId } = req.params;
+        const { poolName, folderName } = req.body;
+        const card = await getCards('SELECT card_id, en_name, types FROM cards WHERE card_id = ?', [cardId]);
+
+        if (!card) {
+            return res.status(404).json({ success: false, error: 'Card not found' });
+        }
+
+        const result = createCardScript(card, poolName, folderName);
+        res.json({ success: true, data: result });
+    } catch (error) {
+        const badRequestErrors = new Set([
+            'Invalid card class name',
+            'Invalid card pool or folder',
+            'Unsupported card type'
+        ]);
+        if (badRequestErrors.has(error.message)) {
             return res.status(400).json({ success: false, error: error.message });
         }
         res.status(500).json({ success: false, error: error.message });
@@ -636,7 +676,8 @@ function getCardResourceStatus(card, context) {
         cardData: context.cardDataIds.has(cardId),
         portrait: isMonster && fs.existsSync(imageService.getPortraitPath(cardId)),
         scene: isMonster && fs.existsSync(getScenePath(cardId)),
-        monsterScript: isMonster && monsterScriptExists(card)
+        monsterScript: isMonster && monsterScriptExists(card),
+        cardScript: cardScriptExists(card)
     };
 }
 
@@ -695,6 +736,119 @@ function getMonsterClassName(card) {
     }
 
     return className;
+}
+
+function getCardScriptOptions() {
+    if (!fs.existsSync(cardPoolDir)) return [];
+
+    const labels = {
+        Common: '通用',
+        Fusion: '融合',
+        Link: '连接',
+        Redhat: '小红帽',
+        ZaneTruesdale: '丸藤亮'
+    };
+
+    return fs.readdirSync(cardPoolDir, { withFileTypes: true })
+        .filter(entry => entry.isFile() && entry.name.endsWith('CardPool.cs') && !entry.name.startsWith('Base'))
+        .map(entry => {
+            const content = fs.readFileSync(path.join(cardPoolDir, entry.name), 'utf8');
+            const match = content.match(/public\s+(?:sealed\s+)?class\s+([A-Za-z_][A-Za-z0-9_]*CardPool)\s*:/);
+            if (!match) return null;
+
+            const poolName = match[1];
+            const folderName = poolName.replace(/CardPool$/, '');
+            return {
+                poolName,
+                folderName,
+                label: labels[folderName] ? `${labels[folderName]} (${poolName})` : poolName
+            };
+        })
+        .filter(Boolean)
+        .sort((a, b) => a.label.localeCompare(b.label, 'zh-CN'));
+}
+
+function getCardClassName(card) {
+    const className = card.en_name || '';
+    if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(className)) {
+        throw new Error('Invalid card class name');
+    }
+    return className;
+}
+
+function findCardScriptPath(card) {
+    const fileName = `${getCardClassName(card)}.cs`;
+    return findFileByName(cardCategoryDir, fileName);
+}
+
+function findFileByName(directory, fileName) {
+    if (!fs.existsSync(directory)) return null;
+
+    for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+        const entryPath = path.join(directory, entry.name);
+        if (entry.isFile() && entry.name === fileName) return entryPath;
+        if (entry.isDirectory()) {
+            const found = findFileByName(entryPath, fileName);
+            if (found) return found;
+        }
+    }
+    return null;
+}
+
+function cardScriptExists(card) {
+    try {
+        return !!findCardScriptPath(card);
+    } catch {
+        return false;
+    }
+}
+
+function createCardScript(card, poolName, folderName) {
+    const option = getCardScriptOptions().find(item => (
+        item.poolName === poolName && item.folderName === folderName
+    ));
+    if (!option) {
+        throw new Error('Invalid card pool or folder');
+    }
+
+    const existingPath = findCardScriptPath(card);
+    if (existingPath) {
+        return { scriptPath: existingPath, existed: true };
+    }
+
+    const isMonster = isMonsterCard(card);
+    const isSpell = String(card.types || '').includes('魔法');
+    if (!isMonster && !isSpell) {
+        throw new Error('Unsupported card type');
+    }
+
+    const className = getCardClassName(card);
+    const templateClassName = isMonster ? 'MonsterTemplate' : 'SpellTemplate';
+    const templatePath = path.join(cardTemplateDir, `${templateClassName}.cs`);
+    if (!fs.existsSync(templatePath)) {
+        throw new Error(`Card template not found: ${templateClassName}`);
+    }
+
+    const targetDir = path.join(cardCategoryDir, option.folderName);
+    const scriptPath = path.join(targetDir, `${className}.cs`);
+    const namespaceName = `VYgo.Scripts.Cards.Category.${option.folderName}`;
+    let content = fs.readFileSync(templatePath, 'utf8');
+
+    content = content
+        .replace(/^namespace\s+VYgo\.Scripts\.Cards\.Template;/m, `namespace ${namespaceName};`)
+        .replace(/^\/\/ \[RegisterCard\(typeof\(ZaneTruesdaleCardPool\)\)\].*$/m, `[RegisterCard(typeof(${option.poolName}))]`)
+        .replace(`public abstract class ${templateClassName}()`, `public class ${className}()`)
+        .replace('public override int CardId => -1;', `public override int CardId => ${Number(card.card_id)};`);
+
+    const requiredUsings = [
+        'using STS2RitsuLib.Interop.AutoRegistration;',
+        'using VYgo.Scripts.Pools;'
+    ];
+    content = `${requiredUsings.filter(line => !content.includes(line)).join('\n')}\n${content}`;
+
+    fs.mkdirSync(targetDir, { recursive: true });
+    fs.writeFileSync(scriptPath, content, { encoding: 'utf8', flag: 'wx' });
+    return { scriptPath, existed: false };
 }
 
 async function exportCardData() {

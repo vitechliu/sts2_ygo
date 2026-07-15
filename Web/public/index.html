@@ -106,12 +106,13 @@
                                     <th class="col-status">卡牌立绘</th>
                                     <th class="col-status">卡牌场景</th>
                                     <th class="col-status">怪兽脚本</th>
+                                    <th class="col-status">卡牌脚本</th>
                                     <th class="col-actions">操作</th>
                                 </tr>
                             </thead>
                             <tbody id="cardsTableBody">
                                 <tr>
-                                    <td colspan="10" class="empty-cell">暂无卡牌数据</td>
+                                    <td colspan="11" class="empty-cell">暂无卡牌数据</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -161,6 +162,28 @@
             </section>
         </main>
     </div>
+
+    <dialog id="cardScriptDialog" class="script-dialog">
+        <form id="cardScriptForm">
+            <div class="dialog-header">
+                <h2>添加卡牌脚本</h2>
+                <button id="closeCardScriptDialogBtn" type="button" class="dialog-close" aria-label="关闭">×</button>
+            </div>
+            <p id="cardScriptCardInfo" class="dialog-card-info"></p>
+            <label class="dialog-field">
+                <span>卡池</span>
+                <select id="cardScriptPool" required></select>
+            </label>
+            <label class="dialog-field">
+                <span>文件夹</span>
+                <input id="cardScriptFolder" type="text" readonly>
+            </label>
+            <div class="dialog-actions">
+                <button id="cancelCardScriptBtn" type="button" class="btn-secondary">取消</button>
+                <button id="submitCardScriptBtn" type="submit" class="btn-primary">创建脚本</button>
+            </div>
+        </form>
+    </dialog>
 
     <div id="toast" class="toast hidden"></div>
 

@@ -102,6 +102,8 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
         await base.AfterDeath(choiceContext, creature, wasRemovalPrevented, deathAnimLength);
     }
 
+    public virtual async Task AfterAttack(PlayerChoiceContext choiceContext) { }
+
     private async Task ReturnCard(Player player, BaseVYgoCard card) {
         var result = await CardPileCmd.AddGeneratedCardToCombat(
             CombatState.CreateCard(card, player),

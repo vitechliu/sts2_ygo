@@ -41,8 +41,8 @@ public class YgoPower : ModPowerTemplate, IYgoId {
     public void InitInfo() {
         var coreCard = this.YgoGetCore();
         StringVar stringVar = (StringVar)base.DynamicVars["YgoInfo"];
-        if (coreCard != null && coreCard.Types != null) {
-            stringVar.StringValue = coreCard.Types;
+        if (coreCard != null && coreCard.FormatedInfo.Length > 0) {
+            stringVar.StringValue = coreCard.FormatedInfo;
         }
         else {
             stringVar.StringValue = "暂无信息";
