@@ -6,16 +6,16 @@ using VYgo.Scripts.Characters;
 using VYgo.Scripts.Pools;
 using VYgo.Scripts.Var;
 
-namespace VYgo.Scripts.Cards.Category.CyberDragon;
+namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
 [RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 1)]
-public class CyberEndDragon() : BaseExtraFusionCard(energyCost, rarity, targetType, shouldShowInCardLibrary) {
-    public override int CardId => 1546123;
-    public override int FusionMaterialCount => 3;
+public class CyberDragonInfinity() : BaseExtraCard(energyCost, rarity, targetType, shouldShowInCardLibrary) {
+    public override int CardId => 10443957;
+    protected override YgoType CardYgoType => YgoType.xyz;
     
     private const int energyCost = -1;
-    private const CardRarity rarity = CardRarity.Uncommon;
+    private const CardRarity rarity = CardRarity.Common;
     private const TargetType targetType = TargetType.None;
     private const bool shouldShowInCardLibrary = true;
 
@@ -24,22 +24,13 @@ public class CyberEndDragon() : BaseExtraFusionCard(energyCost, rarity, targetTy
     //     HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
     // }
 
-
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [
-        YgoKeywords.Piercing
-    ];
-
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new AttackVar(25),
-        new LifeVar(12)
+        new AttackVar(5),
+        new LifeVar(4)
     ];
     
     protected override void OnUpgrade() {
-        DynamicVars["Life"].UpgradeValueBy(5);
-        DynamicVars["Attack"].UpgradeValueBy(5);
-    }
-
-    public override bool CanUseFusionMaterial(SummonMaterial material) {
-        return material.VYgoCard?.MaterialCardName == YgoMaterialNames.电子龙;
+        DynamicVars["Life"].UpgradeValueBy(1);
+        DynamicVars["Attack"].UpgradeValueBy(1);
     }
 }

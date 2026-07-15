@@ -1,15 +1,11 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MinionLib.Commands;
-using MinionLib.Minion;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
 using VYgo.Scripts.Characters;
-using VYgo.Scripts.Monsters.YGO;
 using VYgo.Scripts.Pools;
 
-namespace VYgo.Scripts.Cards.Category.Common;
+namespace VYgo.Scripts.Cards.Category.Link;
 
 [RegisterCard(typeof(LinkCardPool))]
 [RegisterCharacterStarterCard(typeof(RedhatCharacter), 2)]

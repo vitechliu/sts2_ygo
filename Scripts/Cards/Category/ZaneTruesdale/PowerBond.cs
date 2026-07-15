@@ -4,7 +4,7 @@ using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Scripts.Characters;
 using VYgo.Scripts.Pools;
 
-namespace VYgo.Scripts.Cards.Category.CyberDragon;
+namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
 [RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 2)]

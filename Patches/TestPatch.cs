@@ -4,7 +4,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Models;
 using VYgo.Scripts;
-using VYgo.Scripts.Cards.Category.CyberDragon;
 
 namespace VYgo.Patches;
 

@@ -6,13 +6,13 @@ using VYgo.Scripts.Characters;
 using VYgo.Scripts.Pools;
 using VYgo.Scripts.Var;
 
-namespace VYgo.Scripts.Cards.Category.CyberDragon;
+namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
 [RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 1)]
-public class CyberTwinDragon() : BaseExtraFusionCard(energyCost, rarity, targetType, shouldShowInCardLibrary) {
-    public override int CardId => 74157028;
-    public override int FusionMaterialCount => 2;
+public class CyberEndDragon() : BaseExtraFusionCard(energyCost, rarity, targetType, shouldShowInCardLibrary) {
+    public override int CardId => 1546123;
+    public override int FusionMaterialCount => 3;
     
     private const int energyCost = -1;
     private const CardRarity rarity = CardRarity.Uncommon;
@@ -30,13 +30,13 @@ public class CyberTwinDragon() : BaseExtraFusionCard(energyCost, rarity, targetT
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new AttackVar(6),
-        new LifeVar(4)
+        new AttackVar(25),
+        new LifeVar(12)
     ];
     
     protected override void OnUpgrade() {
-        DynamicVars["Life"].UpgradeValueBy(2);
-        DynamicVars["Attack"].UpgradeValueBy(2);
+        DynamicVars["Life"].UpgradeValueBy(5);
+        DynamicVars["Attack"].UpgradeValueBy(5);
     }
 
     public override bool CanUseFusionMaterial(SummonMaterial material) {

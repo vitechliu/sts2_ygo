@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core.Effects;
-using VYgo.Scripts.Cards.Category.CyberDragon;
+using VYgo.Scripts.Cards.Category.ZaneTruesdale;
 using VYgo.Scripts.Cards.Placeholders;
 using VYgo.Scripts.Characters;
 using VYgo.Scripts.Pools;

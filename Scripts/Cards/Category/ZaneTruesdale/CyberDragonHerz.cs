@@ -7,7 +7,7 @@ using VYgo.Scripts.Characters;
 using VYgo.Scripts.Pools;
 using VYgo.Scripts.Var;
 
-namespace VYgo.Scripts.Cards.Category.CyberDragon;
+namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
 [RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 2)]
