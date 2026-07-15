@@ -30,7 +30,10 @@ public static class Entry {
     public const string ResPath = $"res://{ModId}";
 
     public static Logger Logger { get; private set; } = null!;
+    //额外卡组
     public static PileType ExtraPile;
+    //场上的怪兽
+    public static PileType MonsterPile;
 
     public static Dictionary<int, BaseVYgoCard> CardYgoIdCache { get; private set; } = new();
     public static Dictionary<int, BaseMonster> MonsterYgoIdCache { get; private set; } = new();
@@ -148,6 +151,12 @@ public static class Entry {
             IconPath =  "res://VYgo/images/extra_card_pile.png",
             OnOpen = ctx => ctx.ShowDefaultPileScreen(),
             VisibleWhen = ctx => ctx.Player != null,
+        }).PileType;
+        
+        MonsterPile = registry.RegisterOwned("monster_pile", new ModCardPileSpec {
+            Scope = ModCardPileScope.CombatOnly,
+            Style = ModCardPileUiStyle.Headless,
+            Anchor = ModCardPileAnchor.Default
         }).PileType;
     }
 

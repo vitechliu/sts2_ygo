@@ -1,8 +1,10 @@
-﻿using MegaCrit.Sts2.Core.Commands;
+﻿using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MinionLib.Minion;
 using MinionLib.Powers;
@@ -21,6 +23,8 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
     public override string? CustomVisualsPath => $"res://VYgo/scenes/monsters/{CardId}.tscn";
 
     protected bool _upgraded;
+
+    public CardModel? SourceCard;
 
     public bool Upgraded => _upgraded;
     public virtual void SetUpgraded() {
@@ -55,6 +59,7 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
         Player owner,
         MinionSummonOptions options) // 注意使用 self 而非 this
     {
+        SourceCard = options.Source;
         PileSent = false;
         if (options.MaxHp is { } maxHp)
             await CreatureCmd.SetMaxAndCurrentHp(Creature, maxHp); // 设置血量
@@ -92,7 +97,7 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
             if (card != null) {
                 var owner = creature.PetOwner;
                 if (owner != null) {
-                    await ReturnCard(owner, card);
+                    await ReturnCard(owner, choiceContext);
                     await OnSendToGraveyard(choiceContext, creature, owner);
                 }
             }
@@ -105,15 +110,11 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
 
     public virtual async Task AfterAttack(PlayerChoiceContext choiceContext) { }
 
-    private async Task ReturnCard(Player player, BaseVYgoCard card) {
-        var result = await CardPileCmd.AddGeneratedCardToCombat(
-            CombatState.CreateCard(card, player),
-            PileType.Discard,
-            player
-        );
-        if (result.success && result.oldPile == null && result.cardAdded.Pile?.Type == PileType.Discard) {
-            result.cardAdded.Pile.InvokeCardAddFinished();
-        }
-        // CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(CombatState.CreateCard(card, player), PileType.Discard,  player), 0f);
+    private async Task ReturnCard(Player player, PlayerChoiceContext choiceContext) {
+        if (SourceCard == null) return;
+        if (CombatManager.Instance.IsOverOrEnding) return;
+        var discardPile = PileType.Discard.GetPile(player);
+        await CardPileCmd.Add(SourceCard, discardPile);
+        discardPile.InvokeContentsChanged();
     }
 }
