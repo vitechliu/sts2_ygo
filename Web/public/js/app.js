@@ -8,6 +8,10 @@ let cardsState = {
     currentPage: 1,
     pageSize: 12
 };
+let cardScriptState = {
+    cardId: null,
+    options: null
+};
 let cropState = {
     canvas: null,
     ctx: null,
@@ -28,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCardSearch();
     initConfig();
     initCropCanvas();
+    initCardScriptDialog();
     loadCards();
 });
 
@@ -532,7 +537,7 @@ function renderCardsTable() {
     pagination.classList.toggle('hidden', cards.length === 0);
 
     if (cards.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="10" class="empty-cell">暂无卡牌数据</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="11" class="empty-cell">暂无卡牌数据</td></tr>';
         pageInfo.textContent = '第 1 / 1 页';
         prevBtn.disabled = true;
         nextBtn.disabled = true;
@@ -558,6 +563,7 @@ function renderCardsTable() {
             <td>${renderResourceCell(card, 'portrait', '生成立绘', 'portrait', { monsterOnly: true })}</td>
             <td>${renderResourceCell(card, 'scene', '生成场景', 'scene', { monsterOnly: true })}</td>
             <td>${renderResourceCell(card, 'monsterScript', '生成脚本', 'monster-script', { monsterOnly: true })}</td>
+            <td>${renderCardScriptCell(card)}</td>
             <td>
                 <div class="table-actions">
                     <button onclick="deleteCard(${card.card_id})" class="delete-btn">删除</button>
@@ -569,6 +575,13 @@ function renderCardsTable() {
     pageInfo.textContent = `第 ${cardsState.currentPage} / ${totalPages} 页，共 ${cards.length} 张`;
     prevBtn.disabled = cardsState.currentPage === 1;
     nextBtn.disabled = cardsState.currentPage === totalPages;
+}
+
+function renderCardScriptCell(card) {
+    if (card.resource_status?.cardScript) {
+        return '<span class="resource-status resource-ok">已存在</span>';
+    }
+    return `<button onclick="openCardScriptDialog(${card.card_id})" class="resource-btn">添加脚本</button>`;
 }
 
 function changeCardsPage(delta) {
@@ -635,6 +648,93 @@ async function generateCardResource(cardId, resourceType) {
         loadCards();
     } catch (error) {
         showToast(`${resource.label}生成失败: ${error.message}`, 'error');
+    }
+}
+
+function initCardScriptDialog() {
+    const dialog = document.getElementById('cardScriptDialog');
+    const poolSelect = document.getElementById('cardScriptPool');
+
+    poolSelect.addEventListener('change', syncCardScriptFolder);
+    document.getElementById('cardScriptForm').addEventListener('submit', submitCardScript);
+    document.getElementById('closeCardScriptDialogBtn').addEventListener('click', () => dialog.close());
+    document.getElementById('cancelCardScriptBtn').addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', event => {
+        if (event.target === dialog) dialog.close();
+    });
+}
+
+async function openCardScriptDialog(cardId) {
+    const card = cardsState.allCards.find(item => Number(item.card_id) === Number(cardId));
+    if (!card) {
+        showToast('未找到卡牌数据', 'error');
+        return;
+    }
+
+    try {
+        cardScriptState.cardId = cardId;
+        const options = await loadCardScriptOptions();
+        const poolSelect = document.getElementById('cardScriptPool');
+        poolSelect.innerHTML = options.map(option => (
+            `<option value="${escapeHtml(option.poolName)}" data-folder="${escapeHtml(option.folderName)}">${escapeHtml(option.label)}</option>`
+        )).join('');
+
+        document.getElementById('cardScriptCardInfo').textContent = `${card.cn_name || card.name || '-'} · ${card.en_name || '-'} · ${card.card_id}`;
+        syncCardScriptFolder();
+        document.getElementById('cardScriptDialog').showModal();
+    } catch (error) {
+        showToast('加载卡池失败: ' + error.message, 'error');
+    }
+}
+
+async function loadCardScriptOptions() {
+    if (cardScriptState.options) return cardScriptState.options;
+
+    const response = await fetch(`${API_BASE}/cards/card-script-options`);
+    const result = await response.json();
+    if (!result.success) throw new Error(result.error);
+    if (!result.data.length) throw new Error('没有可用卡池');
+
+    cardScriptState.options = result.data;
+    return result.data;
+}
+
+function syncCardScriptFolder() {
+    const selectedOption = document.getElementById('cardScriptPool').selectedOptions[0];
+    const folderName = selectedOption?.dataset.folder || '';
+    document.getElementById('cardScriptFolder').value = folderName
+        ? `Scripts/Cards/Category/${folderName}`
+        : '';
+}
+
+async function submitCardScript(event) {
+    event.preventDefault();
+    const submitBtn = document.getElementById('submitCardScriptBtn');
+    const poolSelect = document.getElementById('cardScriptPool');
+    const folderName = poolSelect.selectedOptions[0]?.dataset.folder || '';
+
+    try {
+        submitBtn.disabled = true;
+        submitBtn.textContent = '创建中...';
+        const response = await fetch(`${API_BASE}/cards/${cardScriptState.cardId}/card-script`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                poolName: poolSelect.value,
+                folderName
+            })
+        });
+        const result = await response.json();
+        if (!result.success) throw new Error(result.error);
+
+        document.getElementById('cardScriptDialog').close();
+        showToast(result.data.existed ? '卡牌脚本已存在' : '卡牌脚本已创建');
+        loadCards();
+    } catch (error) {
+        showToast('卡牌脚本创建失败: ' + error.message, 'error');
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = '创建脚本';
     }
 }
 

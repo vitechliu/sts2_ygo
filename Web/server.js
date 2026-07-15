@@ -4,6 +4,9 @@ const { exec } = require('child_process');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const shouldOpenBrowser = !['0', 'false', 'no'].includes(
+    String(process.env.OPEN_BROWSER || 'true').toLowerCase()
+);
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -42,7 +45,11 @@ app.listen(PORT, () => {
     const url = `http://localhost:${PORT}`;
     console.log(`VYgo Card Manager running at ${url}`);
     console.log(`Press Ctrl+C to stop.`);
-    openBrowser(url);
+    if (shouldOpenBrowser) {
+        openBrowser(url);
+    } else {
+        console.log('Browser auto-open disabled by OPEN_BROWSER.');
+    }
 });
 
 module.exports = app;

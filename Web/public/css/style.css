@@ -307,7 +307,7 @@ button:disabled {
 
 .cards-table {
     width: 100%;
-    min-width: 1160px;
+    min-width: 1260px;
     border-collapse: collapse;
     table-layout: fixed;
 }
@@ -465,6 +465,91 @@ button:disabled {
     text-align: center !important;
     color: #666;
     padding: 32px !important;
+}
+
+/* 卡牌脚本弹窗 */
+.script-dialog {
+    width: min(440px, calc(100vw - 32px));
+    padding: 0;
+    border: 1px solid #264d78;
+    border-radius: 8px;
+    background: #16213e;
+    color: #eee;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.48);
+}
+
+.script-dialog::backdrop {
+    background: rgba(7, 10, 22, 0.72);
+}
+
+.script-dialog form {
+    padding: 20px;
+}
+
+.dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.dialog-header h2 {
+    margin: 0;
+}
+
+.dialog-close {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: transparent;
+    color: #9db6cf;
+    font-size: 24px;
+    line-height: 1;
+}
+
+.dialog-close:hover {
+    background: #243351;
+    color: #fff;
+}
+
+.dialog-card-info {
+    margin-bottom: 18px;
+    color: #9db6cf;
+    font-size: 0.88em;
+}
+
+.dialog-field {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+    color: #d8e9ff;
+}
+
+.dialog-field input,
+.dialog-field select {
+    width: 100%;
+}
+
+.dialog-field input[readonly] {
+    color: #9db6cf;
+    background: #11172a;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 22px;
+    padding-top: 16px;
+    border-top: 1px solid #264d78;
+}
+
+.dialog-actions .btn-primary {
+    padding: 8px 16px;
+    font-size: 1em;
 }
 
 /* 配置页面 */
