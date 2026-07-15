@@ -11,7 +11,8 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 	private const float MaterialVfxCleanupDelay = 3f;
 	private const float MaterialCompressDuration = 0.15f;
 	private const float MaterialFlyDuration = 0.20f;
-	private const string ActionReadyIconPath = "res://VYgo/images/intents/intent_attack_2.png";
+
+	public static readonly Vector2 BaseIntentScale = new Vector2(-1f, 1f) * 0.35f;
 
 	private const string MaterialShaderCode = """
 		shader_type canvas_item;
@@ -41,7 +42,7 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 	protected void PlaySummonVfx() {
 		var node = VFXUtil.PlaySimple(SUMMON_VFX_PATH, VfxSpawnPosition.GlobalPosition, 3);
 		if (node != null) {
-			Entry.Logger.Info("Play NMonsterSummon VFX: " + VfxSpawnPosition.GlobalPosition);
+			// Entry.Logger.Info("Play NMonsterSummon VFX: " + VfxSpawnPosition.GlobalPosition);
 			VFXUtil.ReplayAllParticles(node);
 		}
 	}
@@ -49,6 +50,7 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 	protected Sprite2D mainSprite;
 	private Sprite2D? actionReadyIcon;
 	private Tween? actionReadyTween;
+	private string? actionReadyIconPath;
 
 	public override void _Ready() {
 		base._Ready();
@@ -56,10 +58,16 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 		CreateActionReadyIcon();
 	}
 
-	public void SetActionReadyIndicatorVisible(bool visible) {
+	public void SetActionReadyIndicator(string? iconPath) {
 		if (actionReadyIcon == null)
 			CreateActionReadyIcon();
 		if (actionReadyIcon == null) return;
+
+		bool visible = !string.IsNullOrEmpty(iconPath);
+		if (visible && actionReadyIconPath != iconPath) {
+			actionReadyIcon.Texture = ResourceLoader.Load<Texture2D>(iconPath);
+			actionReadyIconPath = iconPath;
+		}
 
 		if (actionReadyIcon.Visible == visible) return;
 
@@ -70,12 +78,12 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 		if (!visible) return;
 
 		actionReadyIcon.Modulate = Colors.White;
-		actionReadyIcon.Scale = Vector2.One * 0.28f;
+		actionReadyIcon.Scale = BaseIntentScale;
 		actionReadyTween = actionReadyIcon.CreateTween().SetLoops();
-		actionReadyTween.TweenProperty(actionReadyIcon, "scale", Vector2.One * 0.34f, 0.45f)
+		actionReadyTween.TweenProperty(actionReadyIcon, "scale", BaseIntentScale * 1.2f, 0.45f)
 			.SetTrans(Tween.TransitionType.Sine)
 			.SetEase(Tween.EaseType.InOut);
-		actionReadyTween.TweenProperty(actionReadyIcon, "scale", Vector2.One * 0.28f, 0.45f)
+		actionReadyTween.TweenProperty(actionReadyIcon, "scale", BaseIntentScale, 0.45f)
 			.SetTrans(Tween.TransitionType.Sine)
 			.SetEase(Tween.EaseType.InOut);
 	}
@@ -85,11 +93,10 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 
 		actionReadyIcon = new Sprite2D {
 			Name = "ActionReadyIcon",
-			Texture = ResourceLoader.Load<Texture2D>(ActionReadyIconPath),
 			Centered = true,
 			Visible = false,
 			ZIndex = 1,
-			Scale = Vector2.One * 0.28f
+			Scale = BaseIntentScale
 		};
 		IntentPosition.AddChild(actionReadyIcon);
 	}

@@ -22,6 +22,7 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
 
     protected bool _upgraded;
 
+    public bool Upgraded => _upgraded;
     public virtual void SetUpgraded() {
         _upgraded = true;
         Entry.Logger.Info("SetUpgraded:" + Title);
@@ -42,11 +43,11 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
     } = true;
 
 
-    public virtual Task OnSummonYgo(
+    public virtual async Task OnSummonYgo(
         PlayerChoiceContext choiceContext,
         Player owner,
         MinionSummonOptions options) {
-        return Task.CompletedTask;
+        await Task.CompletedTask;
     }
     // 召唤时执行的代码，通常用来设置血量、应用初始能力等，options 是在召唤随从时传入的参数
     public override async Task OnSummon(

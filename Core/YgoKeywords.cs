@@ -6,7 +6,7 @@ using VYgo.Scripts;
 
 namespace VYgo.Core;
 
-[RegisterOwnedCardKeyword(nameof(Piercing), IconPath = "res://icon.svg", CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.AfterCardDescription)]
+[RegisterOwnedCardKeyword(nameof(Piercing), IconPath = null, CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.AfterCardDescription)]
 public class YgoKeywords {
     public static readonly CardKeyword Piercing = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(Piercing)).GetModCardKeyword();
 }

@@ -9,10 +9,15 @@ using VYgo.Scripts.Powers;
 
 namespace VYgo.Scripts.Actions;
 
-public sealed class TargetingAttackAction : BasePerTurnMonsterAction {
+public class TargetingAttackAction : BasePerTurnMonsterAction {
+    private const string AttackIntentIconDirectory = "res://images/packed/intents/attack";
+
     public override TargetType TargetType => TargetType.AnyEnemy;
 
-    private int StrengthPowerAmount {
+    protected override string IntentIconPath =>
+        $"{AttackIntentIconDirectory}/intent_attack_{GetAttackIntentTier(StrengthPowerAmount)}.png";
+
+    protected int StrengthPowerAmount {
         get {
             var power = Owner.Powers.OfType<AttackPower>().FirstOrDefault();
             return power?.Amount ?? 0;
@@ -24,9 +29,17 @@ public sealed class TargetingAttackAction : BasePerTurnMonsterAction {
     }
     
     protected override async Task OnAct(PlayerChoiceContext choiceContext, Creature? target) {
-        Triggered = true;
+        SpendUses();
         if (target == null) return;
         await MinionAnimCmd.PlayBumpAttackAsync(Owner, target);
         await CreatureCmd.Damage(choiceContext, target, StrengthPowerAmount, ValueProp.Move, null, null);
+    }
+
+    private static int GetAttackIntentTier(int damage) {
+        if (damage < 5) return 1;
+        if (damage < 10) return 2;
+        if (damage < 20) return 3;
+        if (damage < 40) return 4;
+        return 5;
     }
 }
