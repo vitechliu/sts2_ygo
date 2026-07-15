@@ -212,7 +212,13 @@ public static class SummonUtil {
             ));
 
             if (!selectedExtraCard.Owner.Creature.IsDead) {
-                await CardCmd.AutoPlay(request.ChoiceContext, selectedExtraCard, (Creature)null);
+                await CardCmd.AutoPlay(
+                    request.ChoiceContext, 
+                    selectedExtraCard, 
+                    null,
+                    AutoPlayType.Default,
+                    false,
+                    true);
             }
 
             await VFXUtil.Wait(request.FinalWaitSeconds);

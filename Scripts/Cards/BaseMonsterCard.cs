@@ -69,7 +69,7 @@ public abstract class BaseMonsterCard(
 
 
     protected override (PileType, CardPilePosition) GetResultPileTypeAndPositionForCardPlay() {
-        return (PileType.None, CardPilePosition.Bottom);
+        return (Entry.MonsterPile, CardPilePosition.Bottom);
     }
 
     public int Life => DynamicVars["Life"].IntValue;
