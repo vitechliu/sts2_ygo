@@ -29,8 +29,6 @@ public class CyberDragonHerz() : BaseMonsterCard(energyCost,rarity, targetType, 
         new CardsVar(1),
     ];
     
-    public override List<YgoArchetypes> ArchetypesList => [YgoArchetypes.Cyber, YgoArchetypes.CyberDragon];
-
     private const int energyCost = 1;
     private const CardRarity rarity = CardRarity.Common;
     private const TargetType targetType = TargetType.None;

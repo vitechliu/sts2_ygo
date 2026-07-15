@@ -18,6 +18,4 @@ public class CyberBarrierDragon() : BaseMonsterCard(2, CardRarity.Basic, TargetT
     //     BaseSummonHoverTip,
     // ];
     
-    public override List<YgoArchetypes> ArchetypesList => [YgoArchetypes.Cyber];
-    
 }

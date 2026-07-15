@@ -1,0 +1,4 @@
+[submodule "External/ygopro"]
+	path = External/ygopro
+	url = https://github.com/mycard/ygopro.git
+	branch = server

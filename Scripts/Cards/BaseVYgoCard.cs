@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
 using STS2RitsuLib.Scaffolding.Content;
 using VYgo.Core;
+using VYgo.Scripts;
 
 namespace VYgo.Scripts.Cards;
 
@@ -13,12 +14,13 @@ public abstract class BaseVYgoCard(
     : ModCardTemplate(baseCost, type, rarity, target, showInCardLibrary),
         IYgoId {
 
-    //字段
-    public virtual List<YgoArchetypes> ArchetypesList { get; set; } = [];
+    // 字段由 Web 工具从 cards.cdb 自动导出到 CoreCard。
+    public IReadOnlyList<ushort> ArchetypesList =>
+        Entry.CoreCardCache.GetValueOrDefault(CardId)?.Archetypes ?? [];
 
     public virtual YgoMaterialNames? MaterialCardName => null; //简化的卡名，用于判断素材，检索等
     
-    public bool ContainArchetype(YgoArchetypes archetype) => ArchetypesList.Contains(archetype);
+    public bool ContainArchetype(YgoArchetypeCode archetype) => ArchetypesList.Contains(archetype.Value);
 
     private static readonly Dictionary<YgoType, string> PORTRAIT = new() {
         [YgoType.normal] = "01",

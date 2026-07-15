@@ -42,8 +42,6 @@ public class CyberDragon() : BaseMonsterCard(energyCost, rarity, targetType, sho
         EnergyCost.SetUntilPlayed(Active ? 0 : CanonicalEnergyCost);
     }
 
-    public override List<YgoArchetypes> ArchetypesList => [YgoArchetypes.Cyber, YgoArchetypes.CyberDragon];
-
     public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw) {
         if (card != this) return Task.CompletedTask;
         FlushCost();

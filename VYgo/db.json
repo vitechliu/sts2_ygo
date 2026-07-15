@@ -11,7 +11,10 @@
         "def": 2800,
         "level": 6,
         "attribute": "光",
-        "race": "机械族"
+        "race": "机械族",
+        "archetypes": [
+            147
+        ]
     },
     {
         "id": 15,
@@ -25,7 +28,10 @@
         "def": 2100,
         "level": 8,
         "attribute": "光",
-        "race": "机械族"
+        "race": "机械族",
+        "archetypes": [
+            147
+        ]
     },
     {
         "id": 14,
@@ -39,7 +45,8 @@
         "def": 0,
         "level": 0,
         "attribute": "",
-        "race": ""
+        "race": "",
+        "archetypes": []
     },
     {
         "id": 13,
@@ -53,7 +60,8 @@
         "def": 0,
         "level": 0,
         "attribute": "",
-        "race": ""
+        "race": "",
+        "archetypes": []
     },
     {
         "id": 12,
@@ -67,7 +75,11 @@
         "def": 100,
         "level": 1,
         "attribute": "光",
-        "race": "机械族"
+        "race": "机械族",
+        "archetypes": [
+            147,
+            4243
+        ]
     },
     {
         "id": 11,
@@ -81,7 +93,10 @@
         "def": 0,
         "level": 0,
         "attribute": "",
-        "race": ""
+        "race": "",
+        "archetypes": [
+            70
+        ]
     },
     {
         "id": 10,
@@ -95,7 +110,10 @@
         "def": 0,
         "level": 0,
         "attribute": "",
-        "race": ""
+        "race": "",
+        "archetypes": [
+            70
+        ]
     },
     {
         "id": 9,
@@ -109,7 +127,10 @@
         "def": 2800,
         "level": 10,
         "attribute": "光",
-        "race": "机械族"
+        "race": "机械族",
+        "archetypes": [
+            147
+        ]
     },
     {
         "id": 8,
@@ -123,7 +144,8 @@
         "def": 0,
         "level": 0,
         "attribute": "",
-        "race": ""
+        "race": "",
+        "archetypes": []
     },
     {
         "id": 7,
@@ -137,7 +159,11 @@
         "def": 1000,
         "level": 4,
         "attribute": "光",
-        "race": "机械族"
+        "race": "机械族",
+        "archetypes": [
+            147,
+            4243
+        ]
     },
     {
         "id": 6,
@@ -151,7 +177,8 @@
         "def": 40,
         "level": 2,
         "attribute": "暗",
-        "race": "战士族"
+        "race": "战士族",
+        "archetypes": []
     },
     {
         "id": 5,
@@ -165,7 +192,11 @@
         "def": 1500,
         "level": 2,
         "attribute": "光",
-        "race": "机械族"
+        "race": "机械族",
+        "archetypes": [
+            147,
+            4243
+        ]
     },
     {
         "id": 4,
@@ -179,7 +210,11 @@
         "def": 1600,
         "level": 6,
         "attribute": "光",
-        "race": "机械族"
+        "race": "机械族",
+        "archetypes": [
+            147,
+            4243
+        ]
     },
     {
         "id": 3,
@@ -193,7 +228,11 @@
         "def": 10,
         "level": 2,
         "attribute": "光",
-        "race": "机械族"
+        "race": "机械族",
+        "archetypes": [
+            147,
+            4243
+        ]
     },
     {
         "id": 2,
@@ -207,7 +246,11 @@
         "def": 600,
         "level": 3,
         "attribute": "光",
-        "race": "机械族"
+        "race": "机械族",
+        "archetypes": [
+            147,
+            4243
+        ]
     },
     {
         "id": 1,
@@ -221,6 +264,10 @@
         "def": 1600,
         "level": 5,
         "attribute": "光",
-        "race": "机械族"
+        "race": "机械族",
+        "archetypes": [
+            147,
+            4243
+        ]
     }
 ]

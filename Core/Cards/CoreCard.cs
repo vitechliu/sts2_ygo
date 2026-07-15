@@ -21,6 +21,14 @@ public record CoreCard(
     string? Attribute,
     [property: JsonPropertyName("race")] string? Race
 ) : IYgoId {
+    private IReadOnlyList<ushort> _archetypes = [];
+
+    [JsonPropertyName("archetypes")]
+    public IReadOnlyList<ushort> Archetypes {
+        get => _archetypes;
+        init => _archetypes = value ?? [];
+    }
+
     /// <summary>
     /// 用于界面展示的卡片类型信息，不包含攻击力、防御力和连接标记等战斗数值。
     /// </summary>

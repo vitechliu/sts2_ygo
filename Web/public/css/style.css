@@ -307,7 +307,7 @@ button:disabled {
 
 .cards-table {
     width: 100%;
-    min-width: 1260px;
+    min-width: 1440px;
     border-collapse: collapse;
     table-layout: fixed;
 }
@@ -348,6 +348,10 @@ button:disabled {
     width: 104px;
 }
 
+.col-archetypes {
+    width: 180px;
+}
+
 .col-actions {
     width: 80px;
 }
@@ -374,6 +378,33 @@ button:disabled {
     overflow: hidden;
     text-overflow: ellipsis;
     color: #fff;
+}
+
+.archetype-list {
+    display: flex;
+    gap: 4px;
+    overflow: hidden;
+}
+
+.archetype-chip {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 96px;
+    padding: 3px 7px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(94, 129, 244, 0.16);
+    color: #aebfff;
+    font-size: 0.76em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    box-shadow: inset 0 0 0 1px rgba(94, 129, 244, 0.3);
+}
+
+.archetype-warning {
+    color: #f4c95d;
+    font-size: 0.8em;
+    white-space: nowrap;
 }
 
 .table-actions {
