@@ -47,6 +47,23 @@
 ## Web卡牌自动导入工具
 
  自动导入工具能够输入卡片id自动从外部资源目录导入卡图、立绘，并从ygocdb api接口获取卡片名称翻译等
+
+### 字段数据源
+
+卡牌字段由 `External/ygopro` submodule 中的 `cards.cdb` 和 `strings.conf` 提供。首次克隆项目后先初始化：
+
+```bash
+git submodule update --init External/ygopro
+```
+
+上游数据不会由 Web 服务自动更新。需要更新时，显式拉取 `server` 分支并在主仓库审查 submodule 指针变化：
+
+```bash
+git submodule update --remote --merge External/ygopro
+git add External/ygopro
+```
+
+Web 导出 `VYgo/db.json` 时会从上游数据库实时生成 `archetypes` 数组；若 submodule 未初始化或卡片不存在，会显示警告并为该卡导出空数组。
  
 ### 配置与使用
 

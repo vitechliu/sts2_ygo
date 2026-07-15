@@ -15,7 +15,7 @@ public class CyberDragonHerzMinion: BaseMonster {
 
     protected override async Task OnSendToGraveyard(PlayerChoiceContext choiceContext, Creature creature, Player owner) {
         CardPile pile = PileType.Draw.GetPile(owner);
-        IEnumerable<CardModel> source = pile.Cards.OfType<BaseMonsterCard>().Where((BaseMonsterCard c) => !c.IsExtra && c.ArchetypesList.Contains(YgoArchetypes.CyberDragon));
+        IEnumerable<CardModel> source = pile.Cards.OfType<BaseMonsterCard>().Where((BaseMonsterCard c) => !c.IsExtra && c.ContainArchetype(YgoArchetypes.CyberDragon));
         IEnumerable<CardModel> enumerable = source.ToList().UnstableShuffle(owner.RunState.Rng.CombatCardSelection).Take(_upgraded ? 2 : 1);
         foreach (CardModel card in enumerable) {
             await CardPileCmd.Add(card, PileType.Hand);

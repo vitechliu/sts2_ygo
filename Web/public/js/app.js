@@ -537,7 +537,7 @@ function renderCardsTable() {
     pagination.classList.toggle('hidden', cards.length === 0);
 
     if (cards.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="11" class="empty-cell">暂无卡牌数据</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="12" class="empty-cell">暂无卡牌数据</td></tr>';
         pageInfo.textContent = '第 1 / 1 页';
         prevBtn.disabled = true;
         nextBtn.disabled = true;
@@ -557,6 +557,7 @@ function renderCardsTable() {
             </td>
             <td class="card-id">${card.card_id}</td>
             <td class="card-title" title="${escapeHtml(card.cn_name || card.name || '')}">${escapeHtml(card.cn_name || card.name || '-')}</td>
+            <td>${renderArchetypesCell(card)}</td>
             <td>${renderResourceCell(card, 'cardImage', '生成卡图', 'card-image')}</td>
             <td>${renderResourceCell(card, 'localization', '生成本地化', 'localization')}</td>
             <td>${renderResourceCell(card, 'cardData', '生成数据', 'data')}</td>
@@ -582,6 +583,22 @@ function renderCardScriptCell(card) {
         return '<span class="resource-status resource-ok">已存在</span>';
     }
     return `<button onclick="openCardScriptDialog(${card.card_id})" class="resource-btn">添加脚本</button>`;
+}
+
+function renderArchetypesCell(card) {
+    if (card.archetype_warning) {
+        return `<span class="archetype-warning" title="${escapeHtml(card.archetype_warning)}">⚠ 无字段</span>`;
+    }
+
+    if (!Array.isArray(card.archetypes) || card.archetypes.length === 0) {
+        return '<span class="resource-empty">-</span>';
+    }
+
+    return `<div class="archetype-list">${card.archetypes.map(archetype => {
+        const label = archetype.cnName || archetype.hex;
+        const details = [archetype.hex, archetype.jaName].filter(Boolean).join(' · ');
+        return `<span class="archetype-chip" title="${escapeHtml(details)}">${escapeHtml(label)}</span>`;
+    }).join('')}</div>`;
 }
 
 function changeCardsPage(delta) {
@@ -644,7 +661,12 @@ async function generateCardResource(cardId, resourceType) {
             throw new Error(result.error);
         }
 
-        showToast(`${resource.label}已生成`);
+        const warningCount = result.data?.warnings?.length || 0;
+        if (warningCount > 0) {
+            showToast(`${resource.label}已生成，但有 ${warningCount} 条字段警告`, 'warning');
+        } else {
+            showToast(`${resource.label}已生成`);
+        }
         loadCards();
     } catch (error) {
         showToast(`${resource.label}生成失败: ${error.message}`, 'error');
@@ -819,7 +841,12 @@ async function exportCards() {
             throw new Error(result.error);
         }
 
-        showToast(`已导出 ${result.data.count} 张卡牌到 db.json`);
+        const warningCount = result.data.warnings?.length || 0;
+        if (warningCount > 0) {
+            showToast(`已导出 ${result.data.count} 张卡牌，存在 ${warningCount} 条字段警告`, 'warning');
+        } else {
+            showToast(`已导出 ${result.data.count} 张卡牌到 db.json`);
+        }
     } catch (error) {
         showToast(error.message, 'error');
     } finally {

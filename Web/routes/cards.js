@@ -3,6 +3,8 @@ const router = express.Router();
 const { runCards, getCards, allCards, allConfig } = require('../database');
 const ygoApiService = require('../services/ygoApiService');
 const imageService = require('../services/imageService');
+const archetypeService = require('../services/archetypeService');
+const { toExportCardData, mergeExportedCard } = require('../services/cardExportService');
 const fs = require('fs');
 const path = require('path');
 
@@ -15,11 +17,22 @@ const cardPoolDir = path.join(projectRoot, 'Scripts', 'Pools');
 router.get('/', async (req, res) => {
     try {
         const cards = await allCards('SELECT * FROM cards ORDER BY created_at DESC');
-        const statusContext = await loadResourceStatusContext();
-        const cardsWithStatus = cards.map(card => ({
-            ...card,
-            resource_status: getCardResourceStatus(card, statusContext)
-        }));
+        const [statusContext, archetypesByCardId] = await Promise.all([
+            loadResourceStatusContext(),
+            archetypeService.getCardsArchetypes(cards.map(card => card.card_id))
+        ]);
+        const cardsWithStatus = cards.map(card => {
+            const archetypeResult = getArchetypeResult(archetypesByCardId, card.card_id);
+            if (archetypeResult.warning) {
+                console.warn(`Archetype data warning for card ${card.card_id}: ${archetypeResult.warning}`);
+            }
+            return {
+                ...card,
+                archetypes: archetypeResult.archetypes,
+                archetype_warning: archetypeResult.warning,
+                resource_status: getCardResourceStatus(card, statusContext)
+            };
+        });
 
         res.json({ success: true, data: cardsWithStatus });
     } catch (error) {
@@ -853,6 +866,7 @@ function createCardScript(card, poolName, folderName) {
 
 async function exportCardData() {
     const cards = await allCards('SELECT * FROM cards ORDER BY created_at DESC');
+    const archetypesByCardId = await archetypeService.getCardsArchetypes(cards.map(card => card.card_id));
     const vygoDir = path.join(__dirname, '..', '..', 'VYgo');
     const exportPath = path.join(vygoDir, 'db.json');
 
@@ -860,11 +874,16 @@ async function exportCardData() {
         fs.mkdirSync(vygoDir, { recursive: true });
     }
 
-    const filteredCards = cards.map(toExportCardData);
+    const warnings = [];
+    const filteredCards = cards.map(card => {
+        const archetypeResult = getArchetypeResult(archetypesByCardId, card.card_id);
+        appendArchetypeWarning(warnings, card.card_id, archetypeResult.warning);
+        return toExportCardData(card, archetypeResult.codes);
+    });
 
     fs.writeFileSync(exportPath, JSON.stringify(filteredCards, null, 4), 'utf8');
 
-    return { exportPath, count: filteredCards.length };
+    return { exportPath, count: filteredCards.length, warnings };
 }
 
 async function exportSingleCardData(cardId) {
@@ -881,30 +900,39 @@ async function exportSingleCardData(cardId) {
         fs.mkdirSync(vygoDir, { recursive: true });
     }
 
+    const archetypesByCardId = await archetypeService.getCardsArchetypes([card.card_id]);
+    const archetypeResult = getArchetypeResult(archetypesByCardId, card.card_id);
+    const warnings = [];
+    appendArchetypeWarning(warnings, card.card_id, archetypeResult.warning);
+
     const existingCards = loadJson(exportPath);
-    const exportedCards = Array.isArray(existingCards) ? existingCards : [];
-    const nextCard = toExportCardData(card);
-    const existingIndex = exportedCards.findIndex(item => Number(item.card_id) === Number(card.card_id));
+    const nextCard = toExportCardData(card, archetypeResult.codes);
+    const mergeResult = mergeExportedCard(existingCards, nextCard);
 
-    if (existingIndex >= 0) {
-        exportedCards[existingIndex] = nextCard;
-    } else {
-        exportedCards.unshift(nextCard);
-    }
-
-    fs.writeFileSync(exportPath, JSON.stringify(exportedCards, null, 4), 'utf8');
+    fs.writeFileSync(exportPath, JSON.stringify(mergeResult.cards, null, 4), 'utf8');
 
     return {
         exportPath,
         cardId: Number(card.card_id),
-        count: exportedCards.length,
-        updated: existingIndex >= 0
+        count: mergeResult.cards.length,
+        updated: mergeResult.updated,
+        warnings
     };
 }
 
-function toExportCardData(card) {
-    const { raw_data, created_at, updated_at, ...rest } = card;
-    return rest;
+function getArchetypeResult(archetypesByCardId, cardId) {
+    return archetypesByCardId.get(Number(cardId)) || {
+        codes: [],
+        archetypes: [],
+        warning: `No archetype result was produced for card ${cardId}`
+    };
+}
+
+function appendArchetypeWarning(warnings, cardId, reason) {
+    if (!reason) return;
+    const warning = { cardId: Number(cardId), reason };
+    warnings.push(warning);
+    console.warn(`Archetype data warning for card ${cardId}: ${reason}`);
 }
 
 module.exports = router;

@@ -17,8 +17,6 @@ public class CyberDragonCore() : BaseMonsterCard(energyCost,rarity, targetType, 
         YgoHoverTipConst.NameAs(YgoMaterialNames.电子龙)
     ];
     
-    public override List<YgoArchetypes> ArchetypesList => [YgoArchetypes.Cyber, YgoArchetypes.CyberDragon];
-
     public override YgoMaterialNames? MaterialCardName => YgoMaterialNames.电子龙;
     
     private const int energyCost = 0;
