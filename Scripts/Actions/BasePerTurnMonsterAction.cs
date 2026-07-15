@@ -15,28 +15,32 @@ public abstract class BasePerTurnMonsterAction : ModActionTemplate {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.None;
 
-    protected bool _triggered;
+    protected abstract string IntentIconPath { get; }
 
-    public bool Triggered {
-        get => _triggered;
-        set {
-            if (_triggered == value) return;
+    //每回合使用次数
+    protected virtual int MaxUses => 1;
+    //本回合剩余使用次数
+    public int RemainingUses = -1;
 
-            _triggered = value;
-            RefreshActionReadyIndicator();
-        }
+    protected void SpendUses() {
+        RemainingUses--;
+        RefreshActionReadyIndicator();
+    }
+    protected void RecoverUses() {
+        RemainingUses = MaxUses;
+        RefreshActionReadyIndicator();
     }
 
     public override bool CanAct(ICombatState combatState) {
         Creature owner = Owner;
-        return !_triggered && Amount > 0M && owner.IsAlive && owner.CombatState == combatState;
+        return RemainingUses > 0 && Amount > 0M && owner.IsAlive && owner.CombatState == combatState;
     }
 
     public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         foreach (var creature in participants) {
             if (creature.IsPet && creature == Owner) {
-                Triggered = false;
+                RecoverUses();
                 break;
             }
         }
@@ -44,7 +48,19 @@ public abstract class BasePerTurnMonsterAction : ModActionTemplate {
     }
 
     public override Task AfterApplied(Creature? applier, CardModel? cardSource) {
-        RefreshActionReadyIndicator();
+        RecoverUses();
+        return Task.CompletedTask;
+    }
+
+    public override Task AfterPowerAmountChanged(
+        PlayerChoiceContext choiceContext,
+        PowerModel power,
+        decimal amount,
+        Creature? applier,
+        CardModel? cardSource
+    ) {
+        if (power.Owner == Owner)
+            RefreshActionReadyIndicator();
         return Task.CompletedTask;
     }
 
@@ -59,13 +75,11 @@ public abstract class BasePerTurnMonsterAction : ModActionTemplate {
 
     private static void RefreshActionReadyIndicator(Creature owner) {
         var visuals = owner.GetCreatureNode()?.Visuals as NMonsterVisuals;
-        visuals?.SetActionReadyIndicatorVisible(HasUnusedPerTurnAction(owner));
-    }
-
-    private static bool HasUnusedPerTurnAction(Creature owner) {
-        return owner.IsAlive &&
-               owner.Powers
-                   .OfType<BasePerTurnMonsterAction>()
-                   .Any(action => !action.Triggered && action.Amount > 0);
+        var action = owner.IsAlive
+            ? owner.Powers
+                .OfType<BasePerTurnMonsterAction>()
+                .FirstOrDefault(action => action.RemainingUses > 0 && action.Amount > 0)
+            : null;
+        visuals?.SetActionReadyIndicator(action?.IntentIconPath);
     }
 }

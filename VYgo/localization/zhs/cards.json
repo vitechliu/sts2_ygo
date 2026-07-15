@@ -24,7 +24,7 @@
     "V_YGO_CARD_MONSTER_REBORN.description": "从[gold]弃牌堆[/gold]选择1只怪兽并[gold]召唤[/gold]",
     "V_YGO_CARD_MONSTER_REBORN.selectionScreenPrompt": "请选择需要复活的怪兽。",
     "V_YGO_CARD_CYBER_DRAGON_ZWEI.title": "电子龙二型",
-    "V_YGO_CARD_CYBER_DRAGON_ZWEI.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n攻击后，获得3力量。",
+    "V_YGO_CARD_CYBER_DRAGON_ZWEI.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n攻击后，[gold]攻击力[/gold]提升{AttackAdd}。",
     "V_YGO_CARD_CYBER_END_DRAGON.title": "电子终结龙",
     "V_YGO_CARD_CYBER_END_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]「电子龙」＋「电子龙」＋「电子龙」[/aqua]\n[gold]穿甲[/gold]。",
     "V_YGO_CARD_POLYMERIZATION.title": "融合",

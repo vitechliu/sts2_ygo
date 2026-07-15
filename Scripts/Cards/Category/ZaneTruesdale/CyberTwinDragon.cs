@@ -25,10 +25,6 @@ public class CyberTwinDragon() : BaseExtraFusionCard(energyCost, rarity, targetT
     // }
 
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [
-        YgoKeywords.Piercing
-    ];
-
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new AttackVar(6),
         new LifeVar(4)

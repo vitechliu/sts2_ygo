@@ -165,14 +165,19 @@ public static class Entry {
                 var previousPile = evt.PreviousPile;
                 var curPile = card.Pile.Type;
                 if (
-                    curPile == PileType.Draw
+                    card != null
+                    && card.Pile != null
+                    && previousPile != null
+                    && curPile == PileType.Draw
                     && card is BaseMonsterCard baseMonsterCard
                     && baseMonsterCard.IsExtra) {
                     card.Pile.RemoveInternal(card, silent:true);
                     var pile = ExtraPile.GetPile(card.Owner);
-                    pile.AddInternal(card, silent:true);
-                    pile.InvokeCardAddFinished();
-                    Logger.Info("CardForceToExtra:" + evt.Card.Title + " From:" + previousPile);
+                    if (pile != null) {
+                        pile.AddInternal(card, silent:true);
+                        pile.InvokeCardAddFinished();
+                        Logger.Info("CardForceToExtra:" + evt.Card.Title + " From:" + previousPile);
+                    }
                 }
             });
         // RitsuLibFramework.SubscribeLifecycle<CombatStartingEvent>((@event, disposable) => {
