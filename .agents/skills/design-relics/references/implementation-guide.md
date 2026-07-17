@@ -12,7 +12,7 @@
 | Starter directory | `Scripts/Relics/Starters/` |
 | Localization | `VYgo/localization/zhs/relics.json` |
 | Icon | `VYgo/images/relics/<RelicClassName>.png` |
-| Engine references | `D:/github/raw107/src/Core/Models/Relics/` (read-only) |
+| Engine references | `D:/github/raw109/src/Core/Models/Relics/` (read-only) |
 
 `BaseYgoRelic.AssetProfile` resolves `IconPath`, `IconOutlinePath`, and `BigIconPath` from the runtime class name. Do not override it for a conventionally named icon.
 
