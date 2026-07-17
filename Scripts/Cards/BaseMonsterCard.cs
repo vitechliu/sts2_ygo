@@ -62,14 +62,18 @@ public abstract class BaseMonsterCard(
     }
 
     // //0.107版本
-    // //怪兽卡打出后和能力卡一样消失，只有怪兽死亡后才会移入弃牌堆
     // protected override PileType GetResultPileTypeForCardPlay() {
     //     return PileType.None;
     // }
 
-
-    protected override (PileType, CardPilePosition) GetResultPileTypeAndPositionForCardPlay() {
-        return (Entry.MonsterPile, CardPilePosition.Bottom);
+    // //0.108版本
+    // protected override (PileType, CardPilePosition) GetResultPileTypeAndPositionForCardPlay() {
+    //     return (Entry.MonsterPile, CardPilePosition.Bottom);
+    // }
+    
+    //0.109版本
+    protected override CardLocation GetResultLocationForCardPlay() {
+        return new CardLocation(Owner, Entry.MonsterPile, CardPilePosition.Bottom);
     }
 
     public int Life => DynamicVars["Life"].IntValue;
