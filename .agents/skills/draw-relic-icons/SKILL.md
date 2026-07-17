@@ -11,7 +11,7 @@ Create one transparent 256x256 PNG per Relic. Save it as `VYgo/images/relics/<Re
 
 1. Read the Relic class and its localization. Base the object and metaphor on the actual effect, not only the class name. If either source is missing, report that assumption before generating art.
 2. Derive the output filename from the concrete C# class name, including a final `Relic` suffix. Do not translate, lowercase, or convert it to snake case. Example: `CyberCoreRelic` becomes `VYgo/images/relics/CyberCoreRelic.png`.
-3. Inspect 3-6 relevant original icons in `D:/github/raw107/images/relics/`. Choose references by similar object category, silhouette, or palette. Use them only to learn visual grammar; do not copy their subject, exact geometry, or distinctive details. Never modify that directory.
+3. Inspect 3-6 relevant original icons in `D:/github/raw109/images/relics/`. Choose references by similar object category, silhouette, or palette. Use them only to learn visual grammar; do not copy their subject, exact geometry, or distinctive details. Never modify that directory.
 4. Read [references/style-spec.md](references/style-spec.md), then form a production prompt from its template.
 5. Use the built-in `image_gen` tool at square resolution. Request a perfectly flat chroma-key background; use `#00ff00` unless the subject is green, then use `#ff00ff`.
 6. Copy the selected generated source into `/tmp/vygo-relic-icons/`. Keep generated/keyed sources out of `VYgo/`.

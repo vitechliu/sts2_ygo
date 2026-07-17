@@ -12,7 +12,7 @@
 - Depth: retain deliberate painted highlights and shadows that describe material and curvature; avoid only noisy texture and photorealistic lighting.
 - Line weight: important outlines and gaps must resolve to at least 3px at 64px, equivalent to 12px in the 256px master.
 
-VYgo Power icons establish the readability baseline: bold silhouette, simple metaphor, thick outlines, and large color regions. Original icons in `D:/github/raw107/images/relics/` add the Relic grammar: a collectible physical object, slight hand-painted asymmetry, restrained highlights and shadows, and no surrounding badge. Use original icons only as structural reference; never copy an existing icon's subject or exact geometry.
+VYgo Power icons establish the readability baseline: bold silhouette, simple metaphor, thick outlines, and large color regions. Original icons in `D:/github/raw109/images/relics/` add the Relic grammar: a collectible physical object, slight hand-painted asymmetry, restrained highlights and shadows, and no surrounding badge. Use original icons only as structural reference; never copy an existing icon's subject or exact geometry.
 
 ## Semantic construction
 
@@ -28,7 +28,7 @@ Prefer an object that could plausibly be found and carried as a relic. Encode th
 
 ## Reference selection
 
-Before prompting, inspect 3-6 PNG files from `D:/github/raw107/images/relics/`:
+Before prompting, inspect 3-6 PNG files from `D:/github/raw109/images/relics/`:
 
 1. Pick at least one reference with a similar silhouette or physical object category.
 2. Pick at least one reference with a suitable value structure or palette.
