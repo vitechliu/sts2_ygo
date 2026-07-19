@@ -41,6 +41,10 @@ public abstract class BaseMonsterCard(
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+        await SummonMonster(choiceContext, cardPlay);
+    }
+
+    protected virtual async Task SummonMonster(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         var c = this.YgoGetMonster();
         if (c == null) return;
         // Entry.Logger.Info("findMonster");
