@@ -1,5 +1,14 @@
 # VYgo relic implementation guide
 
+## Contents
+
+- [Project mappings](#project-mappings)
+- [Naming](#naming)
+- [Starter template](#starter-template)
+- [Effect implementation](#effect-implementation)
+- [DynamicVars and localization](#dynamicvars-and-localization)
+- [Review checklist](#review-checklist)
+
 ## Project mappings
 
 | Concern | Convention |
@@ -12,9 +21,11 @@
 | Starter directory | `Scripts/Relics/Starters/` |
 | Localization | `VYgo/localization/zhs/relics.json` |
 | Icon | `VYgo/images/relics/<RelicClassName>.png` |
-| Engine references | `D:/github/raw109/src/Core/Models/Relics/` (read-only) |
+| Engine references | `${STS2_VANILLA_ROOT}/src/Core/Models/Relics/` (read-only) |
 
 `BaseYgoRelic.AssetProfile` resolves `IconPath`, `IconOutlinePath`, and `BigIconPath` from the runtime class name. Do not override it for a conventionally named icon.
+
+Resolve `STS2_VANILLA_ROOT` from the active `AGENTS.md` instructions or environment. It must point to the local STS2 reference root containing `src/` and `localization/`; never commit a developer-specific absolute path.
 
 ## Naming
 
