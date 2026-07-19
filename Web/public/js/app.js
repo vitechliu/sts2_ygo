@@ -73,6 +73,11 @@ function initCardSearch() {
     cardIdInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') queryCard();
     });
+    document.getElementById('manualEnNameInput').addEventListener('input', (event) => {
+        if (!currentCardData || !currentCardData.apiData) return;
+        currentCardData.manualEnName = event.target.value;
+        updateEnglishNameControls();
+    });
 
     document.getElementById('genLocaleBtn').addEventListener('click', generateLocalizationEntry);
     document.getElementById('resetCropBtn').addEventListener('click', resetCropView);
@@ -115,6 +120,57 @@ async function queryCard() {
     }
 }
 
+function normalizeEnglishName(value) {
+    return typeof value === 'string' ? value.replace(/[^a-zA-Z0-9]/g, '') : '';
+}
+
+function getEffectiveEnglishName() {
+    const apiEnglishName = currentCardData?.apiData?.enName || '';
+    if (apiEnglishName) return apiEnglishName;
+    return normalizeEnglishName(currentCardData?.manualEnName || '');
+}
+
+function isValidEnglishName(value) {
+    return /^[A-Za-z][A-Za-z0-9]*$/.test(value);
+}
+
+function updateEnglishNameControls() {
+    const apiData = currentCardData?.apiData;
+    const manualField = document.getElementById('manualEnNameField');
+    const manualInput = document.getElementById('manualEnNameInput');
+    const manualHint = document.getElementById('manualEnNameHint');
+    const localeBtn = document.getElementById('genLocaleBtn');
+    const generateBtn = document.getElementById('generateCardBtn');
+    const needsManualName = !!apiData && !apiData.enName;
+    const englishName = getEffectiveEnglishName();
+    const hasValidEnglishName = isValidEnglishName(englishName);
+
+    manualField.classList.toggle('hidden', !needsManualName);
+
+    if (needsManualName) {
+        const hasManualInput = (currentCardData.manualEnName || '').trim().length > 0;
+        manualInput.classList.toggle('input-error', hasManualInput && !hasValidEnglishName);
+        manualInput.setAttribute('aria-invalid', String(hasManualInput && !hasValidEnglishName));
+
+        if (hasManualInput && !hasValidEnglishName) {
+            manualHint.textContent = '英文名清洗后必须以英文字母开头，并且至少保留一个字符。';
+            manualHint.classList.add('error');
+        } else if (hasValidEnglishName) {
+            manualHint.textContent = `将使用 ${englishName} 生成本地化键和脚本文件名。`;
+            manualHint.classList.remove('error');
+        } else {
+            manualHint.textContent = '空格和标点会自动移除，该名称将用于本地化键和脚本文件名。';
+            manualHint.classList.remove('error');
+        }
+
+        document.getElementById('infoCleanEnName').textContent = englishName || '-';
+    }
+
+    localeBtn.disabled = !hasValidEnglishName;
+    localeBtn.textContent = hasValidEnglishName ? '生成本地化' : '请先输入有效英文名';
+    generateBtn.disabled = !(currentCardData?.cardImage?.found && hasValidEnglishName);
+}
+
 function displayQueryResult(data) {
     const resultDiv = document.getElementById('queryResult');
     resultDiv.classList.remove('hidden');
@@ -132,16 +188,7 @@ function displayQueryResult(data) {
         if (data.apiData.def) stats.push(`DEF ${data.apiData.def}`);
         if (data.apiData.level) stats.push(`Lv.${data.apiData.level}`);
         document.getElementById('infoStats').textContent = stats.join(' / ') || '-';
-
-        // 启用/禁用本地化按钮
-        const localeBtn = document.getElementById('genLocaleBtn');
-        if (data.apiData.enName && data.apiData.enName.length > 0) {
-            localeBtn.disabled = false;
-            localeBtn.textContent = '生成本地化';
-        } else {
-            localeBtn.disabled = true;
-            localeBtn.textContent = '无英文名，无法生成';
-        }
+        document.getElementById('manualEnNameInput').value = data.manualEnName || '';
     } else {
         document.getElementById('infoCnName').textContent = 'API查询失败';
         document.getElementById('infoEnName').textContent = '-';
@@ -149,7 +196,7 @@ function displayQueryResult(data) {
         document.getElementById('infoTypes').textContent = '-';
         document.getElementById('infoDesc').textContent = '-';
         document.getElementById('infoStats').textContent = '-';
-        document.getElementById('genLocaleBtn').disabled = true;
+        document.getElementById('manualEnNameInput').value = '';
     }
 
     // 2. 显示卡图/裁剪区域
@@ -174,6 +221,8 @@ function displayQueryResult(data) {
         cropStatus.className = 'status-badge status-error';
         generateBtn.disabled = true;
     }
+
+    updateEnglishNameControls();
 
     // 3. 显示立绘
     const portraitPreview = document.getElementById('portraitPreview');
@@ -203,6 +252,11 @@ async function generateLocalizationEntry() {
     if (!currentCardData || !currentCardData.apiData) return;
     
     const { cardId, apiData } = currentCardData;
+    const enName = getEffectiveEnglishName();
+    if (!isValidEnglishName(enName)) {
+        showToast('请先输入有效的英文名', 'warning');
+        return;
+    }
     
     try {
         const btn = document.getElementById('genLocaleBtn');
@@ -214,7 +268,7 @@ async function generateLocalizationEntry() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 cardId,
-                enName: apiData.enName,
+                enName,
                 cnName: apiData.cnName
             })
         });
@@ -416,6 +470,11 @@ async function generateCard() {
     }
 
     const { cardId, apiData, cardImage, portrait } = currentCardData;
+    const enName = getEffectiveEnglishName();
+    if (!isValidEnglishName(enName)) {
+        showToast('请先输入有效的英文名', 'warning');
+        return;
+    }
 
     try {
         const btn = document.getElementById('generateCardBtn');
@@ -457,7 +516,7 @@ async function generateCard() {
                 cardId,
                 name: apiData.name,
                 cnName: apiData.cnName,
-                enName: apiData.enName,
+                enName,
                 types: apiData.types,
                 description: apiData.description,
                 atk: apiData.atk,
@@ -494,8 +553,8 @@ async function generateCard() {
     } catch (error) {
         showToast(error.message, 'error');
     } finally {
-        document.getElementById('generateCardBtn').disabled = false;
         document.getElementById('generateCardBtn').textContent = '生成卡牌';
+        updateEnglishNameControls();
     }
 }
 

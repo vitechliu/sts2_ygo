@@ -42,6 +42,19 @@
                                 <p><strong>描述：</strong> <span id="infoDesc">-</span></p>
                                 <p><strong>ATK/DEF：</strong> <span id="infoStats">-</span></p>
                             </div>
+                            <div id="manualEnNameField" class="manual-en-name-field hidden">
+                                <label for="manualEnNameInput">API 缺少英文名，请手动输入</label>
+                                <input
+                                    type="text"
+                                    id="manualEnNameInput"
+                                    placeholder="例如：Cyber Dragon"
+                                    autocomplete="off"
+                                    spellcheck="false"
+                                />
+                                <p id="manualEnNameHint" class="field-hint">
+                                    空格和标点会自动移除，该名称将用于本地化键和脚本文件名。
+                                </p>
+                            </div>
                             <div class="panel-actions">
                                 <button id="genLocaleBtn" class="btn-secondary" disabled>生成本地化</button>
                             </div>
