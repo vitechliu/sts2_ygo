@@ -7,5 +7,8 @@
   "V_YGO_POWER_YGO_POWER.smartDescription": "{YgoInfo}",
   "V_YGO_POWER_MONSTER_LEVEL_POWER.title": "星级",
   "V_YGO_POWER_MONSTER_LEVEL_POWER.description": "这只怪兽的等级变成{Amount}星。",
-  "V_YGO_POWER_MONSTER_LEVEL_POWER.smartDescription": "这只怪兽的等级变成{Amount}星。"
+  "V_YGO_POWER_MONSTER_LEVEL_POWER.smartDescription": "这只怪兽的等级变成{Amount}星。",
+  "V_YGO_POWER_CYBER_DRAGON_SUMMONED_THIS_TURN_POWER.title": "电子龙召唤",
+  "V_YGO_POWER_CYBER_DRAGON_SUMMONED_THIS_TURN_POWER.description": "你在本回合召唤过「电子龙」怪兽。",
+  "V_YGO_POWER_CYBER_DRAGON_SUMMONED_THIS_TURN_POWER.smartDescription": "你在本回合召唤过「电子龙」怪兽。"
 }

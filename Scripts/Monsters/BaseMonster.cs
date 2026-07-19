@@ -85,6 +85,16 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
             await PowerCmd.Apply<TargetingAttackAction>(choiceContext, Creature, 1m, owner.Creature, options.Source, true);
         }
         await OnSummonYgo(choiceContext, owner, options);
+        if (card?.ContainArchetype(YgoArchetypes.CyberDragon) == true
+            && !owner.Creature.HasPower<CyberDragonSummonedThisTurnPower>()) {
+            await PowerCmd.Apply<CyberDragonSummonedThisTurnPower>(
+                choiceContext,
+                owner.Creature,
+                1m,
+                Creature,
+                options.Source,
+                true);
+        }
     }
 
     public abstract int CardId { get; }
