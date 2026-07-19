@@ -116,13 +116,13 @@ router.get('/query/:cardId', async (req, res) => {
 // 添加本地化条目
 router.post('/localization', async (req, res) => {
     try {
-        const { cardId, enName, cnName } = req.body;
+        const { enName, cnName } = req.body;
         
         if (!enName) {
             return res.status(400).json({ success: false, error: 'English name is required for localization' });
         }
 
-        const localePath = await addLocalizationEntry(cardId, enName, cnName);
+        const localePath = await addLocalizationEntry(enName, cnName);
         
         res.json({ 
             success: true, 
@@ -385,7 +385,7 @@ router.post('/:cardId/localization', async (req, res) => {
             return res.status(400).json({ success: false, error: 'English name is required for localization' });
         }
 
-        const localePath = await addLocalizationEntry(card.card_id, card.en_name, card.cn_name);
+        const localePath = await addLocalizationEntry(card.en_name, card.cn_name);
         res.json({ success: true, data: { localePath } });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
@@ -472,7 +472,7 @@ function toUpperSnakeCase(str) {
 }
 
 // 辅助函数：添加单条本地化条目
-async function addLocalizationEntry(cardId, enName, cnName) {
+async function addLocalizationEntry(enName, cnName) {
     const settings = await allConfig('SELECT * FROM settings');
     const config = {};
     settings.forEach(s => config[s.key] = s.value);
@@ -502,9 +502,10 @@ async function addLocalizationEntry(cardId, enName, cnName) {
     }
 
     cardsLocalization[`${key}.title`] = cnName || enName;
-    // 描述留空或从数据库获取
-    const card = await getCards('SELECT description FROM cards WHERE card_id = ?', [cardId]);
-    cardsLocalization[`${key}.description`] = card?.description || '';
+    const descriptionKey = `${key}.description`;
+    if (!Object.prototype.hasOwnProperty.call(cardsLocalization, descriptionKey)) {
+        cardsLocalization[descriptionKey] = '';
+    }
 
     fs.writeFileSync(cardsLocalePath, JSON.stringify(cardsLocalization, null, 4), 'utf8');
 
@@ -627,7 +628,7 @@ async function generateLocalization() {
                 cardsLocalization[titleKey] = card.cn_name;
                 insertedCount++;
             }
-            if (!cardsLocalization.hasOwnProperty(descKey)) {
+            if (!Object.prototype.hasOwnProperty.call(cardsLocalization, descKey)) {
                 cardsLocalization[descKey] = '';
             }
 
