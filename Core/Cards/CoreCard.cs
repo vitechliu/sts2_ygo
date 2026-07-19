@@ -32,21 +32,27 @@ public record CoreCard(
     /// <summary>
     /// 用于界面展示的卡片类型信息，不包含攻击力、防御力和连接标记等战斗数值。
     /// </summary>
-    public string FormatedInfo {
-        get {
-            if (string.IsNullOrWhiteSpace(Types)) return string.Empty;
+    public string FormatedInfo => GetFormatedInfo(Level);
 
-            string info = NormalizeWhitespace(Types);
-            int typeEnd = info.StartsWith('[') ? info.IndexOf(']') : -1;
+    public string GetFormatedInfo(int? effectiveLevel) {
+        if (string.IsNullOrWhiteSpace(Types)) return string.Empty;
 
-            // 未知格式也不抛出异常，只移除能够明确识别的攻防数据。
-            if (typeEnd < 0) return RemoveCombatStats(info);
-
-            string type = info[..(typeEnd + 1)];
-            string details = RemoveCombatStats(info[(typeEnd + 1)..].Trim());
-            return details.Length == 0 ? type : $"{type}\n{details}";
+        string info = NormalizeWhitespace(Types);
+        if (HasLevel && Level is { } originalLevel && effectiveLevel is { } currentLevel) {
+            info = info.Replace($"[★{originalLevel}]", $"[★{currentLevel}]");
         }
+
+        int typeEnd = info.StartsWith('[') ? info.IndexOf(']') : -1;
+
+        // 未知格式也不抛出异常，只移除能够明确识别的攻防数据。
+        if (typeEnd < 0) return RemoveCombatStats(info);
+
+        string type = info[..(typeEnd + 1)];
+        string details = RemoveCombatStats(info[(typeEnd + 1)..].Trim());
+        return details.Length == 0 ? type : $"{type}\n{details}";
     }
+
+    public bool HasLevel => Level is > 0 && Types?.Contains("[★") == true;
 
     public int? LinkCount {
         get {

@@ -17,7 +17,8 @@
     "V_YGO_CARD_LINK_SUMMON.description": "进行一次[gold]连接召唤[/gold]。",
     "V_YGO_CARD_LINK_SUMMON.selectionScreenPrompt": "请选择需要召唤的卡牌。",
     "V_YGO_CARD_CYBER_DRAGON_CORE.title": "电子龙核",
-    "V_YGO_CARD_CYBER_DRAGON_CORE.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n从卡堆[gold]检索[/gold]一张带有「电子龙」的卡片。",
+    "V_YGO_CARD_CYBER_DRAGON_CORE.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]：从[gold]抽牌堆[/gold]中选择一张「电子龙」魔陷放入你的[gold]手牌[/gold]。",
+    "V_YGO_CARD_CYBER_DRAGON_CORE.selectionScreenPrompt": "请选择要加入手牌的「电子龙」魔法或陷阱牌。",
     "V_YGO_CARD_SP_LITTLE_KNIGHT.title": "S：P小夜",
     "V_YGO_CARD_SP_LITTLE_KNIGHT.description": "[gold]连接召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]效果怪兽2只。[/aqua]\n[gold]召唤[/gold]:对随机一名敌人造成7点[gold]虚空[/gold]伤害。",
     "V_YGO_CARD_MONSTER_REBORN.title": "死者苏生",
@@ -42,5 +43,7 @@
     "V_YGO_CARD_CYBER_TWIN_DRAGON.title": "电子双生龙",
     "V_YGO_CARD_CYBER_TWIN_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]「电子龙」＋「电子龙」[/aqua]\n可以攻击两次。",
     "V_YGO_CARD_CYBER_BARRIER_DRAGON.title": "电子障壁龙",
-    "V_YGO_CARD_CYBER_BARRIER_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])"
+    "V_YGO_CARD_CYBER_BARRIER_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])",
+    "V_YGO_CARD_CYBER_DRAGON_DREI.title": "电子龙三型",
+    "V_YGO_CARD_CYBER_DRAGON_DREI.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]：场上的全部「电子龙」怪兽的等级变成{Level}星。"
 }

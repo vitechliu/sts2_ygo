@@ -28,16 +28,11 @@ public class CyberEndDragon() : BaseExtraFusionCard(energyCost, rarity, targetTy
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
         YgoKeywords.Piercing
     ];
-
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new AttackVar(25),
-        new LifeVar(12)
-    ];
     
-    protected override void OnUpgrade() {
-        DynamicVars["Life"].UpgradeValueBy(5);
-        DynamicVars["Attack"].UpgradeValueBy(5);
-    }
+    public override int BaseAttackVar => 11;
+    public override int BaseLifeVar => 5;
+    public override int UpgradeAttackVar => 3;
+    public override int UpgradeLifeVar => 2;
 
     public override bool CanUseFusionMaterial(SummonMaterial material) {
         return material.VYgoCard?.MaterialCardName == YgoMaterialNames.电子龙;

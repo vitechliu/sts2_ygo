@@ -41,6 +41,9 @@ public sealed record SummonMaterial(CardModel? Card, Creature? Creature = null) 
         : null;
     public string? Race => CoreCard?.Race;
     public bool IsEffectMonster => CoreCard?.IsEffectMonster == true;
+    public int? Level => Creature?.Monster is BaseMonster monster
+        ? monster.Level
+        : (Card as BaseVYgoCard)?.Level;
 
     public static bool IsFieldMonster(Creature creature) {
         return creature.Monster is BaseMonster;

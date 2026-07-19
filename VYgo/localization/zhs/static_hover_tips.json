@@ -15,6 +15,8 @@
   "V_YGO_FUSION_SUMMON.description": "根据融合素材要求召唤融合怪兽。一般需要借助融合魔法卡。",
   "V_YGO_SEND_TO_GRAVEYARD.title": "送墓",
   "V_YGO_SEND_TO_GRAVEYARD.description": "当怪兽死亡时触发。",
+  "V_YGO_ENTER_FIELD.title": "登场",
+  "V_YGO_ENTER_FIELD.description": "当怪兽被召唤到场上时触发。",
   "V_YGO_NAME_AS.title": "卡名",
   "V_YGO_NAME_AS.description": "这张卡的卡名视为[blue]{YgoName}[/blue]。"
 }

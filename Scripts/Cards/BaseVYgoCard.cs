@@ -22,6 +22,10 @@ public abstract class BaseVYgoCard(
     
     public bool ContainArchetype(YgoArchetypeCode archetype) => ArchetypesList.Contains(archetype.Value);
 
+    public YgoType YgoCardType => CardYgoType;
+
+    public int? Level => this.YgoGetCore() is { HasLevel: true } coreCard ? coreCard.Level : null;
+
     private static readonly Dictionary<YgoType, string> PORTRAIT = new() {
         [YgoType.normal] = "01",
         [YgoType.effect] = "02",
