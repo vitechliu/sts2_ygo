@@ -17,7 +17,7 @@
     "V_YGO_CARD_LINK_SUMMON.description": "进行一次[gold]连接召唤[/gold]。",
     "V_YGO_CARD_LINK_SUMMON.selectionScreenPrompt": "请选择需要召唤的卡牌。",
     "V_YGO_CARD_CYBER_DRAGON_CORE.title": "电子龙核",
-    "V_YGO_CARD_CYBER_DRAGON_CORE.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]：从[gold]抽牌堆[/gold]中选择一张「电子龙」魔陷放入你的[gold]手牌[/gold]。",
+    "V_YGO_CARD_CYBER_DRAGON_CORE.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]:从[gold]抽牌堆[/gold]中选择一张「电子龙」魔陷放入你的[gold]手牌[/gold]。",
     "V_YGO_CARD_CYBER_DRAGON_CORE.selectionScreenPrompt": "请选择要加入手牌的「电子龙」魔法或陷阱牌。",
     "V_YGO_CARD_SP_LITTLE_KNIGHT.title": "S：P小夜",
     "V_YGO_CARD_SP_LITTLE_KNIGHT.description": "[gold]连接召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]效果怪兽2只。[/aqua]\n[gold]召唤[/gold]:对随机一名敌人造成7点[gold]虚空[/gold]伤害。",
@@ -35,7 +35,7 @@
     "V_YGO_CARD_FUSION_SUBSTITUTE.description": "以场上的怪兽作为融合素材，进行一次[gold]融合召唤[/gold]。若成功召唤，抽1张牌",
     "V_YGO_CARD_FUSION_SUBSTITUTE.selectionScreenPrompt": "请选择需要召唤的卡牌。",
     "V_YGO_CARD_CYBER_DRAGON_HERZ.title": "电子龙芯",
-    "V_YGO_CARD_CYBER_DRAGON_HERZ.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]送墓[/gold]：将{Cards:diff()}张随机「电子龙」牌添加到你的[gold]手牌[/gold]中。",
+    "V_YGO_CARD_CYBER_DRAGON_HERZ.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]送墓[/gold]:将{Cards:diff()}张随机「电子龙」牌添加到你的[gold]手牌[/gold]中。",
     "V_YGO_CARD_EVOLUTION_BURST.title": "进化光焰",
     "V_YGO_CARD_EVOLUTION_BURST.description": "场上有「电子龙」怪兽存在的场合才能发动，造成10点伤害。",
     "V_YGO_CARD_POWER_BOND.title": "力量结合",
@@ -45,5 +45,7 @@
     "V_YGO_CARD_CYBER_BARRIER_DRAGON.title": "电子障壁龙",
     "V_YGO_CARD_CYBER_BARRIER_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])",
     "V_YGO_CARD_CYBER_DRAGON_DREI.title": "电子龙三型",
-    "V_YGO_CARD_CYBER_DRAGON_DREI.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]：场上的全部「电子龙」怪兽的等级变成{Level}星。"
+    "V_YGO_CARD_CYBER_DRAGON_DREI.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]:场上的全部「电子龙」怪兽的等级变成{Level}星。",
+    "V_YGO_CARD_CYBER_DRAGON_VIER.title": "电子龙四型",
+    "V_YGO_CARD_CYBER_DRAGON_VIER.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n如果你在本回合召唤过「电子龙」怪兽，则耗能减少{CostReduction:energyIcons()}。"
 }
