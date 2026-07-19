@@ -32,6 +32,13 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
         Entry.Logger.Info("SetUpgraded:" + Title);
     }
 
+    public int? Level {
+        get {
+            if (this.YgoGetCore() is not { HasLevel: true } coreCard) return null;
+            return Creature?.GetPower<MonsterLevelPower>()?.Amount ?? coreCard.Level;
+        }
+    }
+
     protected NMonsterVisuals? Visuals => Creature?.GetCreatureNode()?.Visuals as NMonsterVisuals;
     
     //防止多次死亡结算

@@ -4,5 +4,8 @@
   "V_YGO_POWER_ATTACK_POWER.smartDescription": "怪物使用主动攻击行为时造成的伤害。",
   "V_YGO_POWER_YGO_POWER.title": "游戏王怪兽",
   "V_YGO_POWER_YGO_POWER.description": "游戏王怪兽。(游戏中会展示具体参数)",
-  "V_YGO_POWER_YGO_POWER.smartDescription": "{YgoInfo}"
+  "V_YGO_POWER_YGO_POWER.smartDescription": "{YgoInfo}",
+  "V_YGO_POWER_MONSTER_LEVEL_POWER.title": "星级",
+  "V_YGO_POWER_MONSTER_LEVEL_POWER.description": "这只怪兽的等级变成{Amount}星。",
+  "V_YGO_POWER_MONSTER_LEVEL_POWER.smartDescription": "这只怪兽的等级变成{Amount}星。"
 }

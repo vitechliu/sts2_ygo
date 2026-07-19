@@ -25,16 +25,10 @@ public class CyberTwinDragon() : BaseExtraFusionCard(energyCost, rarity, targetT
     // }
 
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new AttackVar(6),
-        new LifeVar(4)
-    ];
+    public override int BaseAttackVar => 6;
+    public override int BaseLifeVar => 5;
+    public override int UpgradeAttackVar => 2;
     
-    protected override void OnUpgrade() {
-        DynamicVars["Life"].UpgradeValueBy(2);
-        DynamicVars["Attack"].UpgradeValueBy(2);
-    }
-
     public override bool CanUseFusionMaterial(SummonMaterial material) {
         return material.VYgoCard?.MaterialCardName == YgoMaterialNames.电子龙;
     }

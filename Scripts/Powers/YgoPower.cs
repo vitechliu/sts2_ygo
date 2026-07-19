@@ -41,8 +41,10 @@ public class YgoPower : ModPowerTemplate, IYgoId {
     public void InitInfo() {
         var coreCard = this.YgoGetCore();
         StringVar stringVar = (StringVar)base.DynamicVars["YgoInfo"];
-        if (coreCard != null && coreCard.FormatedInfo.Length > 0) {
-            stringVar.StringValue = coreCard.FormatedInfo;
+        int? level = Owner.Monster is BaseMonster monster ? monster.Level : coreCard?.Level;
+        string formattedInfo = coreCard?.GetFormatedInfo(level) ?? string.Empty;
+        if (formattedInfo.Length > 0) {
+            stringVar.StringValue = formattedInfo;
         }
         else {
             stringVar.StringValue = "暂无信息";

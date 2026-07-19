@@ -44,6 +44,11 @@ public static class YgoHoverTipConst {
     public static IHoverTip SendToGraveyard() {
         return Base("SEND_TO_GRAVEYARD");
     }
+
+    //登场
+    public static IHoverTip EnterField() {
+        return Base("ENTER_FIELD");
+    }
     
     //卡名替代
     public static IHoverTip NameAs(YgoMaterialNames name) {

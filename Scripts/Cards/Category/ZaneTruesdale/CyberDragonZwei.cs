@@ -21,6 +21,8 @@ public class CyberDragonZwei() : BaseMonsterCard(1, CardRarity.Common, TargetTyp
     public override int BaseAttackVar => 4;
     public override int BaseLifeVar => 3;
 
+    public override int UpgradeAttackVar => 1;
+
     // protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
     //     BaseSummonHoverTip,
     // ];
