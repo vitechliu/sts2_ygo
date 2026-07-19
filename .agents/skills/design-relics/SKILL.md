@@ -19,7 +19,7 @@ Turn a relic concept into a registered, localized VYgo relic. Treat the user-pro
 
 1. Read [references/implementation-guide.md](references/implementation-guide.md).
 2. Inspect `Scripts/Relics/BaseYgoRelic.cs`, the target pool under `Scripts/Pools/`, and the closest existing mod relic.
-3. Search `D:/github/raw109/src/Core/Models/Relics/` for one or more original relics with the same trigger, state lifetime, or reward. Copy the lifecycle pattern and method signature, not the original balance or theme. Never modify that directory.
+3. Resolve the read-only vanilla reference root from the active `AGENTS.md` instructions or `STS2_VANILLA_ROOT`, then search `${STS2_VANILLA_ROOT}/src/Core/Models/Relics/` for one or more original relics with the same trigger, state lifetime, or reward. Ask for the root if it is not configured. Copy the lifecycle pattern and method signature, not the original balance or theme. Never modify that directory.
 4. Put starter relics in `Scripts/Relics/Starters/`. For other relics, reuse an existing appropriate subfolder; if none exists, place the file directly in `Scripts/Relics/` rather than inventing a new one-item taxonomy.
 5. Inherit `BaseYgoRelic`, add `[RegisterRelic(typeof(<TargetRelicPool>))]`, and override `Rarity`.
 6. For a starter relic, also add `[RegisterCharacterStarterRelic(typeof(<Character>))]`. Prefer registration attributes over editing obsolete `StartingRelicTypes` collections.

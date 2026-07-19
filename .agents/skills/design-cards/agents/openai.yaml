@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design VYgo Cards"
+  short_description: "Implement VYgo cards from paths and effect specs"
+  default_prompt: "Use $design-cards to implement the card script at the provided path from my effect description."
