@@ -117,12 +117,13 @@ router.get('/query/:cardId', async (req, res) => {
 router.post('/localization', async (req, res) => {
     try {
         const { enName, cnName } = req.body;
+        const normalizedEnName = typeof enName === 'string' ? enName.trim() : '';
         
-        if (!enName) {
-            return res.status(400).json({ success: false, error: 'English name is required for localization' });
+        if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(normalizedEnName)) {
+            return res.status(400).json({ success: false, error: 'A valid English name is required for localization' });
         }
 
-        const localePath = await addLocalizationEntry(enName, cnName);
+        const localePath = await addLocalizationEntry(normalizedEnName, cnName);
         
         res.json({ 
             success: true, 
@@ -142,6 +143,11 @@ router.post('/', async (req, res) => {
             atk, def, level, attribute, race, rawData,
             cropParams, cardImagePath, portraitPath 
         } = req.body;
+        const normalizedEnName = typeof enName === 'string' ? enName.trim() : '';
+
+        if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(normalizedEnName)) {
+            return res.status(400).json({ success: false, error: 'A valid English name is required' });
+        }
 
         // 检查是否已存在
         const existing = await getCards('SELECT * FROM cards WHERE card_id = ?', [cardId]);
@@ -179,7 +185,7 @@ router.post('/', async (req, res) => {
         const result = await runCards(
             `INSERT INTO cards (card_id, name, cn_name, en_name, types, description, atk, def, level, attribute, race, raw_data) 
              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [cardId, name, cnName, enName, types, description, atk, def, level, attribute, race, sanitizedRawData]
+            [cardId, name, cnName, normalizedEnName, types, description, atk, def, level, attribute, race, sanitizedRawData]
         );
 
         res.json({ 
