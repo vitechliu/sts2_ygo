@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Models;
 using VYgo.Core.Cards;
+using VYgo.Scripts;
 using VYgo.Scripts.Cards;
 using VYgo.Scripts.Monsters;
 
@@ -54,9 +55,13 @@ public sealed record SummonMaterial(CardModel? Card, Creature? Creature = null) 
     }
 
     public static SummonMaterial FromFieldMonster(Creature creature) {
-        CardModel? card = null;
-        if (creature.Monster is IYgoId monster) {
-            card = monster.YgoGetCard();
+        CardModel? card = (creature.Monster as BaseMonster)?.SourceCard;
+
+        if (card == null) {
+            Entry.Logger.Warn(
+                $"Field monster {creature.Monster?.GetType().Name ?? creature.GetType().Name} " +
+                "has no source combat card and cannot be selected as summon material."
+            );
         }
 
         return new SummonMaterial(card, creature);

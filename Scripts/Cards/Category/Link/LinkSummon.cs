@@ -10,7 +10,7 @@ using VYgo.Scripts.Pools;
 namespace VYgo.Scripts.Cards.Category.Link;
 
 [RegisterCard(typeof(LinkCardPool))]
-[RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 1)]
+[RegisterCharacterStarterCard(typeof(RedhatCharacter), 1)]
 public class LinkSummon() : BaseSummonCard(0, CardType.Skill, CardRarity.Basic, TargetType.None) {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         YgoHoverTipConst.FusionSummon()

@@ -17,7 +17,6 @@ using VYgo.Scripts.Pools;
 namespace VYgo.Scripts.Cards.Test;
 
 [RegisterCard(typeof(RedhatCardPool))]
-[RegisterCharacterStarterCard(typeof(RedhatCharacter), 1)]
 public class TestCard2() : BasePlaceholder(CardType.Skill, CardRarity.Common) {
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         await base.OnPlay(choiceContext, cardPlay);
