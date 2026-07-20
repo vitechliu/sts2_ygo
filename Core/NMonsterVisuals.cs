@@ -95,7 +95,7 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 			Name = "ActionReadyIcon",
 			Centered = true,
 			Visible = false,
-			ZIndex = 1,
+			ZIndex = 0,
 			Scale = BaseIntentScale
 		};
 		IntentPosition.AddChild(actionReadyIcon);
