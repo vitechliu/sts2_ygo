@@ -5,6 +5,5 @@ using VYgo.Scripts.Pools;
 namespace VYgo.Scripts.Cards.Placeholders;
 
 [RegisterCard(typeof(RedhatCardPool))]
-// [RegisterCharacterStarterCard(typeof(RedhatCharacter), 5)]
 public class AttackBasic(): BasePlaceholder(CardType.Attack, CardRarity.Basic) {
 }
