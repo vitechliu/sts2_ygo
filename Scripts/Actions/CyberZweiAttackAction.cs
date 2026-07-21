@@ -8,14 +8,16 @@ namespace VYgo.Scripts.Actions;
 
 public class CyberZweiAttackAction : TargetingAttackAction {
     protected override async Task OnAct(PlayerChoiceContext choiceContext, Creature? target) {
+        if (target == null) return;
+
         await base.OnAct(choiceContext, target);
     
-        CyberDragonZweiMinion m = Owner.Monster as CyberDragonZweiMinion;
-        if (m == null) {
+        if (Owner.Monster is not CyberDragonZweiMinion monster) {
             Entry.Logger.Error("Cannot Find CyberDragonZweiMinion");
             return;
         }
-        var val = m.Upgraded ? 4 : 3;
+
+        var val = monster.Upgraded ? 4 : 3;
         await PowerCmd.Apply<AttackPower>(choiceContext, Owner, val, Owner, null);
     }
 }

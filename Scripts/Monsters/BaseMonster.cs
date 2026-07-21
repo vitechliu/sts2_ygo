@@ -24,7 +24,7 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
 
     protected bool _upgraded;
 
-    public CardModel? SourceCard;
+    public CardModel? SourceCard { get; private set; }
 
     public bool Upgraded => _upgraded;
     public virtual void SetUpgraded() {
@@ -35,7 +35,7 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
     protected NMonsterVisuals? Visuals => Creature?.GetCreatureNode()?.Visuals as NMonsterVisuals;
     
     //防止多次死亡结算
-    protected bool PileSent;
+    protected bool PileSent { get; private set; }
     public virtual bool IsGuardian {
         get;
         set;
@@ -90,7 +90,7 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
 
     public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength) {
         //怪兽死亡后，对应的怪兽卡置入弃牌堆
-        if (!PileSent && creature == Creature) {
+        if (!wasRemovalPrevented && !PileSent && creature == Creature) {
             PileSent = true;
             // Entry.Logger.Info("AfterDeath:" + GetType().Name);
             var card = this.YgoGetCard();
@@ -112,7 +112,7 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
 
     private async Task ReturnCard(Player player, PlayerChoiceContext choiceContext) {
         if (SourceCard == null) return;
-        if (CombatManager.Instance.IsOverOrEnding) return;
+        if (CombatManager.Instance?.IsOverOrEnding != false) return;
         var discardPile = PileType.Discard.GetPile(player);
         await CardPileCmd.Add(SourceCard, discardPile);
         discardPile.InvokeContentsChanged();
