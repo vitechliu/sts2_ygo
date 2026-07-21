@@ -58,6 +58,7 @@
     </ItemGroup>
     <ItemGroup>
         <Content Remove="Scripts\**\*.uid"/>
+        <Compile Remove="External\**\*.cs;Web\**\*.cs"/>
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Core\Summon\" />
@@ -67,7 +68,7 @@
         <Folder Include="VYgo\images\monster\"/>
     </ItemGroup>
     <PropertyGroup>
-        <NoWarn>$(NoWarn);MSB3270;CS0162;CS1998;CS8600;CS8602;CS8603;CS8604;CS8618;CS8620;CS8622;CS8625;CS8629;CS0436</NoWarn>
+        <NoWarn>$(NoWarn);MSB3270;CS0436;CS1998</NoWarn>
     </PropertyGroup>
 
 
@@ -81,11 +82,10 @@
     <Target Name="GodotPublish" AfterTargets="Publish" Condition="'$(GodotPath)' != '' and '$(IsInnerGodotExport)' != 'true'">
         <Message Text="Exporting Godot .pck to mods folder" Importance="high"/>
         <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;$(GodotPreset)&quot; &quot;$(Sts2ModDir)/VYgo/VYgo.pck&quot;"
-              EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1"
-              ContinueOnError="WarnAndContinue"/>
+              EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1"/>
     </Target>
 
     <Target Name="GodotPublishSkipped" AfterTargets="Publish" Condition="'$(GodotPath)' == ''">
-        <Message Text="Skipping Godot .pck export because GodotPath is not configured." Importance="high"/>
+        <Error Text="GodotPath is required because VYgo.json declares has_pck=true."/>
     </Target>
 </Project>
