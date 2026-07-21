@@ -1,7 +1,9 @@
 namespace VYgo.Core;
 
 //箭头
+[Flags]
 public enum CardLinkMarker {
+    None = 0,
     BottomLeft = 0x01,
     Bottom = 0x02,
     BottomRight = 0x04,

@@ -16,7 +16,7 @@ public abstract class BaseSummonCard(
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"res://VYgo/images/cards/{GetType().Name}.png",
-        FramePath: $"res://VYgo/images/frame/{type}/card_design0003.png"
+        FramePath: $"res://VYgo/images/frame/{Type}/card_design0003.png"
     );
     
     
