@@ -6,7 +6,8 @@ class YgoApiService {
     async getCardById(cardId) {
         try {
             const response = await axios.get(`${BASE_URL}/api/v0/card/${cardId}?show=all`, {
-                timeout: 10000
+                timeout: 10000,
+                maxContentLength: 2 * 1024 * 1024
             });
             return response.data;
         } catch (error) {
@@ -17,27 +18,12 @@ class YgoApiService {
         }
     }
 
-    async searchCards(query, start = 0) {
-        try {
-            const response = await axios.get(`${BASE_URL}/api/v0/?search=${encodeURIComponent(query)}&start=${start}`, {
-                timeout: 10000
-            });
-            return response.data;
-        } catch (error) {
-            throw new Error(`Search failed: ${error.message}`);
-        }
-    }
-
-    async getCardImageUrl(cardId, type = 'ygopro') {
-        return `https://cdn.233.momobako.com/ygoimg/${type}/${cardId}.webp`;
-    }
-
     parseCardData(apiData) {
         const data = apiData.data || {};
         const text = apiData.text || {};
         
         // 提取英文名并去除非英文数字符号
-        const rawEnName = apiData.en_name || text.en_name || '';
+        const rawEnName = String(apiData.en_name || text.en_name || '');
         const cleanEnName = rawEnName.replace(/[^a-zA-Z0-9]/g, '');
         
         return {
@@ -59,6 +45,9 @@ class YgoApiService {
 
     sanitizeRawData(rawData) {
         const data = typeof rawData === 'string' ? JSON.parse(rawData) : rawData;
+        if (data === null || typeof data !== 'object' || Array.isArray(data)) {
+            throw new Error('Raw card data must be a JSON object');
+        }
         const sanitized = { ...data };
 
         delete sanitized.faqs;
