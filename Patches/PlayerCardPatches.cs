@@ -26,6 +26,8 @@ public class PlayerCardPatches {
     [HarmonyPatch(typeof(Player), nameof(Player.PopulateCombatState))]
     public static bool PopulateCombatStatePatch(Player __instance, Rng rng, CombatState state) {
         if (!__instance.Character.GetType().IsGenericTypeOf(typeof(BaseYgoCharacter<,,>))) return true;
+        var playerCombatState = __instance.PlayerCombatState
+            ?? throw new InvalidOperationException("Player combat state was not initialized before population.");
         foreach (CardModel mutableCard in __instance.Deck.Cards.ToList()) {
             CardModel card = state.CloneCard(mutableCard);
             card.DeckVersion = mutableCard;
@@ -34,10 +36,10 @@ public class PlayerCardPatches {
                 pile.AddInternal(card);
             }
             else {
-                __instance.PlayerCombatState.DrawPile.AddInternal(card);
+                playerCombatState.DrawPile.AddInternal(card);
             }
         }
-        __instance.PlayerCombatState.DrawPile.RandomizeOrderInternal(__instance, rng, state);
+        playerCombatState.DrawPile.RandomizeOrderInternal(__instance, rng, state);
         return false;
     }
 }

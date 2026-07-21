@@ -11,7 +11,7 @@ public abstract class BaseExtraCard(
     : BaseMonsterCard(baseCost, rarity, target, showInCardLibrary) {
     
     //最大随从数量限制
-    protected override bool IsPlayable => Owner.MinionCount() < MinionUtil.MAX_MINION_COUNT;
+    protected override bool IsPlayable => Owner.MinionCount() < MinionUtil.MaxMinionCount;
 
     public override bool IsExtra => true;
 }

@@ -10,7 +10,7 @@ namespace VYgo.Utils;
 
 public static class MinionUtil {
 
-    public const int MAX_MINION_COUNT = 5;
+    public const int MaxMinionCount = 5;
     
     public static int MinionCount(this Player player) {
         return player.Creature.Pets.Count(c => c.Monster is MinionModel);
@@ -28,7 +28,11 @@ public static class MinionUtil {
         MethodInfo method = typeof(MinionUtil).GetMethod(nameof(AddMinionInstant), 1, new[] { typeof(PlayerChoiceContext), typeof(Player), typeof(MinionSummonOptions) })
                             ?? throw new InvalidOperationException("Generic AddMinionInstant method not found.");
         MethodInfo genericMethod = method.MakeGenericMethod(monsterType);
-        return await (Task<Creature>)genericMethod.Invoke(null, new object[] { choiceContext, player, options });
+        if (genericMethod.Invoke(null, new object[] { choiceContext, player, options }) is not Task<Creature> task) {
+            throw new InvalidOperationException("Generic AddMinionInstant returned an unexpected result.");
+        }
+
+        return await task;
     }
     
     public static async Task<Creature> AddMinionInstant<T>(
@@ -37,7 +41,7 @@ public static class MinionUtil {
         MinionSummonOptions options = default)
         where T : MinionModel
     {
-        ArgumentNullException.ThrowIfNull((object) player, nameof (player));
+        ArgumentNullException.ThrowIfNull(player);
         Creature pet = await PlayerCmd.AddPet<T>(player);
         if (pet.Monster is MinionModel monster1)
             monster1.Position = options.Position;
@@ -45,8 +49,6 @@ public static class MinionUtil {
         await MinionAnimCmd.Rearrange(false);
         if (pet.Monster is MinionModel monster2)
             await monster2.OnSummon(choiceContext, player, options);
-        Creature creature = pet;
-        pet = (Creature) null;
-        return creature;
+        return pet;
     }
 }

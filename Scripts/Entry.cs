@@ -170,24 +170,17 @@ public static class Entry {
         //令额外卡组的卡永远不能出现在抽牌堆
         RitsuLibFramework.SubscribeLifecycle<CardMovedBetweenPilesEvent>(
             evt => {
-                var card = evt.Card;
-                var previousPile = evt.PreviousPile;
-                var curPile = card.Pile.Type;
-                if (
-                    card != null
-                    && card.Pile != null
-                    && previousPile != null
-                    && curPile == PileType.Draw
-                    && card is BaseMonsterCard baseMonsterCard
-                    && baseMonsterCard.IsExtra) {
-                    card.Pile.RemoveInternal(card, silent:true);
-                    var pile = ExtraPile.GetPile(card.Owner);
-                    if (pile != null) {
-                        pile.AddInternal(card, silent:true);
-                        pile.InvokeCardAddFinished();
-                        Logger.Info("CardForceToExtra:" + evt.Card.Title + " From:" + previousPile);
-                    }
+                CardModel card = evt.Card;
+                if (card is not BaseMonsterCard { IsExtra: true }
+                    || card.Pile?.Type != PileType.Draw) {
+                    return;
                 }
+
+                CardPile extraPile = ExtraPile.GetPile(card.Owner);
+                card.Pile.RemoveInternal(card, silent: true);
+                extraPile.AddInternal(card, silent: true);
+                extraPile.InvokeCardAddFinished();
+                Logger.Info($"CardForceToExtra:{card.Title} From:{evt.PreviousPile}");
             });
         // RitsuLibFramework.SubscribeLifecycle<CombatStartingEvent>((@event, disposable) => {
         //     Logger.Info("CombatStarting");
@@ -225,7 +218,7 @@ public static class Entry {
         Logger.Info($"Built YGO ID caches: {CardYgoIdCache.Count} cards, {MonsterYgoIdCache.Count} monsters.");
     }
 
-    static Dictionary<int, T> BuildYgoIdCache<T>(Func<IEnumerable<T>> tryGetFromModelDb = null) where T : class, IYgoId {
+    static Dictionary<int, T> BuildYgoIdCache<T>(Func<IEnumerable<T>> tryGetFromModelDb) where T : class, IYgoId {
         var cache = new Dictionary<int, T>();
         try {
             foreach (var item in tryGetFromModelDb()) {

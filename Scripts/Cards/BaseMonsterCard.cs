@@ -21,7 +21,7 @@ public abstract class BaseMonsterCard(
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [BaseSummonHoverTip];
 
     //最大随从数量限制
-    protected override bool IsPlayable => Owner.MinionCount() < MinionUtil.MAX_MINION_COUNT;
+    protected override bool IsPlayable => Owner.MinionCount() < MinionUtil.MaxMinionCount;
 
     public virtual bool IsExtra => false;
 
