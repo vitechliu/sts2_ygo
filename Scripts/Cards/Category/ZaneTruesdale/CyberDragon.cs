@@ -34,29 +34,19 @@ public class CyberDragon() : BaseMonsterCard(energyCost, rarity, targetType, sho
     public override int BaseLifeVar => 3;
     public override int UpgradeAttackVar => 2;
 
-    protected override bool ShouldGlowGoldInternal => Active;
+    protected override bool ShouldGlowGoldInternal => IsSpecialSummonActive;
     
-    bool Active => Owner.MinionCount() <= 0;
+    private bool IsSpecialSummonActive => Owner.MinionCount() == 0;
 
-    void FlushCost() {
-        EnergyCost.SetUntilPlayed(Active ? 0 : CanonicalEnergyCost);
-    }
+    public override bool TryModifyEnergyCostInCombat(
+        CardModel card,
+        decimal originalCost,
+        out decimal modifiedCost) {
+        modifiedCost = originalCost;
+        if (card != this || !IsSpecialSummonActive) return false;
 
-    public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw) {
-        if (card != this) return Task.CompletedTask;
-        FlushCost();
-        return Task.CompletedTask;
-    }
-    public override Task AfterCardEnteredCombat(CardModel card) {
-        if (card != this) return Task.CompletedTask;
-        FlushCost();
-        return Task.CompletedTask;
-    }
-
-    public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        if (cardPlay.Card.Owner != Owner) return Task.CompletedTask;
-        FlushCost();
-        return Task.CompletedTask;
+        modifiedCost = 0m;
+        return true;
     }
     
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [

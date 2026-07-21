@@ -29,8 +29,8 @@ public class TargetingAttackAction : BasePerTurnMonsterAction {
     }
     
     protected override async Task OnAct(PlayerChoiceContext choiceContext, Creature? target) {
-        SpendUses();
         if (target == null) return;
+        SpendUses();
         await MinionAnimCmd.PlayBumpAttackAsync(Owner, target);
         await CreatureCmd.Damage(choiceContext, target, StrengthPowerAmount, ValueProp.Move, null, null);
     }

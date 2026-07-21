@@ -23,6 +23,8 @@ public class EvolutionBurst() : BaseSpellCard(energyCost, CardType.Attack, rarit
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(9m, ValueProp.Move)
     ];
+
+    protected override bool IsPlayable => base.IsPlayable && CyberDragon.PlayerHasCyberDragon(Owner);
     
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         if (!CyberDragon.PlayerHasCyberDragon(Owner)) return;
