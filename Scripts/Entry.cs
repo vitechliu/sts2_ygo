@@ -49,6 +49,7 @@ public static class Entry {
         harmony.PatchAll();
         
         RegisterCardPile();
+        DirectExtraDeckSummonNetAction.Register();
         SubscribeEvents();
         LoadCoreCards();
         

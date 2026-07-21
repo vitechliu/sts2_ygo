@@ -48,6 +48,17 @@ public sealed record ExtraDeckSummonRequest(
     float FinalWaitSeconds = 0.45f
 );
 
+public sealed record SelectedExtraDeckSummonRequest(
+    CardModel SelectedExtraCard,
+    Player Owner,
+    PlayerChoiceContext ChoiceContext,
+    Func<SummonMaterialSelectionSpec?> BuildMaterialSelection,
+    Func<SummonAnimationContext, Task> PlayAnimation,
+    CardModel? SourceCard = null,
+    Func<IReadOnlyList<SummonMaterial>, Task>? ConsumeMaterials = null,
+    float FinalWaitSeconds = 0.45f
+);
+
 public sealed record SummonAnimationContext(
     CardModel FinalCard,
     IReadOnlyList<SummonMaterial> Materials,
@@ -133,15 +144,36 @@ public static class SummonUtil {
             .FirstOrDefault();
         if (selectedExtraCard == null || !extraPile.Cards.Contains(selectedExtraCard)) return;
 
+        await ExecuteSelectedExtraDeckSummon(new SelectedExtraDeckSummonRequest(
+            SelectedExtraCard: selectedExtraCard,
+            Owner: request.Owner,
+            ChoiceContext: request.ChoiceContext,
+            BuildMaterialSelection: () => request.BuildMaterialSelection(selectedExtraCard),
+            PlayAnimation: request.PlayAnimation,
+            SourceCard: request.SourceCard,
+            ConsumeMaterials: request.ConsumeMaterials,
+            FinalWaitSeconds: request.FinalWaitSeconds
+        ));
+    }
+
+    public static async Task ExecuteSelectedExtraDeckSummon(SelectedExtraDeckSummonRequest request) {
+        CardPile extraPile = Entry.ExtraPile.GetPile(request.Owner);
+        CardModel selectedExtraCard = request.SelectedExtraCard;
+        if (selectedExtraCard.Owner != request.Owner
+            || selectedExtraCard.Pile != extraPile
+            || !extraPile.Cards.Contains(selectedExtraCard)) {
+            return;
+        }
+
         IReadOnlyList<SummonMaterial> selectedMaterials = await SummonMaterialSelectCmd.Select(
             request.ChoiceContext,
             request.Owner,
             selectedExtraCard,
-            () => request.BuildMaterialSelection(selectedExtraCard)
+            request.BuildMaterialSelection
         );
         if (selectedMaterials.Count <= 0) return;
 
-        SummonMaterialSelectionSpec? latestSpec = request.BuildMaterialSelection(selectedExtraCard);
+        SummonMaterialSelectionSpec? latestSpec = request.BuildMaterialSelection();
         if (latestSpec == null || !extraPile.Cards.Contains(selectedExtraCard)) return;
 
         IReadOnlyList<SummonMaterial> materials = latestSpec.ResolveMaterials(
@@ -151,13 +183,16 @@ public static class SummonUtil {
 
         if (TestMode.IsOn || NCombatRoom.Instance == null) return;
 
-        NCard? sourceNode = NCard.FindOnTable(request.SourceCard);
-        if (sourceNode == null || !GodotObject.IsInstanceValid(sourceNode) || !sourceNode.IsInsideTree()) {
-            return;
-        }
+        NCard? sourceNode = null;
+        if (request.SourceCard != null) {
+            sourceNode = NCard.FindOnTable(request.SourceCard);
+            if (sourceNode == null || !GodotObject.IsInstanceValid(sourceNode) || !sourceNode.IsInsideTree()) {
+                return;
+            }
 
-        sourceNode.PlayPileTween?.FastForwardToCompletion();
-        sourceNode.Visible = false;
+            sourceNode.PlayPileTween?.FastForwardToCompletion();
+            sourceNode.Visible = false;
+        }
 
         try {
             IReadOnlyList<CardModel> materialCards = materials
@@ -194,7 +229,7 @@ public static class SummonUtil {
             await VFXUtil.Wait(request.FinalWaitSeconds);
         }
         finally {
-            if (GodotObject.IsInstanceValid(sourceNode)) {
+            if (sourceNode != null && GodotObject.IsInstanceValid(sourceNode)) {
                 sourceNode.Visible = true;
             }
         }
@@ -221,7 +256,7 @@ public static class SummonUtil {
         );
     }
 
-    private static SummonMaterialSelectionSpec? BuildLinkMaterialSelection(
+    internal static SummonMaterialSelectionSpec? BuildLinkMaterialSelection(
         CardModel card,
         Player owner,
         Func<BaseExtraLinkCard, CoreCard, IReadOnlyList<SummonMaterial>> getAvailableMaterials
