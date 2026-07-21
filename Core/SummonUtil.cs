@@ -174,25 +174,22 @@ public static class SummonUtil {
         }
 
         List<SummonMaterial> materials = selectedSelection.Materials.ToList();
+        IReadOnlyList<CardModel> materialCards = materials
+            .Select(material => material.Card)
+            .OfType<CardModel>()
+            .ToList();
 
-        if (TestMode.IsOn || NCombatRoom.Instance == null) {
-            return;
+        NCombatRoom? combatRoom = TestMode.IsOn ? null : NCombatRoom.Instance;
+        NCard? sourceNode = combatRoom == null ? null : NCard.FindOnTable(request.SourceCard);
+        bool sourceNodeWasHidden = sourceNode != null
+            && GodotObject.IsInstanceValid(sourceNode)
+            && sourceNode.IsInsideTree();
+        if (sourceNodeWasHidden) {
+            sourceNode!.PlayPileTween?.FastForwardToCompletion();
+            sourceNode.Visible = false;
         }
-
-        NCard? sourceNode = NCard.FindOnTable(request.SourceCard);
-        if (sourceNode == null || !GodotObject.IsInstanceValid(sourceNode) || !sourceNode.IsInsideTree()) {
-            return;
-        }
-
-        sourceNode.PlayPileTween?.FastForwardToCompletion();
-        sourceNode.Visible = false;
 
         try {
-            IReadOnlyList<CardModel> materialCards = materials
-                .Select(material => material.Card)
-                .OfType<CardModel>()
-                .ToList();
-
             if (request.ConsumeMaterials != null) {
                 await request.ConsumeMaterials(materials);
             }
@@ -200,16 +197,22 @@ public static class SummonUtil {
                 await ConsumeSummonMaterials(request.ChoiceContext, materials);
             }
 
-            Vector2 screenCenterPos = NGame.Instance.GetViewportRect().Size * 0.5f;
-            // CardModel finalCard = selectedExtraCard.CreateClone();
-            // await CardPileCmd.Add(finalCard, PileType.Play);
-
-            await request.PlayAnimation(new SummonAnimationContext(
-                FinalCard: selectedExtraCard,
-                Materials: materials,
-                MaterialCards: materialCards,
-                ScreenCenterPos: screenCenterPos
-            ));
+            bool playedAnimation = false;
+            if (combatRoom != null) {
+                Vector2 screenCenterPos = combatRoom.GetViewportRect().Size * 0.5f;
+                try {
+                    await request.PlayAnimation(new SummonAnimationContext(
+                        FinalCard: selectedExtraCard,
+                        Materials: materials,
+                        MaterialCards: materialCards,
+                        ScreenCenterPos: screenCenterPos
+                    ));
+                    playedAnimation = true;
+                }
+                catch (Exception ex) {
+                    Entry.Logger.Warn($"Extra deck summon animation failed for {selectedExtraCard.GetType().Name}: {ex}");
+                }
+            }
 
             if (!selectedExtraCard.Owner.Creature.IsDead) {
                 await CardCmd.AutoPlay(
@@ -221,10 +224,12 @@ public static class SummonUtil {
                     true);
             }
 
-            await VFXUtil.Wait(request.FinalWaitSeconds);
+            if (playedAnimation) {
+                await VFXUtil.Wait(request.FinalWaitSeconds);
+            }
         }
         finally {
-            if (GodotObject.IsInstanceValid(sourceNode)) {
+            if (sourceNodeWasHidden && GodotObject.IsInstanceValid(sourceNode)) {
                 sourceNode.Visible = true;
             }
         }
@@ -262,7 +267,7 @@ public static class SummonUtil {
             }
         }
 
-        return owner.MinionCount() - consumedFieldMonsterCount < MinionUtil.MAX_MINION_COUNT;
+        return owner.MinionCount() - consumedFieldMonsterCount < MinionUtil.MaxMinionCount;
     }
 
     private static SummonSelection? BuildFusionSelection(
@@ -370,10 +375,10 @@ public static class SummonUtil {
         foreach (SummonMaterial material in materials) {
             if (material.Creature != null) {
                 hasFieldMaterial = true;
-                consumeTasks.Add(TaskHelper.RunSafely(MaterialSacrifice(material.Creature)));
+                consumeTasks.Add(MaterialSacrifice(material.Creature));
             }
             else if (material.Card != null) {
-                consumeTasks.Add(TaskHelper.RunSafely(CardCmd.Discard(choiceContext, material.Card)));
+                consumeTasks.Add(CardCmd.Discard(choiceContext, material.Card));
             }
         }
 
@@ -387,35 +392,40 @@ public static class SummonUtil {
     }
 
     private static async Task MaterialSacrifice(Creature material) {
-        var nCreature = material.GetCreatureNode();
-        if (nCreature is null) return;
+        var creatureNode = material.GetCreatureNode();
+        Task? deathAnimationTask = null;
+        if (creatureNode?.Visuals is NMonsterVisuals visuals) {
+            creatureNode.ToggleIsInteractable(false);
+            creatureNode.AnimHideIntent();
 
-        if (nCreature.Visuals is not NMonsterVisuals visuals) return;
-
-        nCreature.ToggleIsInteractable(false);
-        nCreature.AnimHideIntent();
-
-        async Task PlayDeathAnimation() {
-            try {
-                await visuals.PlayMaterialVfx();
-                await visuals.PlayMaterialExitAnimation();
-            }
-            finally {
-                if (GodotObject.IsInstanceValid(nCreature)) {
-                    nCreature.QueueFreeSafely();
+            async Task PlayDeathAnimation() {
+                try {
+                    await visuals.PlayMaterialVfx();
+                    await visuals.PlayMaterialExitAnimation();
+                }
+                finally {
+                    if (GodotObject.IsInstanceValid(creatureNode)) {
+                        creatureNode.QueueFreeSafely();
+                    }
                 }
             }
+
+            deathAnimationTask = TaskHelper.RunSafely(PlayDeathAnimation());
+            creatureNode.DeathAnimationTask = deathAnimationTask;
         }
 
-        Task deathAnimationTask = TaskHelper.RunSafely(PlayDeathAnimation());
-        nCreature.DeathAnimationTask = deathAnimationTask;
         await CreatureCmd.Kill(material, true);
-        await deathAnimationTask;
+        if (deathAnimationTask != null) {
+            await deathAnimationTask;
+        }
     }
 
     private static async Task PlayFusionSummonAnimation(SummonAnimationContext context) {
+        NCombatRoom? combatRoom = NCombatRoom.Instance;
+        if (combatRoom == null) return;
+
         var fusionAnim2D = VFXUtil.GenVFXNode<NFusionSummon2D>(FusionSummon2DAssets);
-        NCombatRoom.Instance.CombatVfxContainer.AddChild(fusionAnim2D);
+        combatRoom.CombatVfxContainer.AddChild(fusionAnim2D);
         fusionAnim2D.GlobalPosition = context.ScreenCenterPos;
 
         try {
@@ -596,8 +606,11 @@ public static class SummonUtil {
         SFXUtil.Play("event:/vygo/sfx/link_summon_00");
         await PlayLinkPreviewAnimation(context.MaterialCards, context.ScreenCenterPos);
 
+        NCombatRoom? combatRoom = NCombatRoom.Instance;
+        if (combatRoom == null) return;
+
         var mainAnim2D = VFXUtil.GenVFXNode<NLinkSummon2D>(LinkSummon2DAssets);
-        NCombatRoom.Instance.CombatVfxContainer.AddChild(mainAnim2D);
+        combatRoom.CombatVfxContainer.AddChild(mainAnim2D);
         mainAnim2D.GlobalPosition = context.ScreenCenterPos;
 
         try {
