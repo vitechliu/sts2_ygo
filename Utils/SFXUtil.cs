@@ -22,7 +22,7 @@ public static class SFXUtil {
             });
     }
 
-    public static AudioLoopHandle Loop(string path, float volume = 1f) {
+    public static AudioLoopHandle? Loop(string path, float volume = 1f) {
         return GameAudioService.Shared.PlayLoop(
             AudioSource.Event(path),
             new AudioPlaybackOptions
@@ -35,6 +35,6 @@ public static class SFXUtil {
     public static async Task PlayLoopIn(string path, float time, float volume = 1f) {
         var loop = Loop(path, volume);
         await VFXUtil.Wait(time);
-        loop.Dispose();
+        loop?.Dispose();
     }
 }

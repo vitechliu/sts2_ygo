@@ -20,7 +20,7 @@ public static class YgoHoverTipConst {
     }
 
     private static IHoverTip Base(string key) {
-        var str = "V_YGO_" + key.ToUpper();
+        var str = "V_YGO_" + key.ToUpperInvariant();
         var title = HoverTipFactory.L10NStatic(str + ".title");
         var description = HoverTipFactory.L10NStatic(str + ".description");
         return new HoverTip(title, description);
