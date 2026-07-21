@@ -5,6 +5,13 @@ const ygoApiService = require('../services/ygoApiService');
 const imageService = require('../services/imageService');
 const archetypeService = require('../services/archetypeService');
 const { toExportCardData, mergeExportedCard } = require('../services/cardExportService');
+const {
+    ValidationError,
+    parseCardId,
+    requireString,
+    normalizeCropParams
+} = require('../services/inputValidation');
+const { readJsonArray, readJsonObject, writeJsonAtomic } = require('../services/jsonFileService');
 const fs = require('fs');
 const path = require('path');
 
@@ -12,6 +19,15 @@ const projectRoot = path.join(__dirname, '..', '..');
 const cardCategoryDir = path.join(projectRoot, 'Scripts', 'Cards', 'Category');
 const cardTemplateDir = path.join(projectRoot, 'Scripts', 'Cards', 'Template');
 const cardPoolDir = path.join(projectRoot, 'Scripts', 'Pools');
+
+router.param('cardId', (req, res, next, value) => {
+    try {
+        req.cardId = parseCardId(value);
+        next();
+    } catch (error) {
+        res.status(400).json({ success: false, error: error.message });
+    }
+});
 
 // 获取所有卡牌
 router.get('/', async (req, res) => {
@@ -43,7 +59,7 @@ router.get('/', async (req, res) => {
 // 通过ID查询卡牌（同步查询API、卡图、立绘）
 router.get('/query/:cardId', async (req, res) => {
     try {
-        const { cardId } = req.params;
+        const cardId = req.cardId;
         
         // 并行执行三个查询
         const [apiData, cardImagePath, portraitPath] = await Promise.all([
@@ -116,11 +132,9 @@ router.get('/query/:cardId', async (req, res) => {
 // 添加本地化条目
 router.post('/localization', async (req, res) => {
     try {
-        const { cardId, enName, cnName } = req.body;
-        
-        if (!enName) {
-            return res.status(400).json({ success: false, error: 'English name is required for localization' });
-        }
+        const cardId = parseCardId(req.body.cardId);
+        const enName = requireString(req.body.enName, 'English name', { maxLength: 128 });
+        const cnName = requireString(req.body.cnName ?? '', 'Chinese name', { allowEmpty: true, maxLength: 256 });
 
         const localePath = await addLocalizationEntry(cardId, enName, cnName);
         
@@ -130,6 +144,9 @@ router.post('/localization', async (req, res) => {
             message: 'Localization entry added' 
         });
     } catch (error) {
+        if (error instanceof ValidationError) {
+            return res.status(400).json({ success: false, error: error.message });
+        }
         res.status(500).json({ success: false, error: error.message });
     }
 });
@@ -137,14 +154,22 @@ router.post('/localization', async (req, res) => {
 // 新增卡牌（处理裁剪图片、立绘、插入数据库）
 router.post('/', async (req, res) => {
     try {
-        const { 
+        const {
             cardId, name, cnName, enName, types, description, 
             atk, def, level, attribute, race, rawData,
             cropParams, cardImagePath, portraitPath 
         } = req.body;
+        const normalizedCardId = parseCardId(cardId);
+        const normalizedCropParams = normalizeCropParams(cropParams);
+        let sanitizedRawData = null;
+        try {
+            sanitizedRawData = rawData ? ygoApiService.sanitizeRawData(rawData) : null;
+        } catch (error) {
+            throw new ValidationError(`Invalid raw card data: ${error.message}`);
+        }
 
         // 检查是否已存在
-        const existing = await getCards('SELECT * FROM cards WHERE card_id = ?', [cardId]);
+        const existing = await getCards('SELECT * FROM cards WHERE card_id = ?', [normalizedCardId]);
         if (existing) {
             return res.status(400).json({ success: false, error: 'Card already exists' });
         }
@@ -153,46 +178,46 @@ router.post('/', async (req, res) => {
         let finalPortraitPath = null;
 
         // 处理卡图（如果有裁剪参数和卡图源文件）
-        if (cardImagePath && fs.existsSync(cardImagePath)) {
-            try {
-                finalImagePath = await imageService.processCroppedImage(
-                    cardImagePath, 
-                    cardId, 
-                    cropParams || null
-                );
-            } catch (e) {
-                console.log('Image processing failed:', e.message);
+        if (cardImagePath) {
+            if (!await imageService.isAllowedExternalImage(cardImagePath)) {
+                throw new ValidationError('Card image must be inside a configured external image directory');
             }
+            finalImagePath = await imageService.processCroppedImage(
+                cardImagePath,
+                normalizedCardId,
+                normalizedCropParams
+            );
         }
 
         // 处理立绘（直接复制）
-        if (isMonsterCard({ types }) && portraitPath && fs.existsSync(portraitPath)) {
-            try {
-                finalPortraitPath = await imageService.copyPortrait(portraitPath, cardId);
-            } catch (e) {
-                console.log('Portrait copy failed:', e.message);
+        if (isMonsterCard({ types }) && portraitPath) {
+            if (!await imageService.isAllowedExternalImage(portraitPath)) {
+                throw new ValidationError('Portrait must be inside a configured external image directory');
             }
+            finalPortraitPath = await imageService.copyPortrait(portraitPath, normalizedCardId);
         }
 
         // 插入数据库
-        const sanitizedRawData = rawData ? ygoApiService.sanitizeRawData(rawData) : null;
         const result = await runCards(
             `INSERT INTO cards (card_id, name, cn_name, en_name, types, description, atk, def, level, attribute, race, raw_data) 
              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [cardId, name, cnName, enName, types, description, atk, def, level, attribute, race, sanitizedRawData]
+            [normalizedCardId, name, cnName, enName, types, description, atk, def, level, attribute, race, sanitizedRawData]
         );
 
         res.json({ 
             success: true, 
             data: { 
                 id: result.id, 
-                cardId, 
+                cardId: normalizedCardId,
                 imagePath: finalImagePath,
                 portraitPath: finalPortraitPath,
                 message: 'Card added successfully' 
             } 
         });
     } catch (error) {
+        if (error instanceof ValidationError) {
+            return res.status(400).json({ success: false, error: error.message });
+        }
         res.status(500).json({ success: false, error: error.message });
     }
 });
@@ -200,13 +225,16 @@ router.post('/', async (req, res) => {
 // 删除卡牌
 router.delete('/:cardId', async (req, res) => {
     try {
-        const { cardId } = req.params;
+        const cardId = req.cardId;
         
         // 先获取卡牌信息（用于本地化删除）
         const card = await getCards('SELECT en_name FROM cards WHERE card_id = ?', [cardId]);
+        if (!card) {
+            return res.status(404).json({ success: false, error: 'Card not found' });
+        }
         
         // 从本地化文件中移除
-        await removeLocalizationEntry(cardId, card?.en_name);
+        await removeLocalizationEntry(cardId, card.en_name);
         
         // 删除数据库记录
         await runCards('DELETE FROM cards WHERE card_id = ?', [cardId]);
@@ -232,7 +260,7 @@ router.delete('/:cardId', async (req, res) => {
 // 生成 Godot 场景
 router.post('/:cardId/scene', async (req, res) => {
     try {
-        const { cardId } = req.params;
+        const cardId = req.cardId;
         const card = await getCards('SELECT card_id, types FROM cards WHERE card_id = ?', [cardId]);
 
         if (!card) {
@@ -274,7 +302,7 @@ router.post('/:cardId/scene', async (req, res) => {
 // 生成卡图（从外部卡图目录按 cardId 查找并直接裁剪/缩放）
 router.post('/:cardId/card-image', async (req, res) => {
     try {
-        const { cardId } = req.params;
+        const cardId = req.cardId;
         const sourcePath = await imageService.findImageFile(cardId);
 
         if (!sourcePath) {
@@ -291,7 +319,7 @@ router.post('/:cardId/card-image', async (req, res) => {
 // 生成卡牌立绘（从外部立绘目录按 cardId 查找并复制）
 router.post('/:cardId/portrait', async (req, res) => {
     try {
-        const { cardId } = req.params;
+        const cardId = req.cardId;
         const card = await getCards('SELECT card_id, types FROM cards WHERE card_id = ?', [cardId]);
 
         if (!card) {
@@ -317,7 +345,7 @@ router.post('/:cardId/portrait', async (req, res) => {
 // 生成怪兽脚本
 router.post('/:cardId/monster-script', async (req, res) => {
     try {
-        const { cardId } = req.params;
+        const cardId = req.cardId;
         const card = await getCards('SELECT card_id, en_name, types FROM cards WHERE card_id = ?', [cardId]);
 
         if (!card) {
@@ -349,7 +377,7 @@ router.get('/card-script-options', (req, res) => {
 // 根据卡牌类型和所选卡池生成卡牌脚本
 router.post('/:cardId/card-script', async (req, res) => {
     try {
-        const { cardId } = req.params;
+        const cardId = req.cardId;
         const { poolName, folderName } = req.body;
         const card = await getCards('SELECT card_id, en_name, types FROM cards WHERE card_id = ?', [cardId]);
 
@@ -375,7 +403,7 @@ router.post('/:cardId/card-script', async (req, res) => {
 // 生成单张卡牌本地化
 router.post('/:cardId/localization', async (req, res) => {
     try {
-        const { cardId } = req.params;
+        const cardId = req.cardId;
         const card = await getCards('SELECT * FROM cards WHERE card_id = ?', [cardId]);
 
         if (!card) {
@@ -395,7 +423,7 @@ router.post('/:cardId/localization', async (req, res) => {
 // 生成单张卡牌数据（只更新 VYgo/db.json 中当前卡牌）
 router.post('/:cardId/data', async (req, res) => {
     try {
-        const { cardId } = req.params;
+        const cardId = req.cardId;
         const result = await exportSingleCardData(cardId);
         res.json({ success: true, data: result });
     } catch (error) {
@@ -434,8 +462,7 @@ router.get('/image-preview', async (req, res) => {
             return res.status(400).json({ success: false, error: 'Path is required' });
         }
         
-        // 安全检查：确保路径存在且是文件
-        if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
+        if (!await imageService.isAllowedExternalImage(filePath)) {
             return res.status(404).json({ success: false, error: 'Image not found' });
         }
         
@@ -448,7 +475,7 @@ router.get('/image-preview', async (req, res) => {
 // 获取单张卡牌详情
 router.get('/:cardId', async (req, res) => {
     try {
-        const { cardId } = req.params;
+        const cardId = req.cardId;
         const card = await getCards('SELECT * FROM cards WHERE card_id = ?', [cardId]);
         
         if (!card) {
@@ -467,8 +494,9 @@ function toUpperSnakeCase(str) {
     return str
         .replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
         .replace(/([a-z0-9])([A-Z])/g, '$1_$2')
+        .replace(/[^A-Za-z0-9]+/g, '_')
         .toUpperCase()
-        .replace(/^_/, '');
+        .replace(/^_+|_+$/g, '');
 }
 
 // 辅助函数：添加单条本地化条目
@@ -486,43 +514,28 @@ async function addLocalizationEntry(cardId, enName, cnName) {
 
     // 转换为大写下划线格式
     const upperSnakeName = toUpperSnakeCase(enName);
+    if (!upperSnakeName) {
+        throw new ValidationError('English name must contain letters or digits');
+    }
     const key = `${prefix}${upperSnakeName}`;
 
     // 更新 cards.json
     const cardsLocalePath = path.join(localeDir, 'cards.json');
-    let cardsLocalization = {};
-    
-    if (fs.existsSync(cardsLocalePath)) {
-        try {
-            const content = fs.readFileSync(cardsLocalePath, 'utf8');
-            cardsLocalization = JSON.parse(content);
-        } catch (e) {
-            console.log('Failed to parse existing cards localization, creating new');
-        }
-    }
+    const cardsLocalization = readJsonObject(cardsLocalePath);
 
     cardsLocalization[`${key}.title`] = cnName || enName;
     // 描述留空或从数据库获取
     const card = await getCards('SELECT description FROM cards WHERE card_id = ?', [cardId]);
     cardsLocalization[`${key}.description`] = card?.description || '';
 
-    fs.writeFileSync(cardsLocalePath, JSON.stringify(cardsLocalization, null, 4), 'utf8');
+    writeJsonAtomic(cardsLocalePath, cardsLocalization);
 
     // 更新 monsters.json
     const monstersLocalePath = path.join(localeDir, 'monsters.json');
-    let monstersLocalization = {};
-    
-    if (fs.existsSync(monstersLocalePath)) {
-        try {
-            const content = fs.readFileSync(monstersLocalePath, 'utf8');
-            monstersLocalization = JSON.parse(content);
-        } catch (e) {
-            console.log('Failed to parse existing monsters localization, creating new');
-        }
-    }
+    const monstersLocalization = readJsonObject(monstersLocalePath);
 
     monstersLocalization[`${upperSnakeName}_MINION.name`] = cnName || enName;
-    fs.writeFileSync(monstersLocalePath, JSON.stringify(monstersLocalization, null, 4), 'utf8');
+    writeJsonAtomic(monstersLocalePath, monstersLocalization);
     
     console.log(`Localization entry added: ${key}`);
     return cardsLocalePath;
@@ -537,55 +550,22 @@ async function removeLocalizationEntry(cardId, enName) {
     const prefix = config.locale_prefix || 'V_YGO_CARD_';
     const localeDir = path.join(__dirname, '..', '..', 'VYgo', 'localization', 'zhs');
     
-    // 从 cards.json 中移除
-    const cardsLocalePath = path.join(localeDir, 'cards.json');
-    if (fs.existsSync(cardsLocalePath)) {
-        try {
-            const content = fs.readFileSync(cardsLocalePath, 'utf8');
-            const localization = JSON.parse(content);
-            
-            if (enName) {
-                const upperSnakeName = toUpperSnakeCase(enName);
-                const key = `${prefix}${upperSnakeName}`;
-                delete localization[`${key}.title`];
-                delete localization[`${key}.description`];
-            } else {
-                // 如果没有 enName，回退到旧逻辑
-                Object.keys(localization).forEach(key => {
-                    if (key.includes(cardId)) {
-                        delete localization[key];
-                    }
-                });
-            }
-
-            fs.writeFileSync(cardsLocalePath, JSON.stringify(localization, null, 4), 'utf8');
-        } catch (e) {
-            console.error('Failed to remove cards localization entry:', e);
+    const upperSnakeName = toUpperSnakeCase(enName);
+    if (upperSnakeName) {
+        const cardsLocalePath = path.join(localeDir, 'cards.json');
+        if (fs.existsSync(cardsLocalePath)) {
+            const localization = readJsonObject(cardsLocalePath);
+            const key = `${prefix}${upperSnakeName}`;
+            delete localization[`${key}.title`];
+            delete localization[`${key}.description`];
+            writeJsonAtomic(cardsLocalePath, localization);
         }
-    }
-    
-    // 从 monsters.json 中移除
-    const monstersLocalePath = path.join(localeDir, 'monsters.json');
-    if (fs.existsSync(monstersLocalePath)) {
-        try {
-            const content = fs.readFileSync(monstersLocalePath, 'utf8');
-            const localization = JSON.parse(content);
-            
-            if (enName) {
-                const upperSnakeName = toUpperSnakeCase(enName);
-                delete localization[`${upperSnakeName}_MINION.name`];
-            } else {
-                // 如果没有 enName，回退到旧逻辑
-                Object.keys(localization).forEach(key => {
-                    if (key.includes(cardId)) {
-                        delete localization[key];
-                    }
-                });
-            }
 
-            fs.writeFileSync(monstersLocalePath, JSON.stringify(localization, null, 4), 'utf8');
-        } catch (e) {
-            console.error('Failed to remove monsters localization entry:', e);
+        const monstersLocalePath = path.join(localeDir, 'monsters.json');
+        if (fs.existsSync(monstersLocalePath)) {
+            const localization = readJsonObject(monstersLocalePath);
+            delete localization[`${upperSnakeName}_MINION.name`];
+            writeJsonAtomic(monstersLocalePath, localization);
         }
     }
     
@@ -594,66 +574,53 @@ async function removeLocalizationEntry(cardId, enName) {
 
 // 增量生成本地化 JSON：只插入不存在的键，不更新已有键
 async function generateLocalization() {
-    try {
-        const settings = await allConfig('SELECT * FROM settings');
-        const config = {};
-        settings.forEach(s => config[s.key] = s.value);
+    const settings = await allConfig('SELECT * FROM settings');
+    const config = {};
+    settings.forEach(s => config[s.key] = s.value);
 
-        const prefix = config.locale_prefix || 'V_YGO_CARD_';
-        const cards = await allCards('SELECT * FROM cards ORDER BY card_id');
+    const prefix = config.locale_prefix || 'V_YGO_CARD_';
+    const cards = await allCards('SELECT * FROM cards ORDER BY card_id');
 
-        const localeDir = path.join(__dirname, '..', '..', 'VYgo', 'localization', 'zhs');
-        if (!fs.existsSync(localeDir)) {
-            fs.mkdirSync(localeDir, { recursive: true });
+    const localeDir = path.join(__dirname, '..', '..', 'VYgo', 'localization', 'zhs');
+    if (!fs.existsSync(localeDir)) {
+        fs.mkdirSync(localeDir, { recursive: true });
+    }
+
+    const cardsLocalePath = path.join(localeDir, 'cards.json');
+    const cardsLocalization = readJsonObject(cardsLocalePath);
+
+    const monstersLocalePath = path.join(localeDir, 'monsters.json');
+    const monstersLocalization = readJsonObject(monstersLocalePath);
+
+    let insertedCount = 0;
+
+    cards.forEach(card => {
+        const upperSnakeName = toUpperSnakeCase(card.en_name);
+        if (!upperSnakeName) return;
+
+        const key = `${prefix}${upperSnakeName}`;
+        const titleKey = `${key}.title`;
+        const descKey = `${key}.description`;
+        const monsterKey = `${upperSnakeName}_MINION.name`;
+
+        // 只在键不存在时插入
+        if (!Object.hasOwn(cardsLocalization, titleKey)) {
+            cardsLocalization[titleKey] = card.cn_name;
+            insertedCount++;
+        }
+        if (!Object.hasOwn(cardsLocalization, descKey)) {
+            cardsLocalization[descKey] = '';
         }
 
-        const cardsLocalePath = path.join(localeDir, 'cards.json');
-        const cardsLocalization = loadJson(cardsLocalePath);
+        if (!Object.hasOwn(monstersLocalization, monsterKey)) {
+            monstersLocalization[monsterKey] = card.cn_name;
+        }
+    });
 
-        const monstersLocalePath = path.join(localeDir, 'monsters.json');
-        const monstersLocalization = loadJson(monstersLocalePath);
+    writeJsonAtomic(cardsLocalePath, cardsLocalization);
+    writeJsonAtomic(monstersLocalePath, monstersLocalization);
 
-        let insertedCount = 0;
-
-        cards.forEach(card => {
-            const upperSnakeName = toUpperSnakeCase(card.en_name);
-            const key = `${prefix}${upperSnakeName}`;
-            const titleKey = `${key}.title`;
-            const descKey = `${key}.description`;
-            const monsterKey = `${upperSnakeName}_MINION.name`;
-
-            // 只在键不存在时插入
-            if (!cardsLocalization.hasOwnProperty(titleKey)) {
-                cardsLocalization[titleKey] = card.cn_name;
-                insertedCount++;
-            }
-            if (!cardsLocalization.hasOwnProperty(descKey)) {
-                cardsLocalization[descKey] = '';
-            }
-
-            if (!monstersLocalization.hasOwnProperty(monsterKey)) {
-                monstersLocalization[monsterKey] = card.cn_name;
-            }
-        });
-
-        fs.writeFileSync(cardsLocalePath, JSON.stringify(cardsLocalization, null, 4), 'utf8');
-        fs.writeFileSync(monstersLocalePath, JSON.stringify(monstersLocalization, null, 4), 'utf8');
-
-        console.log(`Localization files updated incrementally: ${insertedCount} new entries inserted.`);
-    } catch (error) {
-        console.error('Failed to generate localization:', error);
-    }
-}
-
-function loadJson(filePath) {
-    if (!fs.existsSync(filePath)) return {};
-    try {
-        const content = fs.readFileSync(filePath, 'utf8');
-        return JSON.parse(content);
-    } catch (e) {
-        console.log('Failed to parse JSON, returning empty object:', filePath);
-        return {};
-    }
+    console.log(`Localization files updated incrementally: ${insertedCount} new entries inserted.`);
 }
 
 async function loadResourceStatusContext() {
@@ -662,12 +629,10 @@ async function loadResourceStatusContext() {
     settings.forEach(s => config[s.key] = s.value);
 
     const localeDir = path.join(__dirname, '..', '..', 'VYgo', 'localization', 'zhs');
-    const cardsLocale = loadJson(path.join(localeDir, 'cards.json'));
-    const dbCards = loadJson(path.join(__dirname, '..', '..', 'VYgo', 'db.json'));
+    const cardsLocale = readJsonObject(path.join(localeDir, 'cards.json'));
+    const dbCards = readJsonArray(path.join(__dirname, '..', '..', 'VYgo', 'db.json'));
     const cardDataIds = new Set(
-        Array.isArray(dbCards)
-            ? dbCards.map(card => Number(card.card_id))
-            : []
+        dbCards.map(card => Number(card.card_id))
     );
 
     return {
@@ -881,7 +846,7 @@ async function exportCardData() {
         return toExportCardData(card, archetypeResult.codes);
     });
 
-    fs.writeFileSync(exportPath, JSON.stringify(filteredCards, null, 4), 'utf8');
+    writeJsonAtomic(exportPath, filteredCards);
 
     return { exportPath, count: filteredCards.length, warnings };
 }
@@ -905,11 +870,11 @@ async function exportSingleCardData(cardId) {
     const warnings = [];
     appendArchetypeWarning(warnings, card.card_id, archetypeResult.warning);
 
-    const existingCards = loadJson(exportPath);
+    const existingCards = readJsonArray(exportPath);
     const nextCard = toExportCardData(card, archetypeResult.codes);
     const mergeResult = mergeExportedCard(existingCards, nextCard);
 
-    fs.writeFileSync(exportPath, JSON.stringify(mergeResult.cards, null, 4), 'utf8');
+    writeJsonAtomic(exportPath, mergeResult.cards);
 
     return {
         exportPath,
