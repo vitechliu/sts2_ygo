@@ -18,7 +18,7 @@ public abstract class BasePerTurnMonsterAction : ModActionTemplate {
 
     public override string? CustomBigIconPath => CustomIconPath;
 
-    protected abstract string IntentIconPath { get; }
+    protected abstract string? IntentIconPath { get; }
 
     //每回合使用次数
     protected virtual int MaxUses => 1;
@@ -81,7 +81,7 @@ public abstract class BasePerTurnMonsterAction : ModActionTemplate {
         var action = owner.IsAlive
             ? owner.Powers
                 .OfType<BasePerTurnMonsterAction>()
-                .FirstOrDefault(action => action.RemainingUses > 0 && action.Amount > 0)
+                .FirstOrDefault(action => action.CanAct(owner.CombatState))
             : null;
         visuals?.SetActionReadyIndicator(action?.IntentIconPath);
     }

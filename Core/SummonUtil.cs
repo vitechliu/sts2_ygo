@@ -68,7 +68,23 @@ public sealed record SummonAnimationContext(
 );
 
 public static class SummonUtil {
+    private const string NoValidFusionSummonMessage =
+        "V_YGO_SUMMON_MESSAGE_NO_VALID_FUSION";
+
     public static Task ExecuteFusionSummon(FusionSummonRequest request) {
+        if (!HasFusionSummonTarget(
+                request.Owner,
+                request.GetAvailableMaterials,
+                request.FusionCardFilter
+            )) {
+            ThinkCmd.Play(
+                new LocString("combat_messages", NoValidFusionSummonMessage),
+                request.Owner.Creature,
+                3
+            );
+            return Task.CompletedTask;
+        }
+
         return ExecuteExtraDeckSummon(new ExtraDeckSummonRequest(
             SourceCard: request.SourceCard,
             Owner: request.Owner,
@@ -241,6 +257,7 @@ public static class SummonUtil {
                     false,
                     true
                 );
+                extraPile.InvokeCardRemoveFinished();
             }
 
             await VFXUtil.Wait(request.FinalWaitSeconds);
