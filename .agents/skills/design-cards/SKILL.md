@@ -33,6 +33,7 @@ Turn a target card path and effect description into a working, localized VYgo im
 
 - Put immediate play resolution in the card's `OnPlay`.
 - Put effects that exist only while a summoned monster is in play—attacking, taking damage, turn callbacks, death, or persistent modifiers—in the paired `Scripts/Monsters/YGO/*Minion.cs` model. Update both files when the contract crosses that boundary.
+- For a monster effect labeled `启动`, follow [Monster activation actions](references/implementation-guide.md#monster-activation-actions); do not leave the action hidden or without Power localization.
 - Use card callbacks such as draw, combat-entry, or card-play hooks only when the card itself must react while it is in the relevant zone. Apply owner and combat-state guards to global callbacks.
 - Reuse project utilities and command APIs. Verify every hook and command against the current source or an already compiling project example before using it.
 - Snapshot an enumerated collection with `ToList()` before the effect removes, sacrifices, moves, or destroys its members.
@@ -52,7 +53,7 @@ Turn a target card path and effect description into a working, localized VYgo im
 1. Edit `VYgo/localization/zhs/cards.json` as UTF-8. Derive the prefix from the class name as uppercase snake case with `V_YGO_CARD_`; for example, `CyberDragon` becomes `V_YGO_CARD_CYBER_DRAGON`.
 2. Keep `.title` and `.description` synchronized with code. Add fields such as `.selectionScreenPrompt` only when the implementation consumes them.
 3. Describe exact timing, targets, limits, randomness, and upgrade-visible values. Use the implemented DynamicVars rather than hard-coded localized numbers where practical.
-4. If behavior resides in the paired minion and its UI text also needs to change, update `VYgo/localization/zhs/monsters.json` or other matching localization in the same change.
+4. If behavior resides in the paired minion or a visible Action Power, update `VYgo/localization/zhs/monsters.json`, `powers.json`, or other matching localization in the same change.
 5. Parse every edited JSON file after modification and preserve unrelated keys and UTF-8 Chinese text.
 
 ## Validate and report

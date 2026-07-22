@@ -21,11 +21,12 @@ using VYgo.Utils;
 namespace VYgo.Core;
 
 public sealed record FusionSummonRequest(
-    CardModel SourceCard,
+    CardModel? SourceCard,
     Player Owner,
     PlayerChoiceContext ChoiceContext,
     LocString SelectionPrompt,
-    Func<BaseExtraFusionCard, IReadOnlyList<SummonMaterial>> GetAvailableMaterials
+    Func<BaseExtraFusionCard, IReadOnlyList<SummonMaterial>> GetAvailableMaterials,
+    Func<BaseExtraFusionCard, bool>? FusionCardFilter = null
 );
 
 public sealed record LinkSummonRequest(
@@ -37,7 +38,7 @@ public sealed record LinkSummonRequest(
 );
 
 public sealed record ExtraDeckSummonRequest(
-    CardModel SourceCard,
+    CardModel? SourceCard,
     Player Owner,
     PlayerChoiceContext ChoiceContext,
     LocString SelectionPrompt,
@@ -73,7 +74,8 @@ public static class SummonUtil {
             Owner: request.Owner,
             ChoiceContext: request.ChoiceContext,
             SelectionPrompt: request.SelectionPrompt,
-            ExtraCardFilter: card => card is BaseExtraFusionCard,
+            ExtraCardFilter: card => card is BaseExtraFusionCard fusionCard
+                && (request.FusionCardFilter?.Invoke(fusionCard) ?? true),
             BuildMaterialSelection: card => BuildFusionMaterialSelection(
                 card,
                 request.Owner,
@@ -123,6 +125,21 @@ public static class SummonUtil {
             .Select(SummonMaterial.FromHandMonsterCard)
             .Where(material => filter?.Invoke(material) ?? true));
         return materials;
+    }
+
+    public static bool HasFusionSummonTarget(
+        Player owner,
+        Func<BaseExtraFusionCard, IReadOnlyList<SummonMaterial>> getAvailableMaterials,
+        Func<BaseExtraFusionCard, bool>? fusionCardFilter = null
+    ) {
+        return Entry.ExtraPile.GetPile(owner).Cards
+            .OfType<BaseExtraFusionCard>()
+            .Where(card => fusionCardFilter?.Invoke(card) ?? true)
+            .Any(card => BuildFusionMaterialSelection(
+                card,
+                owner,
+                getAvailableMaterials
+            )?.HasValidCombination == true);
     }
 
     public static async Task ExecuteExtraDeckSummon(ExtraDeckSummonRequest request) {

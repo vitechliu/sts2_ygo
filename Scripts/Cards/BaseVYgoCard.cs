@@ -47,9 +47,16 @@ public abstract class BaseVYgoCard(
     }
     
     public abstract int CardId { get; }
+    
+    protected virtual int PortraitCardId => CardId;
+
+    protected virtual bool UseAncient => false;
+    
+    
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"res://VYgo/images/cards/{CardId}.png",
-        FramePath: YgoFramePath
+        PortraitPath: $"res://VYgo/images/cards/{PortraitCardId}.png",
+        FramePath: YgoFramePath,
+        VisualStyle: UseAncient ? CardVisualStyle.Ancient : CardVisualStyle.Standard
     );
     
     protected virtual YgoType CardYgoType => YgoType.effect;

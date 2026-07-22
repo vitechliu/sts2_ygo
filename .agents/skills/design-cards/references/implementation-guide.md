@@ -7,6 +7,7 @@
 - [Select a base class](#select-a-base-class)
 - [Search vanilla by localized effect](#search-vanilla-by-localized-effect)
 - [Convert the effect into engine behavior](#convert-the-effect-into-engine-behavior)
+- [Monster activation actions](#monster-activation-actions)
 - [Commands and patterns to verify](#commands-and-patterns-to-verify)
 - [DynamicVars and upgrades](#dynamicvars-and-upgrades)
 - [Registration, IDs, and localization](#registration-ids-and-localization)
@@ -129,6 +130,19 @@ Use the narrowest implementation site:
 - A Power model only when the game state must outlive the resolving card/minion and existing project or vanilla patterns support it.
 
 For callbacks observable by multiple players or objects, check `Owner`/card ownership and combat state. Reset mutable limits at the exact boundary they describe. Do not emulate a per-turn rule with a per-combat flag.
+
+## Monster activation actions
+
+Implement a monster effect labeled `启动` that replaces the normal attack as a dedicated `BasePerTurnMonsterAction`. In the paired minion, set `BasicAttackAction => false` and apply the custom Action from `OnSummonYgo` with the current `PlayerChoiceContext`, owner, and source card.
+
+Every player-visible activation Action must:
+
+- Override `IsVisibleInternal => true` so the underlying `PowerModel` and its hover tip are shown.
+- Override `CustomIconPath => IntentIconPath` so the visible Power icon matches the monster action-ready intent icon. Keep `CustomBigIconPath` aligned through the project base action behavior.
+- Add `<ACTION_MODEL_ID>.title` and `<ACTION_MODEL_ID>.description` to `VYgo/localization/zhs/powers.json`. Describe the exact activation effect and its per-turn use limit.
+- Add `<ACTION_MODEL_ID>.selectionScreenPrompt` to `powers.json` whenever the Action reads `PowerModel.SelectionScreenPrompt`.
+
+Use the Action's actual runtime `ModelId.Entry` for these keys; do not assume it uses the card localization prefix. Verify an existing visible Action or the local registration behavior when the ID is uncertain.
 
 ## Commands and patterns to verify
 
