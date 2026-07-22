@@ -22,17 +22,11 @@ public sealed class RevolutionCyberDragonFusionAction : BasePerTurnMonsterAction
 
     public override TargetType TargetType => TargetType.None;
 
-    protected override string IntentIconPath => "res://VYgo/images/intents/intent_dragon_vortex.png";
+    protected override string? IntentIconPath => "res://VYgo/images/intents/intent_dragon_vortex.png";
     public override string? CustomIconPath => IntentIconPath;
 
     public override bool CanAct(ICombatState combatState) {
-        if (!base.CanAct(combatState) || Owner.PetOwner is not { } player) return false;
-
-        return SummonUtil.HasFusionSummonTarget(
-            player,
-            _ => SummonUtil.GetFieldAndHandMonsterMaterials(player),
-            IsMachineFusionMonster
-        );
+        return base.CanAct(combatState) && Owner.PetOwner != null;
     }
 
     protected override async Task OnAct(

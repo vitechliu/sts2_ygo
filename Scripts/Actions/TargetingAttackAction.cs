@@ -14,8 +14,9 @@ public class TargetingAttackAction : BasePerTurnMonsterAction {
 
     public override TargetType TargetType => TargetType.AnyEnemy;
 
-    protected override string IntentIconPath =>
-        $"{AttackIntentIconDirectory}/intent_attack_{GetAttackIntentTier(StrengthPowerAmount)}.png";
+    protected override string? IntentIconPath => StrengthPowerAmount > 0
+        ? $"{AttackIntentIconDirectory}/intent_attack_{GetAttackIntentTier(StrengthPowerAmount)}.png"
+        : null;
 
     protected int StrengthPowerAmount {
         get {
