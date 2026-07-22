@@ -8,8 +8,6 @@ using STS2RitsuLib;
 using STS2RitsuLib.CardPiles;
 using STS2RitsuLib.Interop;
 using System.Text.Json;
-using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Audio;
 using VYgo.Core;
 using VYgo.Core.CardPools;
@@ -172,22 +170,18 @@ public static class Entry {
         RitsuLibFramework.SubscribeLifecycle<CardMovedBetweenPilesEvent>(
             evt => {
                 var card = evt.Card;
-                var previousPile = evt.PreviousPile;
+                // var previousPile = evt.PreviousPile;
                 var curPile = card.Pile.Type;
                 if (
-                    card != null
-                    && card.Pile != null
-                    && previousPile != null
+                    card.Pile != null
                     && curPile == PileType.Draw
                     && card is BaseMonsterCard baseMonsterCard
                     && baseMonsterCard.IsExtra) {
                     card.Pile.RemoveInternal(card, silent:true);
                     var pile = ExtraPile.GetPile(card.Owner);
-                    if (pile != null) {
-                        pile.AddInternal(card, silent:true);
-                        pile.InvokeCardAddFinished();
-                        Logger.Info("CardForceToExtra:" + evt.Card.Title + " From:" + previousPile);
-                    }
+                    pile.AddInternal(card, silent:true);
+                    pile.InvokeCardAddFinished();
+                    // Logger.Info("CardForceToExtra:" + evt.Card.Title + " From:" + previousPile);
                 }
             });
         // RitsuLibFramework.SubscribeLifecycle<CombatStartingEvent>((@event, disposable) => {

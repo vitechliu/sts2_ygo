@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using VYgo.Core;
 using VYgo.RitsuAdapters;
@@ -14,6 +15,8 @@ public abstract class BasePerTurnMonsterAction : ModActionTemplate {
     public override bool AutoRemoveAtTurnEnd => false;
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.None;
+
+    public override string? CustomBigIconPath => CustomIconPath;
 
     protected abstract string IntentIconPath { get; }
 

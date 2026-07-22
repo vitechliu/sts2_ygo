@@ -52,9 +52,12 @@
     "V_YGO_CARD_CYBER_DRAGON_NACHSTER.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]:从[gold]弃牌堆[/gold]中选择一只机械族怪兽并召唤。",
     "V_YGO_CARD_CYBER_DRAGON_NACHSTER.selectionScreenPrompt": "请选择要召唤的机械族怪兽。",
     "V_YGO_SUMMON_MATERIAL_SELECT.target": "为「{Target}」选择召唤素材",
-    "V_YGO_SUMMON_MATERIAL_SELECT.progress": "已选择 {Selected}/{Max} 张素材；请选择仍能组成合法组合的素材。",
+    "V_YGO_SUMMON_MATERIAL_SELECT.progress": "已选择 {Selected}/{Max} 张素材；请继续选择素材。",
     "V_YGO_SUMMON_MATERIAL_SELECT.ready": "[green]已选择 {Selected} 张素材，组合有效，可以确认。[/green]",
-    "V_YGO_SUMMON_MATERIAL_SELECT.blocked": "[red]该素材无法与当前选择组成合法召唤组合。[/red] 已选择 {Selected}/{Max} 张。",
+    "V_YGO_SUMMON_MATERIAL_SELECT.blocked": "[red]当前素材选择无法执行合法召唤。[/red] 已选择 {Selected}/{Max} 张。",
     "V_YGO_SUMMON_MATERIAL_SELECT.field": "场上",
-    "V_YGO_SUMMON_MATERIAL_SELECT.hand": "手牌"
+    "V_YGO_SUMMON_MATERIAL_SELECT.hand": "手牌",
+    "V_YGO_EXTRA_DECK_DIRECT_SUMMON.confirm": "进行召唤",
+    "V_YGO_CARD_REVOLUTION_CYBER_DRAGON.title": "机光龙-电子龙",
+    "V_YGO_CARD_REVOLUTION_CYBER_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n如果你没有控制任何随从，可以[gold]特招[/gold]。\n[gold]登场[/gold]：对随机一名敌人造成{Damage:diff()}点伤害。\n[gold]启动[/gold]：以手卡·场上的怪兽作为融合素材，进行一次机械族怪兽的[gold]融合召唤[/gold]。"
 }

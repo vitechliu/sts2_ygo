@@ -50,6 +50,11 @@ public static class YgoHoverTipConst {
         return Base("ENTER_FIELD");
     }
     
+    //启动
+    public static IHoverTip Action() {
+        return Base("ACTION");
+    }
+    
     //卡名替代
     public static IHoverTip NameAs(YgoMaterialNames name) {
         var str = "V_YGO_NAME_AS";
