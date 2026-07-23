@@ -68,10 +68,21 @@ function initTabs() {
 function initCardSearch() {
     const queryBtn = document.getElementById('queryBtn');
     const cardIdInput = document.getElementById('cardIdInput');
+    const nameQueryBtn = document.getElementById('nameQueryBtn');
+    const cardNameInput = document.getElementById('cardNameInput');
 
     queryBtn.addEventListener('click', queryCard);
-    cardIdInput.addEventListener('keypress', (e) => {
+    nameQueryBtn.addEventListener('click', searchCardByName);
+    cardIdInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') queryCard();
+    });
+    cardNameInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') searchCardByName();
+    });
+    cardNameInput.addEventListener('input', () => {
+        if (!cardNameInput.value.trim()) {
+            clearNameSearchResults();
+        }
     });
     document.getElementById('manualEnNameInput').addEventListener('input', (event) => {
         if (!currentCardData || !currentCardData.apiData) return;
@@ -96,28 +107,145 @@ async function queryCard() {
         return;
     }
 
-    try {
-        const queryBtn = document.getElementById('queryBtn');
-        queryBtn.disabled = true;
-        queryBtn.textContent = '查询中...';
+    await queryCardById(cardId);
+}
 
-        const response = await fetch(`${API_BASE}/cards/query/${cardId}`);
+async function queryCardById(cardId, triggerButton = document.getElementById('queryBtn')) {
+    const buttonText = triggerButton?.textContent;
+
+    try {
+        if (triggerButton) {
+            triggerButton.disabled = true;
+            triggerButton.textContent = '查询中...';
+        }
+
+        const response = await fetch(`${API_BASE}/cards/query/${encodeURIComponent(cardId)}`);
         const result = await response.json();
 
         if (!result.success) {
             throw new Error(result.error);
         }
 
+        document.getElementById('cardIdInput').value = cardId;
         currentCardData = result.data;
         displayQueryResult(result.data);
+        clearNameSearchResults();
+        return true;
     } catch (error) {
         showToast(error.message, 'error');
         document.getElementById('queryResult').classList.add('hidden');
+        return false;
     } finally {
-        const queryBtn = document.getElementById('queryBtn');
-        queryBtn.disabled = false;
-        queryBtn.textContent = '查询';
+        if (triggerButton) {
+            triggerButton.disabled = false;
+            triggerButton.textContent = buttonText;
+        }
     }
+}
+
+async function searchCardByName() {
+    const input = document.getElementById('cardNameInput');
+    const query = input.value.trim();
+    const button = document.getElementById('nameQueryBtn');
+    const buttonText = button.textContent;
+
+    if (!query) {
+        showToast('请输入卡牌名', 'warning');
+        return;
+    }
+
+    try {
+        button.disabled = true;
+        button.textContent = '搜索中...';
+
+        const response = await fetch(`${API_BASE}/cards/search?query=${encodeURIComponent(query)}`);
+        const result = await response.json();
+        if (!result.success) {
+            throw new Error(result.error);
+        }
+
+        const cards = Array.isArray(result.data) ? result.data : [];
+        const exactMatches = cards.filter(card => card.isExactMatch);
+
+        if (exactMatches.length === 1) {
+            const match = exactMatches[0];
+            button.textContent = '正在载入...';
+            const loaded = await queryCardById(match.cardId);
+            if (loaded) {
+                showToast(`已按卡名匹配：${match.cnName || match.enName || match.cardId}`);
+            }
+            return;
+        }
+
+        renderNameSearchResults(cards, query);
+    } catch (error) {
+        clearNameSearchResults();
+        showToast(error.message, 'error');
+    } finally {
+        button.disabled = false;
+        button.textContent = buttonText;
+    }
+}
+
+function renderNameSearchResults(cards, query) {
+    const container = document.getElementById('nameSearchResults');
+    container.replaceChildren();
+    container.classList.remove('hidden');
+
+    if (!cards.length) {
+        const empty = document.createElement('p');
+        empty.className = 'name-search-empty';
+        empty.textContent = `没有找到与“${query}”匹配的卡牌`;
+        container.appendChild(empty);
+        return;
+    }
+
+    const summary = document.createElement('p');
+    summary.className = 'name-search-summary';
+    summary.textContent = `找到 ${cards.length} 张候选卡，请选择要导入的卡牌：`;
+
+    const list = document.createElement('div');
+    list.className = 'name-search-list';
+
+    cards.forEach(card => {
+        const resultButton = document.createElement('button');
+        resultButton.type = 'button';
+        resultButton.className = 'name-search-result';
+
+        const main = document.createElement('span');
+        main.className = 'name-search-result-main';
+
+        const title = document.createElement('span');
+        title.className = 'name-search-result-title';
+        title.textContent = card.cnName || card.enName || `卡牌 ${card.cardId}`;
+
+        const meta = document.createElement('span');
+        meta.className = 'name-search-result-meta';
+        const names = [card.enName, card.jpName].filter(Boolean).join(' · ');
+        meta.textContent = [`ID ${card.cardId}`, names, card.types].filter(Boolean).join(' · ');
+
+        const action = document.createElement('span');
+        action.className = 'name-search-result-action';
+        action.textContent = '选择并导入';
+
+        main.append(title, meta);
+        resultButton.append(main, action);
+        resultButton.addEventListener('click', async () => {
+            const loaded = await queryCardById(card.cardId, resultButton);
+            if (loaded) {
+                showToast(`已选择：${card.cnName || card.enName || card.cardId}`);
+            }
+        });
+        list.appendChild(resultButton);
+    });
+
+    container.append(summary, list);
+}
+
+function clearNameSearchResults() {
+    const container = document.getElementById('nameSearchResults');
+    container.replaceChildren();
+    container.classList.add('hidden');
 }
 
 function normalizeEnglishName(value) {

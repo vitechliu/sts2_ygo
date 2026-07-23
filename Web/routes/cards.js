@@ -40,6 +40,27 @@ router.get('/', async (req, res) => {
     }
 });
 
+// 通过名称搜索卡牌；选定结果后由前端继续复用 ID 查询流程
+router.get('/search', async (req, res) => {
+    try {
+        const query = String(req.query.query || '').trim();
+        if (!query) {
+            return res.status(400).json({ success: false, error: '请输入卡牌名' });
+        }
+
+        const searchData = await ygoApiService.searchCards(query);
+        const cards = ygoApiService.parseSearchResults(searchData, query);
+
+        res.json({
+            success: true,
+            data: cards,
+            next: searchData?.next ?? null
+        });
+    } catch (error) {
+        res.status(502).json({ success: false, error: error.message });
+    }
+});
+
 // 通过ID查询卡牌（同步查询API、卡图、立绘）
 router.get('/query/:cardId', async (req, res) => {
     try {
@@ -838,12 +859,15 @@ function createCardScript(card, poolName, folderName) {
 
     const isMonster = isMonsterCard(card);
     const isSpell = String(card.types || '').includes('魔法');
-    if (!isMonster && !isSpell) {
+    const isTrap = String(card.types || '').includes('陷阱');
+    if (!isMonster && !isSpell && !isTrap) {
         throw new Error('Unsupported card type');
     }
 
     const className = getCardClassName(card);
-    const templateClassName = isMonster ? 'MonsterTemplate' : 'SpellTemplate';
+    let templateClassName = 'MonsterTemplate';
+    if (isSpell) templateClassName = 'SpellTemplate';
+    else if (isTrap) templateClassName = 'TrapTemplate';
     const templatePath = path.join(cardTemplateDir, `${templateClassName}.cs`);
     if (!fs.existsSync(templatePath)) {
         throw new Error(`Card template not found: ${templateClassName}`);

@@ -2,6 +2,13 @@ const axios = require('axios');
 
 const BASE_URL = 'https://ygocdb.com';
 
+function normalizeCardName(value) {
+    return String(value || '')
+        .normalize('NFKC')
+        .toLocaleLowerCase()
+        .replace(/[\s\p{P}\p{S}]+/gu, '');
+}
+
 class YgoApiService {
     async getCardById(cardId) {
         try {
@@ -26,6 +33,41 @@ class YgoApiService {
         } catch (error) {
             throw new Error(`Search failed: ${error.message}`);
         }
+    }
+
+    parseSearchResults(apiData, query) {
+        const normalizedQuery = normalizeCardName(query);
+        const cards = Array.isArray(apiData?.result) ? apiData.result : [];
+
+        return cards
+            .filter(card => Number.isInteger(Number(card?.id)) && Number(card.id) > 0)
+            .map(card => {
+                const names = [
+                    card.nwbbs_n,
+                    card.cn_name,
+                    card.sc_name,
+                    card.md_name,
+                    card.cnocg_n,
+                    card.jp_name,
+                    card.en_name,
+                    card.wiki_en
+                ].filter(Boolean);
+                const matchedName = names.find(name => normalizeCardName(name) === normalizedQuery) || '';
+
+                return {
+                    cardId: Number(card.id),
+                    cnName: card.nwbbs_n || card.cn_name || card.sc_name || '',
+                    enName: card.en_name || card.wiki_en || '',
+                    jpName: card.jp_name || '',
+                    types: card.text?.types || '',
+                    atk: Number(card.data?.atk) || 0,
+                    def: Number(card.data?.def) || 0,
+                    level: Number(card.data?.level) || 0,
+                    isExactMatch: !!normalizedQuery && !!matchedName,
+                    matchedName
+                };
+            })
+            .sort((left, right) => Number(right.isExactMatch) - Number(left.isExactMatch));
     }
 
     async getCardImageUrl(cardId, type = 'ygopro') {
@@ -91,4 +133,8 @@ class YgoApiService {
     }
 }
 
-module.exports = new YgoApiService();
+const ygoApiService = new YgoApiService();
+
+module.exports = ygoApiService;
+module.exports.YgoApiService = YgoApiService;
+module.exports.normalizeCardName = normalizeCardName;
