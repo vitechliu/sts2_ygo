@@ -22,10 +22,23 @@
             <section id="cards-tab" class="tab-content active">
                 <div class="card-search">
                     <h2>导入卡牌</h2>
-                    <div class="search-box">
-                        <input type="text" id="cardIdInput" placeholder="输入卡牌ID (如: 70095154)" />
-                        <button id="queryBtn">查询</button>
+                    <div class="import-search-grid">
+                        <div class="import-search-field">
+                            <label for="cardIdInput">按卡牌 ID</label>
+                            <div class="search-box">
+                                <input type="text" id="cardIdInput" inputmode="numeric" placeholder="例如：70095154" />
+                                <button type="button" id="queryBtn">查询</button>
+                            </div>
+                        </div>
+                        <div class="import-search-field">
+                            <label for="cardNameInput">按卡牌名</label>
+                            <div class="search-box">
+                                <input type="text" id="cardNameInput" placeholder="例如：电子龙" autocomplete="off" />
+                                <button type="button" id="nameQueryBtn">搜索</button>
+                            </div>
+                        </div>
                     </div>
+                    <div id="nameSearchResults" class="name-search-results hidden" aria-live="polite"></div>
                 </div>
 
                 <!-- 查询结果面板 -->
