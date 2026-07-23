@@ -11,9 +11,10 @@ Turn a target card path and effect description into a working, localized VYgo im
 
 1. Read [references/implementation-guide.md](references/implementation-guide.md) completely.
 2. Normalize the supplied path relative to the repository and inspect the file when it exists. Preserve its class name, `CardId`, base class, cost, type, rarity, target, pool registrations, starter registrations, stats, and art behavior unless the user asks to change them.
-3. Translate the effect into an explicit contract: trigger, timing, target, amount, duration, limit, zone, randomness or selection rule, upgrade delta, and whether the action mutates a collection.
-4. Derive omitted facts from the target file, paired monster, localization, and neighboring cards when there is one clear answer. State material assumptions. Ask one concise question only when different answers would produce meaningfully different gameplay and the repository cannot resolve the choice.
-5. For a missing target file, search the intended category, `VYgo/db.json`, pools, and localization before deciding metadata. Do not invent a YGO `CardId`, registration pool, starter count, or monster stats when they cannot be discovered.
+3. Map Chinese rarity labels exactly: `基础` → `CardRarity.Basic`, `普通` → `CardRarity.Common`, `罕见` → `CardRarity.Uncommon`, and `稀有` → `CardRarity.Rare`. Treat `罕见` and `稀有` as distinct; never translate `罕见` as `Rare`.
+4. Translate the effect into an explicit contract: trigger, timing, target, amount, duration, limit, zone, randomness or selection rule, upgrade delta, and whether the action mutates a collection.
+5. Derive omitted facts from the target file, paired monster, localization, and neighboring cards when there is one clear answer. State material assumptions. Ask one concise question only when different answers would produce meaningfully different gameplay and the repository cannot resolve the choice.
+6. For a missing target file, search the intended category, `VYgo/db.json`, pools, and localization before deciding metadata. Do not invent a YGO `CardId`, registration pool, starter count, or monster stats when they cannot be discovered.
 
 ## Research before coding
 
@@ -58,7 +59,7 @@ Turn a target card path and effect description into a working, localized VYgo im
 
 ## Validate and report
 
-1. Review the diff for path/class/namespace, `CardId`, base class, registrations, target type, DynamicVars, upgrade behavior, localization keys, and paired minion consistency.
+1. Review the diff for path/class/namespace, `CardId`, base class, registrations, requested rarity using the fixed Chinese mapping, target type, DynamicVars, upgrade behavior, localization keys, and paired minion consistency.
 2. Run `dotnet build`. Fix errors caused by the implementation; do not modify read-only vanilla source or unrelated user changes.
 3. When no automated test covers the behavior, identify the smallest in-game scenario that verifies trigger timing, target selection, upgrade behavior, and zone transitions.
 4. Report the vanilla/project references used, implemented semantics, assumptions, changed files, JSON validation, build result, and any remaining in-game visual or behavioral check.

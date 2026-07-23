@@ -11,6 +11,12 @@ namespace VYgo.Utils;
 public static class MinionUtil {
 
     public const int MAX_MINION_COUNT = 5;
+
+    public static async Task AddHp(Creature creature, int amount) {
+        if (amount <= 0) return;
+        await CreatureCmd.SetMaxHp(creature, creature.MaxHp + amount);
+        await CreatureCmd.Heal(creature, amount, false);
+    }
     
     public static int MinionCount(this Player player) {
         return player.Creature.Pets.Count(c => c.Monster is MinionModel);
