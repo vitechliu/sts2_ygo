@@ -59,5 +59,7 @@
     "V_YGO_SUMMON_MATERIAL_SELECT.hand": "手牌",
     "V_YGO_EXTRA_DECK_DIRECT_SUMMON.confirm": "进行召唤",
     "V_YGO_CARD_REVOLUTION_CYBER_DRAGON.title": "机光龙-电子龙",
-    "V_YGO_CARD_REVOLUTION_CYBER_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n如果你没有控制任何随从，可以[gold]特招[/gold]。\n[gold]登场[/gold]：对随机一名敌人造成{Damage:diff()}点伤害。\n[gold]启动[/gold]：以手卡·场上的怪兽作为融合素材，进行一次机械族怪兽的[gold]融合召唤[/gold]。"
+    "V_YGO_CARD_REVOLUTION_CYBER_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n如果你没有控制任何随从，可以[gold]特招[/gold]。\n[gold]登场[/gold]：对随机一名敌人造成{Damage:diff()}点伤害。\n[gold]启动[/gold]：以手卡·场上的怪兽作为融合素材，进行一次机械族怪兽的[gold]融合召唤[/gold]。",
+    "V_YGO_CARD_INFINITE_IMPERMANENCE.title": "无限泡影",
+    "V_YGO_CARD_INFINITE_IMPERMANENCE.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n获得{NegatingPower:diff()}层[gold]无效[/gold]。"
 }

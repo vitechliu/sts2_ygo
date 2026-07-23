@@ -9,6 +9,7 @@ using STS2RitsuLib.CardPiles;
 using STS2RitsuLib.Interop;
 using System.Text.Json;
 using STS2RitsuLib.Audio;
+using STS2RitsuLib.Content;
 using VYgo.Core;
 using VYgo.Core.CardPools;
 using VYgo.Core.Cards;
@@ -50,6 +51,7 @@ public static class Entry {
         DirectExtraDeckSummonNetAction.Register();
         SubscribeEvents();
         LoadCoreCards();
+        RegisterCommonPools();
         
         FmodStudioDeferredBankRegistration.RegisterBank("res://VYgo/banks/VYgo.bank");
         FmodStudioDeferredBankRegistration.RegisterStudioGuidMappings("res://VYgo/banks/VYgo.guids.txt");
@@ -139,7 +141,19 @@ public static class Entry {
         }
     }
 
-    
+
+    static void RegisterCommonPool<T>(string id) where T : BaseYgoCommonCardPool {
+        ModContentRegistry.For(ModId)
+            .RegisterCardLibraryCompendiumSharedPoolFilter<T>(
+                id, // ID
+                "res://VYgo/images/char_icon_redhat.png" // 图标位置
+            );
+    }
+    static void RegisterCommonPools() {
+        RegisterCommonPool<CommonCardPool>("v_ygo_common");
+        RegisterCommonPool<LinkCardPool>("v_ygo_link");
+        RegisterCommonPool<FusionCardPool>("v_ygo_fusion");
+    }
     //注册额外卡组
     static void RegisterCardPile() {
         var registry = ModCardPileRegistry.For(ModId);
