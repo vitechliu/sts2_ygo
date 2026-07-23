@@ -1,5 +1,35 @@
 [
     {
+        "id": 23,
+        "card_id": 25769732,
+        "name": "",
+        "cn_name": "机械改造工厂",
+        "en_name": "MachineConversionFactory",
+        "types": "[魔法|装备]",
+        "description": "机械族怪兽可以装备。装备怪兽的攻击力·守备力上升300。",
+        "atk": 0,
+        "def": 0,
+        "level": 0,
+        "attribute": "",
+        "race": "",
+        "archetypes": []
+    },
+    {
+        "id": 22,
+        "card_id": 24224830,
+        "name": "",
+        "cn_name": "墓穴的指名者",
+        "en_name": "CalledbytheGrave",
+        "types": "[魔法|速攻]",
+        "description": "①：以对方墓地1只怪兽为对象才能发动。那只怪兽除外。直到下个回合的结束时，这个效果除外的怪兽以及原本卡名和那只怪兽相同的怪兽的效果无效化。",
+        "atk": 0,
+        "def": 0,
+        "level": 0,
+        "attribute": "",
+        "race": "",
+        "archetypes": []
+    },
+    {
         "id": 21,
         "card_id": 10045474,
         "name": "",

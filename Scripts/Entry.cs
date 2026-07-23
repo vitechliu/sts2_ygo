@@ -33,6 +33,8 @@ public static class Entry {
     public static PileType ExtraPile;
     //场上的怪兽
     public static PileType MonsterPile;
+    //装备中的魔法卡
+    public static PileType EquipPile;
 
     public static Dictionary<int, BaseVYgoCard> CardYgoIdCache { get; private set; } = new();
     public static Dictionary<int, BaseMonster> MonsterYgoIdCache { get; private set; } = new();
@@ -167,6 +169,12 @@ public static class Entry {
         }).PileType;
         
         MonsterPile = registry.RegisterOwned("monster_pile", new ModCardPileSpec {
+            Scope = ModCardPileScope.CombatOnly,
+            Style = ModCardPileUiStyle.Headless,
+            Anchor = ModCardPileAnchor.Default
+        }).PileType;
+
+        EquipPile = registry.RegisterOwned("equip_pile", new ModCardPileSpec {
             Scope = ModCardPileScope.CombatOnly,
             Style = ModCardPileUiStyle.Headless,
             Anchor = ModCardPileAnchor.Default
