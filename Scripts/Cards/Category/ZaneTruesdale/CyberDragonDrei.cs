@@ -16,6 +16,8 @@ public class CyberDragonDrei() : BaseMonsterCard(1, CardRarity.Uncommon, TargetT
 
     public override int CardId => 59281922;
 
+    public override YgoMaterialNames? MaterialCardName => YgoMaterialNames.电子龙;
+    
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new AttackVar(BaseAttackVar),
         new LifeVar(BaseLifeVar),

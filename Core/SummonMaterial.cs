@@ -36,6 +36,10 @@ public sealed record SummonMaterial(CardModel? Card, Creature? Creature = null) 
         }
     }
 
+    public bool NameEquals(YgoMaterialNames name) {
+        return (bool)VYgoCard?.NameEquals(name);
+    }
+
     public int? CardId => CoreCard?.CardId;
     public string? CardName => CoreCard is { } coreCard
         ? new[] { coreCard.CnName, coreCard.Name, coreCard.EnName }.FirstOrDefault(name => !string.IsNullOrEmpty(name))

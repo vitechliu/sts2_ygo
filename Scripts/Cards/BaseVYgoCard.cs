@@ -18,7 +18,14 @@ public abstract class BaseVYgoCard(
     public IReadOnlyList<ushort> ArchetypesList =>
         Entry.CoreCardCache.GetValueOrDefault(CardId)?.Archetypes ?? [];
 
-    public virtual YgoMaterialNames? MaterialCardName => null; //简化的卡名，用于判断素材，检索等
+    public virtual YgoMaterialNames? MaterialCardName => null; //视为的卡名，用于判断素材，检索等
+
+    public virtual bool NameEquals(YgoMaterialNames name) {
+        if (MaterialCardName.HasValue) {
+            return MaterialCardName.ToString().Equals(name.ToString());
+        }
+        return this.YgoGetCard()?.Title == name.ToString();
+    }
     
     public bool ContainArchetype(YgoArchetypeCode archetype) => ArchetypesList.Contains(archetype.Value);
 

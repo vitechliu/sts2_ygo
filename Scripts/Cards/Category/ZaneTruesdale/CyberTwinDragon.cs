@@ -30,6 +30,6 @@ public class CyberTwinDragon() : BaseExtraFusionCard(energyCost, rarity, targetT
     public override int UpgradeAttackVar => 2;
     
     public override bool CanUseFusionMaterial(SummonMaterial material) {
-        return material.VYgoCard?.MaterialCardName == YgoMaterialNames.电子龙;
+        return material.NameEquals(YgoMaterialNames.电子龙);
     }
 }
