@@ -69,5 +69,7 @@
     "V_YGO_CARD_MACHINE_CONVERSION_FACTORY.description": "装备给1只友方怪兽。其攻击力提高{Attack:diff()}，生命值提高{Life:diff()}。\n装备怪兽死亡时，将此牌置入弃牌堆。",
     "V_YGO_CARD_THERION_KING_REGULUS.title": "兽带斗神“王者”轩辕十四",
     "V_YGO_CARD_THERION_KING_REGULUS.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]：从弃牌堆中选择1只机械族怪兽装备，获得{NegatingPower:diff()}层[gold]无效[/gold]和{Energy:energyIcons()}。",
-    "V_YGO_CARD_THERION_KING_REGULUS.selectionScreenPrompt": "选择1只机械族怪兽装备。"
+    "V_YGO_CARD_THERION_KING_REGULUS.selectionScreenPrompt": "选择1只机械族怪兽装备。",
+    "V_YGO_CARD_CYBER_EMERGENCY.title": "电子紧急呼救",
+    "V_YGO_CARD_CYBER_EMERGENCY.description": "随机将一张[gold]「电子龙」[/gold]怪兽加入你的[gold]手牌[/gold]。{IfUpgraded:show:\n如果你拥有[gold]无效[/gold]，消耗1层[gold]无效[/gold]，将一张此牌的复制品加入你的[gold]手牌[/gold]。|}"
 }

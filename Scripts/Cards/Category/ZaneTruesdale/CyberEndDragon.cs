@@ -36,6 +36,6 @@ public class CyberEndDragon() : BaseExtraFusionCard(energyCost, rarity, targetTy
     public override int UpgradeLifeVar => 2;
 
     public override bool CanUseFusionMaterial(SummonMaterial material) {
-        return material.VYgoCard?.MaterialCardName == YgoMaterialNames.电子龙;
+        return material.NameEquals(YgoMaterialNames.电子龙);
     }
 }
