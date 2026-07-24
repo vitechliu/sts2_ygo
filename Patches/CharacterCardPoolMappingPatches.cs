@@ -11,11 +11,21 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Runs;
 using VYgo.Core.CardPools;
+using VYgo.Core.Extensions;
+using VYgo.Scripts;
 
 namespace VYgo.Patches;
 
 [HarmonyPatch]
 public static class CharacterCardPoolMappingPatches {
+    private static readonly CardType[] YgoCharacterCardTypes = [
+        CardType.Skill,
+        CardType.Skill,
+        CardType.Skill,
+        CardType.Skill,
+        CardType.Power,
+    ];
+
     private static readonly FieldInfo? ColoredCardTypesField =
         AccessTools.Field(typeof(MerchantInventory), "_coloredCardTypes");
 
@@ -48,12 +58,30 @@ public static class CharacterCardPoolMappingPatches {
     [HarmonyPatch(typeof(MerchantInventory), "PopulateCharacterCardEntries")]
     public static bool PopulateCharacterCardEntriesPrefix(MerchantInventory __instance) {
         var player = __instance.Player;
-        if (!CharacterCardPoolLinks.HasExtraPools(player.Character)) return true;
-        if (ColoredCardTypesField?.GetValue(null) is not CardType[] coloredCardTypes) return true;
+        var character = player.Character;
+        var hasExtraPools = CharacterCardPoolLinks.HasExtraPools(character);
+        var isYgoCharacter = character.GetType().IsGenericTypeOf(typeof(BaseYgoCharacter<,,>));
+        if (!hasExtraPools && !isYgoCharacter) return true;
+
+        CardType[] coloredCardTypes;
+        if (isYgoCharacter) {
+            coloredCardTypes = YgoCharacterCardTypes;
+        }
+        else if (ColoredCardTypesField?.GetValue(null) is CardType[] originalColoredCardTypes) {
+            coloredCardTypes = originalColoredCardTypes;
+        }
+        else {
+            return true;
+        }
+
         if (CharacterCardEntriesField?.GetValue(__instance) is not List<MerchantCardEntry> characterCardEntries) return true;
 
         var saleIndex = player.PlayerRng.Shops.NextInt(coloredCardTypes.Length);
-        var cardPool = CharacterCardPoolLinks.GetUnlockedCardsFor(player).ToList();
+        var cardPool = hasExtraPools
+            ? CharacterCardPoolLinks.GetUnlockedCardsFor(player).ToList()
+            : character.CardPool
+                .GetUnlockedCards(player.UnlockState, player.RunState.CardMultiplayerConstraint)
+                .ToList();
 
         for (var i = 0; i < coloredCardTypes.Length; i++) {
             var entry = new MerchantCardEntry(player, __instance, cardPool, coloredCardTypes[i]);
