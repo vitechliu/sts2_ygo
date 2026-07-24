@@ -1,5 +1,20 @@
 [
     {
+        "id": 26,
+        "card_id": 12580477,
+        "name": "",
+        "cn_name": "雷击",
+        "en_name": "Raigeki",
+        "types": "[魔法]",
+        "description": "①：对方场上的怪兽全部破坏。",
+        "atk": 0,
+        "def": 0,
+        "level": 0,
+        "attribute": "",
+        "race": "",
+        "archetypes": []
+    },
+    {
         "id": 25,
         "card_id": 60600126,
         "name": "",
