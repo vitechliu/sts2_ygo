@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -44,9 +45,11 @@ public abstract class BaseMonsterCard(
         await SummonMonster(choiceContext, cardPlay);
     }
 
-    protected virtual async Task SummonMonster(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+    protected virtual async Task<Creature?> SummonMonster(
+        PlayerChoiceContext choiceContext,
+        CardPlay cardPlay) {
         var c = this.YgoGetMonster();
-        if (c == null) return;
+        if (c == null) return null;
         // Entry.Logger.Info("findMonster");
         var summonedCreature = await MinionUtil.AddMinionInstant(
             c.GetType(),
@@ -63,6 +66,7 @@ public abstract class BaseMonsterCard(
             m.SetUpgraded();
         }
         await MonsterCardVfx.PlaySummonCardFly(this, summonedCreature);
+        return summonedCreature;
     }
 
     // //0.107版本

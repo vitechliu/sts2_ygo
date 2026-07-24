@@ -30,7 +30,9 @@ public class CalledbytheGrave()
                 prefs: new CardSelectorPrefs(SelectionScreenPrompt, 1),
                 context: choiceContext,
                 pile: PileType.Discard.GetPile(Owner),
-                player: Owner))
+                player: Owner,
+                filter: model => model is BaseMonsterCard
+                ))
             .FirstOrDefault();
         if (selectedCard == null) {
             return;

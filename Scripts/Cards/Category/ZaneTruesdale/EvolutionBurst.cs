@@ -14,7 +14,7 @@ namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 public class EvolutionBurst() : BaseSpellCard(energyCost, CardType.Attack, rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 52875873;
 
-    private const int energyCost = 0;
+    private const int energyCost = 1;
     private const CardRarity rarity = CardRarity.Basic;
     private const TargetType targetType = TargetType.AnyEnemy;
     private const bool shouldShowInCardLibrary = true;

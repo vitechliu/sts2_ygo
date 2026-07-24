@@ -6,16 +6,31 @@ using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.TestSupport;
 using VYgo.Scripts.Cards;
 
 namespace VYgo.Core.Effects;
 
 public static class MonsterCardVfx {
-    public static async Task PlaySummonCardFly(BaseMonsterCard card, Creature summonedCreature) {
+    public static Task PlaySummonCardFly(
+        BaseMonsterCard card,
+        Creature summonedCreature) {
+        return PlayCardFlyToCreature(card, summonedCreature);
+    }
+
+    public static Task PlayEquipCardFly(
+        CardModel card,
+        Creature target) {
+        return PlayCardFlyToCreature(card, target);
+    }
+
+    private static async Task PlayCardFlyToCreature(
+        CardModel card,
+        Creature target) {
         if (TestMode.IsOn || NCombatRoom.Instance == null) return;
 
-        var targetNode = NCombatRoom.Instance.GetCreatureNode(summonedCreature);
+        var targetNode = NCombatRoom.Instance.GetCreatureNode(target);
         if (targetNode == null) return;
 
         var sourceNode = NCard.FindOnTable(card, PileType.Play);
