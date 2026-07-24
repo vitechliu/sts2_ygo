@@ -109,7 +109,9 @@ internal static class ExtraDeckSummonAnimations {
     }
 
     private static async Task SpiralCardsIntoFusion(IReadOnlyList<Card3DEffectContext> ctxs, Vector2 centerPos) {
-        const float SpiralDuration = 0.72f;
+        const float SpiralDuration = 0.95f;
+        const float StaggerDelay = 0.04f;
+        const float SpiralTurns = 1.15f;
         Tween tween = ctxs[0].DisplaySprite.CreateTween().SetParallel();
 
         for (int i = 0; i < ctxs.Count; i++) {
@@ -117,39 +119,65 @@ internal static class ExtraDeckSummonAnimations {
             Vector2 start = ctx.DisplaySprite.GlobalPosition;
             float startRadius = start.DistanceTo(centerPos);
             float startAngle = (start - centerPos).Angle();
-            float direction = i % 2 == 0 ? 1f : -1f;
-            float phase = i * 0.32f;
             Vector2 startScale = ctx.DisplaySprite.Scale;
             Color startModulate = ctx.DisplaySprite.Modulate;
+            float startRotation = ctx.DisplaySprite.Rotation;
+            Vector3 startPivotRotation = ctx.Pivot.RotationDegrees;
 
             tween.TweenMethod(
                     Callable.From<float>(t => {
-                        float eased = 1f - Mathf.Pow(1f - t, 3f);
-                        float angle = startAngle + direction * (Mathf.Pi * 2.35f * eased + phase);
-                        float radius = Mathf.Lerp(startRadius, 0f, eased);
-                        ctx.DisplaySprite.GlobalPosition = centerPos + Vector2.FromAngle(angle) * radius;
-                        ctx.DisplaySprite.Rotation = direction * Mathf.Pi * 5.5f * eased;
-                        ctx.DisplaySprite.Scale = startScale * Mathf.Lerp(1f, 0.08f, eased);
+                        float orbitProgress = SmoothStep(t);
+                        float collapseT = Mathf.Clamp((t - 0.18f) / 0.82f, 0f, 1f);
+                        float collapseProgress = Mathf.Pow(collapseT, 2.2f);
+                        float angle = startAngle + Mathf.Tau * SpiralTurns * orbitProgress;
+                        float radius = startRadius * (1f - collapseProgress);
+                        Vector2 position = centerPos + Vector2.FromAngle(angle) * radius;
+                        ctx.DisplaySprite.GlobalPosition = position;
+                        ctx.DisplaySprite.Rotation = startRotation + Mathf.Tau * 0.7f * orbitProgress;
+
+                        float suctionT = Mathf.Clamp((t - 0.45f) / 0.55f, 0f, 1f);
+                        float suctionProgress = SmoothStep(suctionT);
+                        Vector2 inwardDirection = centerPos - position;
+                        if (inwardDirection.LengthSquared() > 0.0001f) {
+                            Vector2 localDirection =
+                                inwardDirection.Normalized().Rotated(-ctx.DisplaySprite.Rotation);
+                            if (ctx.DisplaySprite.FlipH) localDirection.X = -localDirection.X;
+                            if (ctx.DisplaySprite.FlipV) localDirection.Y = -localDirection.Y;
+                            ctx.CardMaterial.SetShaderParameter("suction_direction", localDirection);
+                        }
+                        ctx.CardMaterial.SetShaderParameter("suction_progress", suctionProgress);
+
+                        float scaleT = SmoothStep(Mathf.Clamp((t - 0.55f) / 0.45f, 0f, 1f));
+                        float fadeT = SmoothStep(Mathf.Clamp((t - 0.7f) / 0.3f, 0f, 1f));
+                        ctx.DisplaySprite.Scale = startScale * Mathf.Lerp(1f, 0.08f, scaleT);
                         ctx.DisplaySprite.Modulate = startModulate with {
-                            A = Mathf.Lerp(startModulate.A, 0f, Mathf.Clamp((t - 0.58f) / 0.42f, 0f, 1f))
+                            A = Mathf.Lerp(startModulate.A, 0f, fadeT)
                         };
                         ctx.Pivot.RotationDegrees = new Vector3(
-                            Mathf.Lerp(-7f, -46f, eased),
-                            Mathf.Lerp(ctx.Pivot.RotationDegrees.Y, 240f * direction, t),
-                            Mathf.Lerp(0f, 90f * direction, eased)
+                            Mathf.Lerp(startPivotRotation.X, -28f, orbitProgress),
+                            Mathf.Lerp(startPivotRotation.Y, startPivotRotation.Y + 75f, orbitProgress),
+                            Mathf.Lerp(startPivotRotation.Z, 24f, orbitProgress)
                         );
-                        ctx.CardMaterial.SetShaderParameter("outline_strength", Mathf.Lerp(1.8f, 4.2f, eased));
-                        ctx.GlowMaterial.SetShaderParameter("glow_intensity", Mathf.Lerp(1.6f, 3.5f, eased));
-                        ctx.GlowMaterial.SetShaderParameter("glow_radius", Mathf.Lerp(14f, 34f, eased));
+                        ctx.CardMaterial.SetShaderParameter(
+                            "outline_strength",
+                            Mathf.Lerp(1.8f, 4.2f, suctionProgress)
+                        );
+                        ctx.GlowMaterial.SetShaderParameter(
+                            "glow_intensity",
+                            Mathf.Lerp(1.4f, 3.5f, suctionProgress)
+                        );
+                        ctx.GlowMaterial.SetShaderParameter(
+                            "glow_radius",
+                            Mathf.Lerp(14f, 34f, suctionProgress)
+                        );
                     }),
                     0f,
                     1f,
                     SpiralDuration)
-                .SetEase(Tween.EaseType.InOut)
-                .SetTrans(Tween.TransitionType.Sine);
+                .SetDelay(i * StaggerDelay);
         }
 
-        SFXUtil.PlayAfter("event:/vygo/sfx/link_summon_03", 0.32f);
+        SFXUtil.PlayAfter("event:/vygo/sfx/link_summon_03", 0.45f);
         await tween.AwaitFinished(ctxs[0].DisplaySprite);
     }
 
@@ -343,6 +371,8 @@ internal static class ExtraDeckSummonAnimations {
         ctx.CardMaterial.SetShaderParameter("glow_color", outlineColor);
         ctx.CardMaterial.SetShaderParameter("outline_strength", 0f);
         ctx.CardMaterial.SetShaderParameter("pulse_amount", 0f);
+        ctx.CardMaterial.SetShaderParameter("suction_progress", 0f);
+        ctx.CardMaterial.SetShaderParameter("suction_direction", Vector2.Up);
 
         ctx.GlowMaterial.SetShaderParameter("glow_color", glowColor);
         ctx.GlowMaterial.SetShaderParameter("glow_intensity", glowIntensity);
@@ -424,5 +454,10 @@ internal static class ExtraDeckSummonAnimations {
             to,
             duration
         );
+    }
+
+    private static float SmoothStep(float value) {
+        value = Mathf.Clamp(value, 0f, 1f);
+        return value * value * (3f - 2f * value);
     }
 }

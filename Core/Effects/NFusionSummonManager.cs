@@ -85,10 +85,10 @@ public partial class NFusionSummonManager : Node2D {
         tween.TweenProperty(_vortexCore, "scale", Vector2.One * 1.35f, 0.18f)
             .SetEase(Tween.EaseType.Out)
             .SetTrans(Tween.TransitionType.Cubic);
-        tween.TweenProperty(_vortexRed, "modulate:a", 0.18f, 0.38f)
+        tween.TweenProperty(_vortexRed, "modulate:a", 0f, 0.5f)
             .SetEase(Tween.EaseType.In)
             .SetTrans(Tween.TransitionType.Quad);
-        tween.TweenProperty(_vortexBlue, "modulate:a", 0.18f, 0.38f)
+        tween.TweenProperty(_vortexBlue, "modulate:a", 0f, 0.5f)
             .SetEase(Tween.EaseType.In)
             .SetTrans(Tween.TransitionType.Quad);
         tween.TweenProperty(_vortexCore, "modulate:a", 0f, 0.28f)
