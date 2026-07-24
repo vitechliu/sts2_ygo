@@ -63,8 +63,11 @@
     "V_YGO_CARD_INFINITE_IMPERMANENCE.title": "无限泡影",
     "V_YGO_CARD_INFINITE_IMPERMANENCE.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n获得{NegatingPower:diff()}层[gold]无效[/gold]。",
     "V_YGO_CARD_CALLEDBYTHE_GRAVE.title": "墓穴的指名者",
-    "V_YGO_CARD_CALLEDBYTHE_GRAVE.description": "从[gold]弃牌堆[/gold]中选择1张牌[gold]消耗[/gold]，然后获得{NegatingPower:diff()}层[gold]无效[/gold]。\n如果弃牌堆为空，不会获得[gold]无效[/gold]。",
-    "V_YGO_CARD_CALLEDBYTHE_GRAVE.selectionScreenPrompt": "选择1张牌消耗。",
+    "V_YGO_CARD_CALLEDBYTHE_GRAVE.description": "从[gold]弃牌堆[/gold]中选择1张怪兽[gold]消耗[/gold]，并获得{NegatingPower:diff()}层[gold]无效[/gold]。",
+    "V_YGO_CARD_CALLEDBYTHE_GRAVE.selectionScreenPrompt": "选择1张怪兽牌消耗。",
     "V_YGO_CARD_MACHINE_CONVERSION_FACTORY.title": "机械改造工厂",
-    "V_YGO_CARD_MACHINE_CONVERSION_FACTORY.description": "装备给1只友方怪兽。其攻击力提高{Attack:diff()}，生命值提高{Life:diff()}。\n装备怪兽死亡时，将此牌置入弃牌堆。"
+    "V_YGO_CARD_MACHINE_CONVERSION_FACTORY.description": "装备给1只友方怪兽。其攻击力提高{Attack:diff()}，生命值提高{Life:diff()}。\n装备怪兽死亡时，将此牌置入弃牌堆。",
+    "V_YGO_CARD_THERION_KING_REGULUS.title": "兽带斗神“王者”轩辕十四",
+    "V_YGO_CARD_THERION_KING_REGULUS.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]：从弃牌堆中选择1只机械族怪兽装备，获得{NegatingPower:diff()}层[gold]无效[/gold]和{Energy:energyIcons()}。",
+    "V_YGO_CARD_THERION_KING_REGULUS.selectionScreenPrompt": "选择1只机械族怪兽装备。"
 }

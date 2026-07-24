@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using VYgo.Core.Effects;
 using VYgo.Scripts;
 using VYgo.Scripts.Powers;
 
@@ -155,10 +156,17 @@ public static class EquipCmd {
         if (!host.AttachEquipment(card)) return false;
 
         if (moveToEquipPile) {
-            await CardPileCmd.Add(
+            CardPileAddResult result = await CardPileCmd.Add(
                 card,
-                Entry.EquipPile.GetPile(card.Owner));
+                Entry.EquipPile.GetPile(card.Owner),
+                skipVisuals: true);
+            if (!result.success) {
+                host.DetachEquipment(card);
+                return false;
+            }
         }
+
+        await MonsterCardVfx.PlayEquipCardFly(card, target!);
 
         if (card is IEquipmentEffect effect) {
             await effect.OnEquipped(choiceContext, target!);
