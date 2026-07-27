@@ -27,7 +27,7 @@
     "V_YGO_CARD_CYBER_DRAGON_ZWEI.title": "电子龙二型",
     "V_YGO_CARD_CYBER_DRAGON_ZWEI.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n攻击后，[gold]攻击力[/gold]提升{AttackAdd}。",
     "V_YGO_CARD_CYBER_END_DRAGON.title": "电子终结龙",
-    "V_YGO_CARD_CYBER_END_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]「电子龙」＋「电子龙」＋「电子龙」[/aqua]",
+    "V_YGO_CARD_CYBER_END_DRAGON.description": "[gold]融合召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]「电子龙」＋「电子龙」＋「电子龙」[/aqua]",
     "V_YGO_CARD_POLYMERIZATION.title": "融合",
     "V_YGO_CARD_POLYMERIZATION.description": "以手卡·场上的怪兽作为融合素材，进行一次[gold]融合召唤[/gold]。",
     "V_YGO_CARD_POLYMERIZATION.selectionScreenPrompt": "请选择需要召唤的卡牌。",
@@ -41,7 +41,7 @@
     "V_YGO_CARD_POWER_BOND.title": "力量结合",
     "V_YGO_CARD_POWER_BOND.description": "以手卡·场上的怪兽作为融合素材，进行一次[gold]融合召唤[/gold]。\n这个效果召唤的怪兽的[gold]力量[/gold]上升那个原本[gold]力量[/gold]数值。在你的回合结束时，你失去这个效果上升的数值点生命。",
     "V_YGO_CARD_CYBER_TWIN_DRAGON.title": "电子双生龙",
-    "V_YGO_CARD_CYBER_TWIN_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]「电子龙」＋「电子龙」[/aqua]\n可以攻击两次。",
+    "V_YGO_CARD_CYBER_TWIN_DRAGON.description": "[gold]融合召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]「电子龙」＋「电子龙」[/aqua]\n可以攻击两次。",
     "V_YGO_CARD_CYBER_BARRIER_DRAGON.title": "电子障壁龙",
     "V_YGO_CARD_CYBER_BARRIER_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])",
     "V_YGO_CARD_CYBER_DRAGON_DREI.title": "电子龙三型",
@@ -49,7 +49,7 @@
     "V_YGO_CARD_CYBER_DRAGON_VIER.title": "电子龙四型",
     "V_YGO_CARD_CYBER_DRAGON_VIER.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n如果你在本回合召唤过「电子龙」怪兽，则耗能减少{CostReduction:energyIcons()}。",
     "V_YGO_CARD_CYBER_DRAGON_NACHSTER.title": "电子龙·次代星",
-    "V_YGO_CARD_CYBER_DRAGON_NACHSTER.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]:从[gold]弃牌堆[/gold]中选择一只机械族怪兽并召唤。",
+    "V_YGO_CARD_CYBER_DRAGON_NACHSTER.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]:从[gold]弃牌堆[/gold]中选择一只机械族怪兽并[gold]特召[/gold]。",
     "V_YGO_CARD_CYBER_DRAGON_NACHSTER.selectionScreenPrompt": "请选择要召唤的机械族怪兽。",
     "V_YGO_SUMMON_MATERIAL_SELECT.target": "为「{Target}」选择召唤素材",
     "V_YGO_SUMMON_MATERIAL_SELECT.progress": "已选择 {Selected}/{Max} 张素材；请继续选择素材。",
@@ -68,7 +68,7 @@
     "V_YGO_CARD_MACHINE_CONVERSION_FACTORY.title": "机械改造工厂",
     "V_YGO_CARD_MACHINE_CONVERSION_FACTORY.description": "装备给1只友方怪兽。其攻击力提高{Attack:diff()}，生命值提高{Life:diff()}。\n装备怪兽死亡时，将此牌置入弃牌堆。",
     "V_YGO_CARD_THERION_KING_REGULUS.title": "兽带斗神“王者”轩辕十四",
-    "V_YGO_CARD_THERION_KING_REGULUS.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]：从弃牌堆中选择1只机械族怪兽装备，获得{NegatingPower:diff()}层[gold]无效[/gold]和{Energy:energyIcons()}。",
+    "V_YGO_CARD_THERION_KING_REGULUS.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n从弃牌堆中选择1只机械族怪兽可以[gold]特召[/gold]\n[gold]登场[/gold]：装备选中的怪兽，并获得{NegatingPower:diff()}层[gold]无效[/gold]和{Energy:energyIcons()}。",
     "V_YGO_CARD_THERION_KING_REGULUS.selectionScreenPrompt": "选择1只机械族怪兽装备。",
     "V_YGO_CARD_CYBER_EMERGENCY.title": "电子紧急呼救",
     "V_YGO_CARD_CYBER_EMERGENCY.description": "随机将一张[gold]「电子龙」[/gold]怪兽加入你的[gold]手牌[/gold]。{IfUpgraded:show:\n如果你拥有[gold]无效[/gold]，消耗1层[gold]无效[/gold]，将一张此牌的复制品加入你的[gold]手牌[/gold]。|}",
@@ -77,5 +77,5 @@
     "V_YGO_CARD_CYBER_LASER_DRAGON.title": "电子镭射龙",
     "V_YGO_CARD_CYBER_LASER_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n发动攻击后，给予被攻击的敌人{VulnerablePower:diff()}层[gold]易伤[/gold]。",
     "V_YGO_CARD_PHOTON_GENERATOR_UNIT.title": "光子发生装置",
-    "V_YGO_CARD_PHOTON_GENERATOR_UNIT.description": "选择场上的一只「电子龙」怪兽作为[gold]祭品[/gold]，[gold]召唤[/gold]一只{IfUpgraded:show:升级后的|}「电子镭射龙」。"
+    "V_YGO_CARD_PHOTON_GENERATOR_UNIT.description": "选择场上的一只「电子龙」怪兽作为[gold]祭品[/gold]，[gold]特召[/gold]一只{IfUpgraded:show:升级后的|}「电子镭射龙」。"
 }

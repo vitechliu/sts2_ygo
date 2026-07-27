@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using VYgo.Core;
+using VYgo.Core.Summon;
 using VYgo.Scripts.Powers;
 using VYgo.Scripts.Var;
 
@@ -39,9 +40,6 @@ public class TherionKingRegulus()
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay cardPlay) {
-        var summonedCreature = await SummonMonster(choiceContext, cardPlay);
-        if (summonedCreature == null) return;
-
         CardModel? selectedCard = (await CardSelectCmd.FromCombatPile(
                 prefs: new CardSelectorPrefs(SelectionScreenPrompt, 1),
                 context: choiceContext,
@@ -49,6 +47,9 @@ public class TherionKingRegulus()
                 player: Owner,
                 filter: IsMachineMonster))
             .FirstOrDefault();
+        var summonedCreature = await SummonMonster(choiceContext, cardPlay, new SummonContext(IsSpecialSummon: selectedCard != null));
+        if (summonedCreature == null) return;
+
         if (selectedCard == null
             || !await EquipCmd.EquipFromPile(
                 choiceContext,

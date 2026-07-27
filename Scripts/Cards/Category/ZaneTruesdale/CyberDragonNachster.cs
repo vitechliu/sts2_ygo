@@ -22,7 +22,8 @@ public class CyberDragonNachster() : BaseMonsterCard(1, CardRarity.Rare, TargetT
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         BaseSummonHoverTip,
-        YgoHoverTipConst.EnterField()
+        YgoHoverTipConst.EnterField(),
+        YgoHoverTipConst.SpecialSummon()
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
