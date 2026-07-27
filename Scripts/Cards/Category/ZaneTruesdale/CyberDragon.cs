@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
+using VYgo.Core.Summon;
 using VYgo.Scripts.Characters;
 using VYgo.Scripts.Monsters;
 using VYgo.Scripts.Pools;
@@ -40,6 +41,10 @@ public class CyberDragon() : BaseMonsterCard(energyCost, rarity, targetType, sho
 
     void FlushCost() {
         EnergyCost.SetUntilPlayed(Active ? 0 : CanonicalEnergyCost);
+    }
+    
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+        await SummonMonster(choiceContext, cardPlay, new SummonContext(IsSpecialSummon: Active));
     }
 
     public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw) {

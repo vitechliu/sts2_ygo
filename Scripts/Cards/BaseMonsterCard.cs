@@ -4,8 +4,10 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using VYgo.Core.Effects;
+using VYgo.Core.Hooks;
 using MinionLib.Minion;
 using VYgo.Core;
+using VYgo.Core.Summon;
 using VYgo.Scripts.Monsters;
 using VYgo.Scripts.Var;
 using VYgo.Utils;
@@ -42,14 +44,29 @@ public abstract class BaseMonsterCard(
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        await SummonMonster(choiceContext, cardPlay);
+        await SummonMonster(choiceContext, cardPlay, new SummonContext(IsSpecialSummon: cardPlay.IsAutoPlay));
     }
 
     protected virtual async Task<Creature?> SummonMonster(
         PlayerChoiceContext choiceContext,
-        CardPlay cardPlay) {
+        CardPlay cardPlay
+    ) {
+        return await SummonMonster(choiceContext, cardPlay, new SummonContext());
+    }
+    protected virtual async Task<Creature?> SummonMonster(
+        PlayerChoiceContext choiceContext,
+        CardPlay cardPlay,
+        SummonContext summonContext
+    ) {
         var c = this.YgoGetMonster();
         if (c == null) return null;
+        var combatState = Owner.Creature.CombatState;
+        await MonsterSummonHook.BeforeMonsterSummon(
+            combatState,
+            choiceContext,
+            this,
+            cardPlay,
+            summonContext);
         // Entry.Logger.Info("findMonster");
         var summonedCreature = await MinionUtil.AddMinionInstant(
             c.GetType(),
@@ -65,6 +82,13 @@ public abstract class BaseMonsterCard(
         if (IsUpgraded && summonedCreature.Monster is BaseMonster m) {
             m.SetUpgraded();
         }
+        await MonsterSummonHook.AfterMonsterSummon(
+            combatState,
+            choiceContext,
+            this,
+            cardPlay,
+            summonedCreature,
+            summonContext);
         await MonsterCardVfx.PlaySummonCardFly(this, summonedCreature);
         return summonedCreature;
     }
