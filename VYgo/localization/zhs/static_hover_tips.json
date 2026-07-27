@@ -4,7 +4,7 @@
   "V_YGO_CARDPILE_EXTRA_PILE.empty": "额外卡组是空的",
 
   "V_YGO_SUMMON_NORMAL.title": "召唤",
-  "V_YGO_SUMMON_NORMAL.description": "将卡牌作为怪兽召唤到场上，怪兽死亡后卡牌进入弃牌堆。",
+  "V_YGO_SUMMON_NORMAL.description": "将卡牌作为怪兽召唤到场上，怪兽离场后卡牌进入弃牌堆。",
   "V_YGO_SUMMON.title": "召唤({Attack}/{Life})",
   "V_YGO_SUMMON.description": "以[blue]{Attack}[/blue]点攻击力、[blue]{Life}[/blue]点生命值召唤怪兽。",
   "V_YGO_SPECIAL_SUMMON.title": "特召",
@@ -20,5 +20,9 @@
   "V_YGO_ACTION.title": "启动",
   "V_YGO_ACTION.description": "怪兽的主动效果，替代原本的攻击行为，默认1回合1次，点击怪兽即可触发效果。",
   "V_YGO_NAME_AS.title": "卡名",
-  "V_YGO_NAME_AS.description": "这张卡的卡名视为[blue]{YgoName}[/blue]。"
+  "V_YGO_NAME_AS.description": "这张卡的卡名视为[blue]{YgoName}[/blue]。",
+  "V_YGO_EQUIP.title": "装备",
+  "V_YGO_EQUIP.description": "这张卡牌被装备在怪兽上，当怪兽离场时，装备会送往[gold]弃牌堆[/gold]",
+  "V_YGO_SET_CARD.title": "盖伏",
+  "V_YGO_SET_CARD.description": "需要盖伏的效果，需要到回合结束后才能生效或者起效。"
 }

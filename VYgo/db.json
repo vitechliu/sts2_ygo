@@ -1,5 +1,39 @@
 [
     {
+        "id": 28,
+        "card_id": 66607691,
+        "name": "",
+        "cn_name": "光子发生装置",
+        "en_name": "PhotonGeneratorUnit",
+        "types": "[魔法|速攻]",
+        "description": "把自己场上2只「电子龙」作为祭品才能发动。从自己的手卡·卡组·墓地特殊召唤1只「电子镭射龙」。",
+        "atk": 0,
+        "def": 0,
+        "level": 0,
+        "attribute": "",
+        "race": "",
+        "archetypes": [
+            85
+        ]
+    },
+    {
+        "id": 27,
+        "card_id": 4162088,
+        "name": "",
+        "cn_name": "电子镭射龙",
+        "en_name": "CyberLaserDragon",
+        "types": "[怪兽|效果|特殊召唤] 机械/光\n[★7] 2400/1800",
+        "description": "这张卡不能通常召唤。这张卡只能通过「光子发生装置」的效果特殊召唤。可以把持有这张卡攻击力以上的攻击力·守备力的1只怪兽破坏。这个效果1回合只能使用1次。",
+        "atk": 2400,
+        "def": 1800,
+        "level": 7,
+        "attribute": "光",
+        "race": "机械族",
+        "archetypes": [
+            147
+        ]
+    },
+    {
         "id": 26,
         "card_id": 12580477,
         "name": "",

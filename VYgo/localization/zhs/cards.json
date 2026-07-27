@@ -73,5 +73,9 @@
     "V_YGO_CARD_CYBER_EMERGENCY.title": "电子紧急呼救",
     "V_YGO_CARD_CYBER_EMERGENCY.description": "随机将一张[gold]「电子龙」[/gold]怪兽加入你的[gold]手牌[/gold]。{IfUpgraded:show:\n如果你拥有[gold]无效[/gold]，消耗1层[gold]无效[/gold]，将一张此牌的复制品加入你的[gold]手牌[/gold]。|}",
     "V_YGO_CARD_RAIGEKI.title": "雷击",
-    "V_YGO_CARD_RAIGEKI.description": "对所有敌人造成{Damage:diff()}点伤害。"
+    "V_YGO_CARD_RAIGEKI.description": "对所有敌人造成{Damage:diff()}点伤害。",
+    "V_YGO_CARD_CYBER_LASER_DRAGON.title": "电子镭射龙",
+    "V_YGO_CARD_CYBER_LASER_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n发动攻击后，给予被攻击的敌人{VulnerablePower:diff()}层[gold]易伤[/gold]。",
+    "V_YGO_CARD_PHOTON_GENERATOR_UNIT.title": "光子发生装置",
+    "V_YGO_CARD_PHOTON_GENERATOR_UNIT.description": "选择场上的一只「电子龙」怪兽作为[gold]祭品[/gold]，[gold]召唤[/gold]一只{IfUpgraded:show:升级后的|}「电子镭射龙」。"
 }
