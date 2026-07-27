@@ -131,6 +131,48 @@ public static class SummonUtil {
             .ToList();
     }
 
+    public static bool HasValidFieldTribute(
+        Player owner,
+        int tributeCount,
+        Func<SummonMaterial, bool>? filter = null
+    ) {
+        return BuildFieldTributeSelection(owner, tributeCount, filter)
+            .HasValidCombination;
+    }
+
+    public static async Task<bool> ExecuteFieldTribute(
+        PlayerChoiceContext choiceContext,
+        Player owner,
+        CardModel targetCard,
+        int tributeCount,
+        Func<SummonMaterial, bool>? filter = null
+    ) {
+        Func<SummonMaterialSelectionSpec?> buildSelection =
+            () => BuildFieldTributeSelection(owner, tributeCount, filter);
+
+        IReadOnlyList<SummonMaterial> selectedMaterials =
+            await SummonMaterialSelectCmd.Select(
+                choiceContext,
+                owner,
+                targetCard,
+                buildSelection
+            );
+        if (selectedMaterials.Count <= 0) return false;
+
+        SummonMaterialSelectionSpec latestSelection =
+            BuildFieldTributeSelection(owner, tributeCount, filter);
+        IReadOnlyList<SummonMaterial> resolvedMaterials =
+            latestSelection.ResolveMaterials(
+                selectedMaterials
+                    .Select(material => material.Card)
+                    .OfType<CardModel>()
+            );
+        if (!latestSelection.IsValidSelection(resolvedMaterials)) return false;
+
+        await ConsumeSummonMaterials(choiceContext, resolvedMaterials.ToList());
+        return true;
+    }
+
     public static IReadOnlyList<SummonMaterial> GetFieldAndHandMonsterMaterials(
         Player owner,
         Func<SummonMaterial, bool>? filter = null
@@ -344,6 +386,34 @@ public static class SummonUtil {
         return owner.MinionCount() - consumedFieldMonsterCount < MinionUtil.MAX_MINION_COUNT;
     }
 
+    private static SummonMaterialSelectionSpec BuildFieldTributeSelection(
+        Player owner,
+        int tributeCount,
+        Func<SummonMaterial, bool>? filter
+    ) {
+        if (tributeCount <= 0) {
+            throw new ArgumentOutOfRangeException(
+                nameof(tributeCount),
+                tributeCount,
+                "Tribute count must be greater than zero."
+            );
+        }
+
+        IReadOnlyList<SummonMaterial> candidates = GetFieldMonsterMaterials(owner, filter)
+            .Where(material => material.Creature is { IsAlive: true })
+            .ToList();
+
+        return new SummonMaterialSelectionSpec(
+            candidates,
+            tributeCount,
+            tributeCount,
+            materials => materials.Count == tributeCount
+                && materials.All(material =>
+                    material.Creature is { IsAlive: true } creature
+                    && owner.Creature.Pets.Contains(creature))
+        );
+    }
+
     private static async Task ConsumeSummonMaterials(
         PlayerChoiceContext choiceContext,
         IReadOnlyList<SummonMaterial> materials
@@ -370,7 +440,10 @@ public static class SummonUtil {
 
     private static async Task MaterialSacrifice(Creature material) {
         var nCreature = material.GetCreatureNode();
-        if (nCreature?.Visuals is not NMonsterVisuals visuals) return;
+        if (nCreature?.Visuals is not NMonsterVisuals visuals) {
+            await CreatureCmd.Kill(material, true);
+            return;
+        }
 
         nCreature.ToggleIsInteractable(false);
         nCreature.AnimHideIntent();
