@@ -24,5 +24,7 @@
   "V_YGO_EQUIP.title": "装备",
   "V_YGO_EQUIP.description": "这张卡牌被装备在怪兽上，当怪兽离场时，装备会送往[gold]弃牌堆[/gold]",
   "V_YGO_SET_CARD.title": "盖伏",
-  "V_YGO_SET_CARD.description": "需要盖伏的效果，需要到回合结束后才能生效或者起效。"
+  "V_YGO_SET_CARD.description": "需要盖伏的效果，需要到回合结束后才能生效或者起效。",
+  "V_YGO_HAND_ACTION.title": "手发",
+  "V_YGO_HAND_ACTION.description": "在手牌丢弃以发动特殊效果，右键激活。"
 }

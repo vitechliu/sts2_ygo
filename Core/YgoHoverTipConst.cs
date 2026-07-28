@@ -55,6 +55,10 @@ public static class YgoHoverTipConst {
         return Base("ACTION");
     }
     
+    //手发
+    public static IHoverTip HandAction() {
+        return Base("HAND_ACTION");
+    }
     //卡名替代
     public static IHoverTip NameAs(YgoMaterialNames name) {
         var str = "V_YGO_NAME_AS";
