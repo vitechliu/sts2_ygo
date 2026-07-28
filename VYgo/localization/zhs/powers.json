@@ -19,5 +19,8 @@
   "REVOLUTION_CYBER_DRAGON_FUSION_ACTION.selectionScreenPrompt": "请选择要融合召唤的机械族怪兽。",
   "V_YGO_POWER_MAXX_C_POWER.title": "特召抽卡",
   "V_YGO_POWER_MAXX_C_POWER.description": "每当你[gold]特召[/gold]，抽1张卡。",
-  "V_YGO_POWER_MAXX_C_POWER.smartDescription": "每当你[gold]特召[/gold]，抽1张卡。"
+  "V_YGO_POWER_MAXX_C_POWER.smartDescription": "每当你[gold]特召[/gold]，抽1张卡。",
+  "V_YGO_POWER_CYBERNETIC_HIDDEN_TECHNOLOGY_POWER.title": "电子隐秘技术",
+  "V_YGO_POWER_CYBERNETIC_HIDDEN_TECHNOLOGY_POWER.description": "每当敌人攻击时，若额外卡组中有融合怪兽，随机将其中1只送入弃牌堆，然后对该敌人造成{Amount}点伤害。",
+  "V_YGO_POWER_CYBERNETIC_HIDDEN_TECHNOLOGY_POWER.smartDescription": "每当敌人攻击时，若额外卡组中有融合怪兽，随机将其中1只送入弃牌堆，然后对该敌人造成[blue]{Amount}[/blue]点伤害。"
 }

@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace VYgo.Scripts.Cards.Category.Common;
 
 [RegisterCard(typeof(CommonCardPool))]
-public class Raigeki() : BaseSpellCard(1, CardType.Skill, CardRarity.Common, TargetType.AllEnemies) {
+public class Raigeki() : BaseSpellCard(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies) {
     public override int CardId => 12580477;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [

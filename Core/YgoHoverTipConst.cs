@@ -49,6 +49,10 @@ public static class YgoHoverTipConst {
     public static IHoverTip EnterField() {
         return Base("ENTER_FIELD");
     }
+
+    public static IHoverTip Equip() {
+        return Base("EQUIP");
+    }
     
     //启动
     public static IHoverTip Action() {
