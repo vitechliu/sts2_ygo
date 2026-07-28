@@ -79,5 +79,10 @@
     "V_YGO_CARD_PHOTON_GENERATOR_UNIT.title": "光子发生装置",
     "V_YGO_CARD_PHOTON_GENERATOR_UNIT.description": "选择场上的一只「电子龙」怪兽作为[gold]祭品[/gold]，[gold]特召[/gold]一只{IfUpgraded:show:升级后的|}「电子镭射龙」。",
     "V_YGO_CARD_MAXX_C.title": "增殖的G",
-    "V_YGO_CARD_MAXX_C.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]手发[/gold]:你在这个回合内每[gold]特召[/gold]1次，抽一张牌。"
+    "V_YGO_CARD_MAXX_C.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]手发[/gold]:你在这个回合内每[gold]特召[/gold]1次，抽一张牌。",
+    "V_YGO_CARD_CYBERNETIC_HIDDEN_TECHNOLOGY.title": "电子隐秘技术",
+    "V_YGO_CARD_CYBERNETIC_HIDDEN_TECHNOLOGY.description": "每当敌人攻击时，若额外卡组中有融合怪兽，随机将其中1只送入弃牌堆，然后对该敌人造成[blue]{CyberneticHiddenTechnologyPower:diff()}[/blue]点伤害。",
+    "V_YGO_CARD_CYBERDARK_HORN.title": "电子暗黑魔角",
+    "V_YGO_CARD_CYBERDARK_HORN.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]：从弃牌堆中选择1只机械族怪兽装备，并获得其攻击力加成。",
+    "V_YGO_CARD_CYBERDARK_HORN.selectionScreenPrompt": "选择1只机械族怪兽装备。"
 }

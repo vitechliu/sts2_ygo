@@ -13,10 +13,8 @@ namespace VYgo.Scripts.Cards.Category.Common;
 public class MaxxC() : BaseMonsterCard(1, CardRarity.Common, TargetType.None), IModRightClickableCard {
     public override int CardId => 23434538;
 
-    public override int BaseAttackVar => 1;
-    public override int BaseLifeVar => 1;
-    public override int UpgradeAttackVar => 1;
-    public override int UpgradeLifeVar => 1;
+    public override int BaseAttackVar => 2;
+    public override int BaseLifeVar => 2;
     
     
 
@@ -28,5 +26,9 @@ public class MaxxC() : BaseMonsterCard(1, CardRarity.Common, TargetType.None), I
     public async Task OnRightClick(ModRightClickExecutionContext context) {
         await PowerCmd.Apply<MaxxCPower>(context.PlayerChoiceContext, Owner.Creature, 1m, Owner.Creature, this);
         await CardCmd.Discard(context.PlayerChoiceContext, this);
+    }
+
+    protected override void OnUpgrade() {
+        EnergyCost.UpgradeBy(-1);
     }
 }
