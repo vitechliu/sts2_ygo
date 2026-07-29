@@ -43,6 +43,18 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
     
     //防止多次死亡结算
     protected bool PileSent;
+
+    internal bool TryReserveSourceCardAsSummonMaterial(CardModel card) {
+        if (PileSent || SourceCard != card || Creature is not { IsAlive: true }) return false;
+        PileSent = true;
+        return true;
+    }
+
+    internal void CancelSourceCardMaterialReservation(CardModel card) {
+        if (SourceCard == card && Creature is { IsAlive: true }) {
+            PileSent = false;
+        }
+    }
     public virtual bool IsGuardian {
         get;
         set;

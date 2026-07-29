@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://Core/Effects/NXyzSummon2D.cs" id="1_root"]
+[ext_resource type="Script" path="res://Core/Effects/NXyzSummonManager.cs" id="2_manager"]
+
+[sub_resource type="World3D" id="World3D_xyz"]
+
+[node name="XyzSummon3D" type="Node2D" node_paths=PackedStringArray("Manager")]
+z_index = 900
+script = ExtResource("1_root")
+Manager = NodePath("SubViewportContainer/SubViewport/XyzSummonManager")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = 540.0
+mouse_filter = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+own_world_3d = true
+world_3d = SubResource("World3D_xyz")
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="XyzSummonManager" type="Node3D" parent="SubViewportContainer/SubViewport"]
+script = ExtResource("2_manager")
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/XyzSummonManager"]
+current = true
+fov = 46.0
+near = 0.05
+far = 160.0
+
+[node name="StageRoot" type="Node3D" parent="SubViewportContainer/SubViewport/XyzSummonManager"]

@@ -40,6 +40,9 @@ public static class YgoHoverTipConst {
     public static IHoverTip FusionSummon() {
         return Base("FUSION_SUMMON");
     }
+    public static IHoverTip XyzSummon() {
+        return Base("XYZ_SUMMON");
+    }
     //送墓
     public static IHoverTip SendToGraveyard() {
         return Base("SEND_TO_GRAVEYARD");
@@ -62,6 +65,11 @@ public static class YgoHoverTipConst {
     //手发
     public static IHoverTip HandAction() {
         return Base("HAND_ACTION");
+    }
+    
+    //超量素材
+    public static IHoverTip XYZMaterial() {
+        return Base("XYZ_MATERIAL");
     }
     //卡名替代
     public static IHoverTip NameAs(YgoMaterialNames name) {

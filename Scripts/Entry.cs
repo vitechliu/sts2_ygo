@@ -35,6 +35,8 @@ public static class Entry {
     public static PileType MonsterPile;
     //装备中的魔法卡
     public static PileType EquipPile;
+    //附着在超量怪兽下方的素材卡
+    public static PileType XyzMaterialPile;
 
     public static Dictionary<int, BaseVYgoCard> CardYgoIdCache { get; private set; } = new();
     public static Dictionary<int, BaseMonster> MonsterYgoIdCache { get; private set; } = new();
@@ -175,6 +177,12 @@ public static class Entry {
         }).PileType;
 
         EquipPile = registry.RegisterOwned("equip_pile", new ModCardPileSpec {
+            Scope = ModCardPileScope.CombatOnly,
+            Style = ModCardPileUiStyle.Headless,
+            Anchor = ModCardPileAnchor.Default
+        }).PileType;
+
+        XyzMaterialPile = registry.RegisterOwned("xyz_material_pile", new ModCardPileSpec {
             Scope = ModCardPileScope.CombatOnly,
             Style = ModCardPileUiStyle.Headless,
             Anchor = ModCardPileAnchor.Default

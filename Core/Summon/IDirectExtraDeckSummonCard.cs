@@ -15,6 +15,8 @@ public interface IDirectExtraDeckSummonCard {
 public sealed record DirectExtraDeckSummonSpec(
     Func<SummonMaterialSelectionSpec?> BuildMaterialSelection,
     Func<SummonAnimationContext, Task> PlayAnimation,
-    Func<IReadOnlyList<SummonMaterial>, Task>? ConsumeMaterials = null,
+    Func<IReadOnlyList<SummonMaterial>, Task<bool>>? ConsumeMaterials = null,
+    Func<SummonPostPlayContext, Task<bool>>? AfterAutoPlay = null,
+    Func<IReadOnlyList<SummonMaterial>, Task>? OnSummonFailedAfterConsumption = null,
     float FinalWaitSeconds = 0.45f
 );

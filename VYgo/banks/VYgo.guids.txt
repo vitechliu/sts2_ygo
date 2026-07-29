@@ -19,6 +19,13 @@
 {d37e890c-f318-456e-8a15-6ace2f912363} event:/vygo/sfx/link_summon_05
 {5bd2d9ae-2146-4d7b-8fff-ae432a42f589} event:/vygo/sfx/material_01
 {0f2f2a84-616b-40bd-8794-9ba4231f7f57} event:/vygo/sfx/material_shine
+{11261ea7-bae7-4dde-ab07-96ce2c30ab48} event:/vygo/sfx/xyz_01
+{dea32a72-8718-4ed1-803b-8b1f8ce94d90} event:/vygo/sfx/xyz_02_01
+{8dae6387-cd12-4b4b-be5e-7849f3f6a45a} event:/vygo/sfx/xyz_02_02
+{abb1cebb-2f10-48ca-ba07-40aca0a8e26c} event:/vygo/sfx/xyz_02_03
+{4ecc4d32-4d66-431c-adb0-34b5a02db5a0} event:/vygo/sfx/xyz_03
+{52fe1cd5-f3bb-4df8-a847-5e29ffd5bbc4} event:/vygo/sfx/xyz_04
+{fd3efc95-d58d-4462-b09e-19f808c397ff} event:/vygo/sfx/xyz_material
 {06cefc2c-7055-44b5-af2e-7652cd2414d6} parameter:/Progress
 {a36ba432-c5b1-44ff-b5e4-12f654cfa067} parameter:/sfx_duck
 {9fd4e212-6c2e-4b45-8a4b-942284c71171} parameter:/sfx_duck_big

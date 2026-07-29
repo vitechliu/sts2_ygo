@@ -37,6 +37,15 @@ public sealed record LinkSummonRequest(
     Func<BaseExtraLinkCard, CoreCard, IReadOnlyList<SummonMaterial>> GetAvailableMaterials
 );
 
+public sealed record XyzSummonRequest(
+    CardModel? SourceCard,
+    Player Owner,
+    PlayerChoiceContext ChoiceContext,
+    LocString SelectionPrompt,
+    Func<BaseExtraXyzCard, CoreCard, IReadOnlyList<SummonMaterial>> GetAvailableMaterials,
+    Func<BaseExtraXyzCard, bool>? XyzCardFilter = null
+);
+
 public sealed record ExtraDeckSummonRequest(
     CardModel? SourceCard,
     Player Owner,
@@ -45,7 +54,9 @@ public sealed record ExtraDeckSummonRequest(
     Func<CardModel, bool> ExtraCardFilter,
     Func<CardModel, SummonMaterialSelectionSpec?> BuildMaterialSelection,
     Func<SummonAnimationContext, Task> PlayAnimation,
-    Func<IReadOnlyList<SummonMaterial>, Task>? ConsumeMaterials = null,
+    Func<IReadOnlyList<SummonMaterial>, Task<bool>>? ConsumeMaterials = null,
+    Func<SummonPostPlayContext, Task<bool>>? AfterAutoPlay = null,
+    Func<IReadOnlyList<SummonMaterial>, Task>? OnSummonFailedAfterConsumption = null,
     float FinalWaitSeconds = 0.45f
 );
 
@@ -56,7 +67,9 @@ public sealed record SelectedExtraDeckSummonRequest(
     Func<SummonMaterialSelectionSpec?> BuildMaterialSelection,
     Func<SummonAnimationContext, Task> PlayAnimation,
     CardModel? SourceCard = null,
-    Func<IReadOnlyList<SummonMaterial>, Task>? ConsumeMaterials = null,
+    Func<IReadOnlyList<SummonMaterial>, Task<bool>>? ConsumeMaterials = null,
+    Func<SummonPostPlayContext, Task<bool>>? AfterAutoPlay = null,
+    Func<IReadOnlyList<SummonMaterial>, Task>? OnSummonFailedAfterConsumption = null,
     float FinalWaitSeconds = 0.45f
 );
 
@@ -65,6 +78,13 @@ public sealed record SummonAnimationContext(
     IReadOnlyList<SummonMaterial> Materials,
     IReadOnlyList<CardModel> MaterialCards,
     Vector2 ScreenCenterPos
+);
+
+public sealed record SummonPostPlayContext(
+    CardModel FinalCard,
+    Player Owner,
+    PlayerChoiceContext ChoiceContext,
+    IReadOnlyList<SummonMaterial> Materials
 );
 
 public static class SummonUtil {
@@ -119,6 +139,50 @@ public static class SummonUtil {
         ));
     }
 
+    public static Task ExecuteXyzSummon(XyzSummonRequest request) {
+        return ExecuteExtraDeckSummon(new ExtraDeckSummonRequest(
+            SourceCard: request.SourceCard,
+            Owner: request.Owner,
+            ChoiceContext: request.ChoiceContext,
+            SelectionPrompt: request.SelectionPrompt,
+            ExtraCardFilter: card => card is BaseExtraXyzCard xyzCard
+                && (request.XyzCardFilter?.Invoke(xyzCard) ?? true),
+            BuildMaterialSelection: card => BuildXyzMaterialSelection(
+                card,
+                request.Owner,
+                request.GetAvailableMaterials
+            ),
+            PlayAnimation: ExtraDeckSummonAnimations.PlayXyzSummonAnimation,
+            ConsumeMaterials: materials =>
+                XyzMaterialCmd.ReserveForSummon(request.Owner, materials),
+            AfterAutoPlay: XyzMaterialCmd.AttachReservedToSummonedMonster,
+            OnSummonFailedAfterConsumption: materials =>
+                XyzMaterialCmd.SendReservedToGraveyard(request.Owner, materials),
+            FinalWaitSeconds: 0.45f
+        ));
+    }
+
+    internal static DirectExtraDeckSummonSpec CreateDirectXyzSummonSpec(
+        BaseExtraXyzCard card,
+        Player owner,
+        Func<BaseExtraXyzCard, CoreCard, IReadOnlyList<SummonMaterial>> getAvailableMaterials
+    ) {
+        return new DirectExtraDeckSummonSpec(
+            BuildMaterialSelection: () => BuildXyzMaterialSelection(
+                card,
+                owner,
+                getAvailableMaterials
+            ),
+            PlayAnimation: ExtraDeckSummonAnimations.PlayXyzSummonAnimation,
+            ConsumeMaterials: materials =>
+                XyzMaterialCmd.ReserveForSummon(owner, materials),
+            AfterAutoPlay: XyzMaterialCmd.AttachReservedToSummonedMonster,
+            OnSummonFailedAfterConsumption: materials =>
+                XyzMaterialCmd.SendReservedToGraveyard(owner, materials),
+            FinalWaitSeconds: 0.45f
+        );
+    }
+
     public static IReadOnlyList<SummonMaterial> GetFieldMonsterMaterials(
         Player owner,
         Func<SummonMaterial, bool>? filter = null
@@ -169,8 +233,10 @@ public static class SummonUtil {
             );
         if (!latestSelection.IsValidSelection(resolvedMaterials)) return false;
 
-        await ConsumeSummonMaterials(choiceContext, resolvedMaterials.ToList());
-        return true;
+        return await ConsumeSummonMaterials(
+            choiceContext,
+            resolvedMaterials.ToList()
+        );
     }
 
     public static IReadOnlyList<SummonMaterial> GetFieldAndHandMonsterMaterials(
@@ -227,6 +293,8 @@ public static class SummonUtil {
             PlayAnimation: request.PlayAnimation,
             SourceCard: request.SourceCard,
             ConsumeMaterials: request.ConsumeMaterials,
+            AfterAutoPlay: request.AfterAutoPlay,
+            OnSummonFailedAfterConsumption: request.OnSummonFailedAfterConsumption,
             FinalWaitSeconds: request.FinalWaitSeconds
         ));
     }
@@ -269,6 +337,8 @@ public static class SummonUtil {
             sourceNode.Visible = false;
         }
 
+        bool materialsConsumed = false;
+        bool summonCompleted = false;
         try {
             IReadOnlyList<CardModel> materialCards = materials
                 .Select(material => material.Card)
@@ -276,11 +346,12 @@ public static class SummonUtil {
                 .ToList();
 
             if (request.ConsumeMaterials != null) {
-                await request.ConsumeMaterials(materials);
+                materialsConsumed = await request.ConsumeMaterials(materials);
             }
             else {
-                await ConsumeSummonMaterials(request.ChoiceContext, materials);
+                materialsConsumed = await ConsumeSummonMaterials(request.ChoiceContext, materials);
             }
+            if (!materialsConsumed) return;
 
             Vector2 screenCenterPos = NGame.Instance.GetViewportRect().Size * 0.5f;
             await request.PlayAnimation(new SummonAnimationContext(
@@ -299,12 +370,30 @@ public static class SummonUtil {
                     false,
                     true
                 );
+
+                if (request.AfterAutoPlay != null
+                    && !await request.AfterAutoPlay(new SummonPostPlayContext(
+                        selectedExtraCard,
+                        request.Owner,
+                        request.ChoiceContext,
+                        materials
+                    ))) {
+                    return;
+                }
+
+                summonCompleted = true;
                 extraPile.InvokeCardRemoveFinished();
             }
 
             await VFXUtil.Wait(request.FinalWaitSeconds);
         }
         finally {
+            if (materialsConsumed
+                && !summonCompleted
+                && request.OnSummonFailedAfterConsumption != null) {
+                await request.OnSummonFailedAfterConsumption(materials);
+            }
+
             if (sourceNode != null && GodotObject.IsInstanceValid(sourceNode)) {
                 sourceNode.Visible = true;
             }
@@ -355,6 +444,33 @@ public static class SummonUtil {
             linkCard.GetMinLinkMaterialCount(coreCard),
             linkCard.GetMaxLinkMaterialCount(coreCard),
             materials => linkCard.HasValidLinkMaterials(coreCard, materials)
+                && CanSummonWithMaterials(owner, materials)
+        );
+    }
+
+    internal static SummonMaterialSelectionSpec? BuildXyzMaterialSelection(
+        CardModel card,
+        Player owner,
+        Func<BaseExtraXyzCard, CoreCard, IReadOnlyList<SummonMaterial>> getAvailableMaterials
+    ) {
+        if (card is not BaseExtraXyzCard xyzCard) return null;
+
+        CoreCard? coreCard = xyzCard.YgoGetCore();
+        if (coreCard?.Rank is not > 0) {
+            Entry.Logger.Error("Failed to get Xyz rank data: " + xyzCard.CardId);
+            return null;
+        }
+
+        IReadOnlyList<SummonMaterial> candidates = getAvailableMaterials(xyzCard, coreCard)
+            .Where(material => material.Card != null)
+            .Where(material => xyzCard.CanUseXyzMaterial(coreCard, material))
+            .ToList();
+
+        return new SummonMaterialSelectionSpec(
+            candidates,
+            xyzCard.MinXyzMaterialCount,
+            xyzCard.MaxXyzMaterialCount,
+            materials => xyzCard.HasValidXyzMaterials(coreCard, materials)
                 && CanSummonWithMaterials(owner, materials)
         );
     }
@@ -414,7 +530,7 @@ public static class SummonUtil {
         );
     }
 
-    private static async Task ConsumeSummonMaterials(
+    private static async Task<bool> ConsumeSummonMaterials(
         PlayerChoiceContext choiceContext,
         IReadOnlyList<SummonMaterial> materials
     ) {
@@ -430,15 +546,16 @@ public static class SummonUtil {
             }
         }
 
-        if (consumeTasks.Count <= 0) return;
+        if (consumeTasks.Count <= 0) return false;
         if (hasFieldMaterial) {
             SFXUtil.Play("event:/vygo/sfx/material_shine");
         }
 
         await Task.WhenAll(consumeTasks);
+        return true;
     }
 
-    private static async Task MaterialSacrifice(Creature material) {
+    internal static async Task MaterialSacrifice(Creature material) {
         var nCreature = material.GetCreatureNode();
         if (nCreature?.Visuals is not NMonsterVisuals visuals) {
             await CreatureCmd.Kill(material, true);

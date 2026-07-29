@@ -7,8 +7,6 @@
     "V_YGO_CARD_CYBER_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n如果你没有控制任何随从，可以[gold]特招[/gold]",
     "V_YGO_CARD_PROTO_CYBER_DRAGON.title": "原始电子龙",
     "V_YGO_CARD_PROTO_CYBER_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])",
-    "V_YGO_CARD_CYBER_DRAGON_INFINITY.title": "电子龙·无限",
-    "V_YGO_CARD_CYBER_DRAGON_INFINITY.description": "",
     "V_YGO_CARD_CYBER_DRAGON_SIEGER.title": "电子龙·凯旋",
     "V_YGO_CARD_CYBER_DRAGON_SIEGER.description": "[gold]连接召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]包含「电子龙」的机械族怪兽2只。[/aqua]\n可以攻击两次。",
     "V_YGO_CARD_TEST3_D_CARD.title": "oiiaiooiiai",
@@ -84,5 +82,9 @@
     "V_YGO_CARD_CYBERNETIC_HIDDEN_TECHNOLOGY.description": "每当敌人攻击时，若额外卡组中有融合怪兽，随机将其中1只送入弃牌堆，然后对该敌人造成[blue]{CyberneticHiddenTechnologyPower:diff()}[/blue]点伤害。",
     "V_YGO_CARD_CYBERDARK_HORN.title": "电子暗黑魔角",
     "V_YGO_CARD_CYBERDARK_HORN.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]：从弃牌堆中选择1只机械族怪兽装备，并获得其攻击力加成。",
-    "V_YGO_CARD_CYBERDARK_HORN.selectionScreenPrompt": "选择1只机械族怪兽装备。"
+    "V_YGO_CARD_CYBERDARK_HORN.selectionScreenPrompt": "选择1只机械族怪兽装备。",
+    "V_YGO_CARD_CYBER_DRAGON_NOVA.title": "电子龙·新星",
+    "V_YGO_CARD_CYBER_DRAGON_NOVA.description": "[gold]超量召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]机械族5星怪兽×2。[/aqua]\n[gold]启动[/gold]:去除1个[gold]素材[/gold]发动，从弃牌堆选择一只「电子龙」特召。",
+    "V_YGO_CARD_CYBER_DRAGON_INFINITY.title": "电子龙·无限",
+    "V_YGO_CARD_CYBER_DRAGON_INFINITY.description": "[gold]超量召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]机械族·光属性6星怪兽×3或「电子龙·新星」x1。\n[/aqua][gold]启动[/gold]:获得1层[gold]无效[/gold]。"
 }
