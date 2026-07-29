@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dphgqhwrqu2rm"
+path="res://.godot/imported/fxm_Spiral_004.obj-c044f1b20bdee604a4daa5565af0fa18.mesh"
+
+[deps]
+
+files=["res://.godot/imported/fxm_Spiral_004.obj-c044f1b20bdee604a4daa5565af0fa18.mesh"]
+
+source_file="res://VYgo/scenes/summon/xyz/assets/fxm_Spiral_004.obj"
+dest_files=["res://.godot/imported/fxm_Spiral_004.obj-c044f1b20bdee604a4daa5565af0fa18.mesh", "res://.godot/imported/fxm_Spiral_004.obj-c044f1b20bdee604a4daa5565af0fa18.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

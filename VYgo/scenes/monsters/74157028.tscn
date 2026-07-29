@@ -19,9 +19,10 @@ texture = ExtResource("1_8kv8s")
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
-offset_left = -65.0
-offset_top = -190.0
-offset_right = 65.0
+offset_left = -91.0
+offset_top = -176.0
+offset_right = 85.0
+offset_bottom = 2.0
 
 [node name="CenterPos" type="Marker2D" parent="."]
 unique_name_in_owner = true

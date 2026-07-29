@@ -24,11 +24,14 @@ namespace VYgo.Core;
 internal static class ExtraDeckSummonAnimations {
     public const string FusionSummon2DAssets = "res://VYgo/scenes/summon/fusion/fusion_summon_2d.tscn";
     public const string LinkSummon2DAssets = "res://VYgo/scenes/summon/link/link_summon_2d.tscn";
+    public const string XyzSummon2DAssets = "res://VYgo/scenes/summon/xyz/xyz_summon_2d.tscn";
 
     private static readonly Color FusionRed = new("ff315e");
     private static readonly Color FusionBlue = new("3fb4ff");
     private static readonly Color FusionViolet = new("bd4cff");
     private static readonly Color LinkMagenta = new("ff00ff");
+    private static readonly Color XyzBlue = new("55bfff");
+    private static readonly Color XyzViolet = new("8a63ff");
 
     private static readonly List<(int Trail, CardLinkMarker Marker)> LinkMarkers = new() {
         (2, CardLinkMarker.Top),
@@ -238,6 +241,230 @@ internal static class ExtraDeckSummonAnimations {
             .SetTrans(Tween.TransitionType.Sine);
         await settle.AwaitFinished(ctx.Pivot);
         await VFXUtil.Wait(0.18f);
+    }
+
+    internal static async Task PlayXyzSummonAnimation(SummonAnimationContext context) {
+        IReadOnlyList<CardModel> visibleMaterials = context.MaterialCards.Take(6).ToList();
+        if (visibleMaterials.Count == 0) return;
+
+        var xyzAnim2D = VFXUtil.GenVFXNode<NXyzSummon2D>(XyzSummon2DAssets);
+        NCombatRoom.Instance.CombatVfxContainer.AddChild(xyzAnim2D);
+        xyzAnim2D.GlobalPosition = context.ScreenCenterPos;
+
+        try {
+            SFXUtil.Play("event:/vygo/sfx/xyz_01");
+            await Card3DEffectUtil.RunMultipleCard3DEffect(
+                visibleMaterials,
+                async (ctxs, centerPos) => await AnimateXyzMaterials(
+                    ctxs,
+                    centerPos,
+                    xyzAnim2D,
+                    context.Materials.Count
+                ),
+                context.ScreenCenterPos,
+                scaleMultiplier: 1.02f,
+                horizontalSpacing: 300f,
+                initialOpacity: 0f
+            );
+
+            SFXUtil.Play("event:/vygo/sfx/xyz_03");
+            await PlayXyzResultCard(
+                context.FinalCard,
+                context.ScreenCenterPos,
+                xyzAnim2D
+            );
+            await xyzAnim2D.Manager.FadeOut();
+        }
+        catch (Exception ex) {
+            Entry.Logger.Warn("PlayXyzSummonAnimation exception: " + ex);
+        }
+        finally {
+            if (GodotObject.IsInstanceValid(xyzAnim2D)) {
+                xyzAnim2D.QueueFreeSafely();
+            }
+        }
+    }
+
+    private static async Task AnimateXyzMaterials(
+        IReadOnlyList<Card3DEffectContext> ctxs,
+        Vector2 centerPos,
+        NXyzSummon2D xyzAnim2D,
+        int actualMaterialCount
+    ) {
+        if (ctxs.Count == 0) return;
+
+        foreach (Card3DEffectContext ctx in ctxs) {
+            ConfigureCardEffect(ctx, XyzBlue, XyzViolet, 1.75f, 0.12f);
+            ctx.DisplaySprite.ZIndex = 1005;
+        }
+
+        Vector2[] positions = BuildXyzMaterialLayout(ctxs.Count, centerPos);
+        float[] yaws = DistributeYaws(ctxs.Count);
+        List<Tween> revealTweens = new(ctxs.Count);
+        for (int i = 0; i < ctxs.Count; i++) {
+            Card3DEffectContext ctx = ctxs[i];
+            ctx.DisplaySprite.GlobalPosition = positions[i];
+            ctx.Pivot.RotationDegrees = new Vector3(-7f, yaws[i] * 1.15f, (i - (ctxs.Count - 1) * 0.5f) * 2.5f);
+            Tween reveal = CreateHoverTween(ctx, yaws[i] * 0.45f, -6f, 0.68f, 0.78f);
+            reveal.TweenProperty(ctx.DisplaySprite, "global_position:y", positions[i].Y - 24f, 0.68f)
+                .SetEase(Tween.EaseType.InOut)
+                .SetTrans(Tween.TransitionType.Sine);
+            revealTweens.Add(reveal);
+        }
+
+        Task mainStageTask = xyzAnim2D.Manager.PlayMain(ctxs.Count);
+        await Task.WhenAll(Enumerable.Range(0, ctxs.Count)
+            .Select(i => revealTweens[i].AwaitFinished(ctxs[i].Pivot)));
+        await VFXUtil.Wait(0.17f);
+
+        SFXUtil.Play(actualMaterialCount switch {
+            1 => "event:/vygo/sfx/xyz_02_01",
+            2 => "event:/vygo/sfx/xyz_02_02",
+            _ => "event:/vygo/sfx/xyz_02_03"
+        });
+        SFXUtil.Play("event:/vygo/sfx/xyz_material");
+
+        await SpiralCardsIntoXyz(ctxs, centerPos);
+        await mainStageTask;
+    }
+
+    private static Vector2[] BuildXyzMaterialLayout(int count, Vector2 centerPos) {
+        Vector2[] positions = new Vector2[count];
+        if (count == 1) {
+            positions[0] = centerPos;
+            return positions;
+        }
+
+        float radiusX = count <= 3 ? 260f : 355f;
+        float radiusY = count <= 3 ? 90f : 185f;
+        float startAngle = -Mathf.Pi * 0.88f;
+        float endAngle = -Mathf.Pi * 0.12f;
+        for (int i = 0; i < count; i++) {
+            float t = (float)i / (count - 1);
+            float angle = Mathf.Lerp(startAngle, endAngle, t);
+            positions[i] = centerPos + new Vector2(
+                Mathf.Cos(angle) * radiusX,
+                Mathf.Sin(angle) * radiusY - 30f
+            );
+        }
+        return positions;
+    }
+
+    private static async Task SpiralCardsIntoXyz(
+        IReadOnlyList<Card3DEffectContext> ctxs,
+        Vector2 centerPos
+    ) {
+        const float Duration = 1.15f;
+        const float Stagger = 0.035f;
+        Tween tween = ctxs[0].DisplaySprite.CreateTween().SetParallel();
+
+        for (int i = 0; i < ctxs.Count; i++) {
+            Card3DEffectContext ctx = ctxs[i];
+            int materialIndex = i;
+            Vector2 start = ctx.DisplaySprite.GlobalPosition;
+            float startRadius = Math.Max(1f, start.DistanceTo(centerPos));
+            float startAngle = (start - centerPos).Angle();
+            Vector2 startScale = ctx.DisplaySprite.Scale;
+            Color startModulate = ctx.DisplaySprite.Modulate;
+            float startRotation = ctx.DisplaySprite.Rotation;
+            Vector3 startPivotRotation = ctx.Pivot.RotationDegrees;
+
+            tween.TweenMethod(
+                    Callable.From<float>(value => {
+                        float progress = SmoothStep(value);
+                        float angle = startAngle
+                            + Mathf.Tau * (1.25f + materialIndex * 0.06f) * progress;
+                        float radius = startRadius * Mathf.Pow(1f - progress, 1.65f);
+                        ctx.DisplaySprite.GlobalPosition =
+                            centerPos + Vector2.FromAngle(angle) * radius;
+                        ctx.DisplaySprite.Rotation =
+                            startRotation + Mathf.Tau * 0.85f * progress;
+                        ctx.DisplaySprite.Scale =
+                            startScale * Mathf.Lerp(1f, 0.06f, Mathf.Pow(progress, 1.8f));
+                        ctx.DisplaySprite.Modulate = startModulate with {
+                            A = Mathf.Lerp(startModulate.A, 0f, Mathf.Pow(progress, 3f))
+                        };
+                        ctx.Pivot.RotationDegrees = new Vector3(
+                            Mathf.Lerp(startPivotRotation.X, -38f, progress),
+                            Mathf.Lerp(startPivotRotation.Y, 110f, progress),
+                            Mathf.Lerp(startPivotRotation.Z, 35f, progress)
+                        );
+                        ctx.CardMaterial.SetShaderParameter(
+                            "outline_strength",
+                            Mathf.Lerp(1.8f, 4.8f, progress)
+                        );
+                        ctx.GlowMaterial.SetShaderParameter(
+                            "glow_intensity",
+                            Mathf.Lerp(1.75f, 4.2f, progress)
+                        );
+                    }),
+                    0f,
+                    1f,
+                    Duration)
+                .SetDelay(i * Stagger);
+        }
+
+        await tween.AwaitFinished(ctxs[0].DisplaySprite);
+    }
+
+    private static async Task PlayXyzResultCard(
+        CardModel finalCard,
+        Vector2 centerPos,
+        NXyzSummon2D xyzAnim2D
+    ) {
+        await Card3DEffectUtil.RunMultipleCard3DEffect(
+            new[] { finalCard },
+            async (ctxs, target) => {
+                if (ctxs.Count == 0) return;
+                Card3DEffectContext ctx = ctxs[0];
+                ConfigureCardEffect(ctx, XyzBlue, XyzViolet, 2.2f, 0.1f);
+                ctx.DisplaySprite.GlobalPosition = target;
+                ctx.DisplaySprite.ZIndex = 1015;
+                ctx.Pivot.Position = new Vector3(0f, 0f, -1650f);
+                ctx.Pivot.RotationDegrees = new Vector3(-28f, 84f, -14f);
+
+                Task explosionTask = xyzAnim2D.Manager.PlayExplosion();
+                Tween reveal = ctx.Pivot.CreateTween().SetParallel();
+                reveal.TweenProperty(ctx.DisplaySprite, "modulate:a", 1f, 0.05f)
+                    .SetEase(Tween.EaseType.Out)
+                    .SetTrans(Tween.TransitionType.Quad);
+                reveal.TweenProperty(ctx.Pivot, "position", Vector3.Zero, 0.5f)
+                    .SetEase(Tween.EaseType.Out)
+                    .SetTrans(Tween.TransitionType.Expo);
+                reveal.TweenProperty(ctx.Pivot, "rotation_degrees", new Vector3(0f, -5f, 0f), 0.55f)
+                    .SetEase(Tween.EaseType.Out)
+                    .SetTrans(Tween.TransitionType.Back);
+                TweenShaderFloat(reveal, ctx.CardMaterial, "outline_strength", 0.8f, 4.2f, 0.18f)
+                    .SetEase(Tween.EaseType.Out)
+                    .SetTrans(Tween.TransitionType.Cubic);
+                TweenShaderFloat(reveal, ctx.GlowMaterial, "glow_opacity", 0f, 0.92f, 0.2f)
+                    .SetEase(Tween.EaseType.Out)
+                    .SetTrans(Tween.TransitionType.Cubic);
+                await Task.WhenAll(
+                    reveal.AwaitFinished(ctx.Pivot),
+                    explosionTask
+                );
+
+                SFXUtil.Play("event:/vygo/sfx/xyz_04");
+                Task postStageTask = xyzAnim2D.Manager.PlayPostXyz();
+                Tween settle = ctx.Pivot.CreateTween().SetParallel();
+                settle.TweenProperty(ctx.Pivot, "rotation_degrees", new Vector3(0f, 4f, 0f), 0.14f)
+                    .SetEase(Tween.EaseType.InOut)
+                    .SetTrans(Tween.TransitionType.Sine);
+                TweenShaderFloat(settle, ctx.GlowMaterial, "glow_opacity", 0.92f, 0.55f, 0.14f)
+                    .SetEase(Tween.EaseType.Out)
+                    .SetTrans(Tween.TransitionType.Sine);
+                await Task.WhenAll(
+                    settle.AwaitFinished(ctx.Pivot),
+                    postStageTask
+                );
+                await VFXUtil.Wait(0.03f);
+            },
+            centerPos,
+            scaleMultiplier: 1.34f,
+            horizontalSpacing: 0f,
+            initialOpacity: 0f
+        );
     }
 
     internal static async Task PlayLinkSummonAnimation(SummonAnimationContext context) {

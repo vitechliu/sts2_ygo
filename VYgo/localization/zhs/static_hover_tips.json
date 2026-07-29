@@ -13,6 +13,8 @@
   "V_YGO_LINK_SUMMON.description": "根据连接素材要求召唤连接怪兽。可通过右键遗物[gold]电脑网络[/gold]进行。",
   "V_YGO_FUSION_SUMMON.title": "融合召唤",
   "V_YGO_FUSION_SUMMON.description": "根据融合素材要求召唤融合怪兽。一般需要借助融合魔法卡。",
+  "V_YGO_XYZ_SUMMON.title": "超量召唤",
+  "V_YGO_XYZ_SUMMON.description": "将场上相同等级的怪兽作为素材叠放，召唤对应阶级的超量怪兽。",
   "V_YGO_SEND_TO_GRAVEYARD.title": "送墓",
   "V_YGO_SEND_TO_GRAVEYARD.description": "当怪兽死亡时触发。",
   "V_YGO_ENTER_FIELD.title": "登场",
@@ -26,5 +28,7 @@
   "V_YGO_SET_CARD.title": "盖伏",
   "V_YGO_SET_CARD.description": "需要盖伏的效果，需要到回合结束后才能生效或者起效。",
   "V_YGO_HAND_ACTION.title": "手发",
-  "V_YGO_HAND_ACTION.description": "在手牌丢弃以发动特殊效果，右键激活。"
+  "V_YGO_HAND_ACTION.description": "在手牌丢弃以发动特殊效果，右键激活。",
+  "V_YGO_XYZ_MATERIAL.title": "超量素材",
+  "V_YGO_XYZ_MATERIAL.description": "超量召唤的素材"
 }

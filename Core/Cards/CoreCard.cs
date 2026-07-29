@@ -54,6 +54,16 @@ public record CoreCard(
 
     public bool HasLevel => Level is > 0 && Types?.Contains("[★") == true;
 
+    public bool IsXyzMonster =>
+        Types?.Contains("超量") == true
+        || Types?.Contains("XYZ", StringComparison.OrdinalIgnoreCase) == true;
+
+    /// <summary>
+    /// ygocdb stores an Xyz monster's Rank in the same numeric field used by monster Levels.
+    /// Keep the distinction at the runtime-model boundary so Rank is never exposed as a normal Level.
+    /// </summary>
+    public int? Rank => IsXyzMonster ? Level : null;
+
     public int? LinkCount {
         get {
             if (Def == null) return null;

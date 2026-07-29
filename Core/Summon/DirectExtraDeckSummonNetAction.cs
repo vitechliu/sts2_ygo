@@ -120,6 +120,8 @@ public static class DirectExtraDeckSummonNetAction {
             BuildMaterialSelection: spec.BuildMaterialSelection,
             PlayAnimation: spec.PlayAnimation,
             ConsumeMaterials: spec.ConsumeMaterials,
+            AfterAutoPlay: spec.AfterAutoPlay,
+            OnSummonFailedAfterConsumption: spec.OnSummonFailedAfterConsumption,
             FinalWaitSeconds: spec.FinalWaitSeconds
         ));
     }
