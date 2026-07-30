@@ -1,6 +1,7 @@
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Scripts.Pools;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.HoverTips;
 using VYgo.Core;
 using VYgo.Core.Cards;
 using VYgo.Scripts.Characters;
@@ -17,9 +18,11 @@ public class CyberDragonNova() : BaseExtraXyzCard(1, CardRarity.Basic, TargetTyp
     public override int UpgradeAttackVar => 1;
     public override int UpgradeLifeVar => 1;
 
-    // protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-    //     BaseSummonHoverTip,
-    // ];
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        BaseSummonHoverTip,
+        YgoHoverTipConst.XYZMaterial(),
+        YgoHoverTipConst.SpecialSummon()
+    ];
     
     public override bool CanUseXyzMaterial(CoreCard coreCard, SummonMaterial material) {
         return material.CoreCard?.Race == "机械族";

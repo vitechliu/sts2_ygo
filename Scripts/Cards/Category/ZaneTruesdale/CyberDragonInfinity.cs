@@ -1,9 +1,11 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.HoverTips;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
 using VYgo.Core.Cards;
 using VYgo.Scripts.Characters;
 using VYgo.Scripts.Pools;
+using VYgo.Scripts.Powers;
 
 namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
@@ -24,6 +26,12 @@ public class CyberDragonInfinity()
     public override int UpgradeAttackVar => 1;
     public override int UpgradeLifeVar => 1;
 
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        BaseSummonHoverTip,
+        HoverTipFactory.FromPower<NegatingPower>(),
+        HoverTipFactory.FromCard<CyberDragonNova>()
+    ];
+    
     public override bool CanUseXyzMaterial(CoreCard coreCard, SummonMaterial material) {
         return material.Card is CyberDragonNova;
     }

@@ -1,4 +1,6 @@
 ﻿{
   "V_YGO_KEYWORD_PIERCING.description": "怪兽造成伤害无视护盾。",
-  "V_YGO_KEYWORD_PIERCING.title": "穿甲"
+  "V_YGO_KEYWORD_PIERCING.title": "穿甲",
+  "V_YGO_KEYWORD_GROUP_ATTACK.description": "怪兽对所有敌人造成伤害。",
+  "V_YGO_KEYWORD_GROUP_ATTACK.title": "群攻"
 }

@@ -19,7 +19,6 @@ public sealed class CyberDragonNovaAction : BasePerTurnMonsterAction {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         YgoHoverTipConst.Action(),
         YgoHoverTipConst.SpecialSummon(),
-        YgoHoverTipConst.XYZMaterial()
     ];
     
     protected override bool IsVisibleInternal => true;
