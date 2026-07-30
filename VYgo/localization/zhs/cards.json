@@ -89,5 +89,8 @@
     "V_YGO_CARD_CYBER_DRAGON_INFINITY.description": "[gold]超量召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]机械族·光属性6星怪兽×3或「电子龙·新星」x1。\n[/aqua][gold]启动[/gold]:获得1层[gold]无效[/gold]。",
     "V_YGO_CARD_CYBERDARK_EDGE.title": "电子暗黑刃翼",
     "V_YGO_CARD_CYBERDARK_EDGE.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]：从弃牌堆中选择1只机械族怪兽[gold]装备[/gold]，并获得其攻击力加成。",
-    "V_YGO_CARD_CYBERDARK_EDGE.selectionScreenPrompt": "选择1只机械族怪兽[gold]装备[/gold]。"
+    "V_YGO_CARD_CYBERDARK_EDGE.selectionScreenPrompt": "选择1只机械族怪兽[gold]装备[/gold]。",
+    "V_YGO_CARD_CYBERDARK_KEEL.title": "电子暗黑龙骨",
+    "V_YGO_CARD_CYBERDARK_KEEL.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]：从弃牌堆中选择1只机械族怪兽[gold]装备[/gold]，并获得其生命值加成。",
+    "V_YGO_CARD_CYBERDARK_KEEL.selectionScreenPrompt": "选择1只机械族怪兽[gold]装备[/gold]。"
 }

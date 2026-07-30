@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=5 format=3 uid="uid://b8uyuvrobdijb"]
 
-[ext_resource type="Script" path="res://Core/Effects/NXyzSummon2D.cs" id="1_root"]
-[ext_resource type="Script" path="res://Core/Effects/NXyzSummonManager.cs" id="2_manager"]
+[ext_resource type="Script" uid="uid://cb2xwqg7dse7j" path="res://Core/Effects/NXyzSummon2D.cs" id="1_root"]
+[ext_resource type="Script" uid="uid://cey483l1n7ta" path="res://Core/Effects/NXyzSummonManager.cs" id="2_manager"]
 
 [sub_resource type="World3D" id="World3D_xyz"]
 
@@ -35,7 +35,6 @@ script = ExtResource("2_manager")
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/XyzSummonManager"]
 current = true
 fov = 46.0
-near = 0.05
 far = 160.0
 
 [node name="StageRoot" type="Node3D" parent="SubViewportContainer/SubViewport/XyzSummonManager"]
@@ -64,7 +63,6 @@ script = ExtResource("2_manager")
 [node name="Camera3D" type="Camera3D" parent="ForegroundViewportContainer/SubViewport/XyzSummonManager"]
 current = true
 fov = 46.0
-near = 0.05
 far = 160.0
 
 [node name="StageRoot" type="Node3D" parent="ForegroundViewportContainer/SubViewport/XyzSummonManager"]
