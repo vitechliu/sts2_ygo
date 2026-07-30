@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://yi7wdyy5hbvm"
-path="res://.godot/imported/reborn.png-4c787dd66bb79bc8886b1189d9ef3c6b.ctex"
+uid="uid://c7gio1fclxda5"
+path="res://.godot/imported/82562802.png-9f39135ad28097c4627c947ec4cf569c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://VYgo/images/intents/reborn.png"
-dest_files=["res://.godot/imported/reborn.png-4c787dd66bb79bc8886b1189d9ef3c6b.ctex"]
+source_file="res://VYgo/images/monster/82562802.png"
+dest_files=["res://.godot/imported/82562802.png-9f39135ad28097c4627c947ec4cf569c.ctex"]
 
 [params]
 

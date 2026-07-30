@@ -56,6 +56,10 @@ public static class YgoHoverTipConst {
     public static IHoverTip Equip() {
         return Base("EQUIP");
     }
+
+    public static IHoverTip Enhance() {
+        return Base("ENHANCE");
+    }
     
     //启动
     public static IHoverTip Action() {

@@ -25,7 +25,7 @@ public sealed class CyberDragonNovaAction : BasePerTurnMonsterAction {
     
     public override TargetType TargetType => TargetType.None;
 
-    protected override string? IntentIconPath => "res://VYgo/images/intents/reborn.png";
+    protected override string? IntentIconPath => "res://VYgo/images/powers/reborn.png";
     public override string? CustomIconPath => IntentIconPath;
 
     public override bool CanAct(ICombatState combatState) {

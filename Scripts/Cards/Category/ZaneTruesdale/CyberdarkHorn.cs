@@ -40,7 +40,7 @@ public class CyberdarkHorn() : BaseMonsterCard(1, CardRarity.Token, TargetType.N
                 context: choiceContext,
                 pile: PileType.Discard.GetPile(Owner),
                 player: Owner,
-                filter: IsMachineMonster))
+                filter: card => card is BaseMonsterCard))
             .OfType<BaseMonsterCard>()
             .FirstOrDefault();
         if (selectedMonster == null
@@ -59,10 +59,5 @@ public class CyberdarkHorn() : BaseMonsterCard(1, CardRarity.Token, TargetType.N
                 summonedCreature,
                 selectedMonster);
         }
-    }
-
-    private static bool IsMachineMonster(CardModel card) {
-        return card is BaseMonsterCard monsterCard
-            && monsterCard.YgoGetCore()?.Race == "机械族";
     }
 }
