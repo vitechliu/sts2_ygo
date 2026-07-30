@@ -7,18 +7,22 @@ using VYgo.Core;
 namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
-public class CyberdarkClaw()
+public class CyberdarkCannon()
     : BaseCyberdarkHandActionMonsterCard(1, CardRarity.Common, TargetType.None) {
-    public override int CardId => 82562802;
+    public override int CardId => 45078193;
 
     public override int BaseAttackVar => 4;
     public override int BaseLifeVar => 2;
 
     protected override IEnumerable<CardModel> GetHandActionCandidates() {
         return ModelDb.AllCards
-            .OfType<BaseVYgoCard>()
-            .Where(card =>
-                (card.YgoCardType is YgoType.spell or YgoType.trap)
-                && card.ContainArchetype(YgoArchetypes.Cyberdark));
+            .OfType<BaseMonsterCard>()
+            .Where(card => card.ContainArchetype(YgoArchetypes.Cyberdark));
+    }
+
+    protected override PileType GetGeneratedPileType(CardModel selectedCard) {
+        return selectedCard is BaseMonsterCard { IsExtra: true }
+            ? Entry.ExtraPile
+            : PileType.Hand;
     }
 }
