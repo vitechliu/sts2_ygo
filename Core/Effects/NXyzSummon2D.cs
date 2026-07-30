@@ -4,12 +4,16 @@ namespace VYgo.Core.Effects;
 
 public partial class NXyzSummon2D : Node2D {
     [Export] public NXyzSummonManager Manager = null!;
+    [Export] public NXyzSummonManager ForegroundManager = null!;
 
-    private SubViewportContainer _viewportContainer = null!;
+    private SubViewportContainer[] _viewportContainers = [];
 
     public override void _Ready() {
         base._Ready();
-        _viewportContainer = GetNode<SubViewportContainer>("SubViewportContainer");
+        _viewportContainers = [
+            GetNode<SubViewportContainer>("SubViewportContainer"),
+            GetNode<SubViewportContainer>("ForegroundViewportContainer")
+        ];
         ResizeViewport();
     }
 
@@ -19,7 +23,9 @@ public partial class NXyzSummon2D : Node2D {
             viewportSize = new Vector2(1920f, 1080f);
         }
 
-        _viewportContainer.Position = -viewportSize * 0.5f;
-        _viewportContainer.Size = viewportSize;
+        foreach (SubViewportContainer container in _viewportContainers) {
+            container.Position = -viewportSize * 0.5f;
+            container.Size = viewportSize;
+        }
     }
 }
