@@ -5,13 +5,13 @@ description: Create, process, validate, and integrate transparent 256x256 Power 
 
 # Draw Power Icons
 
-Create one transparent 256x256 PNG per Power and use the same file for `IconPath` and `BigIconPath`. Design for 64x64 first: one dominant silhouette, few large shapes, thick outlines, and large color regions.
+Create one transparent 256x256 PNG per Power and use the same file for `IconPath` and `BigIconPath`. Design for 64x64 first: one dominant silhouette, few large shapes, thick outlines, and large color regions. Make the subject fill the icon slot; treat transparent padding as a small safety gap, not decorative whitespace.
 
 ## Workflow
 
 1. Read the Power class and its localization. Base the metaphor on the actual effect, not only the class name.
 2. Choose one subject and at most three large supporting accents. Avoid text, card frames, circular badges, scenery, particles, thin lines, and tiny decoration.
-3. Read [references/style-spec.md](references/style-spec.md), then form a production prompt from its template.
+3. Read [references/style-spec.md](references/style-spec.md), then form a production prompt from its template. Explicitly request a silhouette that reaches roughly 85-95% of both source dimensions where its shape allows.
 4. Use the built-in `image_gen` tool at square resolution. Request a perfectly flat chroma-key background; use `#00ff00` unless the subject is green, then use `#ff00ff`.
 5. Copy the selected generated source into `/tmp/vygo-power-icons/`. Keep generated/keyed sources out of `VYgo/`.
 6. Run the deterministic finalizer with a Python that has Pillow:
@@ -21,12 +21,13 @@ Create one transparent 256x256 PNG per Power and use the same file for `IconPath
      --input /tmp/vygo-power-icons/<power>-source.png \
      --output VYgo/images/powers/<snake_case>_power.png \
      --preview /tmp/vygo-power-icons/<power>-64.png \
-     --report /tmp/vygo-power-icons/<power>-report.json
+     --report /tmp/vygo-power-icons/<power>-report.json \
+     --padding 12
    ```
 
    If plain `python3` lacks Pillow in Codex desktop, call `codex_app__load_workspace_dependencies` and use its bundled Python executable.
-7. Inspect both the 256 output and the 64 preview. At 64px, reject ambiguous silhouettes, lost internal gaps, muddy gradients, color-key fringe, or outline segments thinner than about 3px.
-8. Run strict validation:
+7. Inspect both the 256 output and the 64 preview. At 256px, inspect the reported `bbox` and all four margins: aim for about 12-24px on the sides reached by the subject. Reject a result when any avoidable margin exceeds 32px or when the visible bounding box spans less than 80% of either canvas dimension. Regenerate with a wider/taller composition instead of accepting a small centered subject or stretching it non-uniformly. At 64px, reject ambiguous silhouettes, lost internal gaps, muddy gradients, color-key fringe, or outline segments thinner than about 3px.
+8. Run strict validation. This checks technical constraints but does not replace the framing gate in step 7:
 
    ```bash
    python3 tools/power_icon_pipeline.py check VYgo/images/powers/<snake_case>_power.png --strict
@@ -38,6 +39,7 @@ Create one transparent 256x256 PNG per Power and use the same file for `IconPath
 ## Iteration rules
 
 - Fix semantic or composition failures by regenerating with one targeted prompt change.
+- Treat excessive empty space as a composition failure even if strict validation passes. Tighten framing until the subject looks large at native 64px.
 - Fix only outer silhouette thickness with `finalize --stroke 3 --stroke-color '#2b1720'`; do not use stroke as a substitute for a readable source design.
 - Never upscale a 64px icon into the 256px master.
 - Never overwrite an existing icon unless the user asked for replacement; use a temporary candidate filename while comparing variants.
@@ -49,4 +51,3 @@ Convert the class name without its final `Power` suffix to snake case and append
 
 - `SelfDestroyPower` -> `self_destroy_power.png`
 - `CyberNetworkPower` -> `cyber_network_power.png`
-

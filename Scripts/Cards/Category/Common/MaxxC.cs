@@ -10,7 +10,7 @@ using VYgo.Scripts.Powers;
 namespace VYgo.Scripts.Cards.Category.Common;
 
 [RegisterCard(typeof(CommonCardPool))]
-public class MaxxC() : BaseMonsterCard(1, CardRarity.Common, TargetType.None), IModRightClickableCard {
+public class MaxxC() : BaseRightClickableMonsterCard(1, CardRarity.Common, TargetType.None), IModRightClickableCard {
     public override int CardId => 23434538;
 
     public override int BaseAttackVar => 2;
@@ -23,7 +23,8 @@ public class MaxxC() : BaseMonsterCard(1, CardRarity.Common, TargetType.None), I
         YgoHoverTipConst.SpecialSummon(),
         YgoHoverTipConst.HandAction()
     ];
-    public async Task OnRightClick(ModRightClickExecutionContext context) {
+
+    protected override async Task OnYgoRightClick(ModRightClickExecutionContext context) {
         await PowerCmd.Apply<MaxxCPower>(context.PlayerChoiceContext, Owner.Creature, 1m, Owner.Creature, this);
         await CardCmd.Discard(context.PlayerChoiceContext, this);
     }
