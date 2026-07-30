@@ -179,7 +179,7 @@ public static class EquipCmd {
             CardPileAddResult result = await CardPileCmd.Add(
                 card,
                 Entry.EquipPile.GetPile(card.Owner),
-                skipVisuals: true);
+                skipVisuals: false);
             if (!result.success) {
                 return false;
             }
@@ -235,6 +235,6 @@ public static class EquipCmd {
         await CardPileCmd.Add(
             card,
             originalPile,
-            skipVisuals: true);
+            skipVisuals: false);
     }
 }
