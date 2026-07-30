@@ -163,7 +163,7 @@ public static class XyzMaterialCmd {
             return true;
         }
 
-        await CardPileCmd.Add(card, PileType.Discard.GetPile(owner), skipVisuals: true);
+        await CardPileCmd.Add(card, PileType.Discard.GetPile(owner), skipVisuals: false);
         return false;
     }
 
@@ -192,7 +192,7 @@ public static class XyzMaterialCmd {
         await CardPileCmd.Add(
             card,
             PileType.Discard.GetPile(card.Owner),
-            skipVisuals: true
+            skipVisuals: false
         );
         await PowerCmd.ModifyAmount(
             choiceContext,
@@ -230,7 +230,7 @@ public static class XyzMaterialCmd {
                 await CardPileCmd.Add(
                     card,
                     PileType.Discard.GetPile(card.Owner),
-                    skipVisuals: true
+                    skipVisuals: false
                 );
             }
         }
@@ -251,7 +251,7 @@ public static class XyzMaterialCmd {
                 await CardPileCmd.Add(
                     card,
                     PileType.Discard.GetPile(owner),
-                    skipVisuals: true
+                    skipVisuals: false
                 );
             }
         }
@@ -286,7 +286,7 @@ public static class XyzMaterialCmd {
                 await CardPileCmd.Add(card, monsterPile, skipVisuals: true);
             }
             else {
-                await CardPileCmd.Add(card, discardPile, skipVisuals: true);
+                await CardPileCmd.Add(card, discardPile, skipVisuals: false);
             }
         }
     }
