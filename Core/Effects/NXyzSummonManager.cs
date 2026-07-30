@@ -28,6 +28,7 @@ public partial class NXyzSummonManager : Node3D {
     private static readonly Color MaterialYellow = new("ffe65b");
 
     private readonly List<StandardMaterial3D> _liveMaterials = [];
+    private readonly List<ShaderMaterial> _liveShaderMaterials = [];
     private Node3D _stageRoot = null!;
     private Camera3D _camera = null!;
 
@@ -38,6 +39,8 @@ public partial class NXyzSummonManager : Node3D {
     private Texture2D _vortexTexture = null!;
     private Texture2D _flareTexture = null!;
     private Texture2D _cardTrailTexture = null!;
+    private Texture2D _cardHighlightTexture = null!;
+    private Shader _vortexShader = null!;
 
     public override void _Ready() {
         base._Ready();
@@ -51,6 +54,10 @@ public partial class NXyzSummonManager : Node3D {
         _vortexTexture = LoadTexture("MaterialUzu01.png");
         _flareTexture = LoadTexture("CenterFlare01.png");
         _cardTrailTexture = LoadTexture("CardTrail02.png");
+        _cardHighlightTexture = LoadTexture("CardHighlight03.png");
+        _vortexShader = GD.Load<Shader>(
+            "res://VYgo/scenes/summon/xyz/xyz_vortex_3d.gdshader"
+        );
 
         _camera.Current = true;
         _camera.Fov = 46f;
@@ -70,16 +77,16 @@ public partial class NXyzSummonManager : Node3D {
             new Color(XyzBlue, 0f),
             new Vector3(0f, 0f, -13f)
         );
-        FxMesh vortexBack = CreateQuad(
+        ShaderFxMesh vortexBack = CreateVortexQuad(
             _vortexTexture,
-            new Vector2(24f, 24f),
-            new Color(XyzViolet, 0f),
+            new Vector2(48f, 48f),
+            XyzViolet,
             new Vector3(0f, 0f, -7.5f)
         );
-        FxMesh vortexFront = CreateQuad(
+        ShaderFxMesh vortexFront = CreateVortexQuad(
             _swirlTexture,
-            new Vector2(17f, 17f),
-            new Color(XyzBlue, 0f),
+            new Vector2(40f, 40f),
+            XyzBlue,
             new Vector3(0f, 0f, -5.5f)
         );
         SphereMesh holeCoreMesh = new() {
@@ -125,8 +132,8 @@ public partial class NXyzSummonManager : Node3D {
             SetRotationZ(backdrop.Node, elapsed * 0.045f);
 
             float holeProgress = SmoothStep(Mathf.Clamp((elapsed - 0.85f) / 0.32f, 0f, 1f));
-            SetAlpha(vortexBack, 0.72f * holeProgress);
-            SetAlpha(vortexFront, 0.88f * holeProgress);
+            SetShaderAlpha(vortexBack, 0.72f * holeProgress);
+            SetShaderAlpha(vortexFront, 0.88f * holeProgress);
             SetAlpha(holeCore, 0.98f * holeProgress);
             vortexBack.Node.Scale = Vector3.One * Mathf.Lerp(0.28f, 1.08f, holeProgress);
             vortexFront.Node.Scale = Vector3.One * Mathf.Lerp(0.18f, 1f, holeProgress);
@@ -374,17 +381,68 @@ public partial class NXyzSummonManager : Node3D {
         });
     }
 
+    public async Task PlayPostForeground() {
+        ClearStage();
+
+        GpuParticles3D goldSquares = CreateBurstParticles(
+            _stageRoot,
+            MaterialYellow,
+            _cardHighlightTexture,
+            amount: 64,
+            lifetime: 0.9f / PostPlaybackSpeed,
+            velocityMin: 9f * PostPlaybackSpeed,
+            velocityMax: 27f * PostPlaybackSpeed,
+            sizeMin: 0.38f,
+            sizeMax: 1.05f,
+            particleSize: new Vector2(0.56f, 0.56f)
+        );
+        GpuParticles3D cyanSquares = CreateBurstParticles(
+            _stageRoot,
+            XyzCyan,
+            _cardHighlightTexture,
+            amount: 28,
+            lifetime: 0.72f / PostPlaybackSpeed,
+            velocityMin: 12f * PostPlaybackSpeed,
+            velocityMax: 34f * PostPlaybackSpeed,
+            sizeMin: 0.28f,
+            sizeMax: 0.82f,
+            particleSize: new Vector2(0.46f, 0.46f)
+        );
+
+        await AnimateFor(PostDuration, (elapsed, _) => {
+            float timelineElapsed = elapsed * PostPlaybackSpeed;
+            if (timelineElapsed >= 0.08f && !goldSquares.Emitting) {
+                goldSquares.Emitting = true;
+                cyanSquares.Emitting = true;
+            }
+        });
+    }
+
     public async Task FadeOut() {
         List<(StandardMaterial3D Material, Color Color)> materials = _liveMaterials
             .Where(GodotObject.IsInstanceValid)
             .Select(material => (material, material.AlbedoColor))
             .ToList();
+        List<(ShaderMaterial Material, float Opacity)> shaderMaterials =
+            _liveShaderMaterials
+                .Where(GodotObject.IsInstanceValid)
+                .Select(material => (
+                    material,
+                    (float)material.GetShaderParameter("opacity")
+                ))
+                .ToList();
 
         await AnimateFor(0.08f, (_, progress) => {
             foreach ((StandardMaterial3D material, Color color) in materials) {
                 material.AlbedoColor = color with {
                     A = Mathf.Lerp(color.A, 0f, progress)
                 };
+            }
+            foreach ((ShaderMaterial material, float opacity) in shaderMaterials) {
+                material.SetShaderParameter(
+                    "opacity",
+                    Mathf.Lerp(opacity, 0f, progress)
+                );
             }
         });
     }
@@ -399,6 +457,31 @@ public partial class NXyzSummonManager : Node3D {
     ) {
         QuadMesh mesh = new() { Size = size };
         return CreateMesh(mesh, color, position, additive, texture, parent);
+    }
+
+    private ShaderFxMesh CreateVortexQuad(
+        Texture2D texture,
+        Vector2 size,
+        Color tint,
+        Vector3 position
+    ) {
+        ShaderMaterial material = new() {
+            Shader = _vortexShader,
+            RenderPriority = -1
+        };
+        material.SetShaderParameter("vortex_texture", texture);
+        material.SetShaderParameter("tint", tint);
+        material.SetShaderParameter("opacity", 0f);
+
+        MeshInstance3D node = new() {
+            Mesh = new QuadMesh { Size = size },
+            MaterialOverride = material,
+            Position = position,
+            CastShadow = GeometryInstance3D.ShadowCastingSetting.Off
+        };
+        _stageRoot.AddChild(node);
+        _liveShaderMaterials.Add(material);
+        return new ShaderFxMesh(node, material);
     }
 
     private FxMesh CreateRing(Color color, Vector3 position) {
@@ -642,11 +725,19 @@ public partial class NXyzSummonManager : Node3D {
             child.QueueFree();
         }
         _liveMaterials.Clear();
+        _liveShaderMaterials.Clear();
     }
 
     private static void SetAlpha(FxMesh mesh, float alpha) {
         Color color = mesh.Material.AlbedoColor;
         mesh.Material.AlbedoColor = color with { A = Mathf.Clamp(alpha, 0f, 1f) };
+    }
+
+    private static void SetShaderAlpha(ShaderFxMesh mesh, float alpha) {
+        mesh.Material.SetShaderParameter(
+            "opacity",
+            Mathf.Clamp(alpha, 0f, 1f)
+        );
     }
 
     private static void SetRotationZ(Node3D node, float value) {
@@ -682,6 +773,10 @@ public partial class NXyzSummonManager : Node3D {
     }
 
     private sealed record FxMesh(MeshInstance3D Node, StandardMaterial3D Material);
+    private sealed record ShaderFxMesh(
+        MeshInstance3D Node,
+        ShaderMaterial Material
+    );
     private sealed record StarCluster(Node3D Root, FxMesh Core, GpuParticles3D Trail);
     private sealed record RitualRing(
         FxMesh Core,

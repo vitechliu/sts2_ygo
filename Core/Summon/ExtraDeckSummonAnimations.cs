@@ -447,6 +447,8 @@ internal static class ExtraDeckSummonAnimations {
 
                 SFXUtil.Play("event:/vygo/sfx/xyz_04");
                 Task postStageTask = xyzAnim2D.Manager.PlayPostXyz();
+                Task foregroundPostTask =
+                    xyzAnim2D.ForegroundManager.PlayPostForeground();
                 Tween settle = ctx.Pivot.CreateTween().SetParallel();
                 settle.TweenProperty(ctx.Pivot, "rotation_degrees", new Vector3(0f, 4f, 0f), 0.14f)
                     .SetEase(Tween.EaseType.InOut)
@@ -456,7 +458,8 @@ internal static class ExtraDeckSummonAnimations {
                     .SetTrans(Tween.TransitionType.Sine);
                 await Task.WhenAll(
                     settle.AwaitFinished(ctx.Pivot),
-                    postStageTask
+                    postStageTask,
+                    foregroundPostTask
                 );
                 await VFXUtil.Wait(0.03f);
             },
