@@ -7,6 +7,8 @@ using VYgo.Scripts;
 namespace VYgo.Core;
 
 [RegisterOwnedCardKeyword(nameof(Piercing), IconPath = null, CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.AfterCardDescription)]
+[RegisterOwnedCardKeyword(nameof(GroupAttack), IconPath = null, CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.AfterCardDescription)]
 public class YgoKeywords {
     public static readonly CardKeyword Piercing = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(Piercing)).GetModCardKeyword();
+    public static readonly CardKeyword GroupAttack = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(GroupAttack)).GetModCardKeyword();
 }

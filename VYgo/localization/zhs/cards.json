@@ -64,9 +64,9 @@
     "V_YGO_CARD_CALLEDBYTHE_GRAVE.description": "从[gold]弃牌堆[/gold]中选择1张怪兽[gold]消耗[/gold]，并获得{NegatingPower:diff()}层[gold]无效[/gold]。",
     "V_YGO_CARD_CALLEDBYTHE_GRAVE.selectionScreenPrompt": "选择1张怪兽牌消耗。",
     "V_YGO_CARD_MACHINE_CONVERSION_FACTORY.title": "机械改造工厂",
-    "V_YGO_CARD_MACHINE_CONVERSION_FACTORY.description": "装备给1只友方怪兽。其攻击力提高{Attack:diff()}，生命值提高{Life:diff()}。\n装备怪兽死亡时，将此牌置入弃牌堆。",
+    "V_YGO_CARD_MACHINE_CONVERSION_FACTORY.description": "[gold]装备[/gold]:[gold]强化[/gold]{Attack:diff()}/{Life:diff()}。",
     "V_YGO_CARD_THERION_KING_REGULUS.title": "兽带斗神“王者”轩辕十四",
-    "V_YGO_CARD_THERION_KING_REGULUS.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n从弃牌堆中选择1只机械族怪兽可以[gold]特召[/gold]\n[gold]登场[/gold]：装备选中的怪兽，并获得{NegatingPower:diff()}层[gold]无效[/gold]和{Energy:energyIcons()}。",
+    "V_YGO_CARD_THERION_KING_REGULUS.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n从弃牌堆中选择1只机械族怪兽可以[gold]特召[/gold]\n[gold]登场[/gold]：[gold]装备[/gold]选中的怪兽，并获得{NegatingPower:diff()}层[gold]无效[/gold]和{Energy:energyIcons()}。",
     "V_YGO_CARD_THERION_KING_REGULUS.selectionScreenPrompt": "选择1只机械族怪兽装备。",
     "V_YGO_CARD_CYBER_EMERGENCY.title": "电子紧急呼救",
     "V_YGO_CARD_CYBER_EMERGENCY.description": "随机将一张[gold]「电子龙」[/gold]怪兽加入你的[gold]手牌[/gold]。{IfUpgraded:show:\n如果你拥有[gold]无效[/gold]，消耗1层[gold]无效[/gold]，将一张此牌的复制品加入你的[gold]手牌[/gold]。|}",
@@ -81,10 +81,13 @@
     "V_YGO_CARD_CYBERNETIC_HIDDEN_TECHNOLOGY.title": "电子隐秘技术",
     "V_YGO_CARD_CYBERNETIC_HIDDEN_TECHNOLOGY.description": "每当敌人攻击时，若额外卡组中有融合怪兽，随机将其中1只送入弃牌堆，然后对该敌人造成[blue]{CyberneticHiddenTechnologyPower:diff()}[/blue]点伤害。",
     "V_YGO_CARD_CYBERDARK_HORN.title": "电子暗黑魔角",
-    "V_YGO_CARD_CYBERDARK_HORN.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]：从弃牌堆中选择1只机械族怪兽装备，并获得其攻击力加成。",
+    "V_YGO_CARD_CYBERDARK_HORN.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]：从弃牌堆中选择1只机械族怪兽[gold]装备[/gold]，并获得其攻击力加成。",
     "V_YGO_CARD_CYBERDARK_HORN.selectionScreenPrompt": "选择1只机械族怪兽装备。",
     "V_YGO_CARD_CYBER_DRAGON_NOVA.title": "电子龙·新星",
-    "V_YGO_CARD_CYBER_DRAGON_NOVA.description": "[gold]超量召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]机械族5星怪兽×2。[/aqua]\n[gold]启动[/gold]:去除1个[gold]素材[/gold]发动，从弃牌堆选择一只「电子龙」特召。",
+    "V_YGO_CARD_CYBER_DRAGON_NOVA.description": "[gold]超量召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]机械族5星怪兽×2。[/aqua]\n[gold]启动[/gold]:去除1个[gold]超量素材[/gold]发动，从弃牌堆选择一只「电子龙」特召。",
     "V_YGO_CARD_CYBER_DRAGON_INFINITY.title": "电子龙·无限",
-    "V_YGO_CARD_CYBER_DRAGON_INFINITY.description": "[gold]超量召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]机械族·光属性6星怪兽×3或「电子龙·新星」x1。\n[/aqua][gold]启动[/gold]:获得1层[gold]无效[/gold]。"
+    "V_YGO_CARD_CYBER_DRAGON_INFINITY.description": "[gold]超量召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]机械族·光属性6星怪兽×3或「电子龙·新星」x1。\n[/aqua][gold]启动[/gold]:获得1层[gold]无效[/gold]。",
+    "V_YGO_CARD_CYBERDARK_EDGE.title": "电子暗黑刃翼",
+    "V_YGO_CARD_CYBERDARK_EDGE.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]：从弃牌堆中选择1只机械族怪兽[gold]装备[/gold]，并获得其攻击力加成。",
+    "V_YGO_CARD_CYBERDARK_EDGE.selectionScreenPrompt": "选择1只机械族怪兽[gold]装备[/gold]。"
 }

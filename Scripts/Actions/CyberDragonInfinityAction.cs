@@ -14,7 +14,6 @@ namespace VYgo.Scripts.Actions;
 
 public sealed class CyberDragonInfinityAction : BasePerTurnMonsterAction {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        YgoHoverTipConst.XYZMaterial(),
         YgoHoverTipConst.Action(),
         HoverTipFactory.FromPower<NegatingPower>()
     ];
