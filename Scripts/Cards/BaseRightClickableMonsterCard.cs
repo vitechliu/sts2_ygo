@@ -14,13 +14,14 @@ public abstract class BaseRightClickableMonsterCard(
     protected virtual int RightClickCost => baseCost;
     
     public virtual async Task OnRightClick(ModRightClickExecutionContext context) {
-        if (RightClickCost <= Owner.GetEnergy()) return;
+        if (!CanExecuteRightClick(context)) return;
         await SpendResources();
         await OnYgoRightClick(context);
     }
 
-    public bool CanExecuteRightClick(ModRightClickExecutionContext context) {
-        return RightClickCost <= Owner.GetEnergy();
+    public virtual bool CanExecuteRightClick(ModRightClickExecutionContext context) {
+        return context.PlayerChoiceContext != null
+            && RightClickCost <= Owner.GetEnergy();
     }
 
     protected virtual Task OnYgoRightClick(ModRightClickExecutionContext context) { return Task.CompletedTask; }

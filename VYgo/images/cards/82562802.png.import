@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dp33ytsixy7lh"
-path="res://.godot/imported/negating.png-d97f59d01aa30c9177f1ce0135fe7e4e.ctex"
+uid="uid://bjo4pnc6jamjo"
+path="res://.godot/imported/82562802.png-5cd772e9c166b7219338e3b1a60c1116.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://VYgo/images/intents/negating.png"
-dest_files=["res://.godot/imported/negating.png-d97f59d01aa30c9177f1ce0135fe7e4e.ctex"]
+source_file="res://VYgo/images/cards/82562802.png"
+dest_files=["res://.godot/imported/82562802.png-5cd772e9c166b7219338e3b1a60c1116.ctex"]
 
 [params]
 

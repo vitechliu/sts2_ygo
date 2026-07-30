@@ -14,4 +14,5 @@ public readonly record struct YgoArchetypeCode(ushort Value) {
 public static class YgoArchetypes {
     public static readonly YgoArchetypeCode Cyber = new(0x0093); // 电子
     public static readonly YgoArchetypeCode CyberDragon = new(0x1093); // 电子龙
+    public static readonly YgoArchetypeCode Cyberdark = new(0x4093); // 电子暗黑
 }

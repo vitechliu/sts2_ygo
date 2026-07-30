@@ -11,6 +11,7 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 	private const float MaterialVfxCleanupDelay = 3f;
 	private const float MaterialCompressDuration = 0.15f;
 	private const float MaterialFlyDuration = 0.20f;
+	private const float IntentTextureSize = 144f;
 
 	public static readonly Vector2 BaseIntentScale = new Vector2(-1f, 1f) * 0.35f;
 
@@ -64,12 +65,13 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 		if (actionReadyIcon == null) return;
 
 		bool visible = !string.IsNullOrEmpty(iconPath);
-		if (visible && actionReadyIconPath != iconPath) {
+		bool iconChanged = visible && actionReadyIconPath != iconPath;
+		if (iconChanged) {
 			actionReadyIcon.Texture = ResourceLoader.Load<Texture2D>(iconPath);
 			actionReadyIconPath = iconPath;
 		}
 
-		if (actionReadyIcon.Visible == visible) return;
+		if (actionReadyIcon.Visible == visible && !iconChanged) return;
 
 		actionReadyIcon.Visible = visible;
 		actionReadyTween?.Kill();
@@ -77,15 +79,29 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 
 		if (!visible) return;
 
+		Vector2 baseScale = GetIntentBaseScale(actionReadyIcon.Texture);
 		actionReadyIcon.Modulate = Colors.White;
-		actionReadyIcon.Scale = BaseIntentScale;
+		actionReadyIcon.Scale = baseScale;
 		actionReadyTween = actionReadyIcon.CreateTween().SetLoops();
-		actionReadyTween.TweenProperty(actionReadyIcon, "scale", BaseIntentScale * 1.2f, 0.45f)
+		actionReadyTween.TweenProperty(actionReadyIcon, "scale", baseScale * 1.2f, 0.45f)
 			.SetTrans(Tween.TransitionType.Sine)
 			.SetEase(Tween.EaseType.InOut);
-		actionReadyTween.TweenProperty(actionReadyIcon, "scale", BaseIntentScale, 0.45f)
+		actionReadyTween.TweenProperty(actionReadyIcon, "scale", baseScale, 0.45f)
 			.SetTrans(Tween.TransitionType.Sine)
 			.SetEase(Tween.EaseType.InOut);
+	}
+
+	private static Vector2 GetIntentBaseScale(Texture2D? texture) {
+		if (texture == null) return BaseIntentScale;
+
+		Vector2 textureSize = texture.GetSize();
+		if (Mathf.IsZeroApprox(textureSize.X) || Mathf.IsZeroApprox(textureSize.Y))
+			return BaseIntentScale;
+
+		return BaseIntentScale * new Vector2(
+			IntentTextureSize / textureSize.X,
+			IntentTextureSize / textureSize.Y
+		);
 	}
 
 	private void CreateActionReadyIcon() {

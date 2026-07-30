@@ -81,16 +81,18 @@
     "V_YGO_CARD_CYBERNETIC_HIDDEN_TECHNOLOGY.title": "电子隐秘技术",
     "V_YGO_CARD_CYBERNETIC_HIDDEN_TECHNOLOGY.description": "每当敌人攻击时，若额外卡组中有融合怪兽，随机将其中1只送入弃牌堆，然后对该敌人造成[blue]{CyberneticHiddenTechnologyPower:diff()}[/blue]点伤害。",
     "V_YGO_CARD_CYBERDARK_HORN.title": "电子暗黑魔角",
-    "V_YGO_CARD_CYBERDARK_HORN.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]：从弃牌堆中选择1只机械族怪兽[gold]装备[/gold]，并获得其攻击力加成。",
+    "V_YGO_CARD_CYBERDARK_HORN.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]：从弃牌堆中选择1只怪兽[gold]装备[/gold]，并获得其攻击力加成。",
     "V_YGO_CARD_CYBERDARK_HORN.selectionScreenPrompt": "选择1只机械族怪兽装备。",
     "V_YGO_CARD_CYBER_DRAGON_NOVA.title": "电子龙·新星",
     "V_YGO_CARD_CYBER_DRAGON_NOVA.description": "[gold]超量召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]机械族5星怪兽×2。[/aqua]\n[gold]启动[/gold]:去除1个[gold]超量素材[/gold]发动，从弃牌堆选择一只「电子龙」特召。",
     "V_YGO_CARD_CYBER_DRAGON_INFINITY.title": "电子龙·无限",
     "V_YGO_CARD_CYBER_DRAGON_INFINITY.description": "[gold]超量召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]机械族·光属性6星怪兽×3或「电子龙·新星」x1。\n[/aqua][gold]启动[/gold]:获得1层[gold]无效[/gold]。",
     "V_YGO_CARD_CYBERDARK_EDGE.title": "电子暗黑刃翼",
-    "V_YGO_CARD_CYBERDARK_EDGE.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]：从弃牌堆中选择1只机械族怪兽[gold]装备[/gold]，并获得其攻击力加成。",
+    "V_YGO_CARD_CYBERDARK_EDGE.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]：从弃牌堆中选择1只怪兽[gold]装备[/gold]，并获得其攻击力加成。",
     "V_YGO_CARD_CYBERDARK_EDGE.selectionScreenPrompt": "选择1只机械族怪兽[gold]装备[/gold]。",
     "V_YGO_CARD_CYBERDARK_KEEL.title": "电子暗黑龙骨",
-    "V_YGO_CARD_CYBERDARK_KEEL.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]：从弃牌堆中选择1只机械族怪兽[gold]装备[/gold]，并获得其生命值加成。",
-    "V_YGO_CARD_CYBERDARK_KEEL.selectionScreenPrompt": "选择1只机械族怪兽[gold]装备[/gold]。"
+    "V_YGO_CARD_CYBERDARK_KEEL.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]：从弃牌堆中选择1只怪兽[gold]装备[/gold]，并获得其生命值加成。",
+    "V_YGO_CARD_CYBERDARK_KEEL.selectionScreenPrompt": "选择1只机械族怪兽[gold]装备[/gold]。",
+    "V_YGO_CARD_CYBERDARK_CLAW.title": "电子暗黑恶爪",
+    "V_YGO_CARD_CYBERDARK_CLAW.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]手发[/gold]：从3张{IfUpgraded:show:[gold]升级过的[/gold]|}随机[gold]「电子暗黑」[/gold]魔法·陷阱牌中选择1张加入你的手牌。\n[gold]装备[/gold]：使装备怪兽获得[gold]强化[/gold]{EquipAttack:diff()}/{EquipLife:diff()}。"
 }
