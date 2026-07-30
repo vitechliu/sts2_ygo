@@ -16,13 +16,14 @@ public static class EquipCmd {
     public static bool CanEquip(
         CardModel card,
         Creature? target) {
-        return TryGetTargetHost(card, target, out _);
+        return IsValidTarget(card, target)
+            && FindPower(card.Owner, card) == null;
     }
 
     public static bool IsEquipped(
         Player owner,
         CardModel card) {
-        return FindHost(owner, card) != null;
+        return FindPower(owner, card) != null;
     }
 
     public static bool IsOnField(
@@ -36,24 +37,26 @@ public static class EquipCmd {
         Player owner,
         Func<CardModel, bool>? filter = null) {
         foreach (Creature pet in owner.Creature.Pets) {
-            if (pet.GetPower<YgoPower>() is not { } host) continue;
-            if (host.EquippedCards.Any(card =>
-                    card.Pile?.Type == Entry.EquipPile
-                    && (filter == null || filter(card)))) {
-                return true;
+            foreach (EquipmentPower power in pet.GetPowerInstances<EquipmentPower>()) {
+                if (power.EquipmentCard is { } card
+                    && card.Pile?.Type == Entry.EquipPile
+                    && (filter == null || filter(card))) {
+                    return true;
+                }
             }
         }
 
         return false;
     }
 
-    public static YgoPower? FindHost(
+    public static EquipmentPower? FindPower(
         Player owner,
         CardModel card) {
         foreach (Creature pet in owner.Creature.Pets) {
-            YgoPower? host = pet.GetPower<YgoPower>();
-            if (host?.EquippedCards.Contains(card) == true) {
-                return host;
+            foreach (EquipmentPower power in pet.GetPowerInstances<EquipmentPower>()) {
+                if (power.EquipmentCard == card) {
+                    return power;
+                }
             }
         }
 
@@ -63,9 +66,10 @@ public static class EquipCmd {
     public static IReadOnlyList<CardModel> GetAllEquipment(Player owner) {
         List<CardModel> cards = [];
         foreach (Creature pet in owner.Creature.Pets) {
-            if (pet.GetPower<YgoPower>() is not { } host) continue;
-            cards.AddRange(host.EquippedCards.Where(card =>
-                card.Pile?.Type == Entry.EquipPile));
+            cards.AddRange(pet.GetPowerInstances<EquipmentPower>()
+                .Select(power => power.EquipmentCard)
+                .OfType<CardModel>()
+                .Where(card => card.Pile?.Type == Entry.EquipPile));
         }
 
         return cards;
@@ -123,21 +127,40 @@ public static class EquipCmd {
         CardModel card) {
         if (CombatManager.Instance.IsOverOrEnding) return false;
 
-        YgoPower? host = FindHost(card.Owner, card);
-        if (host == null || !host.DetachEquipment(card)) return false;
+        EquipmentPower? power = FindPower(card.Owner, card);
+        if (power == null) return false;
 
-        await ReleaseEquipment(choiceContext, host.Owner, card);
+        await ReleaseEquipmentPower(
+            choiceContext,
+            power,
+            removePower: true);
         return true;
     }
 
-    internal static async Task SendAllToGraveyard(
+    internal static async Task ReleaseEquipmentPower(
         PlayerChoiceContext choiceContext,
-        YgoPower host) {
-        List<CardModel> cards = host.DetachAllEquipment();
-        if (CombatManager.Instance.IsOverOrEnding) return;
+        EquipmentPower power,
+        bool removePower,
+        Creature? knownOwner = null) {
+        CardModel? card = power.TakeEquipmentCard();
+        if (card == null) return;
 
-        foreach (CardModel card in cards) {
-            await ReleaseEquipment(choiceContext, host.Owner, card);
+        Creature target = knownOwner ?? power.Owner;
+        if (card is IEquipmentEffect effect) {
+            await effect.OnUnequipped(choiceContext, target);
+        }
+
+        if (!CombatManager.Instance.IsOverOrEnding
+            && (card.Pile?.Type == Entry.EquipPile
+                || card.Pile?.Type == PileType.Play)) {
+            await CardPileCmd.Add(
+                card,
+                PileType.Discard.GetPile(card.Owner));
+        }
+
+        if (removePower
+            && target.GetPowerInstances<EquipmentPower>().Contains(power)) {
+            await PowerCmd.Remove(power);
         }
     }
 
@@ -147,23 +170,39 @@ public static class EquipCmd {
         Creature? target,
         bool moveToEquipPile) {
         if (CombatManager.Instance.IsOverOrEnding
-            || !TryGetTargetHost(card, target, out YgoPower? host)) {
+            || !CanEquip(card, target)) {
             return false;
         }
 
-        YgoPower? currentHost = FindHost(card.Owner, card);
-        if (currentHost != null) return currentHost == host;
-        if (!host.AttachEquipment(card)) return false;
-
+        CardPile? originalPile = card.Pile;
         if (moveToEquipPile) {
             CardPileAddResult result = await CardPileCmd.Add(
                 card,
                 Entry.EquipPile.GetPile(card.Owner),
                 skipVisuals: true);
             if (!result.success) {
-                host.DetachEquipment(card);
                 return false;
             }
+        }
+
+        EquipmentPower power =
+            (EquipmentPower)ModelDb.Power<EquipmentPower>().ToMutable();
+        if (!power.Initialize(card)) {
+            await RollBackPileMove(card, originalPile, moveToEquipPile);
+            return false;
+        }
+
+        await PowerCmd.Apply(
+            choiceContext,
+            power,
+            target!,
+            1m,
+            card.Owner.Creature,
+            card);
+        if (!target!.GetPowerInstances<EquipmentPower>().Contains(power)) {
+            power.TakeEquipmentCard();
+            await RollBackPileMove(card, originalPile, moveToEquipPile);
+            return false;
         }
 
         await MonsterCardVfx.PlayEquipCardFly(card, target!);
@@ -175,35 +214,27 @@ public static class EquipCmd {
         return true;
     }
 
-    private static bool TryGetTargetHost(
+    private static bool IsValidTarget(
         CardModel card,
-        Creature? target,
-        out YgoPower? host) {
-        host = null;
-        if (target is not { IsAlive: true }
-            || target.PetOwner != card.Owner) {
-            return false;
-        }
-
-        host = target.GetPower<YgoPower>();
-        return host != null;
+        Creature? target) {
+        return target is { IsAlive: true }
+            && target.PetOwner == card.Owner
+            && target.HasPower<YgoPower>();
     }
 
-    private static async Task ReleaseEquipment(
-        PlayerChoiceContext choiceContext,
-        Creature target,
-        CardModel card) {
-        if (card is IEquipmentEffect effect) {
-            await effect.OnUnequipped(choiceContext, target);
-        }
-
-        if (card.Pile?.Type != Entry.EquipPile
-            && card.Pile?.Type != PileType.Play) {
+    private static async Task RollBackPileMove(
+        CardModel card,
+        CardPile? originalPile,
+        bool movedToEquipPile) {
+        if (!movedToEquipPile
+            || originalPile == null
+            || card.Pile?.Type != Entry.EquipPile) {
             return;
         }
 
         await CardPileCmd.Add(
             card,
-            PileType.Discard.GetPile(card.Owner));
+            originalPile,
+            skipVisuals: true);
     }
 }
