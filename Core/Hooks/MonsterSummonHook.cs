@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using VYgo.Core.Summon;
+using VYgo.Core.History;
 using VYgo.Scripts.Cards;
 
 namespace VYgo.Core.Hooks;
@@ -62,6 +63,10 @@ public static class MonsterSummonHook {
         CardPlay cardPlay,
         Creature summonedCreature,
         SummonContext summonContext) {
+        if (summonContext.IsSpecialSummon) {
+            CombatManager.Instance.History.RecordSpecialSummon(combatState, cardPlay.Player);
+        }
+
         foreach (AbstractModel model in combatState.IterateHookListeners()) {
             if (model is not IMonsterSummonHookListener listener) continue;
 

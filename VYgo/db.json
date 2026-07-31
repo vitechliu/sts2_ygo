@@ -1,5 +1,22 @@
 [
     {
+        "id": 37,
+        "card_id": 39439590,
+        "name": "",
+        "cn_name": "电子恐龙",
+        "en_name": "CyberDinosaur",
+        "types": "[怪兽|效果] 机械/光\n[★7] 2500/1900",
+        "description": "对方从手卡特殊召唤怪兽时，可以从手卡特殊召唤这张卡。",
+        "atk": 2500,
+        "def": 1900,
+        "level": 7,
+        "attribute": "光",
+        "race": "机械族",
+        "archetypes": [
+            147
+        ]
+    },
+    {
         "id": 36,
         "card_id": 45078193,
         "name": "",
