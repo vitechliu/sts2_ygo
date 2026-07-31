@@ -82,16 +82,37 @@ public sealed record SummonAnimationContext(
 
 public sealed record SummonPostPlayContext(
     CardModel FinalCard,
+    Creature SummonedCreature,
     Player Owner,
     PlayerChoiceContext ChoiceContext,
     IReadOnlyList<SummonMaterial> Materials
 );
 
+public sealed record ExtraDeckSummonResult(
+    bool Success,
+    CardModel? SummonedCard,
+    Creature? SummonedCreature,
+    IReadOnlyList<SummonMaterial> Materials
+) {
+    public static ExtraDeckSummonResult Failed(
+        CardModel? summonedCard = null,
+        Creature? summonedCreature = null,
+        IReadOnlyList<SummonMaterial>? materials = null
+    ) {
+        return new ExtraDeckSummonResult(
+            false,
+            summonedCard,
+            summonedCreature,
+            materials ?? Array.Empty<SummonMaterial>()
+        );
+    }
+}
+
 public static class SummonUtil {
     private const string NoValidFusionSummonMessage =
         "V_YGO_SUMMON_MESSAGE_NO_VALID_FUSION";
 
-    public static Task ExecuteFusionSummon(FusionSummonRequest request) {
+    public static Task<ExtraDeckSummonResult> ExecuteFusionSummon(FusionSummonRequest request) {
         if (!HasFusionSummonTarget(
                 request.Owner,
                 request.GetAvailableMaterials,
@@ -102,7 +123,7 @@ public static class SummonUtil {
                 request.Owner.Creature,
                 3
             );
-            return Task.CompletedTask;
+            return Task.FromResult(ExtraDeckSummonResult.Failed());
         }
 
         return ExecuteExtraDeckSummon(new ExtraDeckSummonRequest(
@@ -122,7 +143,7 @@ public static class SummonUtil {
         ));
     }
 
-    public static Task ExecuteLinkSummon(LinkSummonRequest request) {
+    public static Task<ExtraDeckSummonResult> ExecuteLinkSummon(LinkSummonRequest request) {
         return ExecuteExtraDeckSummon(new ExtraDeckSummonRequest(
             SourceCard: request.SourceCard,
             Owner: request.Owner,
@@ -139,7 +160,7 @@ public static class SummonUtil {
         ));
     }
 
-    public static Task ExecuteXyzSummon(XyzSummonRequest request) {
+    public static Task<ExtraDeckSummonResult> ExecuteXyzSummon(XyzSummonRequest request) {
         return ExecuteExtraDeckSummon(new ExtraDeckSummonRequest(
             SourceCard: request.SourceCard,
             Owner: request.Owner,
@@ -266,15 +287,17 @@ public static class SummonUtil {
             )?.HasValidCombination == true);
     }
 
-    public static async Task ExecuteExtraDeckSummon(ExtraDeckSummonRequest request) {
+    public static async Task<ExtraDeckSummonResult> ExecuteExtraDeckSummon(
+        ExtraDeckSummonRequest request
+    ) {
         CardPile extraPile = Entry.ExtraPile.GetPile(request.Owner);
-        if (extraPile.Cards.Count <= 0) return;
+        if (extraPile.Cards.Count <= 0) return ExtraDeckSummonResult.Failed();
 
         List<CardModel> summonableCards = extraPile.Cards
             .Where(request.ExtraCardFilter)
             .Where(card => request.BuildMaterialSelection(card)?.HasValidCombination == true)
             .ToList();
-        if (summonableCards.Count <= 0) return;
+        if (summonableCards.Count <= 0) return ExtraDeckSummonResult.Failed();
 
         CardModel? selectedExtraCard = (await CardSelectCmd.FromCombatPile(
                 prefs: new CardSelectorPrefs(request.SelectionPrompt, 1),
@@ -283,9 +306,11 @@ public static class SummonUtil {
                 player: request.Owner,
                 filter: summonableCards.Contains))
             .FirstOrDefault();
-        if (selectedExtraCard == null || !extraPile.Cards.Contains(selectedExtraCard)) return;
+        if (selectedExtraCard == null || !extraPile.Cards.Contains(selectedExtraCard)) {
+            return ExtraDeckSummonResult.Failed(selectedExtraCard);
+        }
 
-        await ExecuteSelectedExtraDeckSummon(new SelectedExtraDeckSummonRequest(
+        return await ExecuteSelectedExtraDeckSummon(new SelectedExtraDeckSummonRequest(
             SelectedExtraCard: selectedExtraCard,
             Owner: request.Owner,
             ChoiceContext: request.ChoiceContext,
@@ -299,13 +324,16 @@ public static class SummonUtil {
         ));
     }
 
-    public static async Task ExecuteSelectedExtraDeckSummon(SelectedExtraDeckSummonRequest request) {
+    public static async Task<ExtraDeckSummonResult> ExecuteSelectedExtraDeckSummon(
+        SelectedExtraDeckSummonRequest request
+    ) {
         CardPile extraPile = Entry.ExtraPile.GetPile(request.Owner);
         CardModel selectedExtraCard = request.SelectedExtraCard;
         if (selectedExtraCard.Owner != request.Owner
             || selectedExtraCard.Pile != extraPile
-            || !extraPile.Cards.Contains(selectedExtraCard)) {
-            return;
+            || !extraPile.Cards.Contains(selectedExtraCard)
+            || selectedExtraCard is not BaseMonsterCard summonCard) {
+            return ExtraDeckSummonResult.Failed(selectedExtraCard);
         }
 
         IReadOnlyList<SummonMaterial> selectedMaterials = await SummonMaterialSelectCmd.Select(
@@ -314,23 +342,31 @@ public static class SummonUtil {
             selectedExtraCard,
             request.BuildMaterialSelection
         );
-        if (selectedMaterials.Count <= 0) return;
+        if (selectedMaterials.Count <= 0) {
+            return ExtraDeckSummonResult.Failed(selectedExtraCard);
+        }
 
         SummonMaterialSelectionSpec? latestSpec = request.BuildMaterialSelection();
-        if (latestSpec == null || !extraPile.Cards.Contains(selectedExtraCard)) return;
+        if (latestSpec == null || !extraPile.Cards.Contains(selectedExtraCard)) {
+            return ExtraDeckSummonResult.Failed(selectedExtraCard);
+        }
 
         IReadOnlyList<SummonMaterial> materials = latestSpec.ResolveMaterials(
             selectedMaterials.Select(material => material.Card).OfType<CardModel>()
         );
-        if (!latestSpec.IsValidSelection(materials)) return;
+        if (!latestSpec.IsValidSelection(materials)) {
+            return ExtraDeckSummonResult.Failed(selectedExtraCard, materials: materials);
+        }
 
-        if (TestMode.IsOn || NCombatRoom.Instance == null) return;
+        if (TestMode.IsOn || NCombatRoom.Instance == null) {
+            return ExtraDeckSummonResult.Failed(selectedExtraCard, materials: materials);
+        }
 
         NCard? sourceNode = null;
         if (request.SourceCard != null) {
             sourceNode = NCard.FindOnTable(request.SourceCard);
             if (sourceNode == null || !GodotObject.IsInstanceValid(sourceNode) || !sourceNode.IsInsideTree()) {
-                return;
+                return ExtraDeckSummonResult.Failed(selectedExtraCard, materials: materials);
             }
 
             sourceNode.PlayPileTween?.FastForwardToCompletion();
@@ -339,6 +375,7 @@ public static class SummonUtil {
 
         bool materialsConsumed = false;
         bool summonCompleted = false;
+        Creature? summonedCreature = null;
         try {
             IReadOnlyList<CardModel> materialCards = materials
                 .Select(material => material.Card)
@@ -351,7 +388,9 @@ public static class SummonUtil {
             else {
                 materialsConsumed = await ConsumeSummonMaterials(request.ChoiceContext, materials);
             }
-            if (!materialsConsumed) return;
+            if (!materialsConsumed) {
+                return ExtraDeckSummonResult.Failed(selectedExtraCard, materials: materials);
+            }
 
             Vector2 screenCenterPos = NGame.Instance.GetViewportRect().Size * 0.5f;
             await request.PlayAnimation(new SummonAnimationContext(
@@ -362,9 +401,8 @@ public static class SummonUtil {
             ));
 
             if (!selectedExtraCard.Owner.Creature.IsDead) {
-                await CardCmd.AutoPlay(
+                summonedCreature = await summonCard.AutoPlayAndCaptureSummonedCreature(
                     request.ChoiceContext,
-                    selectedExtraCard,
                     null,
                     AutoPlayType.Default,
                     false,
@@ -372,20 +410,40 @@ public static class SummonUtil {
                 );
 
                 if (request.AfterAutoPlay != null
+                    && summonedCreature != null
                     && !await request.AfterAutoPlay(new SummonPostPlayContext(
                         selectedExtraCard,
+                        summonedCreature,
                         request.Owner,
                         request.ChoiceContext,
                         materials
                     ))) {
-                    return;
+                    return ExtraDeckSummonResult.Failed(
+                        selectedExtraCard,
+                        summonedCreature,
+                        materials
+                    );
                 }
 
-                summonCompleted = true;
-                extraPile.InvokeCardRemoveFinished();
+                if (summonedCreature != null) {
+                    summonCompleted = true;
+                    extraPile.InvokeCardRemoveFinished();
+                }
             }
 
             await VFXUtil.Wait(request.FinalWaitSeconds);
+            return summonCompleted
+                ? new ExtraDeckSummonResult(
+                    true,
+                    selectedExtraCard,
+                    summonedCreature,
+                    materials
+                )
+                : ExtraDeckSummonResult.Failed(
+                    selectedExtraCard,
+                    summonedCreature,
+                    materials
+                );
         }
         finally {
             if (materialsConsumed

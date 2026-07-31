@@ -36,11 +36,8 @@ public sealed class RevolutionCyberDragonFusionAction : BasePerTurnMonsterAction
         Player? player = Owner.PetOwner;
         if (player == null) return;
 
-        CardPile extraPile = Entry.ExtraPile.GetPile(player);
-        int extraDeckCountBefore = extraPile.Cards.Count;
-
         SpendUses();
-        await SummonUtil.ExecuteFusionSummon(new FusionSummonRequest(
+        ExtraDeckSummonResult result = await SummonUtil.ExecuteFusionSummon(new FusionSummonRequest(
             SourceCard: null,
             Owner: player,
             ChoiceContext: choiceContext,
@@ -49,7 +46,7 @@ public sealed class RevolutionCyberDragonFusionAction : BasePerTurnMonsterAction
             FusionCardFilter: IsMachineFusionMonster
         ));
 
-        if (Owner.IsAlive && extraPile.Cards.Count >= extraDeckCountBefore) {
+        if (Owner.IsAlive && !result.Success) {
             RecoverUses();
         }
     }
