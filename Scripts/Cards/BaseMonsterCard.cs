@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -20,6 +21,8 @@ public abstract class BaseMonsterCard(
     TargetType target,
     bool showInCardLibrary = true)
     : BaseVYgoCard(baseCost, CardType.Skill, rarity, target, showInCardLibrary) {
+    private Action<Creature>? _summonResultObserver;
+
     protected IHoverTip BaseSummonHoverTip => YgoHoverTipConst.Summon(this);
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [BaseSummonHoverTip];
 
@@ -45,6 +48,37 @@ public abstract class BaseMonsterCard(
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         await SummonMonster(choiceContext, cardPlay, new SummonContext(IsSpecialSummon: cardPlay.IsAutoPlay));
+    }
+
+    internal async Task<Creature?> AutoPlayAndCaptureSummonedCreature(
+        PlayerChoiceContext choiceContext,
+        Creature? target,
+        AutoPlayType type = AutoPlayType.Default,
+        bool skipXCapture = false,
+        bool skipCardPileVisuals = false
+    ) {
+        if (_summonResultObserver != null) {
+            throw new InvalidOperationException(
+                $"A summon result capture is already active for {GetType().Name}."
+            );
+        }
+
+        Creature? summonedCreature = null;
+        _summonResultObserver = creature => summonedCreature ??= creature;
+        try {
+            await CardCmd.AutoPlay(
+                choiceContext,
+                this,
+                target,
+                type,
+                skipXCapture,
+                skipCardPileVisuals
+            );
+            return summonedCreature;
+        }
+        finally {
+            _summonResultObserver = null;
+        }
     }
 
     protected virtual async Task<Creature?> SummonMonster(
@@ -90,6 +124,7 @@ public abstract class BaseMonsterCard(
             summonedCreature,
             summonContext);
         await MonsterCardVfx.PlaySummonCardFly(this, summonedCreature);
+        _summonResultObserver?.Invoke(summonedCreature);
         return summonedCreature;
     }
 

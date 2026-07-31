@@ -33,5 +33,8 @@
   "V_YGO_POWER_MAXX_C_POWER.smartDescription": "每当你[gold]特召[/gold]，抽1张卡。",
   "V_YGO_POWER_CYBERNETIC_HIDDEN_TECHNOLOGY_POWER.title": "电子隐秘技术",
   "V_YGO_POWER_CYBERNETIC_HIDDEN_TECHNOLOGY_POWER.description": "每当敌人攻击时，若额外卡组中有融合怪兽，随机将其中1只送入弃牌堆，然后对该敌人造成{Amount}点伤害。",
-  "V_YGO_POWER_CYBERNETIC_HIDDEN_TECHNOLOGY_POWER.smartDescription": "每当敌人攻击时，若额外卡组中有融合怪兽，随机将其中1只送入弃牌堆，然后对该敌人造成[blue]{Amount}[/blue]点伤害。"
+  "V_YGO_POWER_CYBERNETIC_HIDDEN_TECHNOLOGY_POWER.smartDescription": "每当敌人攻击时，若额外卡组中有融合怪兽，随机将其中1只送入弃牌堆，然后对该敌人造成[blue]{Amount}[/blue]点伤害。",
+  "V_YGO_POWER_POWER_BOND_DAMAGE_POWER.title": "力量结合",
+  "V_YGO_POWER_POWER_BOND_DAMAGE_POWER.description": "在你的回合结束时，受到{Amount}点伤害，然后移除此能力。",
+  "V_YGO_POWER_POWER_BOND_DAMAGE_POWER.smartDescription": "在你的回合结束时，受到[red]{Amount}[/red]点伤害，然后移除此能力。"
 }

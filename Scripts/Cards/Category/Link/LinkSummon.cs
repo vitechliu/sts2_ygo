@@ -15,8 +15,11 @@ public class LinkSummon() : BaseSummonCard(0, CardType.Skill, CardRarity.Basic, 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         YgoHoverTipConst.FusionSummon()
     ];
-    protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        return SummonUtil.ExecuteLinkSummon(new LinkSummonRequest(
+    protected override async Task OnPlay(
+        PlayerChoiceContext choiceContext,
+        CardPlay cardPlay
+    ) {
+        await SummonUtil.ExecuteLinkSummon(new LinkSummonRequest(
             SourceCard: this,
             Owner: Owner,
             ChoiceContext: choiceContext,

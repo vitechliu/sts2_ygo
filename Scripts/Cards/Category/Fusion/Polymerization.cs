@@ -17,8 +17,11 @@ public class Polymerization()
         YgoHoverTipConst.FusionSummon()
     ];
 
-    protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        return SummonUtil.ExecuteFusionSummon(new FusionSummonRequest(
+    protected override async Task OnPlay(
+        PlayerChoiceContext choiceContext,
+        CardPlay cardPlay
+    ) {
+        await SummonUtil.ExecuteFusionSummon(new FusionSummonRequest(
             SourceCard: this,
             Owner: Owner,
             ChoiceContext: choiceContext,

@@ -84,11 +84,14 @@ public static class XyzMaterialCmd {
     public static async Task<bool> AttachReservedToSummonedMonster(
         SummonPostPlayContext context
     ) {
-        Creature? target = context.Owner.Creature.Pets.FirstOrDefault(creature =>
-            creature is { IsAlive: true }
-            && creature.Monster is BaseMonster { SourceCard: { } sourceCard }
-            && sourceCard == context.FinalCard);
-        if (target == null || context.FinalCard is not BaseExtraXyzCard) return false;
+        Creature target = context.SummonedCreature;
+        if (target is not { IsAlive: true }
+            || target.PetOwner != context.Owner
+            || target.Monster is not BaseMonster { SourceCard: { } sourceCard }
+            || sourceCard != context.FinalCard
+            || context.FinalCard is not BaseExtraXyzCard) {
+            return false;
+        }
 
         List<CardModel> cards = context.Materials
             .Select(material => material.Card)
