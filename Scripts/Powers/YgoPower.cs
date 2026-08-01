@@ -69,7 +69,9 @@ public class YgoPower : ModPowerTemplate, IYgoId {
     public int CardId {
         get {
             if (Card != null) return Card.CardId;
-            return (Owner.Monster as BaseMonster).CardId;
+            return Owner.Monster is BaseMonster monster
+                ? monster.CardId
+                : throw new InvalidOperationException("YgoPower owner is not a VYgo monster.");
         }
     }
 }

@@ -4,7 +4,7 @@ using VYgo.Utils;
 namespace VYgo.Core.Effects;
 
 public partial class NLinkTrailManager: Node3D {
-	private AnimationPlayer _animationPlayer;
+	private AnimationPlayer _animationPlayer = null!;
 
 	public NLinkSummonManager? _parent = null!;
 
