@@ -59,6 +59,7 @@
     </ItemGroup>
     <ItemGroup>
         <Content Remove="Scripts\**\*.uid"/>
+        <Compile Remove="External\**\*.cs;Web\**\*.cs"/>
     </ItemGroup>
     <ItemGroup>
         <Folder Include="VYgo\images\relics\" />

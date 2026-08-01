@@ -23,7 +23,7 @@ public abstract class BasePerTurnMonsterAction : ModActionTemplate {
     //每回合使用次数
     protected virtual int MaxUses => 1;
     //本回合剩余使用次数
-    public int RemainingUses = -1;
+    public int RemainingUses { get; private set; } = -1;
 
     protected void SpendUses() {
         RemainingUses--;

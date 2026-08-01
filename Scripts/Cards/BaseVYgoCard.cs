@@ -33,7 +33,7 @@ public abstract class BaseVYgoCard(
 
     public int? Level => this.YgoGetCore() is { HasLevel: true } coreCard ? coreCard.Level : null;
 
-    private static readonly Dictionary<YgoType, string> PORTRAIT = new() {
+    private static readonly Dictionary<YgoType, string> PortraitIds = new() {
         [YgoType.normal] = "01",
         [YgoType.effect] = "02",
         [YgoType.spell] = "03",
@@ -48,8 +48,8 @@ public abstract class BaseVYgoCard(
 
     protected virtual string YgoFramePath {
         get {
-            var pNum = PORTRAIT.GetValueOrDefault(CardYgoType, "01");
-            return $"res://VYgo/images/frame/{type}/card_design00{pNum}.png";
+            var portraitId = PortraitIds.GetValueOrDefault(CardYgoType, "01");
+            return $"res://VYgo/images/frame/{Type}/card_design00{portraitId}.png";
         }
     }
     
