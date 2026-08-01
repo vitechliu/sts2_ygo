@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 const { allConfig } = require('../database');
+const { parseCardId, normalizeCropParams } = require('./inputValidation');
+const { IMAGE_EXTENSIONS, isSupportedImagePath, isFileWithinDirectory } = require('./pathService');
 
 class ImageService {
     constructor() {
@@ -9,6 +11,7 @@ class ImageService {
     }
 
     async findImageFile(cardId) {
+        cardId = parseCardId(cardId);
         const dirs = await allConfig(
             'SELECT * FROM external_dirs WHERE type = ? ORDER BY priority DESC',
             ['card_image']
@@ -18,8 +21,7 @@ class ImageService {
             const dirPath = dir.path;
             if (!fs.existsSync(dirPath)) continue;
 
-            const extensions = ['.png', '.jpg', '.jpeg', '.webp'];
-            for (const ext of extensions) {
+            for (const ext of IMAGE_EXTENSIONS) {
                 const filePath = path.join(dirPath, `${cardId}${ext}`);
                 if (fs.existsSync(filePath)) {
                     return filePath;
@@ -31,6 +33,7 @@ class ImageService {
     }
 
     async findPortraitFile(cardId) {
+        cardId = parseCardId(cardId);
         const dirs = await allConfig(
             'SELECT * FROM external_dirs WHERE type = ? ORDER BY priority DESC',
             ['portrait']
@@ -40,8 +43,7 @@ class ImageService {
             const dirPath = dir.path;
             if (!fs.existsSync(dirPath)) continue;
 
-            const extensions = ['.png', '.jpg', '.jpeg', '.webp'];
-            for (const ext of extensions) {
+            for (const ext of IMAGE_EXTENSIONS) {
                 const filePath = path.join(dirPath, `${cardId}${ext}`);
                 if (fs.existsSync(filePath)) {
                     return filePath;
@@ -53,6 +55,7 @@ class ImageService {
     }
 
     async copyPortrait(sourcePath, cardId) {
+        cardId = parseCardId(cardId);
         const targetDir = path.join(this.projectRoot, 'VYgo', 'images', 'monster');
         
         if (!fs.existsSync(targetDir)) {
@@ -66,6 +69,8 @@ class ImageService {
     }
 
     async processCroppedImage(sourcePath, cardId, cropParams) {
+        cardId = parseCardId(cardId);
+        cropParams = normalizeCropParams(cropParams);
         const targetDir = path.join(this.projectRoot, 'VYgo', 'images', 'cards');
         
         if (!fs.existsSync(targetDir)) {
@@ -101,6 +106,10 @@ class ImageService {
             const safeWidth = Math.min(actualCropWidth, actualWidth - safeX);
             const safeHeight = Math.min(actualCropHeight, actualHeight - safeY);
 
+            if (safeWidth <= 0 || safeHeight <= 0) {
+                throw new Error('Crop area is outside the source image');
+            }
+
             image = image.extract({
                 left: safeX,
                 top: safeY,
@@ -125,43 +134,23 @@ class ImageService {
         return targetPath;
     }
 
-    async downloadImage(url, cardId) {
-        const axios = require('axios');
-        const targetDir = path.join(this.projectRoot, 'VYgo', 'images', 'cards');
-        
-        if (!fs.existsSync(targetDir)) {
-            fs.mkdirSync(targetDir, { recursive: true });
-        }
+    async isAllowedExternalImage(filePath) {
+        if (!isSupportedImagePath(filePath)) return false;
 
-        const targetPath = path.join(targetDir, `${cardId}.png`);
-
-        try {
-            const response = await axios({
-                method: 'GET',
-                url: url,
-                responseType: 'stream',
-                timeout: 30000
-            });
-
-            const writer = fs.createWriteStream(targetPath);
-            response.data.pipe(writer);
-
-            await new Promise((resolve, reject) => {
-                writer.on('finish', resolve);
-                writer.on('error', reject);
-            });
-
-            return targetPath;
-        } catch (error) {
-            throw new Error(`Download failed: ${error.message}`);
-        }
+        const dirs = await allConfig(
+            'SELECT path FROM external_dirs WHERE type IN (?, ?)',
+            ['card_image', 'portrait']
+        );
+        return dirs.some(dir => isFileWithinDirectory(filePath, dir.path));
     }
 
     getImagePath(cardId) {
+        cardId = parseCardId(cardId);
         return path.join(this.projectRoot, 'VYgo', 'images', 'cards', `${cardId}.png`);
     }
 
     getPortraitPath(cardId) {
+        cardId = parseCardId(cardId);
         return path.join(this.projectRoot, 'VYgo', 'images', 'monster', `${cardId}.png`);
     }
 

@@ -48,15 +48,21 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 		}
 	}
 	
-	protected Sprite2D mainSprite;
+	private Sprite2D _mainSprite = null!;
 	private Sprite2D? actionReadyIcon;
 	private Tween? actionReadyTween;
 	private string? actionReadyIconPath;
 
 	public override void _Ready() {
 		base._Ready();
-		mainSprite = GetNode<Sprite2D>("./Visuals/Image");
+		_mainSprite = GetNode<Sprite2D>("./Visuals/Image");
 		CreateActionReadyIcon();
+	}
+
+	public override void _ExitTree() {
+		actionReadyTween?.Kill();
+		actionReadyTween = null;
+		base._ExitTree();
 	}
 
 	public void SetActionReadyIndicator(string? iconPath) {
@@ -140,7 +146,7 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 	}
 
 	public async Task PlayMaterialExitAnimation() {
-		if (!GodotObject.IsInstanceValid(mainSprite)) return;
+		if (!GodotObject.IsInstanceValid(_mainSprite)) return;
 
 		var shader = new Shader {
 			Code = MaterialShaderCode
@@ -149,12 +155,12 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 			Shader = shader
 		};
 		material.SetShaderParameter("whiteness", 0f);
-		mainSprite.Material = material;
+		_mainSprite.Material = material;
 
-		var originalScale = mainSprite.Scale;
+		var originalScale = _mainSprite.Scale;
 		var compressedScale = new Vector2(originalScale.X * 0.035f, originalScale.Y * 1.12f);
-		var compressTween = mainSprite.CreateTween().SetParallel();
-		compressTween.TweenProperty(mainSprite, "scale", compressedScale, MaterialCompressDuration)
+		var compressTween = _mainSprite.CreateTween().SetParallel();
+		compressTween.TweenProperty(_mainSprite, "scale", compressedScale, MaterialCompressDuration)
 			.SetTrans(Tween.TransitionType.Expo)
 			.SetEase(Tween.EaseType.In);
 		compressTween.TweenMethod(
@@ -165,33 +171,33 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 			)
 			.SetTrans(Tween.TransitionType.Sine)
 			.SetEase(Tween.EaseType.In);
-		await mainSprite.ToSignal(compressTween, Tween.SignalName.Finished);
+		await _mainSprite.ToSignal(compressTween, Tween.SignalName.Finished);
 
-		if (!GodotObject.IsInstanceValid(mainSprite)) return;
+		if (!GodotObject.IsInstanceValid(_mainSprite)) return;
 
 		SFXUtil.Play("event:/vygo/sfx/material_01");
 		CustomOriginalVFX.PlayLinkSummon(VfxSpawnPosition.GlobalPosition);
-		var viewportHeight = mainSprite.GetViewportRect().Size.Y;
+		var viewportHeight = _mainSprite.GetViewportRect().Size.Y;
 		var targetPosition = new Vector2(
-			mainSprite.GlobalPosition.X,
+			_mainSprite.GlobalPosition.X,
 			-Mathf.Max(160f, viewportHeight * 0.15f)
 		);
-		var flyTween = mainSprite.CreateTween().SetParallel();
-		flyTween.TweenProperty(mainSprite, "global_position", targetPosition, MaterialFlyDuration)
+		var flyTween = _mainSprite.CreateTween().SetParallel();
+		flyTween.TweenProperty(_mainSprite, "global_position", targetPosition, MaterialFlyDuration)
 			.SetTrans(Tween.TransitionType.Expo)
 			.SetEase(Tween.EaseType.In);
 		flyTween.TweenProperty(
-				mainSprite,
+				_mainSprite,
 				"scale",
 				new Vector2(compressedScale.X, compressedScale.Y * 1.9f),
 				MaterialFlyDuration
 			)
 			.SetTrans(Tween.TransitionType.Expo)
 			.SetEase(Tween.EaseType.In);
-		flyTween.TweenProperty(mainSprite, "modulate:a", 0f, MaterialFlyDuration * 0.35f)
+		flyTween.TweenProperty(_mainSprite, "modulate:a", 0f, MaterialFlyDuration * 0.35f)
 			.SetDelay(MaterialFlyDuration * 0.65f)
 			.SetTrans(Tween.TransitionType.Sine)
 			.SetEase(Tween.EaseType.In);
-		await mainSprite.ToSignal(flyTween, Tween.SignalName.Finished);
+		await _mainSprite.ToSignal(flyTween, Tween.SignalName.Finished);
 	}
 }

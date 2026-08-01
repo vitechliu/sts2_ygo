@@ -76,14 +76,9 @@ public static class VFXUtil {
         return null;
     }
 
-    public static async void ShakeAfter(float time, ShakeStrength strength, ShakeDuration duration, float degAngle = -1f) {
-        await VFXUtil.Wait(time);
-        NGame.Instance?.ScreenShake(strength, duration, degAngle);
-    }
-
     public static Task Wait(float seconds, bool ignoreCombatEnd = false)
     {
-        return VFXUtil.Wait(seconds, new CancellationToken(), ignoreCombatEnd);
+        return VFXUtil.Wait(seconds, CancellationToken.None, ignoreCombatEnd);
     }
 
     public static async Task Wait(float seconds, CancellationToken cancelToken, bool ignoreCombatEnd = false)
@@ -95,14 +90,22 @@ public static class VFXUtil {
 
     public static Task WaitInternal(SceneTreeTimer timer, CancellationToken cancellationToken)
     {
-        TaskCompletionSource tcs = new TaskCompletionSource();
-        timer.Timeout += () =>
-        {
-            tcs.TrySetResult();
-        };
-        if (cancellationToken.CanBeCanceled)
-            cancellationToken.Register(() => tcs.TrySetCanceled(cancellationToken));
-        return tcs.Task;
+        return WaitForTimeout(timer, cancellationToken);
+
+        static async Task WaitForTimeout(SceneTreeTimer timer, CancellationToken cancellationToken) {
+            TaskCompletionSource completion = new(TaskCreationOptions.RunContinuationsAsynchronously);
+            void Complete() => completion.TrySetResult();
+
+            timer.Timeout += Complete;
+            using CancellationTokenRegistration registration = cancellationToken.Register(
+                () => completion.TrySetCanceled(cancellationToken));
+            try {
+                await completion.Task;
+            }
+            finally {
+                timer.Timeout -= Complete;
+            }
+        }
     }
 
     public static async Task CustomScaledWait(

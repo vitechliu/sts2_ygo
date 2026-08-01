@@ -1076,8 +1076,8 @@ function displayExternalDirs(dirs) {
     container.innerHTML = dirs.map(dir => `
         <div class="dir-item">
             <div class="dir-item-info">
-                <span class="path">${dir.path}</span>
-                <span class="meta">类型: ${dir.type} | 优先级: ${dir.priority} | ${dir.description || ''}</span>
+                <span class="path">${escapeHtml(dir.path)}</span>
+                <span class="meta">类型: ${escapeHtml(dir.type)} | 优先级: ${escapeHtml(dir.priority)} | ${escapeHtml(dir.description || '')}</span>
             </div>
             <button onclick="deleteDir(${dir.id})" class="delete-btn">删除</button>
         </div>

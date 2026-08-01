@@ -358,18 +358,15 @@ public static class SummonUtil {
             return ExtraDeckSummonResult.Failed(selectedExtraCard, materials: materials);
         }
 
-        if (TestMode.IsOn || NCombatRoom.Instance == null) {
-            return ExtraDeckSummonResult.Failed(selectedExtraCard, materials: materials);
-        }
-
-        NCard? sourceNode = null;
-        if (request.SourceCard != null) {
-            sourceNode = NCard.FindOnTable(request.SourceCard);
-            if (sourceNode == null || !GodotObject.IsInstanceValid(sourceNode) || !sourceNode.IsInsideTree()) {
-                return ExtraDeckSummonResult.Failed(selectedExtraCard, materials: materials);
-            }
-
-            sourceNode.PlayPileTween?.FastForwardToCompletion();
+        NCombatRoom? combatRoom = TestMode.IsOn ? null : NCombatRoom.Instance;
+        NCard? sourceNode = combatRoom != null && request.SourceCard != null
+            ? NCard.FindOnTable(request.SourceCard)
+            : null;
+        bool sourceNodeWasHidden = sourceNode != null
+            && GodotObject.IsInstanceValid(sourceNode)
+            && sourceNode.IsInsideTree();
+        if (sourceNodeWasHidden) {
+            sourceNode!.PlayPileTween?.FastForwardToCompletion();
             sourceNode.Visible = false;
         }
 
@@ -392,13 +389,24 @@ public static class SummonUtil {
                 return ExtraDeckSummonResult.Failed(selectedExtraCard, materials: materials);
             }
 
-            Vector2 screenCenterPos = NGame.Instance.GetViewportRect().Size * 0.5f;
-            await request.PlayAnimation(new SummonAnimationContext(
-                FinalCard: selectedExtraCard,
-                Materials: materials,
-                MaterialCards: materialCards,
-                ScreenCenterPos: screenCenterPos
-            ));
+            bool playedAnimation = false;
+            if (combatRoom != null) {
+                Vector2 screenCenterPos = combatRoom.GetViewportRect().Size * 0.5f;
+                try {
+                    await request.PlayAnimation(new SummonAnimationContext(
+                        FinalCard: selectedExtraCard,
+                        Materials: materials,
+                        MaterialCards: materialCards,
+                        ScreenCenterPos: screenCenterPos
+                    ));
+                    playedAnimation = true;
+                }
+                catch (Exception ex) {
+                    Entry.Logger.Warn(
+                        $"Extra deck summon animation failed for {selectedExtraCard.GetType().Name}: {ex}"
+                    );
+                }
+            }
 
             if (!selectedExtraCard.Owner.Creature.IsDead) {
                 summonedCreature = await summonCard.AutoPlayAndCaptureSummonedCreature(
@@ -431,7 +439,9 @@ public static class SummonUtil {
                 }
             }
 
-            await VFXUtil.Wait(request.FinalWaitSeconds);
+            if (playedAnimation) {
+                await VFXUtil.Wait(request.FinalWaitSeconds);
+            }
             return summonCompleted
                 ? new ExtraDeckSummonResult(
                     true,
@@ -452,7 +462,7 @@ public static class SummonUtil {
                 await request.OnSummonFailedAfterConsumption(materials);
             }
 
-            if (sourceNode != null && GodotObject.IsInstanceValid(sourceNode)) {
+            if (sourceNodeWasHidden && GodotObject.IsInstanceValid(sourceNode)) {
                 sourceNode.Visible = true;
             }
         }
@@ -557,7 +567,7 @@ public static class SummonUtil {
             }
         }
 
-        return owner.MinionCount() - consumedFieldMonsterCount < MinionUtil.MAX_MINION_COUNT;
+        return owner.MinionCount() - consumedFieldMonsterCount < MinionUtil.MaxMinionCount;
     }
 
     private static SummonMaterialSelectionSpec BuildFieldTributeSelection(
@@ -597,10 +607,10 @@ public static class SummonUtil {
         foreach (SummonMaterial material in materials) {
             if (material.Creature != null) {
                 hasFieldMaterial = true;
-                consumeTasks.Add(TaskHelper.RunSafely(MaterialSacrifice(material.Creature)));
+                consumeTasks.Add(MaterialSacrifice(material.Creature));
             }
             else if (material.Card != null) {
-                consumeTasks.Add(TaskHelper.RunSafely(CardCmd.Discard(choiceContext, material.Card)));
+                consumeTasks.Add(CardCmd.Discard(choiceContext, material.Card));
             }
         }
 
