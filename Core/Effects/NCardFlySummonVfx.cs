@@ -37,7 +37,12 @@ public partial class NCardFlySummonVfx : Node2D {
     public override void _Ready() {
         base.GlobalPosition = Vector2.Zero;
 
-        _trailVfx = NCardTrailVfx.Create(CardNode, CardNode.Model.Owner.Character.TrailPath);
+        if (CardNode.Model is not { } card) {
+            this.QueueFreeSafely();
+            return;
+        }
+
+        _trailVfx = NCardTrailVfx.Create(CardNode, card.Owner.Character.TrailPath);
         if (_trailVfx != null) {
             this.AddChildSafely(_trailVfx);
         }

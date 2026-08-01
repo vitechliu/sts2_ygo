@@ -7,17 +7,13 @@ namespace VYgo.Core.Effects;
 public partial class NLinkSummonManager: Node3D {
 	private Dictionary<int, NLinkTrailManager> LinkTrails = new();
 
-	private Sprite3D _shineSquare;
+	private Sprite3D _shineSquare = null!;
 
 	private Tween? _shineTween;
 
-	private AnimationPlayer _mainAnimationPlayer;
+	private AnimationPlayer _mainAnimationPlayer = null!;
 
-	private AnimationPlayer _lineAnimationPlayer;
-	
-
-	[Export] public AudioStreamOggVorbis _postSound1;
-	[Export] public AudioStreamOggVorbis _postSound2;
+	private AnimationPlayer _lineAnimationPlayer = null!;
 
 	public override void _Ready() {
 		base._Ready();

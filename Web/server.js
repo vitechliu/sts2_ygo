@@ -1,14 +1,20 @@
 const express = require('express');
 const path = require('path');
-const { exec } = require('child_process');
+const { execFile } = require('child_process');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = parsePort(process.env.PORT || '3000');
+const HOST = process.env.HOST || '127.0.0.1';
 const shouldOpenBrowser = !['0', 'false', 'no'].includes(
     String(process.env.OPEN_BROWSER || 'true').toLowerCase()
 );
 
-app.use(express.json({ limit: '50mb' }));
+app.use(express.json({ limit: '2mb' }));
+app.use((req, res, next) => {
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('Referrer-Policy', 'no-referrer');
+    next();
+});
 app.use(express.static(path.join(__dirname, 'public')));
 
 // 静态资源代理：让前端能访问项目根目录的 VYgo 文件夹
@@ -31,25 +37,40 @@ app.use((err, req, res, next) => {
 });
 
 function openBrowser(url) {
-    const command = process.platform === 'win32' ? `start "" "${url}"` :
-                    process.platform === 'darwin' ? `open "${url}"` :
-                    `xdg-open "${url}"`;
-    exec(command, (err) => {
+    const command = process.platform === 'win32' ? 'rundll32.exe' :
+                    process.platform === 'darwin' ? 'open' : 'xdg-open';
+    const args = process.platform === 'win32' ? ['url.dll,FileProtocolHandler', url] : [url];
+    execFile(command, args, { windowsHide: true }, (err) => {
         if (err) {
             console.log(`Could not open browser automatically: ${err.message}`);
         }
     });
 }
 
-app.listen(PORT, () => {
-    const url = `http://localhost:${PORT}`;
-    console.log(`VYgo Card Manager running at ${url}`);
-    console.log(`Press Ctrl+C to stop.`);
-    if (shouldOpenBrowser) {
-        openBrowser(url);
-    } else {
-        console.log('Browser auto-open disabled by OPEN_BROWSER.');
+function parsePort(value) {
+    const port = Number(value);
+    if (!Number.isInteger(port) || port < 1 || port > 65535) {
+        throw new Error('PORT must be an integer between 1 and 65535');
     }
-});
+    return port;
+}
 
-module.exports = app;
+function startServer() {
+    return app.listen(PORT, HOST, () => {
+        const displayHost = HOST === '127.0.0.1' ? 'localhost' : HOST;
+        const url = `http://${displayHost}:${PORT}`;
+        console.log(`VYgo Card Manager running at ${url}`);
+        console.log('Press Ctrl+C to stop.');
+        if (shouldOpenBrowser) {
+            openBrowser(url);
+        } else {
+            console.log('Browser auto-open disabled by OPEN_BROWSER.');
+        }
+    });
+}
+
+if (require.main === module) {
+    startServer();
+}
+
+module.exports = { app, parsePort, startServer };

@@ -17,6 +17,7 @@ const configDb = new sqlite3.Database(CONFIG_DB_PATH, (err) => {
         console.log('Connected to config database.');
     }
 });
+configDb.configure('busyTimeout', 5000);
 
 configDb.serialize(() => {
     configDb.run(`
@@ -38,16 +39,22 @@ configDb.serialize(() => {
         )
     `, (err) => { if (err) console.error('CREATE external_dirs failed:', err.message); });
 
-    configDb.run(`
-        INSERT OR IGNORE INTO settings (key, value) VALUES 
-        ('mod_id', 'VYgo'),
-        ('mod_name', '储君拓展[VYgo]'),
-        ('locale_prefix', 'REGENT_PLUS_CARD_'),
-        ('project_root', '${__dirname.replace(/\\\\/g, '/').replace('/Web', '')}')
-    `, (err) => {
-        if (err) console.error('INSERT settings failed:', err.message);
-        console.log('Config database tables initialized.');
-    });
+    configDb.run(
+        'INSERT OR IGNORE INTO settings (key, value) VALUES (?, ?), (?, ?), (?, ?), (?, ?)',
+        [
+            'mod_id', 'VYgo',
+            'mod_name', 'YGO',
+            'locale_prefix', 'V_YGO_CARD_',
+            'project_root', path.join(__dirname, '..')
+        ],
+        err => {
+            if (err) {
+                console.error('INSERT settings failed:', err.message);
+                return;
+            }
+            console.log('Config database tables initialized.');
+        }
+    );
 });
 
 // ===================== 卡牌数据库 =====================
@@ -59,6 +66,7 @@ const cardsDb = new sqlite3.Database(CARDS_DB_PATH, (err) => {
         console.log('Connected to cards database.');
     }
 });
+cardsDb.configure('busyTimeout', 5000);
 
 cardsDb.serialize(() => {
     cardsDb.run(`
@@ -80,7 +88,10 @@ cardsDb.serialize(() => {
             updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
     `, (err) => {
-        if (err) console.error('CREATE cards failed:', err.message);
+        if (err) {
+            console.error('CREATE cards failed:', err.message);
+            return;
+        }
         console.log('Cards database tables initialized.');
     });
 });
