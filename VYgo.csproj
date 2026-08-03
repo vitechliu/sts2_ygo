@@ -29,8 +29,8 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="STS2.RitsuLib" Version="0.4.59"/>
-        <PackageReference Include="FuYnAloft.Sts2.MinionLib" Version="0.6.1"/>
+        <PackageReference Include="STS2.RitsuLib" Version="0.5.4"/>
+        <PackageReference Include="FuYnAloft.Sts2.MinionLib" Version="0.6.2"/>
     </ItemGroup>
     <ItemGroup>
         <Publicize Include="sts2" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false"/>

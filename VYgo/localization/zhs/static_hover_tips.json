@@ -31,6 +31,8 @@
   "V_YGO_SET_CARD.description": "需要盖伏的效果，需要到回合结束后才能生效或者启动。",
   "V_YGO_HAND_ACTION.title": "手发",
   "V_YGO_HAND_ACTION.description": "在手牌丢弃以发动特殊效果，同样需要支付能量，右键触发。",
+  "V_YGO_POWER_ACTION.title": "启动",
+  "V_YGO_POWER_ACTION.description": "能力的主动效果，右键能力图标触发，默认1回合1次。",
   "V_YGO_XYZ_MATERIAL.title": "超量素材",
   "V_YGO_XYZ_MATERIAL.description": "超量召唤的素材"
 }

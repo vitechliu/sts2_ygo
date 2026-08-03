@@ -61,12 +61,16 @@ public static class YgoHoverTipConst {
         return Base("ENHANCE");
     }
     
-    //启动
+    //卡牌启动
     public static IHoverTip Action() {
         return Base("ACTION");
     }
+    //能力启动
+    public static IHoverTip PowerAction() {
+        return Base("POWER_ACTION");
+    }
     
-    //手发
+    //手发启动
     public static IHoverTip HandAction() {
         return Base("HAND_ACTION");
     }

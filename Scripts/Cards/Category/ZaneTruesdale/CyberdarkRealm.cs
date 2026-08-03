@@ -4,6 +4,7 @@ using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Scripts.Pools;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using VYgo.Core;
@@ -16,6 +17,10 @@ public class CyberdarkRealm() : BaseSpellCard(2, CardType.Skill, CardRarity.Unco
     public const int CostReduction = 1;
 
     public override int CardId => 64753988;
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        YgoHoverTipConst.PowerAction()
+    ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new EnergyVar("CostReduction", CostReduction)
