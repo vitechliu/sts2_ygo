@@ -28,6 +28,8 @@
   "CYBER_DRAGON_NOVA_ACTION.selectionScreenPrompt": "请选择要特召的机械族怪兽。",
   "CYBER_DRAGON_INFINITY_ACTION.title": "获得无效",
   "CYBER_DRAGON_INFINITY_ACTION.description": "[gold]启动[/gold]：获得1层[gold]无效[/gold]。",
+  "CYBER_DRAGON_SIEGER_ACTION.title": "临时强化",
+  "CYBER_DRAGON_SIEGER_ACTION.description": "[gold]启动[/gold]：选择1只友方怪兽，使其本回合获得[gold]强化[/gold]{Amount}/0。每回合限1次。",
   "V_YGO_POWER_MAXX_C_POWER.title": "特召抽卡",
   "V_YGO_POWER_MAXX_C_POWER.description": "每当你[gold]特召[/gold]，抽1张卡。",
   "V_YGO_POWER_MAXX_C_POWER.smartDescription": "每当你[gold]特召[/gold]，抽1张卡。",
@@ -36,5 +38,7 @@
   "V_YGO_POWER_CYBERNETIC_HIDDEN_TECHNOLOGY_POWER.smartDescription": "每当敌人攻击时，若额外卡组中有融合怪兽，随机将其中1只送入弃牌堆，然后对该敌人造成[blue]{Amount}[/blue]点伤害。",
   "V_YGO_POWER_POWER_BOND_DAMAGE_POWER.title": "力量结合",
   "V_YGO_POWER_POWER_BOND_DAMAGE_POWER.description": "在你的回合结束时，受到{Amount}点伤害，然后移除此能力。",
-  "V_YGO_POWER_POWER_BOND_DAMAGE_POWER.smartDescription": "在你的回合结束时，受到[red]{Amount}[/red]点伤害，然后移除此能力。"
+  "V_YGO_POWER_POWER_BOND_DAMAGE_POWER.smartDescription": "在你的回合结束时，受到[red]{Amount}[/red]点伤害，然后移除此能力。",
+  "V_YGO_POWER_TEMPORARY_ATTACK_POWER.description": "怪物使用主动攻击行为时造成的伤害，回合结束失效。",
+  "V_YGO_POWER_TEMPORARY_ATTACK_POWER.smartDescription": "怪物使用主动攻击行为时造成的伤害，回合结束失效。"
 }

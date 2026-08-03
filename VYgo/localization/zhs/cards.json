@@ -8,7 +8,7 @@
     "V_YGO_CARD_PROTO_CYBER_DRAGON.title": "原始电子龙",
     "V_YGO_CARD_PROTO_CYBER_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])",
     "V_YGO_CARD_CYBER_DRAGON_SIEGER.title": "电子龙·凯旋",
-    "V_YGO_CARD_CYBER_DRAGON_SIEGER.description": "[gold]连接召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]包含「电子龙」的机械族怪兽2只。[/aqua]\n可以攻击两次。",
+    "V_YGO_CARD_CYBER_DRAGON_SIEGER.description": "[gold]连接召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]包含「电子龙」的机械族怪兽2只。[/aqua]\n[gold]启动[/gold]：选择1只友方怪兽，使其本回合获得[gold]强化[/gold]{BoostAttack:diff()}/0。",
     "V_YGO_CARD_TEST3_D_CARD.title": "oiiaiooiiai",
     "V_YGO_CARD_TEST3_D_CARD.description": "喵喵喵。",
     "V_YGO_CARD_LINK_SUMMON.title": "连接召唤",
@@ -99,5 +99,8 @@
     "V_YGO_CARD_CYBERDARK_CANNON.title": "电子暗黑火炮",
     "V_YGO_CARD_CYBERDARK_CANNON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]手发[/gold]：从3张{IfUpgraded:show:[gold]升级过的[/gold]|}随机[gold]「电子暗黑」[/gold]怪兽牌中选择1张加入你的手牌；额外卡组怪兽改为加入[gold]额外卡组[/gold]。\n[gold]装备[/gold]：使装备怪兽获得[gold]强化[/gold]{EquipAttack:diff()}/{EquipLife:diff()}。",
     "V_YGO_CARD_CYBER_DINOSAUR.title": "电子恐龙",
-    "V_YGO_CARD_CYBER_DINOSAUR.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n本场战斗中，你每[gold]特召[/gold]1次，这张牌的{energyPrefix:energyIcons(1)}费用减少1。"
+    "V_YGO_CARD_CYBER_DINOSAUR.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n本场战斗中，你每[gold]特召[/gold]1次，这张牌的{energyPrefix:energyIcons(1)}费用减少1。",
+    "V_YGO_CARD_CYBER_REPAIR_PLANT.title": "电子修理工厂",
+    "V_YGO_CARD_CYBER_REPAIR_PLANT.description": "从[gold]抽牌堆[/gold]中选择一张机械族·光属性怪兽牌放入你的[gold]手牌[/gold]。",
+    "V_YGO_CARD_CYBER_REPAIR_PLANT.selectionScreenPrompt": "请选择要加入手牌的机械族·光属性怪兽牌。"
 }
