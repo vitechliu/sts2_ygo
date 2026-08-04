@@ -47,6 +47,6 @@ public class CyberDragonNachster() : BaseMonsterCard(1, CardRarity.Rare, TargetT
 
     private static bool IsMachineMonster(CardModel card) {
         return card is BaseMonsterCard monsterCard
-            && monsterCard.YgoGetCore()?.Race == "机械族";
+            && monsterCard.YgoGetCore().IsRace(YgoRace.Machine);
     }
 }

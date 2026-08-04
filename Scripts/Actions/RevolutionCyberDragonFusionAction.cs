@@ -10,9 +10,6 @@ using VYgo.Scripts.Cards;
 namespace VYgo.Scripts.Actions;
 
 public sealed class RevolutionCyberDragonFusionAction : BasePerTurnMonsterAction {
-    private const string MachineRace = "机械族";
-    
-    
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         YgoHoverTipConst.FusionSummon(),
         YgoHoverTipConst.Action()
@@ -52,6 +49,6 @@ public sealed class RevolutionCyberDragonFusionAction : BasePerTurnMonsterAction
     }
 
     private static bool IsMachineFusionMonster(BaseExtraFusionCard card) {
-        return card.YgoGetCore()?.Race == MachineRace;
+        return card.YgoGetCore().IsRace(YgoRace.Machine);
     }
 }
