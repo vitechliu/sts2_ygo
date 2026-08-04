@@ -113,5 +113,7 @@
     "V_YGO_CARD_CYBERNETIC_HORIZON.title": "电子地平线",
     "V_YGO_CARD_CYBERNETIC_HORIZON.description": "从3张{IfUpgraded:show:[gold]升级过的[/gold]|}随机机械族[gold]融合[/gold]怪兽中选择1张加入[gold]额外卡组[/gold]。\n再从3张{IfUpgraded:show:[gold]升级过的[/gold]|}随机[gold]「电子」[/gold]怪兽中选择1张加入你的[gold]手牌[/gold]。",
     "V_YGO_CARD_CYBERDARK_INFERNO.title": "电子暗黑业火",
-    "V_YGO_CARD_CYBERDARK_INFERNO.description": "每当你召唤[gold]「电子暗黑」[/gold]怪兽时，使其获得[gold]强化[/gold]0/{Life:diff()}。\n[gold]启动[/gold]：移除本能力，将1张[gold]融合[/gold]加入你的[gold]手牌[/gold]。"
+    "V_YGO_CARD_CYBERDARK_INFERNO.description": "每当你召唤[gold]「电子暗黑」[/gold]怪兽时，使其获得[gold]强化[/gold]0/{Life:diff()}。\n[gold]启动[/gold]：移除本能力，将1张[gold]融合[/gold]加入你的[gold]手牌[/gold]。",
+    "V_YGO_CARD_CYBERDARK_CHIMERA.title": "电子暗黑嵌合体",
+    "V_YGO_CARD_CYBERDARK_CHIMERA.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]：将1张{IfUpgraded:show:[gold]升级过的[/gold]|}[gold]力量结合[/gold]加入你的[gold]手牌[/gold]。\n[gold]送墓[/gold]：将1张随机{IfUpgraded:show:[gold]升级过的[/gold]|}[gold]「电子暗黑」[/gold]怪兽加入[gold]弃牌堆[/gold]。"
 }
