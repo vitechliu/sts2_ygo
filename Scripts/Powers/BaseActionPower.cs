@@ -9,17 +9,18 @@ namespace VYgo.Scripts.Powers;
 public abstract class BaseActionPower : ModPowerTemplate, IModRightClickablePower {
 
     protected bool _activated;
-
     public virtual async Task OnRightClick(ModRightClickExecutionContext context) {
         if (!CanExecuteRightClick(context)) return;
         _activated = await OnAction(context);
     }
 
     public virtual bool CanExecuteRightClick(ModRightClickExecutionContext context) {
+        Entry.Logger.Info("PlayerChoiceContext:" + context.PlayerChoiceContext.ToString());
+        Entry.Logger.Info("Player:" + context.Player.ToString());
         return context.PlayerChoiceContext != null
-            && Owner.Player == context.Player
-            && Amount > 0
-            && !_activated;
+               && Owner.Player == context.Player
+               && Amount > 0
+               && !_activated;
     }
 
     public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants,

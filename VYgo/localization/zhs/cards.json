@@ -109,5 +109,7 @@
     "V_YGO_CARD_ARMORED_CYBERN.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]启动[/gold]：选择1只「电子龙」怪兽，将这张卡[gold]装备[/gold]给它。\n[gold]装备[/gold]：[gold]强化[/gold]{EquipAttack:diff()}/{EquipLife:diff()}。",
     "V_YGO_CARD_CYBERDARK_REALM.title": "电子暗黑世界",
     "V_YGO_CARD_CYBERDARK_REALM.description": "从[gold]抽牌堆[/gold]中选择1只[gold]「电子暗黑」[/gold]怪兽放入你的[gold]手牌[/gold]。\n[gold]启动[/gold]：从手牌选择1只[gold]「电子暗黑」[/gold]怪兽，使其本回合费用减少{CostReduction:energyIcons()}。",
-    "V_YGO_CARD_CYBERDARK_REALM.selectionScreenPrompt": "请选择要加入手牌的「电子暗黑」怪兽。"
+    "V_YGO_CARD_CYBERDARK_REALM.selectionScreenPrompt": "请选择要加入手牌的「电子暗黑」怪兽。",
+    "V_YGO_CARD_CYBERNETIC_HORIZON.title": "电子地平线",
+    "V_YGO_CARD_CYBERNETIC_HORIZON.description": "从3张{IfUpgraded:show:[gold]升级过的[/gold]|}随机机械族[gold]融合[/gold]怪兽中选择1张加入[gold]额外卡组[/gold]。\n再从3张{IfUpgraded:show:[gold]升级过的[/gold]|}随机[gold]「电子」[/gold]怪兽中选择1张加入你的[gold]手牌[/gold]。"
 }

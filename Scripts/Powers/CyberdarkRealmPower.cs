@@ -26,7 +26,9 @@ public class CyberdarkRealmPower : BaseActionPower {
         IconPath: "res://VYgo/images/powers/cyberdark_realm_power.png",
         BigIconPath: "res://VYgo/images/powers/cyberdark_realm_power.png"
     );
-
+    
+    public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
+    
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromCard<CyberdarkRealm>(),
         YgoHoverTipConst.Action(),
@@ -57,7 +59,9 @@ public class CyberdarkRealmPower : BaseActionPower {
             .FirstOrDefault();
         if (selectedMonster == null) return false;
 
+        Flash();
         selectedMonster.EnergyCost.AddThisTurnOrUntilPlayed(-CyberdarkRealm.CostReduction, reduceOnly: true);
+        selectedMonster.InvokeEnergyCostChanged();
         return true;
     }
 
