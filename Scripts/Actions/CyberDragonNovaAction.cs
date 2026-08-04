@@ -14,8 +14,6 @@ using VYgo.Scripts.Powers;
 namespace VYgo.Scripts.Actions;
 
 public sealed class CyberDragonNovaAction : BasePerTurnMonsterAction {
-    private const string MachineRace = "机械族";
-
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         YgoHoverTipConst.Action(),
         YgoHoverTipConst.SpecialSummon(),
@@ -50,7 +48,7 @@ public sealed class CyberDragonNovaAction : BasePerTurnMonsterAction {
                 context: choiceContext,
                 pile: PileType.Discard.GetPile(player),
                 player: player,
-                filter: model => model is BaseMonsterCard bm && bm.YgoGetCore()?.Race == MachineRace ))
+                filter: model => model is BaseMonsterCard bm && bm.YgoGetCore().IsRace(YgoRace.Machine) ))
             .FirstOrDefault() is not { } selectedExtraCard) {
             //todo 警告
             return;

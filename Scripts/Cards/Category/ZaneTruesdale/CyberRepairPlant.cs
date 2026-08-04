@@ -27,8 +27,11 @@ public class CyberRepairPlant() : BaseSpellCard(1, CardType.Skill, CardRarity.Ba
     }
 
     private static bool IsLightMachineMonster(CardModel card) {
-        return card is BaseMonsterCard monsterCard
-            && monsterCard.YgoGetCore() is { Race: "机械族", Attribute: "光" };
+        if (card is not BaseMonsterCard monsterCard) return false;
+
+        var coreCard = monsterCard.YgoGetCore();
+        return coreCard.IsRace(YgoRace.Machine)
+            && coreCard?.Attribute == "光";
     }
 
     protected override void OnUpgrade() {

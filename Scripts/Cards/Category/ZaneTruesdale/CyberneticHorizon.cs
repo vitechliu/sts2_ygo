@@ -56,7 +56,7 @@ public class CyberneticHorizon() : BaseSpellCard(1, CardType.Skill, CardRarity.U
     }
 
     private static bool IsMachineFusionMonster(BaseExtraFusionCard card) {
-        return card.YgoGetCore()?.Race == "机械族";
+        return card.YgoGetCore().IsRace(YgoRace.Machine);
     }
 
     private static bool IsCyberMonster(BaseMonsterCard card) {
