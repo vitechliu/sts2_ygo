@@ -124,5 +124,9 @@
     "V_YGO_CARD_CYBERDARK_WURM.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\\n[gold]登场[/gold]：从[gold]抽牌堆[/gold]中选择1只「电子龙」怪兽放入你的[gold]手牌[/gold]，再从[gold]弃牌堆[/gold]中选择1张「电子」魔法·陷阱卡放入你的[gold]手牌[/gold]。将这些牌[gold]升级[/gold]。",
     "V_YGO_CARD_CYBERDARK_WURM.selectionScreenPrompt": "请选择要加入手牌并升级的牌。",
     "V_YGO_CARD_CYBER_LARVA.title": "电子幼体",
-    "V_YGO_CARD_CYBER_LARVA.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\\n[gold]送墓[/gold]：从[gold]抽牌堆[/gold]中将{IfUpgraded:show:全部|1张随机}[gold]「电子幼体」[/gold]加入你的[gold]手牌[/gold]。"
+    "V_YGO_CARD_CYBER_LARVA.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\\n[gold]送墓[/gold]：从[gold]抽牌堆[/gold]中将{IfUpgraded:show:全部|1张随机}[gold]「电子幼体」[/gold]加入你的[gold]手牌[/gold]。",
+    "V_YGO_CARD_CYBER_KIRIN.title": "电子麒麟",
+    "V_YGO_CARD_CYBER_KIRIN.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\\n[gold]启动[/gold]：献祭自身并将此牌[gold]消耗[/gold]，角色获得{IntangiblePower:diff()}层[gold]无实体[/gold]。",
+    "V_YGO_CARD_CYBER_PHOENIX.title": "电子凤凰",
+    "V_YGO_CARD_CYBER_PHOENIX.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\\n[gold]送墓[/gold]：抽{Cards:diff()}张牌。"
 }
