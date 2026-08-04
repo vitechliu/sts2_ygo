@@ -45,7 +45,7 @@
   "V_YGO_POWER_POWER_BOND_DAMAGE_POWER.smartDescription": "在你的回合结束时，受到[red]{Amount}[/red]点伤害，然后移除此能力。",
   "V_YGO_POWER_TEMPORARY_ATTACK_POWER.description": "怪物使用主动攻击行为时造成的伤害，回合结束失效。",
   "V_YGO_POWER_TEMPORARY_ATTACK_POWER.smartDescription": "怪物使用主动攻击行为时造成的伤害，回合结束失效。",
-  "V_YGO_POWER_CYBERDARK_REALM_POWER.title": "电子暗黑启动",
+  "V_YGO_POWER_CYBERDARK_REALM_POWER.title": "电子暗黑世界",
   "V_YGO_POWER_CYBERDARK_REALM_POWER.description": "[gold]启动[/gold]：从手牌选择1只[gold]「电子暗黑」[/gold]怪兽，使其本回合费用减少{Amount}。",
   "V_YGO_POWER_CYBERDARK_REALM_POWER.selectionScreenPrompt": "请选择本回合费用减少的「电子暗黑」怪兽。"
 }
