@@ -42,5 +42,9 @@
     "CYBERDARK_REALM_MINION.name": "电子暗黑世界",
     "CYBERNETIC_HORIZON_MINION.name": "电子地平线",
     "CYBERDARK_INFERNO_MINION.name": "电子暗黑业火",
-    "CYBERDARK_CHIMERA_MINION.name": "电子暗黑嵌合体"
+    "CYBERDARK_CHIMERA_MINION.name": "电子暗黑嵌合体",
+    "CYBERDARK_IMPACT_MINION.name": "电子暗黑冲击！",
+    "CYBERDARK_INVASION_MINION.name": "电子暗黑侵略",
+    "CYBERDARK_WURM_MINION.name": "电子暗黑亚龙",
+    "CYBER_LARVA_MINION.name": "电子幼体"
 }

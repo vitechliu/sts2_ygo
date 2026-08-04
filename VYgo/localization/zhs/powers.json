@@ -49,5 +49,7 @@
   "V_YGO_POWER_CYBERDARK_REALM_POWER.description": "[gold]启动[/gold]：从手牌选择1只[gold]「电子暗黑」[/gold]怪兽，使其本回合费用减少{Amount}。",
   "V_YGO_POWER_CYBERDARK_REALM_POWER.selectionScreenPrompt": "请选择本回合费用减少的「电子暗黑」怪兽。",
   "V_YGO_POWER_CYBERDARK_INFERNO_POWER.title": "电子暗黑业火",
-  "V_YGO_POWER_CYBERDARK_INFERNO_POWER.description": "每当你召唤[gold]「电子暗黑」[/gold]怪兽时，使其获得[gold]强化[/gold]0/{Amount}。\n[gold]启动[/gold]：移除本能力，将1张[gold]融合[/gold]加入你的[gold]手牌[/gold]。"
+  "V_YGO_POWER_CYBERDARK_INFERNO_POWER.description": "每当你召唤[gold]「电子暗黑」[/gold]怪兽时，使其获得[gold]强化[/gold]0/{Amount}。\n[gold]启动[/gold]：移除本能力，将1张[gold]融合[/gold]加入你的[gold]手牌[/gold]。",
+  "V_YGO_POWER_CYBERDARK_INVASION_POWER.title": "电子暗黑侵略",
+  "V_YGO_POWER_CYBERDARK_INVASION_POWER.description": "在你的回合结束时，如果场上有[gold]装备[/gold]卡，随机移除1张并对随机1名敌人造成{Amount}点伤害。\n否则，随机将[gold]抽牌堆[/gold]中的1只[gold]「电子暗黑」[/gold]怪兽[gold]装备[/gold]给随机1只友方怪兽。"
 }
