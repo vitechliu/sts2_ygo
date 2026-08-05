@@ -33,8 +33,7 @@ public sealed partial class NSummonMaterialSelectScreen : NCardGridSelectionScre
     private Control _targetTextContainer = null!;
     private MegaRichTextLabel _infoLabel = null!;
     private MegaRichTextLabel _targetLabel = null!;
-    private CardPile _handPile = null!;
-    private CardPile _monsterPile = null!;
+    private readonly List<CardPile> _materialSourcePiles = [];
     private bool _showBlockedMessage;
     private bool _refreshQueued;
     private bool _completed;
@@ -290,11 +289,25 @@ public sealed partial class NSummonMaterialSelectScreen : NCardGridSelectionScre
 
         string key = material.IsField
             ? "V_YGO_SUMMON_MATERIAL_SELECT.field"
-            : "V_YGO_SUMMON_MATERIAL_SELECT.hand";
+            : material.SourcePile switch {
+                PileType.Draw => "V_YGO_SUMMON_MATERIAL_SELECT.draw",
+                PileType.Hand => "V_YGO_SUMMON_MATERIAL_SELECT.hand",
+                PileType.Discard => "V_YGO_SUMMON_MATERIAL_SELECT.discard",
+                PileType.Exhaust => "V_YGO_SUMMON_MATERIAL_SELECT.exhaust",
+                _ => "V_YGO_SUMMON_MATERIAL_SELECT.pile"
+            };
         badge.Text = new LocString("cards", key).GetFormattedText();
         badge.AddThemeColorOverride(
             "font_color",
-            material.IsField ? new Color("67d9ff") : new Color("ffd76a")
+            material.IsField
+                ? new Color("67d9ff")
+                : material.SourcePile switch {
+                    PileType.Draw => new Color("a8e6a3"),
+                    PileType.Hand => new Color("ffd76a"),
+                    PileType.Discard => new Color("c5b3ff"),
+                    PileType.Exhaust => new Color("ff9a8f"),
+                    _ => Colors.White
+                }
         );
     }
 
@@ -318,10 +331,18 @@ public sealed partial class NSummonMaterialSelectScreen : NCardGridSelectionScre
     private void SubscribeToMaterialSources() {
         if (_subscribed) return;
 
-        _handPile = PileType.Hand.GetPile(_owner);
-        _monsterPile = Entry.MonsterPile.GetPile(_owner);
-        _handPile.ContentsChanged += QueueSpecRefresh;
-        _monsterPile.ContentsChanged += QueueSpecRefresh;
+        _materialSourcePiles.AddRange(new[] {
+                PileType.Draw,
+                PileType.Hand,
+                PileType.Discard,
+                PileType.Exhaust,
+                Entry.MonsterPile
+            }
+            .Distinct()
+            .Select(pileType => pileType.GetPile(_owner)));
+        foreach (CardPile pile in _materialSourcePiles) {
+            pile.ContentsChanged += QueueSpecRefresh;
+        }
         _owner.Creature.CombatState.CreaturesChanged += OnCreaturesChanged;
         _subscribed = true;
     }
@@ -329,8 +350,10 @@ public sealed partial class NSummonMaterialSelectScreen : NCardGridSelectionScre
     private void UnsubscribeFromMaterialSources() {
         if (!_subscribed) return;
 
-        _handPile.ContentsChanged -= QueueSpecRefresh;
-        _monsterPile.ContentsChanged -= QueueSpecRefresh;
+        foreach (CardPile pile in _materialSourcePiles) {
+            pile.ContentsChanged -= QueueSpecRefresh;
+        }
+        _materialSourcePiles.Clear();
         _owner.Creature.CombatState.CreaturesChanged -= OnCreaturesChanged;
         _subscribed = false;
     }

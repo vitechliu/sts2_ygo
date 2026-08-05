@@ -1,5 +1,40 @@
 [
     {
+        "id": 52,
+        "card_id": 55704856,
+        "name": "",
+        "cn_name": "电子负载融合",
+        "en_name": "CyberloadFusion",
+        "types": "[魔法|速攻]",
+        "description": "这个卡名的卡在1回合只能发动1张。\r\n①：从自己场上以及除外的自己怪兽之中让融合怪兽卡决定的融合素材怪兽回到持有者卡组，把以「电子龙」怪兽为融合素材的那1只融合怪兽从额外卡组融合召唤。这个回合，这个效果特殊召唤的怪兽以外的自己怪兽不能攻击。",
+        "atk": 0,
+        "def": 0,
+        "level": 0,
+        "attribute": "",
+        "race": "",
+        "archetypes": [
+            70,
+            147
+        ]
+    },
+    {
+        "id": 51,
+        "card_id": 3659803,
+        "name": "",
+        "cn_name": "超载融合",
+        "en_name": "OverloadFusion",
+        "types": "[魔法]",
+        "description": "①：自己的场上·墓地的怪兽作为融合素材除外，把1只机械族·暗属性的融合怪兽融合召唤。",
+        "atk": 0,
+        "def": 0,
+        "level": 0,
+        "attribute": "",
+        "race": "",
+        "archetypes": [
+            70
+        ]
+    },
+    {
         "id": 50,
         "card_id": 3370104,
         "name": "",

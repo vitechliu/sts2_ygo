@@ -25,7 +25,8 @@ public class FusionSubstitute()
             Owner: Owner,
             ChoiceContext: choiceContext,
             SelectionPrompt: SelectionScreenPrompt,
-            GetAvailableMaterials: _ => SummonUtil.GetFieldMonsterMaterials(Owner)
+            GetAvailableMaterials: _ => SummonUtil.GetFieldMonsterMaterials(Owner),
+            GetMaterialDestination: _ => PileType.Discard
         ));
     }
 

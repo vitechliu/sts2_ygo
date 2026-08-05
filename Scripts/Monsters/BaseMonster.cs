@@ -55,6 +55,32 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
             PileSent = false;
         }
     }
+
+    internal async Task<bool> SendReservedSourceCardAsSummonMaterial(
+        PlayerChoiceContext choiceContext,
+        Player owner,
+        PileType destination
+    ) {
+        if (!PileSent || SourceCard is not { } card || card.Owner != owner) return false;
+
+        if (destination == PileType.Exhaust) {
+            await CardCmd.Exhaust(choiceContext, card);
+        }
+        else {
+            CardPile destinationPile = destination.GetPile(owner);
+            CardPileAddResult result = await CardPileCmd.Add(card, destinationPile);
+            if (!result.success) return false;
+            destinationPile.InvokeContentsChanged();
+        }
+
+        if (card.Pile?.Type != destination) return false;
+        if (destination == PileType.Discard && Creature is { } creature) {
+            await OnSendToGraveyard(choiceContext, creature, owner);
+        }
+
+        return true;
+    }
+
     public virtual bool IsGuardian {
         get;
         set;

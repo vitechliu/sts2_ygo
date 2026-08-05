@@ -33,7 +33,8 @@ public class PowerBond() : BaseSpellCard(energyCost, CardType.Skill, rarity, tar
             Owner: Owner,
             ChoiceContext: choiceContext,
             SelectionPrompt: SelectionScreenPrompt,
-            GetAvailableMaterials: _ => SummonUtil.GetFieldAndHandMonsterMaterials(Owner)
+            GetAvailableMaterials: _ => SummonUtil.GetFieldAndHandMonsterMaterials(Owner),
+            GetMaterialDestination: _ => PileType.Discard
         ));
 
         if (!result.Success
