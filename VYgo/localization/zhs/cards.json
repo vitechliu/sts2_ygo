@@ -55,7 +55,11 @@
     "V_YGO_SUMMON_MATERIAL_SELECT.ready": "[green]已选择 {Selected} 张素材，组合有效，可以确认。[/green]",
     "V_YGO_SUMMON_MATERIAL_SELECT.blocked": "[red]当前素材选择无法执行合法召唤。[/red] 已选择 {Selected}/{Max} 张。",
     "V_YGO_SUMMON_MATERIAL_SELECT.field": "场上",
+    "V_YGO_SUMMON_MATERIAL_SELECT.draw": "抽牌堆",
     "V_YGO_SUMMON_MATERIAL_SELECT.hand": "手牌",
+    "V_YGO_SUMMON_MATERIAL_SELECT.discard": "弃牌堆",
+    "V_YGO_SUMMON_MATERIAL_SELECT.exhaust": "消耗堆",
+    "V_YGO_SUMMON_MATERIAL_SELECT.pile": "牌堆",
     "V_YGO_EXTRA_DECK_DIRECT_SUMMON.confirm": "进行召唤",
     "V_YGO_CARD_REVOLUTION_CYBER_DRAGON.title": "机光龙-电子龙",
     "V_YGO_CARD_REVOLUTION_CYBER_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n如果你没有控制任何随从，可以[gold]特招[/gold]。\n[gold]登场[/gold]：对随机一名敌人造成{Damage:diff()}点伤害。\n[gold]启动[/gold]：以手卡·场上的怪兽作为融合素材，进行一次机械族怪兽的[gold]融合召唤[/gold]。",
@@ -128,5 +132,11 @@
     "V_YGO_CARD_CYBER_KIRIN.title": "电子麒麟",
     "V_YGO_CARD_CYBER_KIRIN.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\\n[gold]启动[/gold]：献祭自身并将此牌[gold]消耗[/gold]，角色获得{IntangiblePower:diff()}层[gold]无实体[/gold]。",
     "V_YGO_CARD_CYBER_PHOENIX.title": "电子凤凰",
-    "V_YGO_CARD_CYBER_PHOENIX.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\\n[gold]送墓[/gold]：抽{Cards:diff()}张牌。"
+    "V_YGO_CARD_CYBER_PHOENIX.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\\n[gold]送墓[/gold]：抽{Cards:diff()}张牌。",
+    "V_YGO_CARD_OVERLOAD_FUSION.title": "超载融合",
+    "V_YGO_CARD_OVERLOAD_FUSION.description": "以场上·[gold]弃牌堆[/gold]的怪兽作为融合素材并[gold]消耗[/gold]，把1只机械族·暗属性融合怪兽[gold]融合召唤[/gold]。",
+    "V_YGO_CARD_OVERLOAD_FUSION.selectionScreenPrompt": "请选择要融合召唤的机械族·暗属性怪兽。",
+    "V_YGO_CARD_CYBERLOAD_FUSION.title": "电子负载融合",
+    "V_YGO_CARD_CYBERLOAD_FUSION.description": "以场上·[gold]弃牌堆[/gold]的怪兽作为融合素材并回到[gold]抽牌堆[/gold]，把1只机械族融合怪兽[gold]融合召唤[/gold]。",
+    "V_YGO_CARD_CYBERLOAD_FUSION.selectionScreenPrompt": "请选择要融合召唤的机械族怪兽。"
 }

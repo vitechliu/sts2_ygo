@@ -48,5 +48,7 @@
     "CYBERDARK_WURM_MINION.name": "电子暗黑亚龙",
     "CYBER_LARVA_MINION.name": "电子幼体",
     "CYBER_KIRIN_MINION.name": "电子麒麟",
-    "CYBER_PHOENIX_MINION.name": "电子凤凰"
+    "CYBER_PHOENIX_MINION.name": "电子凤凰",
+    "OVERLOAD_FUSION_MINION.name": "超载融合",
+    "CYBERLOAD_FUSION_MINION.name": "电子负载融合"
 }

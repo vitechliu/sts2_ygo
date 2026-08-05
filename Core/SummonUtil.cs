@@ -16,6 +16,7 @@ using MegaCrit.Sts2.Core.TestSupport;
 using VYgo.Core.Cards;
 using VYgo.Scripts;
 using VYgo.Scripts.Cards;
+using VYgo.Scripts.Monsters;
 using VYgo.Utils;
 
 namespace VYgo.Core;
@@ -26,6 +27,7 @@ public sealed record FusionSummonRequest(
     PlayerChoiceContext ChoiceContext,
     LocString SelectionPrompt,
     Func<BaseExtraFusionCard, IReadOnlyList<SummonMaterial>> GetAvailableMaterials,
+    Func<SummonMaterial, PileType> GetMaterialDestination,
     Func<BaseExtraFusionCard, bool>? FusionCardFilter = null
 );
 
@@ -116,6 +118,7 @@ public static class SummonUtil {
         if (!HasFusionSummonTarget(
                 request.Owner,
                 request.GetAvailableMaterials,
+                request.GetMaterialDestination,
                 request.FusionCardFilter
             )) {
             ThinkCmd.Play(
@@ -136,9 +139,16 @@ public static class SummonUtil {
             BuildMaterialSelection: card => BuildFusionMaterialSelection(
                 card,
                 request.Owner,
-                request.GetAvailableMaterials
+                request.GetAvailableMaterials,
+                request.GetMaterialDestination
             ),
             PlayAnimation: ExtraDeckSummonAnimations.PlayFusionSummonAnimation,
+            ConsumeMaterials: materials => ConsumeSummonMaterials(
+                request.ChoiceContext,
+                request.Owner,
+                materials,
+                request.GetMaterialDestination
+            ),
             FinalWaitSeconds: 0.45f
         ));
     }
@@ -256,25 +266,62 @@ public static class SummonUtil {
 
         return await ConsumeSummonMaterials(
             choiceContext,
-            resolvedMaterials.ToList()
+            owner,
+            resolvedMaterials.ToList(),
+            _ => PileType.Discard
         );
+    }
+
+    public static IReadOnlyList<SummonMaterial> GetMonsterMaterialsFromPiles(
+        Player owner,
+        IEnumerable<PileType> sourcePiles,
+        Func<SummonMaterial, bool>? filter = null
+    ) {
+        List<SummonMaterial> materials = [];
+        foreach (PileType sourcePile in sourcePiles.Distinct()) {
+            if (sourcePile is not (
+                    PileType.Draw
+                    or PileType.Hand
+                    or PileType.Discard
+                    or PileType.Exhaust
+                )) {
+                throw new ArgumentOutOfRangeException(
+                    nameof(sourcePiles),
+                    sourcePile,
+                    "Monster material sources must be draw, hand, discard, or exhaust."
+                );
+            }
+
+            materials.AddRange(sourcePile.GetPile(owner).Cards
+                .Where(card => SummonMaterial.IsMonsterCardInPile(card, sourcePile))
+                .Select(SummonMaterial.FromMonsterCard)
+                .Where(material => filter?.Invoke(material) ?? true));
+        }
+
+        return materials;
+    }
+
+    public static IReadOnlyList<SummonMaterial> GetFieldAndMonsterMaterialsFromPiles(
+        Player owner,
+        IEnumerable<PileType> sourcePiles,
+        Func<SummonMaterial, bool>? filter = null
+    ) {
+        List<SummonMaterial> materials = GetFieldMonsterMaterials(owner, filter).ToList();
+        materials.AddRange(GetMonsterMaterialsFromPiles(owner, sourcePiles, filter));
+        return materials;
     }
 
     public static IReadOnlyList<SummonMaterial> GetFieldAndHandMonsterMaterials(
         Player owner,
         Func<SummonMaterial, bool>? filter = null
     ) {
-        List<SummonMaterial> materials = GetFieldMonsterMaterials(owner, filter).ToList();
-        materials.AddRange(PileType.Hand.GetPile(owner).Cards
-            .Where(SummonMaterial.IsHandMonsterCard)
-            .Select(SummonMaterial.FromHandMonsterCard)
-            .Where(material => filter?.Invoke(material) ?? true));
-        return materials;
+        return GetFieldAndMonsterMaterialsFromPiles(owner, [PileType.Hand], filter);
     }
 
     public static bool HasFusionSummonTarget(
         Player owner,
         Func<BaseExtraFusionCard, IReadOnlyList<SummonMaterial>> getAvailableMaterials,
+        Func<SummonMaterial, PileType> getMaterialDestination,
         Func<BaseExtraFusionCard, bool>? fusionCardFilter = null
     ) {
         return Entry.ExtraPile.GetPile(owner).Cards
@@ -283,7 +330,8 @@ public static class SummonUtil {
             .Any(card => BuildFusionMaterialSelection(
                 card,
                 owner,
-                getAvailableMaterials
+                getAvailableMaterials,
+                getMaterialDestination
             )?.HasValidCombination == true);
     }
 
@@ -383,7 +431,12 @@ public static class SummonUtil {
                 materialsConsumed = await request.ConsumeMaterials(materials);
             }
             else {
-                materialsConsumed = await ConsumeSummonMaterials(request.ChoiceContext, materials);
+                materialsConsumed = await ConsumeSummonMaterials(
+                    request.ChoiceContext,
+                    request.Owner,
+                    materials,
+                    _ => PileType.Discard
+                );
             }
             if (!materialsConsumed) {
                 return ExtraDeckSummonResult.Failed(selectedExtraCard, materials: materials);
@@ -471,12 +524,17 @@ public static class SummonUtil {
     private static SummonMaterialSelectionSpec? BuildFusionMaterialSelection(
         CardModel card,
         Player owner,
-        Func<BaseExtraFusionCard, IReadOnlyList<SummonMaterial>> getAvailableMaterials
+        Func<BaseExtraFusionCard, IReadOnlyList<SummonMaterial>> getAvailableMaterials,
+        Func<SummonMaterial, PileType> getMaterialDestination
     ) {
         if (card is not BaseExtraFusionCard fusionCard) return null;
 
         IReadOnlyList<SummonMaterial> candidates = getAvailableMaterials(fusionCard)
             .Where(material => material.Card != null)
+            .Where(material => CanMoveMaterialToDestination(
+                material,
+                getMaterialDestination(material)
+            ))
             .Where(fusionCard.CanUseFusionMaterial)
             .ToList();
 
@@ -547,27 +605,53 @@ public static class SummonUtil {
         Player owner,
         IReadOnlyList<SummonMaterial> materials
     ) {
-        HashSet<Creature> availableFieldMonsters = owner.Creature.Pets
-            .Where(SummonMaterial.IsFieldMonster)
-            .ToHashSet();
-        HashSet<CardModel> availableHandMonsters = PileType.Hand.GetPile(owner).Cards
-            .Where(SummonMaterial.IsHandMonsterCard)
-            .ToHashSet();
+        HashSet<CardModel> seenCards = [];
+        HashSet<Creature> seenFieldMonsters = [];
         int consumedFieldMonsterCount = 0;
 
         foreach (SummonMaterial material in materials) {
+            if (material.Card is not { } card
+                || card.Owner != owner
+                || !seenCards.Add(card)
+                || card.Pile?.Type != material.SourcePile
+                || !card.Pile.Cards.Contains(card)) {
+                return false;
+            }
+
             if (material.Creature is { } creature) {
-                if (!availableFieldMonsters.Remove(creature)) return false;
+                if (!seenFieldMonsters.Add(creature)
+                    || creature is not { IsAlive: true, Monster: BaseMonster monster }
+                    || creature.PetOwner != owner
+                    || !owner.Creature.Pets.Contains(creature)
+                    || monster.SourceCard != card
+                    || material.SourcePile != Entry.MonsterPile) {
+                    return false;
+                }
+
                 consumedFieldMonsterCount++;
                 continue;
             }
 
-            if (material.Card is not { } card || !availableHandMonsters.Remove(card)) {
+            if (card is not BaseMonsterCard { IsExtra: false }
+                || material.SourcePile is not (
+                    PileType.Draw
+                    or PileType.Hand
+                    or PileType.Discard
+                    or PileType.Exhaust
+                )) {
                 return false;
             }
         }
 
         return owner.MinionCount() - consumedFieldMonsterCount < MinionUtil.MaxMinionCount;
+    }
+
+    private static bool CanMoveMaterialToDestination(
+        SummonMaterial material,
+        PileType destination
+    ) {
+        return destination is PileType.Draw or PileType.Discard or PileType.Exhaust
+            && (material.IsField || destination != material.SourcePile);
     }
 
     private static SummonMaterialSelectionSpec BuildFieldTributeSelection(
@@ -598,29 +682,96 @@ public static class SummonUtil {
         );
     }
 
-    private static async Task<bool> ConsumeSummonMaterials(
+    public static async Task<bool> ConsumeSummonMaterials(
         PlayerChoiceContext choiceContext,
-        IReadOnlyList<SummonMaterial> materials
+        Player owner,
+        IReadOnlyList<SummonMaterial> materials,
+        Func<SummonMaterial, PileType> getMaterialDestination
     ) {
-        List<Task> consumeTasks = [];
-        bool hasFieldMaterial = false;
+        if (materials.Count <= 0 || !CanSummonWithMaterials(owner, materials)) {
+            return false;
+        }
+
+        List<(SummonMaterial Material, PileType Destination)> moves = [];
         foreach (SummonMaterial material in materials) {
-            if (material.Creature != null) {
-                hasFieldMaterial = true;
-                consumeTasks.Add(MaterialSacrifice(material.Creature));
+            PileType destination = getMaterialDestination(material);
+            if (!CanMoveMaterialToDestination(material, destination)) {
+                Entry.Logger.Error(
+                    $"Invalid summon material destination {destination} for " +
+                    $"{material.Card?.GetType().Name ?? "unknown material"}."
+                );
+                return false;
             }
-            else if (material.Card != null) {
-                consumeTasks.Add(CardCmd.Discard(choiceContext, material.Card));
-            }
+
+            moves.Add((material, destination));
         }
 
-        if (consumeTasks.Count <= 0) return false;
-        if (hasFieldMaterial) {
-            SFXUtil.Play("event:/vygo/sfx/material_shine");
+        List<(BaseMonster Monster, CardModel Card)> fieldReservations = [];
+        foreach ((SummonMaterial material, _) in moves.Where(move => move.Material.IsField)) {
+            if (material is not {
+                    Card: { } card,
+                    Creature: { Monster: BaseMonster monster }
+                }
+                || !monster.TryReserveSourceCardAsSummonMaterial(card)) {
+                foreach ((BaseMonster reservedMonster, CardModel reservedCard) in fieldReservations) {
+                    reservedMonster.CancelSourceCardMaterialReservation(reservedCard);
+                }
+                return false;
+            }
+
+            fieldReservations.Add((monster, card));
         }
 
-        await Task.WhenAll(consumeTasks);
-        return true;
+        try {
+            if (fieldReservations.Count > 0) {
+                SFXUtil.Play("event:/vygo/sfx/material_shine");
+            }
+
+            foreach ((SummonMaterial material, PileType destination) in moves
+                         .Where(move => move.Material.IsField)) {
+                BaseMonster monster = (BaseMonster)material.Creature!.Monster;
+                await MaterialSacrifice(material.Creature);
+                if (!await monster.SendReservedSourceCardAsSummonMaterial(
+                        choiceContext,
+                        owner,
+                        destination
+                    )) {
+                    return false;
+                }
+            }
+
+            List<CardModel> discardCards = moves
+                .Where(move => !move.Material.IsField
+                    && move.Destination == PileType.Discard)
+                .Select(move => move.Material.Card!)
+                .ToList();
+            if (discardCards.Count > 0) {
+                await CardCmd.Discard(choiceContext, discardCards);
+            }
+
+            foreach ((SummonMaterial material, PileType destination) in moves
+                         .Where(move => !move.Material.IsField
+                             && move.Destination != PileType.Discard)) {
+                CardModel card = material.Card!;
+                if (destination == PileType.Exhaust) {
+                    await CardCmd.Exhaust(choiceContext, card);
+                }
+                else {
+                    await CardPileCmd.Add(card, destination);
+                }
+            }
+
+            return moves.All(move => move.Material.Card?.Pile?.Type == move.Destination);
+        }
+        catch (Exception ex) {
+            Entry.Logger.Error("Failed to consume summon materials: " + ex);
+            return false;
+        }
+        finally {
+            foreach ((BaseMonster monster, CardModel card) in fieldReservations) {
+                monster.CancelSourceCardMaterialReservation(card);
+            }
+        }
     }
 
     internal static async Task MaterialSacrifice(Creature material) {

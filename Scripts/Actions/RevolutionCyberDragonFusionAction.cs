@@ -40,6 +40,7 @@ public sealed class RevolutionCyberDragonFusionAction : BasePerTurnMonsterAction
             ChoiceContext: choiceContext,
             SelectionPrompt: SelectionScreenPrompt,
             GetAvailableMaterials: _ => SummonUtil.GetFieldAndHandMonsterMaterials(player),
+            GetMaterialDestination: _ => PileType.Discard,
             FusionCardFilter: IsMachineFusionMonster
         ));
 

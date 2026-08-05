@@ -8,9 +8,28 @@ using VYgo.Scripts.Monsters;
 
 namespace VYgo.Core;
 
-public sealed record SummonMaterial(CardModel? Card, Creature? Creature = null) {
+public sealed record SummonMaterial {
+    private SummonMaterial(CardModel? card, Creature? creature, PileType sourcePile) {
+        Card = card;
+        Creature = creature;
+        SourcePile = sourcePile;
+    }
+
+    public CardModel? Card { get; }
+    public Creature? Creature { get; }
+
+    /// <summary>
+    /// The pile the material occupied when this snapshot was built. Field monsters use
+    /// <see cref="Entry.MonsterPile"/> because their source cards live there.
+    /// </summary>
+    public PileType SourcePile { get; }
+
     public bool IsField => Creature != null;
-    public bool IsHand => Creature == null && Card?.Pile?.Type == PileType.Hand;
+    public bool IsHand => !IsField && SourcePile == PileType.Hand;
+
+    public bool IsFromPile(PileType pileType) {
+        return !IsField && SourcePile == pileType;
+    }
 
     public CoreCard? CoreCard {
         get {
@@ -55,7 +74,12 @@ public sealed record SummonMaterial(CardModel? Card, Creature? Creature = null) 
     }
 
     public static bool IsHandMonsterCard(CardModel card) {
-        return card is BaseMonsterCard { IsExtra: false } && card.Pile?.Type == PileType.Hand;
+        return IsMonsterCardInPile(card, PileType.Hand);
+    }
+
+    public static bool IsMonsterCardInPile(CardModel card, PileType pileType) {
+        return card is BaseMonsterCard { IsExtra: false }
+            && card.Pile?.Type == pileType;
     }
 
     public static SummonMaterial FromFieldMonster(Creature creature) {
@@ -68,10 +92,20 @@ public sealed record SummonMaterial(CardModel? Card, Creature? Creature = null) 
             );
         }
 
-        return new SummonMaterial(card, creature);
+        return new SummonMaterial(card, creature, Entry.MonsterPile);
     }
 
     public static SummonMaterial FromHandMonsterCard(CardModel card) {
-        return new SummonMaterial(card);
+        return FromMonsterCard(card);
+    }
+
+    public static SummonMaterial FromMonsterCard(CardModel card) {
+        if (card.Pile is not { } pile) {
+            throw new InvalidOperationException(
+                $"Monster material {card.GetType().Name} is not in a pile."
+            );
+        }
+
+        return new SummonMaterial(card, null, pile.Type);
     }
 }

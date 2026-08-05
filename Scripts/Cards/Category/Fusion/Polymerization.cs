@@ -26,7 +26,8 @@ public class Polymerization()
             Owner: Owner,
             ChoiceContext: choiceContext,
             SelectionPrompt: SelectionScreenPrompt,
-            GetAvailableMaterials: _ => SummonUtil.GetFieldAndHandMonsterMaterials(Owner)
+            GetAvailableMaterials: _ => SummonUtil.GetFieldAndHandMonsterMaterials(Owner),
+            GetMaterialDestination: _ => PileType.Discard
         ));
     }
 
