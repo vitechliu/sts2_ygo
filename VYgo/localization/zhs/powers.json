@@ -36,6 +36,8 @@
   "ARMORED_CYBERN_ACTION.targetError": "请选择一只「电子龙」怪兽。",
   "CYBER_KIRIN_ACTION.title": "献祭自身",
   "CYBER_KIRIN_ACTION.description": "[gold]启动[/gold]：献祭自身并将来源卡牌[gold]消耗[/gold]，角色获得{Amount}层[gold]无实体[/gold]。每回合限1次。",
+  "CYBER_JORMUNGARDR_ACTION.title": "检索融合",
+  "CYBER_JORMUNGARDR_ACTION.description": "[gold]启动[/gold]：献祭自身并将来源卡牌[gold]消耗[/gold]，将1张带有[gold]消耗[/gold]的[gold]融合[/gold]加入你的[gold]手牌[/gold]。每回合限1次。",
   "V_YGO_POWER_MAXX_C_POWER.title": "特召抽卡",
   "V_YGO_POWER_MAXX_C_POWER.description": "每当你[gold]特召[/gold]，抽1张卡。",
   "V_YGO_POWER_MAXX_C_POWER.smartDescription": "每当你[gold]特召[/gold]，抽1张卡。",
