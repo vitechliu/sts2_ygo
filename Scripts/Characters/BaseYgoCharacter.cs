@@ -1,10 +1,12 @@
 using Godot;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Characters;
 using STS2RitsuLib.Scaffolding.Godot;
 using STS2RitsuLib.Scaffolding.Visuals.StateMachine;
+using VYgo.Core.Extensions;
 
 namespace VYgo.Scripts;
 
@@ -35,4 +37,11 @@ public abstract class BaseYgoCharacter<TCardPool, TRelicPool, TPotionPool>
         "vfx/vfx_bloody_impact",
         "vfx/vfx_rock_shatter",
     ];
+}
+
+
+public static class YgoCharacterExtensions {
+    public static bool IsYgoCharacter(this Player player) {
+        return player.Character.GetType().IsGenericTypeOf(typeof(BaseYgoCharacter<,,>));
+    }
 }

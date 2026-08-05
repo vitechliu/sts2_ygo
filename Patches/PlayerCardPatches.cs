@@ -25,7 +25,7 @@ public class PlayerCardPatches {
     [HarmonyPrefix]
     [HarmonyPatch(typeof(Player), nameof(Player.PopulateCombatState))]
     public static bool PopulateCombatStatePatch(Player __instance, Rng rng, CombatState state) {
-        if (!__instance.Character.GetType().IsGenericTypeOf(typeof(BaseYgoCharacter<,,>))) return true;
+        if (!__instance.IsYgoCharacter()) return true;
         var playerCombatState = __instance.PlayerCombatState
             ?? throw new InvalidOperationException("Player combat state was not initialized before population.");
         foreach (CardModel mutableCard in __instance.Deck.Cards.ToList()) {

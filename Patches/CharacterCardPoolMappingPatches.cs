@@ -60,7 +60,7 @@ public static class CharacterCardPoolMappingPatches {
         var player = __instance.Player;
         var character = player.Character;
         var hasExtraPools = CharacterCardPoolLinks.HasExtraPools(character);
-        var isYgoCharacter = character.GetType().IsGenericTypeOf(typeof(BaseYgoCharacter<,,>));
+        var isYgoCharacter = player.IsYgoCharacter();
         if (!hasExtraPools && !isYgoCharacter) return true;
 
         CardType[] coloredCardTypes;
