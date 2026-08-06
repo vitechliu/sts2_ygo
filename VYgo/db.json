@@ -1,5 +1,20 @@
 [
     {
+        "id": 54,
+        "card_id": 75559356,
+        "name": "",
+        "cn_name": "魔界的机械兵",
+        "en_name": "CyberSoldierofDarkworld",
+        "types": "[怪兽|通常] 机械/暗\n[★4] 1400/1200",
+        "description": "暗之力制造的机器士兵，疯狂的将敌人破坏。",
+        "atk": 1400,
+        "def": 1200,
+        "level": 4,
+        "attribute": "暗",
+        "race": "机械族",
+        "archetypes": []
+    },
+    {
         "id": 53,
         "card_id": 19715246,
         "name": "",
