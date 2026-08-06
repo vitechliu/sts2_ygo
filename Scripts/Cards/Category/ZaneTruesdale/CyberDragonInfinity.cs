@@ -10,7 +10,7 @@ using VYgo.Scripts.Powers;
 namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
-[RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 1)]
+// [RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 1)]
 public class CyberDragonInfinity()
     : BaseExtraXyzCard(energyCost, rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 10443957;

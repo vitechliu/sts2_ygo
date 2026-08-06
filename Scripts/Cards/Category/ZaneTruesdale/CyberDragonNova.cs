@@ -25,6 +25,6 @@ public class CyberDragonNova() : BaseExtraXyzCard(1, CardRarity.Basic, TargetTyp
     ];
     
     public override bool CanUseXyzMaterial(CoreCard coreCard, SummonMaterial material) {
-        return material.CoreCard.IsRace(YgoRace.Machine);
+        return material.CoreCard.IsRace(YgoRace.Machine) && material.CoreCard.HasLevel && material.CoreCard.Level == 5;
     }
 }
