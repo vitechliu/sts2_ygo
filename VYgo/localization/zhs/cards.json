@@ -143,5 +143,7 @@
     "V_YGO_CARD_CYBER_JORMUNGARDR.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n场上没有怪兽时可以[gold]特召[/gold]。\n[gold]登场[/gold]：从[gold]抽牌堆[/gold]中选择1只[gold]「电子龙」[/gold]怪兽[gold]特召[/gold]。\n[gold]启动[/gold]：献祭自身并将此牌[gold]消耗[/gold]，将1张带有[gold]消耗[/gold]的[gold]融合[/gold]加入你的[gold]手牌[/gold]。",
     "V_YGO_CARD_CYBER_JORMUNGARDR.selectionScreenPrompt": "请选择要特召的「电子龙」怪兽。",
     "V_YGO_CARD_CYBER_SOLDIEROF_DARKWORLD.title": "魔界的机械兵",
-    "V_YGO_CARD_CYBER_SOLDIEROF_DARKWORLD.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])"
+    "V_YGO_CARD_CYBER_SOLDIEROF_DARKWORLD.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])",
+    "V_YGO_CARD_INFERNAL_DRAGON.title": "地狱龙",
+    "V_YGO_CARD_INFERNAL_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]送墓[/gold]：将此牌加入你的[gold]手牌[/gold]。"
 }

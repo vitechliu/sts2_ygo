@@ -7,7 +7,6 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MinionLib.Minion;
-using MinionLib.Powers;
 using VYgo.Core;
 using VYgo.RitsuAdapters;
 using VYgo.Scripts.Actions;
@@ -111,12 +110,13 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
         Visuals?.OnSummon();
         var card = this.YgoGetCard();
         var power = await PowerCmd.Apply<YgoPower>(choiceContext, Creature, 1m, owner.Creature, options.Source, true);
-        if (power != null && card != null) {
-            power.Card = card;
-            power.InitInfo();
+        if (power != null) {
+            power.IsGuardian = IsGuardian;
+            if (card != null) {
+                power.Card = card;
+                power.InitInfo();
+            }
         }
-        if (IsGuardian)
-            await PowerCmd.Apply<MinionGuardianPower>(choiceContext, Creature, 1m, owner.Creature, options.Source, true);
         if (options.PrimaryStatAmount is { } strength && strength > 0m)
             await PowerCmd.Apply<AttackPower>(choiceContext, Creature, strength, owner.Creature, options.Source);
         if (BasicAttackAction) {
