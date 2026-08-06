@@ -56,8 +56,14 @@ public static class CharacterCardPoolLinks {
     }
 
     public static IEnumerable<CardModel> GetUnlockedCardsFor(Player player) {
+        return GetUnlockedCardsFor(player, player.RunState.CardMultiplayerConstraint);
+    }
+
+    public static IEnumerable<CardModel> GetUnlockedCardsFor(
+        Player player,
+        CardMultiplayerConstraint multiplayerConstraint) {
         return GetPoolsFor(player.Character)
-            .SelectMany(pool => pool.GetUnlockedCards(player.UnlockState, player.RunState.CardMultiplayerConstraint))
+            .SelectMany(pool => pool.GetUnlockedCards(player.UnlockState, multiplayerConstraint))
             .DistinctBy(static card => card.Id);
     }
 }

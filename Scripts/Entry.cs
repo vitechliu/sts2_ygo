@@ -13,6 +13,7 @@ using STS2RitsuLib.Content;
 using VYgo.Core;
 using VYgo.Core.CardPools;
 using VYgo.Core.Cards;
+using VYgo.Patches;
 using VYgo.Scripts.Cards;
 using VYgo.Scripts.Characters;
 using VYgo.Scripts.Monsters;
@@ -50,6 +51,13 @@ public static class Entry {
         RegisterCharacterCardPoolLinks();
         var harmony = new Harmony("sts2.vitech." + ModId.ToLowerInvariant());
         harmony.PatchAll();
+        try {
+            CharacterCardPoolConsumerPatches.Apply(harmony);
+        }
+        catch (Exception exception) {
+            // This compatibility layer is optional and must never prevent the rest of the mod from loading.
+            Logger.Error($"因游戏更新，卡池修补失败，可能会导致共用卡池无法出现在发现池。Failed to initialize card-pool consumer compatibility: {exception.Message}");
+        }
         
         RegisterCardPile();
         DirectExtraDeckSummonNetAction.Register();
