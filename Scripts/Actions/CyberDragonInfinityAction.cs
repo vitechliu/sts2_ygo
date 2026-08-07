@@ -8,6 +8,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using VYgo.Core;
 using VYgo.Scripts.Cards;
+using VYgo.Scripts.Monsters;
+using VYgo.Scripts.Monsters.YGO;
 using VYgo.Scripts.Powers;
 
 namespace VYgo.Scripts.Actions;
@@ -42,10 +44,12 @@ public sealed class CyberDragonInfinityAction : BasePerTurnMonsterAction {
             //todo 素材警告
             return;
         }
+
+        var amount = Owner.Monster is CyberDragonInfinityMinion owner && owner.Upgraded ? 2 : 1;
         await PowerCmd.Apply<NegatingPower>(
             choiceContext,
             Owner,
-            1m,
+            amount,
             Owner,
             null);
         SpendUses();

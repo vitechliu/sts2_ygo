@@ -1,5 +1,7 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
 using VYgo.Core.Cards;
@@ -21,11 +23,15 @@ public class CyberDragonInfinity()
     private const TargetType targetType = TargetType.None;
     private const bool shouldShowInCardLibrary = true;
 
-    public override int BaseAttackVar => 5;
-    public override int BaseLifeVar => 4;
-    public override int UpgradeAttackVar => 1;
-    public override int UpgradeLifeVar => 1;
-
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new PowerVar<NegatingPower>(1m)
+    ];
+    
+    public override int BaseAttackVar => 8;
+    public override int BaseLifeVar => 5;
+    public override int UpgradeAttackVar => 2;
+    public override int UpgradeLifeVar => 2;
+    
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         BaseSummonHoverTip,
         HoverTipFactory.FromPower<NegatingPower>(),
@@ -34,5 +40,10 @@ public class CyberDragonInfinity()
     
     public override bool CanUseXyzMaterial(CoreCard coreCard, SummonMaterial material) {
         return material.Card is CyberDragonNova;
+    }
+
+    protected override void OnUpgrade() {
+        base.OnUpgrade();
+        DynamicVars["NegatingPower"].UpgradeValueBy(1m);
     }
 }
