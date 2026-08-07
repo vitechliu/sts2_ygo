@@ -33,4 +33,13 @@ public abstract class BaseExtraFusionCard(
             && (MaxFusionMaterialCount is not { } maxCount || materials.Count <= maxCount)
             && materials.All(CanUseFusionMaterial);
     }
+
+    internal async Task<bool> InvokeAfterFusionSummoned(SummonPostPlayContext context) {
+        await AfterFusionSummoned(context);
+        return true;
+    }
+
+    protected virtual Task AfterFusionSummoned(SummonPostPlayContext context) {
+        return Task.CompletedTask;
+    }
 }
