@@ -147,5 +147,7 @@
     "V_YGO_CARD_INFERNAL_DRAGON.title": "地狱龙",
     "V_YGO_CARD_INFERNAL_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]送墓[/gold]：将此牌加入你的[gold]手牌[/gold]。",
     "V_YGO_CARD_EXPLODER_DRAGON.title": "轰炸龙",
-    "V_YGO_CARD_EXPLODER_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n这张卡被[gold]战斗破坏[/gold]时，对伤害来源造成{Damage:diff()}点伤害。"
+    "V_YGO_CARD_EXPLODER_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n这张卡被[gold]战斗破坏[/gold]时，对伤害来源造成{Damage:diff()}点伤害。",
+    "V_YGO_CARD_CHIMERATECH_OVERDRAGON.title": "嵌合超载龙",
+    "V_YGO_CARD_CHIMERATECH_OVERDRAGON.description": "[gold]融合召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]「电子龙」＋机械族怪兽1只以上。[/aqua]\n[gold]登场[/gold]：消灭你的其他友方怪兽，获得[gold]强化[/gold]{BoostAttack:diff()}(X{IfUpgraded:show:+1|})/{BoostLife:diff()}(X{IfUpgraded:show:+1|})，每回合可以攻击(X{IfUpgraded:show:+1|})次。\n(X为融合素材的数量)"
 }

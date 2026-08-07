@@ -149,6 +149,8 @@ public static class SummonUtil {
                 materials,
                 request.GetMaterialDestination
             ),
+            AfterAutoPlay: context =>
+                ((BaseExtraFusionCard)context.FinalCard).InvokeAfterFusionSummoned(context),
             FinalWaitSeconds: 0.45f
         ));
     }
