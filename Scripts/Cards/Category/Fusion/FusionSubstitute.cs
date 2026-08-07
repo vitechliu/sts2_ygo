@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
 using VYgo.Scripts.Characters;
@@ -9,18 +10,20 @@ using VYgo.Scripts.Pools;
 namespace VYgo.Scripts.Cards.Category.Fusion;
 
 [RegisterCard(typeof(FusionCardPool))]
-[RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 1)]
+// [RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 1)]
 public class FusionSubstitute()
-    : BaseSpellCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.None) {
+    : BaseSpellCard(1, CardType.Skill, CardRarity.Common, TargetType.None) {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         YgoHoverTipConst.FusionSummon()
     ];
-
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CardsVar(1),
+    ];
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay cardPlay
     ) {
-        await SummonUtil.ExecuteFusionSummon(new FusionSummonRequest(
+        var res = await SummonUtil.ExecuteFusionSummon(new FusionSummonRequest(
             SourceCard: this,
             Owner: Owner,
             ChoiceContext: choiceContext,
@@ -31,4 +34,8 @@ public class FusionSubstitute()
     }
 
     public override int CardId => 74335036;
+
+    protected override void OnUpgrade() {
+        DynamicVars.Cards.UpgradeValueBy(1m);
+    }
 }

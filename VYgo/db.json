@@ -1,5 +1,20 @@
 [
     {
+        "id": 56,
+        "card_id": 20586572,
+        "name": "",
+        "cn_name": "轰炸龙",
+        "en_name": "ExploderDragon",
+        "types": "[怪兽|效果] 龙/地\n[★3] 1000/0",
+        "description": "①：这张卡的攻击发生的双方的战斗伤害变成0。\r\n②：这张卡被战斗破坏送去墓地的场合发动。把让这张卡破坏的怪兽破坏。",
+        "atk": 1000,
+        "def": 0,
+        "level": 3,
+        "attribute": "地",
+        "race": "龙族",
+        "archetypes": []
+    },
+    {
         "id": 55,
         "card_id": 47754278,
         "name": "",

@@ -30,7 +30,7 @@
     "V_YGO_CARD_POLYMERIZATION.description": "以手卡·场上的怪兽作为融合素材，进行一次[gold]融合召唤[/gold]。",
     "V_YGO_CARD_POLYMERIZATION.selectionScreenPrompt": "请选择需要召唤的卡牌。",
     "V_YGO_CARD_FUSION_SUBSTITUTE.title": "置换融合",
-    "V_YGO_CARD_FUSION_SUBSTITUTE.description": "以场上的怪兽作为融合素材，进行一次[gold]融合召唤[/gold]。若成功召唤，抽1张牌",
+    "V_YGO_CARD_FUSION_SUBSTITUTE.description": "以场上的怪兽作为融合素材，进行一次[gold]融合召唤[/gold]。若成功召唤，抽{Cards:diff()}张牌。",
     "V_YGO_CARD_FUSION_SUBSTITUTE.selectionScreenPrompt": "请选择需要召唤的卡牌。",
     "V_YGO_CARD_CYBER_DRAGON_HERZ.title": "电子龙芯",
     "V_YGO_CARD_CYBER_DRAGON_HERZ.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]送墓[/gold]:将{Cards:diff()}张随机「电子龙」牌加入你的[gold]手牌[/gold]。",
@@ -145,5 +145,7 @@
     "V_YGO_CARD_CYBER_SOLDIER_OF_DARKWORLD.title": "魔界的机械兵",
     "V_YGO_CARD_CYBER_SOLDIER_OF_DARKWORLD.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])",
     "V_YGO_CARD_INFERNAL_DRAGON.title": "地狱龙",
-    "V_YGO_CARD_INFERNAL_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]送墓[/gold]：将此牌加入你的[gold]手牌[/gold]。"
+    "V_YGO_CARD_INFERNAL_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]送墓[/gold]：将此牌加入你的[gold]手牌[/gold]。",
+    "V_YGO_CARD_EXPLODER_DRAGON.title": "轰炸龙",
+    "V_YGO_CARD_EXPLODER_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n这张卡被[gold]战斗破坏[/gold]时，对伤害来源造成{Damage:diff()}点伤害。"
 }

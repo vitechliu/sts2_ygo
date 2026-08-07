@@ -31,5 +31,9 @@ public class Polymerization()
         ));
     }
 
+    protected override void OnUpgrade() {
+        EnergyCost.UpgradeBy(-1);
+    }
+
     public override int CardId => 24094653;
 }

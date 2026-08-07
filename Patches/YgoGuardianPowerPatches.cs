@@ -9,9 +9,33 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using MinionLib.Commands;
 using MinionLib.Minion;
+using VYgo.Core.Hooks;
 using VYgo.Scripts.Powers;
 
 namespace VYgo.Patches;
+
+[HarmonyPatch(
+    typeof(Hook),
+    nameof(Hook.AfterDamageGiven),
+    typeof(PlayerChoiceContext),
+    typeof(ICombatState),
+    typeof(Creature),
+    typeof(DamageResult),
+    typeof(ValueProp),
+    typeof(Creature),
+    typeof(CardModel))]
+public static class YgoMonsterBattleDestroyedPatch {
+    [HarmonyPrefix]
+    private static void Prefix(
+        Creature? dealer,
+        DamageResult results,
+        ValueProp props) {
+        MonsterBattleDestroyedHook.RecordPotentialBattleDestruction(
+            results,
+            props,
+            dealer);
+    }
+}
 
 [HarmonyPatch(typeof(CreatureCmd), nameof(CreatureCmd.GainBlock), typeof(Creature), typeof(decimal), typeof(ValueProp),
     typeof(CardPlay), typeof(bool))]
