@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MinionLib.Minion;
 using VYgo.Core;
+using VYgo.Core.Hooks;
 using VYgo.RitsuAdapters;
 using VYgo.Scripts.Actions;
 using VYgo.Scripts.Cards;
@@ -145,20 +146,27 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
 
     public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength) {
         //怪兽死亡后，对应的怪兽卡置入弃牌堆
-        if (!wasRemovalPrevented && !PileSent && creature == Creature) {
-            PileSent = true;
-            // Entry.Logger.Info("AfterDeath:" + GetType().Name);
-            var card = this.YgoGetCard();
-            if (card != null) {
-                var owner = creature.PetOwner;
-                if (owner != null) {
-                    await ReturnCard(owner, choiceContext);
-                    await OnSendToGraveyard(choiceContext, creature, owner);
+        if (creature == Creature) {
+            if (!wasRemovalPrevented && !PileSent) {
+                PileSent = true;
+                // Entry.Logger.Info("AfterDeath:" + GetType().Name);
+                var card = this.YgoGetCard();
+                if (card != null) {
+                    var owner = creature.PetOwner;
+                    if (owner != null) {
+                        await ReturnCard(owner, choiceContext);
+                        await OnSendToGraveyard(choiceContext, creature, owner);
+                    }
+                }
+                else {
+                    Entry.Logger.Error("ReturnCardError: No Card found for " + GetType().Name);
                 }
             }
-            else {
-                Entry.Logger.Error("ReturnCardError: No Card found for " + GetType().Name);
-            }
+
+            await MonsterBattleDestroyedHook.AfterMonsterDeath(
+                choiceContext,
+                creature,
+                wasRemovalPrevented);
         }
         await base.AfterDeath(choiceContext, creature, wasRemovalPrevented, deathAnimLength);
     }

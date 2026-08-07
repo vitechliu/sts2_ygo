@@ -48,6 +48,10 @@ public static class YgoHoverTipConst {
         return Base("SEND_TO_GRAVEYARD");
     }
 
+    public static IHoverTip BattleDestroyed() {
+        return Base("BATTLE_DESTROYED");
+    }
+
     //登场
     public static IHoverTip EnterField() {
         return Base("ENTER_FIELD");
