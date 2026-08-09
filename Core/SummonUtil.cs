@@ -726,6 +726,7 @@ public static class SummonUtil {
 
         try {
             if (fieldReservations.Count > 0) {
+                //召唤素材发光的音效
                 SFXUtil.Play("event:/vygo/sfx/material_shine");
             }
 
