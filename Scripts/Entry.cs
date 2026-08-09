@@ -30,6 +30,7 @@ public static class Entry {
     public const string ResPath = $"res://{ModId}";
 
     public static Logger Logger { get; private set; } = null!;
+    private static IDisposable? _mainMenuAudioReadySubscription;
     //额外卡组
     public static PileType ExtraPile;
     //场上的怪兽
@@ -67,6 +68,10 @@ public static class Entry {
         
         FmodStudioDeferredBankRegistration.RegisterBank("res://VYgo/banks/VYgo.bank");
         FmodStudioDeferredBankRegistration.RegisterStudioGuidMappings("res://VYgo/banks/VYgo.guids.txt");
+        _mainMenuAudioReadySubscription ??=
+            RitsuLibFramework.SubscribeLifecycleOnce<DeferredInitializationCompletedEvent>(
+                _ => MainMenuPatches.NotifyDeferredAudioReady(),
+                replayCurrentState: true);
         
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
