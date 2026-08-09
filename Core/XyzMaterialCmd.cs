@@ -70,6 +70,7 @@ public static class XyzMaterialCmd {
         }
 
         try {
+            SFXUtil.Play("event:/vygo/sfx/material_shine");
             await Task.WhenAll(reservations.Select(reservation =>
                 SummonUtil.MaterialSacrifice(reservation.Monster.Creature)));
             return true;
