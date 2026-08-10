@@ -14,15 +14,24 @@ internal sealed partial class MainMenuSkinController : Node {
     private const string ControllerName = "VYgoMainMenuSkinController";
     private const string VisualName = "VYgoMainMenuVisual";
     private const string VisualScenePath = "res://VYgo/scenes/main_menu/main_menu_visual.tscn";
-    private const string BackgroundPath = "res://VYgo/images/ui/main_menu/background.png";
-    private const string DecorationBackPath = "res://VYgo/images/ui/main_menu/decoration_back.png";
-    private const string DecorationFrontPath = "res://VYgo/images/ui/main_menu/decoration_front.png";
     private const string IconRoot = "res://VYgo/images/ui/main_menu/icons";
+    private const float MonsterDesignHeight = 1080f;
+
+    private static readonly Vector2 MonsterAnchor = new(0.6875f, 0.5f);
+    private static readonly string[] MonsterPairScenePaths = [
+        "res://VYgo/scenes/main_menu/monster_pairs/monster_pair_0001.tscn",
+        "res://VYgo/scenes/main_menu/monster_pairs/monster_pair_0002.tscn",
+        "res://VYgo/scenes/main_menu/monster_pairs/monster_pair_0011.tscn",
+        "res://VYgo/scenes/main_menu/monster_pairs/monster_pair_0012.tscn"
+    ];
 
     private static readonly Vector2 ToolbarItemSize = new(88f, 84f);
     private static readonly Vector2 ToolbarVisualSize = new(88f, 84f);
+    private static int? _sessionMonsterPairIndex;
 
     private NMainMenu _mainMenu = null!;
+    private Control? _monsterHost;
+    private Control? _activeMonsterPair;
     private VBoxContainer _leftMenu = null!;
     private HBoxContainer _toolbar = null!;
     private NButton _profileButton = null!;
@@ -53,12 +62,6 @@ internal sealed partial class MainMenuSkinController : Node {
             return;
         }
 
-        Texture2D? backgroundTexture = LoadOptionalTexture(BackgroundPath, warnWhenMissing: true);
-        if (backgroundTexture == null) {
-            Entry.Logger.Warn("未找到 VYgo 主菜单背景，继续使用原版动态背景。");
-            return;
-        }
-
         PackedScene? visualScene = ResourceLoader.Load<PackedScene>(VisualScenePath);
         Control? visual = visualScene?.InstantiateOrNull<Control>();
         if (visual == null) {
@@ -67,13 +70,49 @@ internal sealed partial class MainMenuSkinController : Node {
         }
 
         visual.Name = VisualName;
-        SetTexture(visual, "%Background", backgroundTexture);
-        SetTexture(visual, "%DecorationBack", LoadOptionalTexture(DecorationBackPath));
-        SetTexture(visual, "%DecorationFront", LoadOptionalTexture(DecorationFrontPath));
-
         _mainMenu.AddChild(visual);
         _mainMenu.MoveChild(visual, originalBackground.GetIndex() + 1);
         originalBackground.Visible = false;
+
+        _monsterHost = visual.GetNodeOrNull<Control>("%MonsterHost");
+        if (_monsterHost == null) {
+            Entry.Logger.Warn("VYgo 主菜单视觉场景缺少 MonsterHost，仅显示静态背景。");
+            return;
+        }
+
+        InstallMonsterPair();
+        _monsterHost.Connect(Control.SignalName.Resized, Callable.From(UpdateMonsterPairLayout));
+        Callable.From(UpdateMonsterPairLayout).CallDeferred();
+    }
+
+    private void InstallMonsterPair() {
+        _sessionMonsterPairIndex ??= Random.Shared.Next(MonsterPairScenePaths.Length);
+        string scenePath = MonsterPairScenePaths[_sessionMonsterPairIndex.Value];
+        PackedScene? pairScene = ResourceLoader.Load<PackedScene>(scenePath);
+        Control? pair = pairScene?.InstantiateOrNull<Control>();
+        if (pair == null) {
+            Entry.Logger.Warn($"无法实例化主菜单怪兽组合：{scenePath}；继续显示静态背景。");
+            return;
+        }
+
+        pair.MouseFilter = Control.MouseFilterEnum.Ignore;
+        _monsterHost!.AddChild(pair);
+        _activeMonsterPair = pair;
+        UpdateMonsterPairLayout();
+        Entry.Logger.Info($"主菜单怪兽组合已加载：{scenePath}");
+    }
+
+    private void UpdateMonsterPairLayout() {
+        if (_monsterHost == null
+            || _activeMonsterPair == null
+            || !GodotObject.IsInstanceValid(_monsterHost)
+            || !GodotObject.IsInstanceValid(_activeMonsterPair)
+            || _monsterHost.Size.Y <= 0f) {
+            return;
+        }
+
+        _activeMonsterPair.Position = _monsterHost.Size * MonsterAnchor;
+        _activeMonsterPair.Scale = Vector2.One * (_monsterHost.Size.Y / MonsterDesignHeight);
     }
 
     private void InstallMenuLayout() {
@@ -310,8 +349,4 @@ internal sealed partial class MainMenuSkinController : Node {
         return ResourceLoader.Load<Texture2D>(path);
     }
 
-    private static void SetTexture(Control root, string nodePath, Texture2D? texture) {
-        TextureRect? textureRect = root.GetNodeOrNull<TextureRect>(nodePath);
-        if (textureRect != null) textureRect.Texture = texture;
-    }
 }

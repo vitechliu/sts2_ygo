@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://VYgo/ui/images/bg_monsters/WallPaper0012_2.png" id="1_effect"]
+[ext_resource type="Texture2D" path="res://VYgo/ui/images/bg_monsters/WallPaper0012_1.png" id="2_monster"]
+
+[node name="MonsterPair0012" type="Control"]
+mouse_filter = 2
+
+[node name="Effect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -420.0
+offset_top = -420.0
+offset_right = 480.0
+offset_bottom = 420.0
+mouse_filter = 2
+texture = ExtResource("1_effect")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Monster" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -550.0
+offset_top = -375.0
+offset_right = 550.0
+offset_bottom = 439.0
+mouse_filter = 2
+texture = ExtResource("2_monster")
+expand_mode = 1
+stretch_mode = 5
