@@ -41,6 +41,7 @@ internal sealed partial class MainMenuSkinController : Node {
 
     public override void _Process(double delta) {
         base._Process(delta);
+        _leftMenuController?.Update();
         _toolbarController?.Update();
     }
 

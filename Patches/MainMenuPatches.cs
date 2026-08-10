@@ -94,6 +94,7 @@ public static class MainMenuPatches {
     [HarmonyPrefix]
     [HarmonyPatch(typeof(NMainMenu), "MainMenuButtonFocused")]
     private static bool BeforeMainMenuButtonFocused(NMainMenuTextButton button) {
-        return button.GetParent()?.Name != MainMenuSkinController.ToolbarName;
+        return button.GetParent()?.Name != MainMenuSkinController.ToolbarName
+            && !MainMenuLeftMenuController.IsCustomizedButton(button);
     }
 }
