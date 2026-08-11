@@ -10,9 +10,9 @@ namespace VYgo.Scripts.UI;
 internal sealed class MainMenuVisualController {
     private const string VisualName = "VYgoMainMenuVisual";
     private const string VisualScenePath = "res://VYgo/scenes/main_menu/main_menu_visual.tscn";
-    private const float MonsterDesignHeight = 1080f;
+    private const float MonsterDesignHeight = 1080f * 0.8f; //需要放大一点
 
-    private static readonly Vector2 MonsterAnchor = new(0.6875f, 0.5f);
+    private static readonly Vector2 MonsterAnchor = new(0.8f, 0.6f);
     private static readonly string[] MonsterPairScenePaths = [
         "res://VYgo/scenes/main_menu/monster_pairs/monster_pair_0001.tscn",
         "res://VYgo/scenes/main_menu/monster_pairs/monster_pair_0002.tscn",

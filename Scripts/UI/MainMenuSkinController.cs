@@ -15,6 +15,7 @@ internal sealed partial class MainMenuSkinController : Node {
     private MainMenuVisualController? _visualController;
     private MainMenuUserInfoController? _userInfoController;
     private MainMenuLeftMenuController? _leftMenuController;
+    private MainMenuNewsCarouselController? _newsCarouselController;
     private MainMenuToolbarController? _toolbarController;
 
     public static void Install(NMainMenu mainMenu) {
@@ -39,6 +40,9 @@ internal sealed partial class MainMenuSkinController : Node {
         _leftMenuController = new MainMenuLeftMenuController(_mainMenu);
         _leftMenuController.Install();
 
+        _newsCarouselController = new MainMenuNewsCarouselController(_mainMenu, _leftMenuController);
+        _newsCarouselController.Install();
+
         _toolbarController = new MainMenuToolbarController(_mainMenu, _leftMenuController);
         _toolbarController.Install();
     }
@@ -46,6 +50,7 @@ internal sealed partial class MainMenuSkinController : Node {
     public override void _Process(double delta) {
         base._Process(delta);
         _leftMenuController?.Update();
+        _newsCarouselController?.Update(delta);
         _toolbarController?.Update();
     }
 
@@ -53,6 +58,7 @@ internal sealed partial class MainMenuSkinController : Node {
         base._Notification(what);
         if (what == NotificationTranslationChanged && IsNodeReady()) {
             _toolbarController?.RefreshCaptions();
+            _newsCarouselController?.RefreshTexts();
         }
     }
 }
