@@ -1,0 +1,152 @@
+[gd_scene load_steps=6 format=3 uid="uid://ccdb0jfk3ucsd"]
+
+[ext_resource type="Texture2D" uid="uid://dl5ksntfuyojd" path="res://VYgo/ui/images/avatars/ProfileIcon1012061_L.png" id="1_avatar"]
+[ext_resource type="Texture2D" uid="uid://gw7q5816a3b8" path="res://VYgo/ui/images/ranks/img_rankicon_01_l.png" id="2_rank"]
+[ext_resource type="FontFile" uid="uid://vqc75b11jct1" path="res://VYgo/ui/fonts/FOT-KafuTechnoStd-H.otf" id="3_font"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+bg_color = Color(0.025, 0.037, 0.052, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.72, 0.79, 0.8, 0.95)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_experience"]
+bg_color = Color(0.01, 0.015, 0.02, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.55, 0.62, 0.63, 0.9)
+
+[node name="MainMenuUserInfo" type="Control"]
+custom_minimum_size = Vector2(548, 112)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 548.0
+offset_bottom = 112.0
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 8.0
+offset_right = 548.0
+offset_bottom = 104.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="Avatar" type="Node2D" parent="."]
+position = Vector2(62, 56)
+scale = Vector2(1.05, 1.05)
+
+[node name="OuterBorder" type="Polygon2D" parent="Avatar"]
+color = Color(0.025, 0.04, 0.05, 1)
+polygon = PackedVector2Array(-27, -46.7654, 27, -46.7654, 54, 0, 27, 46.7654, -27, 46.7654, -54, 0)
+
+[node name="InnerBorder" type="Polygon2D" parent="Avatar"]
+color = Color(0.51, 0.75, 0.82, 1)
+polygon = PackedVector2Array(-24.5, -42.4352, 24.5, -42.4352, 49, 0, 24.5, 42.4352, -24.5, 42.4352, -49, 0)
+
+[node name="AvatarImage" type="Polygon2D" parent="Avatar"]
+texture = ExtResource("1_avatar")
+polygon = PackedVector2Array(-22, -38.1051, 22, -38.1051, 44, 0, 22, 38.1051, -22, 38.1051, -44, 0)
+uv = PackedVector2Array(0, 0, 512, 0, 512, 256, 512, 512, 0, 512, 0, 256)
+
+[node name="NicknameLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 116.0
+offset_top = 14.0
+offset_right = 334.0
+offset_bottom = 52.0
+theme_override_colors/font_color = Color(0.94, 0.97, 0.96, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 25
+text = "DUELIST"
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="LevelLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 116.0
+offset_top = 54.0
+offset_right = 181.0
+offset_bottom = 91.0
+theme_override_colors/font_color = Color(0.94, 0.97, 0.96, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 22
+text = "Lv. 1"
+vertical_alignment = 1
+
+[node name="ExperienceTrack" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 184.0
+offset_top = 66.0
+offset_right = 330.0
+offset_bottom = 80.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_experience")
+
+[node name="ExperienceFill" type="ColorRect" parent="ExperienceTrack"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.85, 0.92, 0.9, 1)
+
+[node name="RankIcon" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 352.0
+offset_top = 18.0
+offset_right = 428.0
+offset_bottom = 94.0
+mouse_filter = 2
+texture = ExtResource("2_rank")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AchievementBadge" type="Control" parent="."]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_left = 448.0
+offset_top = 18.0
+offset_right = 524.0
+offset_bottom = 94.0
+mouse_filter = 2
+
+[node name="OuterHex" type="Polygon2D" parent="AchievementBadge"]
+position = Vector2(38, 38)
+color = Color(0.05, 0.14, 0.17, 1)
+polygon = PackedVector2Array(-18, -31.1769, 18, -31.1769, 36, 0, 18, 31.1769, -18, 31.1769, -36, 0)
+
+[node name="InnerHex" type="Polygon2D" parent="AchievementBadge"]
+position = Vector2(38, 38)
+color = Color(0.12, 0.55, 0.62, 1)
+polygon = PackedVector2Array(-15, -25.9808, 15, -25.9808, 30, 0, 15, 25.9808, -15, 25.9808, -30, 0)
+
+[node name="Placeholder" type="Label" parent="AchievementBadge"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.82, 0.98, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.85)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 30
+text = "A"
+horizontal_alignment = 1
+vertical_alignment = 1
