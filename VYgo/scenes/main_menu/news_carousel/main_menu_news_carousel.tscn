@@ -1,0 +1,281 @@
+[gd_scene load_steps=12 format=3 uid="uid://ch66can81r4m4"]
+
+[ext_resource type="Texture2D" uid="uid://c6asw68h5ppck" path="res://VYgo/ui/images/select_btn.png" id="1_nel7x"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_frame"]
+bg_color = Color(0.015, 0.03, 0.045, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.7, 0.79, 0.82, 0.96)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.55)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_fallback"]
+bg_color = Color(0.025, 0.12, 0.19, 1)
+
+[sub_resource type="Gradient" id="Gradient_detail"]
+offsets = PackedFloat32Array(0, 0.38, 1)
+colors = PackedColorArray(0.035, 0.2, 0.29, 0.12, 0.025, 0.29, 0.41, 0.82, 0.18, 0.62, 0.72, 0.94)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture_detail"]
+gradient = SubResource("Gradient_detail")
+width = 8
+height = 256
+fill_from = Vector2(0.5, 0)
+fill_to = Vector2(0.5, 1)
+
+[sub_resource type="Gradient" id="Gradient_title"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.92, 0.31, 0.1, 1, 0.92, 0.31, 0.1, 1, 0.92, 0.31, 0.1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture_title"]
+gradient = SubResource("Gradient_title")
+width = 256
+height = 8
+fill_from = Vector2(0, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_arrow_normal"]
+bg_color = Color(0.015, 0.035, 0.055, 0.62)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.55, 0.67, 0.72, 0.48)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_arrow_pressed"]
+bg_color = Color(0.92, 0.31, 0.1, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.79, 0.48, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_arrow_hover"]
+bg_color = Color(0.02, 0.27, 0.39, 0.86)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.53, 0.94, 1, 0.95)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_arrow_focus"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.67, 0.24, 1)
+expand_margin_left = 3.0
+expand_margin_top = 3.0
+expand_margin_right = 3.0
+expand_margin_bottom = 3.0
+
+[node name="MainMenuNewsCarousel" type="Control"]
+custom_minimum_size = Vector2(700, 390)
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 96.0
+offset_top = -418.0
+offset_right = 796.0
+offset_bottom = -28.0
+grow_vertical = 0
+mouse_filter = 1
+
+[node name="CardFrame" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 700.0
+offset_bottom = 350.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_frame")
+
+[node name="CardClip" type="Control" parent="."]
+clip_contents = true
+anchors_preset = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 697.0
+offset_bottom = 347.0
+mouse_filter = 2
+
+[node name="FallbackBackground" type="Panel" parent="CardClip"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_fallback")
+
+[node name="BackgroundA" type="TextureRect" parent="CardClip"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="BackgroundB" type="TextureRect" parent="CardClip"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ImageShade" type="ColorRect" parent="CardClip"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0.025, 0.05, 0.13)
+
+[node name="DetailGradient" type="TextureRect" parent="CardClip"]
+layout_mode = 0
+offset_top = 188.0
+offset_right = 694.0
+offset_bottom = 344.0
+mouse_filter = 2
+texture = SubResource("GradientTexture_detail")
+expand_mode = 1
+
+[node name="TitleBanner" type="TextureRect" parent="CardClip"]
+layout_mode = 0
+offset_right = 342.0
+offset_bottom = 52.0
+mouse_filter = 2
+texture = SubResource("GradientTexture_title")
+expand_mode = 1
+
+[node name="TitleLabel" type="Label" parent="CardClip/TitleBanner"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_right = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.97, 0.91, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.035, 0.01, 0.82)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 30
+text = "不要错过！"
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="DetailLabel" type="Label" parent="CardClip"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 74.0
+offset_top = 224.0
+offset_right = 620.0
+offset_bottom = 336.0
+theme_override_colors/font_color = Color(0.94, 0.99, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0.055, 0.09, 0.94)
+theme_override_constants/line_spacing = 2
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 25
+text = "「电子龙」系列现已加入 VYgo。"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+text_overrun_behavior = 3
+max_lines_visible = 3
+
+[node name="PreviousButton" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(52, 78)
+layout_mode = 0
+offset_left = 2.0
+offset_top = 137.0
+offset_right = 54.0
+offset_bottom = 215.0
+pivot_offset = Vector2(26, 39)
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.94, 0.99, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 42
+theme_override_styles/normal = SubResource("StyleBox_arrow_normal")
+theme_override_styles/pressed = SubResource("StyleBox_arrow_pressed")
+theme_override_styles/hover = SubResource("StyleBox_arrow_hover")
+theme_override_styles/focus = SubResource("StyleBox_arrow_focus")
+
+[node name="Sprite2D" type="Sprite2D" parent="PreviousButton"]
+modulate = Color(0.9151201, 0.9465547, 0.98741966, 1)
+position = Vector2(24, 38.00001)
+scale = Vector2(0.6145834, 0.6145834)
+texture = ExtResource("1_nel7x")
+
+[node name="NextButton" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(52, 78)
+layout_mode = 0
+offset_left = 646.0
+offset_top = 137.0
+offset_right = 698.0
+offset_bottom = 215.0
+pivot_offset = Vector2(26, 39)
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.94, 0.99, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 42
+theme_override_styles/normal = SubResource("StyleBox_arrow_normal")
+theme_override_styles/pressed = SubResource("StyleBox_arrow_pressed")
+theme_override_styles/hover = SubResource("StyleBox_arrow_hover")
+theme_override_styles/focus = SubResource("StyleBox_arrow_focus")
+
+[node name="Sprite2D" type="Sprite2D" parent="NextButton"]
+modulate = Color(0.9151201, 0.9465547, 0.98741966, 1)
+position = Vector2(27, 38.00001)
+scale = Vector2(-0.615, 0.615)
+texture = ExtResource("1_nel7x")
+
+[node name="IndicatorHost" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -160.0
+offset_top = -30.0
+offset_right = 160.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 12
+alignment = 1
