@@ -4,7 +4,7 @@ using MegaCrit.Sts2.Core.Nodes.Screens.MainMenu;
 namespace VYgo.Scripts.UI;
 
 /// <summary>
-/// Coordinates the independently maintained main-menu skin modules.
+/// 协调各个独立维护的主菜单皮肤模块。
 /// </summary>
 internal sealed partial class MainMenuSkinController : Node {
     public static readonly StringName ToolbarName = MainMenuToolbarController.ToolbarName;
@@ -13,6 +13,7 @@ internal sealed partial class MainMenuSkinController : Node {
 
     private NMainMenu _mainMenu = null!;
     private MainMenuVisualController? _visualController;
+    private MainMenuUserInfoController? _userInfoController;
     private MainMenuLeftMenuController? _leftMenuController;
     private MainMenuToolbarController? _toolbarController;
 
@@ -31,6 +32,9 @@ internal sealed partial class MainMenuSkinController : Node {
     private void InstallModules() {
         _visualController = new MainMenuVisualController(_mainMenu);
         _visualController.Install();
+
+        _userInfoController = new MainMenuUserInfoController(_mainMenu);
+        _userInfoController.Install();
 
         _leftMenuController = new MainMenuLeftMenuController(_mainMenu);
         _leftMenuController.Install();
