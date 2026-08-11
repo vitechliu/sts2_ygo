@@ -13,6 +13,7 @@ using STS2RitsuLib.Content;
 using VYgo.Core;
 using VYgo.Core.CardPools;
 using VYgo.Core.Cards;
+using VYgo.Core.Saves;
 using VYgo.Patches;
 using VYgo.Scripts.Cards;
 using VYgo.Scripts.Characters;
@@ -49,6 +50,7 @@ public static class Entry {
     public static void Initialize() {
         var assembly = Assembly.GetExecutingAssembly();
         Logger = RitsuLibFramework.CreateLogger(ModId);
+        RegisterSaveData();
         RegisterCharacterCardPoolLinks();
         var harmony = new Harmony("sts2.vitech." + ModId.ToLowerInvariant());
         harmony.PatchAll();
@@ -77,6 +79,12 @@ public static class Entry {
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
         
         Logger.Info("VYgo initialized.");
+    }
+
+    private static void RegisterSaveData() {
+        using (RitsuLibFramework.BeginModDataRegistration(ModId)) {
+            YgoSave.Instance.Register();
+        }
     }
 
     //注册附属卡池
