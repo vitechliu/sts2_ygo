@@ -18,15 +18,19 @@ public static class MainMenuPatches {
     [HarmonyPostfix]
     [HarmonyPatch(typeof(NMainMenu), nameof(NMainMenu._Ready))]
     private static void AfterMainMenuReady(NMainMenu __instance) {
-        Entry.Logger.Info("AfterMainMenuReady");
         _activeMainMenu = new WeakReference<NMainMenu>(__instance);
 
-        try {
-            MainMenuSkinController.Install(__instance);
-        }
-        catch (Exception exception) {
-            Entry.Logger.Error($"Main-menu skin installation failed; keeping the vanilla menu: {exception}");
-        }
+        //等待其他帧
+        Callable.From(() => {
+            if (!GodotObject.IsInstanceValid(__instance) || !__instance.IsInsideTree()) return;
+
+            try {
+                MainMenuSkinController.Install(__instance);
+            }
+            catch (Exception exception) {
+                Entry.Logger.Error($"Main-menu skin installation failed; keeping the vanilla menu: {exception}");
+            }
+        }).CallDeferred();
 
         if (_deferredAudioReady) {
             TryPlayMainMenuMusic(__instance);

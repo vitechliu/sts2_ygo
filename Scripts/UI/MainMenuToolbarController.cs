@@ -21,6 +21,7 @@ internal sealed class MainMenuToolbarController {
 
     private readonly NMainMenu _mainMenu;
     private readonly MainMenuLeftMenuController _leftMenuController;
+    private readonly MainMenuSkinController.MenuLayout _menuLayout;
     private readonly Dictionary<NButton, Control> _toolbarVisuals = new();
     private readonly Dictionary<NButton, Label> _toolbarCaptions = new();
 
@@ -28,15 +29,17 @@ internal sealed class MainMenuToolbarController {
     private NButton _profileButton = null!;
     private NButton _patchNotesButton = null!;
     private NMainMenuTextButton _settingsButton = null!;
-    private NMainMenuTextButton _quitButton = null!;
+    private NMainMenuTextButton _compendiumButton = null!;
     private int _navigationStateHash;
 
     public MainMenuToolbarController(
         NMainMenu mainMenu,
-        MainMenuLeftMenuController leftMenuController
+        MainMenuLeftMenuController leftMenuController,
+        MainMenuSkinController.MenuLayout menuLayout
     ) {
         _mainMenu = mainMenu;
         _leftMenuController = leftMenuController;
+        _menuLayout = menuLayout;
     }
 
     public void Install() {
@@ -44,16 +47,22 @@ internal sealed class MainMenuToolbarController {
             ?? throw new InvalidOperationException("主菜单缺少 ChangeProfileButton。");
         _patchNotesButton = _mainMenu.GetNodeOrNull<NButton>("%PatchNotesButton")
             ?? throw new InvalidOperationException("主菜单缺少 PatchNotesButton。");
-        _settingsButton = _leftMenuController.SettingsButton;
-        _quitButton = _leftMenuController.QuitButton;
+        _settingsButton = GetToolbarTextButton("SettingsButton");
+        _compendiumButton = GetToolbarTextButton("CompendiumButton");
 
         CreateToolbar();
         ConfigureToolbarButton(_profileButton, "profile.png", "P");
         ConfigureToolbarButton(_patchNotesButton, "patch_notes.png", "N");
         ConfigureToolbarButton(_settingsButton, "settings.png", "S");
-        ConfigureToolbarButton(_quitButton, "quit.png", "X");
+        ConfigureToolbarButton(_compendiumButton, "compendium.png", "C");
         RefreshCaptions();
         UpdateFocusNavigation(force: true);
+    }
+
+    private NMainMenuTextButton GetToolbarTextButton(string nodeName) {
+        return _menuLayout.ToolbarItems
+            .FirstOrDefault(item => item.Button.Name.ToString() == nodeName)?.Button
+            ?? throw new InvalidOperationException($"Main-menu toolbar item {nodeName} was not classified.");
     }
 
     private void CreateToolbar() {
@@ -188,7 +197,7 @@ internal sealed class MainMenuToolbarController {
         _toolbarCaptions[_profileButton].Text = profileTitle.GetFormattedText();
         _toolbarCaptions[_patchNotesButton].Text = LoadModCaption("PATCH_NOTES", "Patch Notes");
         _toolbarCaptions[_settingsButton].Text = new LocString("main_menu_ui", "SETTINGS").GetFormattedText();
-        _toolbarCaptions[_quitButton].Text = new LocString("main_menu_ui", "QUIT").GetFormattedText();
+        _toolbarCaptions[_compendiumButton].Text = new LocString("main_menu_ui", "COMPENDIUM").GetFormattedText();
     }
 
     private static string LoadModCaption(string key, string fallback) {
@@ -210,7 +219,7 @@ internal sealed class MainMenuToolbarController {
 
     private void UpdateFocusNavigation(bool force = false) {
         NButton[] leftButtons = _leftMenuController.GetVisibleButtons();
-        NButton[] toolbarButtons = [_profileButton, _patchNotesButton, _settingsButton, _quitButton];
+        NButton[] toolbarButtons = [_profileButton, _patchNotesButton, _settingsButton, _compendiumButton];
         int stateHash = leftButtons.Aggregate(17, (hash, button) => HashCode.Combine(hash, button.GetInstanceId()));
         if (!force && stateHash == _navigationStateHash) return;
         _navigationStateHash = stateHash;

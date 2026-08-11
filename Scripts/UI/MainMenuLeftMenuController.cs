@@ -13,20 +13,18 @@ internal sealed class MainMenuLeftMenuController {
     internal const string CustomVisualName = "VYgoLeftMenuVisual";
 
     private const string MenuFontPath = "res://VYgo/ui/fonts/FOT-KafuTechnoStd-H.otf";
-    private const float MenuWidth = 700f;
+    private const float MenuWidth = 900f;
     private const float ItemHeight = 72f;
-    private const float HighlightWidth = 240f;
+    private const float FirstItemScale = 1.8f;
+    private const float EnglishTitleWidth = 320f;
+    private const float HighlightWidth = 360f;
+    private const float ArrowX = 332f;
+    private const float DescriptionX = 382f;
+    private const float FocusedDescriptionX = 400f;
     private const double FocusDuration = 0.18;
     private const double UnfocusDuration = 0.14;
 
-    private static readonly MenuItemSpec[] ItemSpecs = [
-        new("ContinueButton", "MENU 1", "菜单1说明"),
-        new("AbandonRunButton", "MENU 2", "菜单2说明"),
-        new("SingleplayerButton", "MENU 3", "菜单3说明"),
-        new("MultiplayerButton", "MENU 4", "菜单4说明"),
-        new("TimelineButton", "MENU 5", "菜单5说明", HasNotification: true),
-        new("CompendiumButton", "MENU 6", "菜单6说明")
-    ];
+    private const float OffsetHeight = 150f;
 
     private static readonly Color InactiveTextColor = new("f4f7f5");
     private static readonly Color FocusedTextColor = new("071000");
@@ -35,26 +33,24 @@ internal sealed class MainMenuLeftMenuController {
     private static readonly Color DisabledModulate = new(1f, 1f, 1f, 0.35f);
 
     private readonly NMainMenu _mainMenu;
+    private readonly MainMenuSkinController.MenuLayout _menuLayout;
     private readonly Dictionary<NMainMenuTextButton, MenuItemVisual> _items = new();
 
     private VBoxContainer _leftMenu = null!;
     private Font? _menuFont;
     private Font? _chineseFont;
+    private NMainMenuTextButton? _firstVisibleButton;
 
-    public NMainMenuTextButton SettingsButton { get; private set; } = null!;
-    public NMainMenuTextButton QuitButton { get; private set; } = null!;
-
-    public MainMenuLeftMenuController(NMainMenu mainMenu) {
+    public MainMenuLeftMenuController(
+        NMainMenu mainMenu,
+        MainMenuSkinController.MenuLayout menuLayout
+    ) {
         _mainMenu = mainMenu;
+        _menuLayout = menuLayout;
     }
 
     public void Install() {
-        _leftMenu = _mainMenu.GetNodeOrNull<VBoxContainer>("%MainMenuTextButtons")
-            ?? throw new InvalidOperationException("Main menu is missing MainMenuTextButtons.");
-        SettingsButton = _leftMenu.GetNodeOrNull<NMainMenuTextButton>("SettingsButton")
-            ?? throw new InvalidOperationException("Main menu is missing SettingsButton.");
-        QuitButton = _leftMenu.GetNodeOrNull<NMainMenuTextButton>("QuitButton")
-            ?? throw new InvalidOperationException("Main menu is missing QuitButton.");
+        _leftMenu = _menuLayout.MenuContainer;
 
         _menuFont = ResourceLoader.Load<Font>(MenuFontPath);
         if (_menuFont == null) {
@@ -63,32 +59,33 @@ internal sealed class MainMenuLeftMenuController {
         _chineseFont = FontManager.GetSubstituteFont("zhs", FontType.Regular);
 
         ApplyLayout();
-        foreach (MenuItemSpec spec in ItemSpecs) {
-            NMainMenuTextButton? button = _leftMenu.GetNodeOrNull<NMainMenuTextButton>(spec.NodeName);
-            if (button == null) {
-                Entry.Logger.Warn($"Main menu is missing {spec.NodeName}; skipping its custom visual.");
-                continue;
-            }
-
-            ConfigureButton(button, spec);
+        int childIndex = 0;
+        foreach (MainMenuSkinController.MenuItemDescriptor item in _menuLayout.LeftItems) {
+            _leftMenu.MoveChild(item.Button, childIndex++);
+            ConfigureButton(item);
         }
 
         RepositionContinueRunInfo();
+        UpdateFirstVisibleItem(force: true);
         Update();
     }
 
     private void ApplyLayout() {
         _leftMenu.SetAnchorsPreset(Control.LayoutPreset.TopLeft, keepOffsets: false);
         _leftMenu.OffsetLeft = 96f;
-        _leftMenu.OffsetTop = 210f;
+        _leftMenu.OffsetTop = OffsetHeight;
         _leftMenu.OffsetRight = 96f + MenuWidth;
-        _leftMenu.OffsetBottom = 210f + ItemHeight * ItemSpecs.Length;
-        _leftMenu.CustomMinimumSize = new Vector2(MenuWidth, ItemHeight * ItemSpecs.Length);
+        float menuHeight = _menuLayout.LeftItems.Count == 0
+            ? ItemHeight
+            : ItemHeight * (_menuLayout.LeftItems.Count - 1 + FirstItemScale);
+        _leftMenu.OffsetBottom = OffsetHeight + menuHeight;
+        _leftMenu.CustomMinimumSize = new Vector2(MenuWidth, menuHeight);
         _leftMenu.Alignment = BoxContainer.AlignmentMode.Begin;
         _leftMenu.AddThemeConstantOverride("separation", 0);
     }
 
-    private void ConfigureButton(NMainMenuTextButton button, MenuItemSpec spec) {
+    private void ConfigureButton(MainMenuSkinController.MenuItemDescriptor descriptor) {
+        NMainMenuTextButton button = descriptor.Button;
         button.CustomMinimumSize = new Vector2(MenuWidth, ItemHeight);
         button.SizeFlagsHorizontal = Control.SizeFlags.Fill;
         button.FocusMode = Control.FocusModeEnum.All;
@@ -97,7 +94,7 @@ internal sealed class MainMenuLeftMenuController {
             button.label.Visible = false;
         }
 
-        MenuItemVisual item = CreateVisual(button, spec);
+        MenuItemVisual item = CreateVisual(button, descriptor);
         _items[button] = item;
 
         button.Connect(
@@ -107,7 +104,7 @@ internal sealed class MainMenuLeftMenuController {
             NClickableControl.SignalName.Unfocused,
             Callable.From<NClickableControl>(_ => SetFocused(button, focused: false)));
 
-        if (spec.HasNotification) {
+        if (descriptor.HasNotification) {
             MoveTimelineNotification(item.NotificationHost);
         }
 
@@ -116,10 +113,15 @@ internal sealed class MainMenuLeftMenuController {
         }
     }
 
-    private MenuItemVisual CreateVisual(NMainMenuTextButton button, MenuItemSpec spec) {
+    private MenuItemVisual CreateVisual(
+        NMainMenuTextButton button,
+        MainMenuSkinController.MenuItemDescriptor descriptor
+    ) {
         var root = new Control {
             Name = CustomVisualName,
-            MouseFilter = Control.MouseFilterEnum.Ignore
+            MouseFilter = Control.MouseFilterEnum.Ignore,
+            Scale = Vector2.One,
+            PivotOffset = Vector2.Zero
         };
         root.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
         button.AddChild(root);
@@ -169,10 +171,10 @@ internal sealed class MainMenuLeftMenuController {
         };
         root.AddChild(accentLine);
 
-        Label englishLabel = CreateLabel(spec.EnglishTitle, _menuFont, 34);
+        Label englishLabel = CreateLabel(descriptor.EnglishText, _menuFont, 34);
         englishLabel.Name = "EnglishTitle";
         englishLabel.Position = new Vector2(20f, 0f);
-        englishLabel.Size = new Vector2(205f, ItemHeight);
+        englishLabel.Size = new Vector2(EnglishTitleWidth, ItemHeight);
         englishLabel.PivotOffset = new Vector2(0f, ItemHeight * 0.5f);
         englishLabel.AddThemeColorOverride("font_color", InactiveTextColor);
         englishLabel.AddThemeColorOverride("font_outline_color", new Color(0f, 0f, 0f, 0.9f));
@@ -181,16 +183,16 @@ internal sealed class MainMenuLeftMenuController {
 
         Label arrowLabel = CreateLabel(">", _menuFont, 38);
         arrowLabel.Name = "Arrow";
-        arrowLabel.Position = new Vector2(202f, 0f);
+        arrowLabel.Position = new Vector2(ArrowX, 0f);
         arrowLabel.Size = new Vector2(30f, ItemHeight);
         arrowLabel.Modulate = Colors.Transparent;
         arrowLabel.AddThemeColorOverride("font_color", FocusedTextColor);
         root.AddChild(arrowLabel);
 
-        Label chineseLabel = CreateLabel(spec.ChineseDescription, _chineseFont, 22);
+        Label chineseLabel = CreateLabel(descriptor.HoverText, _chineseFont, 22);
         chineseLabel.Name = "ChineseDescription";
-        chineseLabel.Position = new Vector2(252f, 0f);
-        chineseLabel.Size = new Vector2(420f, ItemHeight);
+        chineseLabel.Position = new Vector2(DescriptionX, 0f);
+        chineseLabel.Size = new Vector2(480f, ItemHeight);
         chineseLabel.Modulate = Colors.Transparent;
         chineseLabel.AddThemeColorOverride("font_color", InactiveTextColor);
         chineseLabel.AddThemeColorOverride("font_outline_color", new Color(0f, 0f, 0f, 0.92f));
@@ -210,10 +212,12 @@ internal sealed class MainMenuLeftMenuController {
             root,
             glowClip,
             highlightClip,
+            accentLine,
             englishLabel,
             arrowLabel,
             chineseLabel,
-            notificationHost);
+            notificationHost,
+            descriptor);
     }
 
     private static Label CreateLabel(string text, Font? font, int fontSize) {
@@ -278,7 +282,7 @@ internal sealed class MainMenuLeftMenuController {
         float targetGlowWidth = focused ? HighlightWidth + 8f : 0f;
         Color targetTextColor = focused ? FocusedTextColor : InactiveTextColor;
         float detailAlpha = focused ? 1f : 0f;
-        float detailX = focused ? 270f : 252f;
+        float detailX = focused ? FocusedDescriptionX : DescriptionX;
 
         if (immediate) {
             item.HighlightClip.Size = item.HighlightClip.Size with { X = targetWidth };
@@ -319,6 +323,8 @@ internal sealed class MainMenuLeftMenuController {
     }
 
     public void Update() {
+        UpdateFirstVisibleItem();
+
         foreach ((NMainMenuTextButton button, MenuItemVisual item) in _items) {
             bool enabled = button.IsEnabled;
             if (item.Enabled == enabled) continue;
@@ -331,8 +337,36 @@ internal sealed class MainMenuLeftMenuController {
         }
     }
 
+    private void UpdateFirstVisibleItem(bool force = false) {
+        NMainMenuTextButton? firstVisible = _menuLayout.LeftItems
+            .Select(item => item.Button)
+            .FirstOrDefault(button => button.Visible);
+        if (!force && firstVisible == _firstVisibleButton) return;
+
+        _firstVisibleButton = firstVisible;
+        foreach ((NMainMenuTextButton button, MenuItemVisual item) in _items) {
+            float visualScale = button == firstVisible ? FirstItemScale : 1f;
+            button.CustomMinimumSize = new Vector2(MenuWidth, ItemHeight * visualScale);
+            item.Root.Scale = Vector2.One * visualScale;
+            // Scaling the whole visual must not also scale its leading margins.
+            // Keep the panel, accent and title on the same left baseline as normal rows.
+            item.GlowClip.Position = item.GlowClip.Position with { X = 4f / visualScale };
+            item.HighlightClip.Position = item.HighlightClip.Position with { X = 8f / visualScale };
+            item.AccentLine.Position = item.AccentLine.Position with { X = 4f / visualScale };
+            item.EnglishLabel.Position = item.EnglishLabel.Position with { X = 20f / visualScale };
+            item.ChineseLabel.Size = new Vector2(visualScale > 1f ? 340f : 480f, ItemHeight);
+        }
+    }
+
+    public void RefreshTexts() {
+        foreach (MenuItemVisual item in _items.Values) {
+            item.EnglishLabel.Text = item.Descriptor.EnglishText;
+            item.ChineseLabel.Text = item.Descriptor.HoverText;
+        }
+    }
+
     public NButton[] GetVisibleButtons() {
-        return _leftMenu.GetChildren().OfType<NButton>()
+        return _menuLayout.LeftItems.Select(item => item.Button)
             .Where(button => button.Visible && button.IsEnabled)
             .ToArray();
     }
@@ -341,21 +375,17 @@ internal sealed class MainMenuLeftMenuController {
         return button.GetNodeOrNull<Control>(CustomVisualName) != null;
     }
 
-    private sealed record MenuItemSpec(
-        string NodeName,
-        string EnglishTitle,
-        string ChineseDescription,
-        bool HasNotification = false);
-
     private sealed class MenuItemVisual {
         public NMainMenuTextButton Button { get; }
         public Control Root { get; }
         public Control GlowClip { get; }
         public Control HighlightClip { get; }
+        public ColorRect AccentLine { get; }
         public Label EnglishLabel { get; }
         public Label ArrowLabel { get; }
         public Label ChineseLabel { get; }
         public Control NotificationHost { get; }
+        public MainMenuSkinController.MenuItemDescriptor Descriptor { get; }
         public Tween? Tween { get; set; }
         public bool Focused { get; set; }
         public bool Enabled { get; set; }
@@ -365,19 +395,23 @@ internal sealed class MainMenuLeftMenuController {
             Control root,
             Control glowClip,
             Control highlightClip,
+            ColorRect accentLine,
             Label englishLabel,
             Label arrowLabel,
             Label chineseLabel,
-            Control notificationHost
+            Control notificationHost,
+            MainMenuSkinController.MenuItemDescriptor descriptor
         ) {
             Button = button;
             Root = root;
             GlowClip = glowClip;
             HighlightClip = highlightClip;
+            AccentLine = accentLine;
             EnglishLabel = englishLabel;
             ArrowLabel = arrowLabel;
             ChineseLabel = chineseLabel;
             NotificationHost = notificationHost;
+            Descriptor = descriptor;
             Enabled = !button.IsEnabled;
         }
     }
