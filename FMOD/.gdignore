@@ -1,0 +1,2 @@
+# FMOD authoring sources and build intermediates are not Godot runtime resources.
+# The mod loads only res://VYgo/banks/VYgo.bank and VYgo.guids.txt.
