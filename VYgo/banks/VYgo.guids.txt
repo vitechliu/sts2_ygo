@@ -11,6 +11,7 @@
 {25843eb8-0f79-4253-aed6-bee1449d8e7e} bus:/master/sfx/chorus
 {9062adad-d974-41ef-b812-79c56bb6c25f} bus:/master/sfx_ducking_bass
 {bfa231d3-c7a0-4395-bb21-4afdf4149043} bus:/master/sfx_ducking_big
+{197b80ae-ae3d-45bf-9432-4df4a71bc092} event:/vygo/music/main_menu
 {91e738e7-1692-4c90-bbd5-f0ede684c88a} event:/vygo/sfx/link_summon_00
 {28b80ea8-0954-4dfa-9071-5bb87a48d082} event:/vygo/sfx/link_summon_01
 {350555ef-b4e8-46c1-bf16-e4dbc2b61561} event:/vygo/sfx/link_summon_02
