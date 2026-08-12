@@ -216,6 +216,24 @@ public static class SummonUtil {
         );
     }
 
+    internal static DirectExtraDeckSummonSpec CreateDirectFusionSummonSpec(
+        BaseExtraFusionCard card,
+        Player owner,
+        Func<BaseExtraFusionCard, IReadOnlyList<SummonMaterial>> getAvailableMaterials
+    ) {
+        return new DirectExtraDeckSummonSpec(
+            BuildMaterialSelection: () => BuildFusionMaterialSelection(
+                card,
+                owner,
+                getAvailableMaterials,
+                _ => PileType.Discard
+            ),
+            PlayAnimation: ExtraDeckSummonAnimations.PlayFusionSummonAnimation,
+            AfterAutoPlay: card.InvokeAfterFusionSummoned,
+            FinalWaitSeconds: 0.45f
+        );
+    }
+
     public static IReadOnlyList<SummonMaterial> GetFieldMonsterMaterials(
         Player owner,
         Func<SummonMaterial, bool>? filter = null
