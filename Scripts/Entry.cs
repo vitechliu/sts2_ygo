@@ -168,17 +168,17 @@ public static class Entry {
     }
 
 
-    static void RegisterCommonPool<T>(string id) where T : BaseYgoCommonCardPool {
+    static void RegisterCommonPool<T>(string id, string icon) where T : BaseYgoCommonCardPool {
         ModContentRegistry.For(ModId)
             .RegisterCardLibraryCompendiumSharedPoolFilter<T>(
                 id, // ID
-                "res://VYgo/images/char_icon_redhat.png" // 图标位置
+                $"res://VYgo/images/pool_icon/{icon}" // 图标位置
             );
     }
     static void RegisterCommonPools() {
-        RegisterCommonPool<CommonCardPool>("v_ygo_common");
-        RegisterCommonPool<LinkCardPool>("v_ygo_link");
-        RegisterCommonPool<FusionCardPool>("v_ygo_fusion");
+        RegisterCommonPool<CommonCardPool>("v_ygo_common", "common.png");
+        RegisterCommonPool<LinkCardPool>("v_ygo_link", "link.png");
+        RegisterCommonPool<FusionCardPool>("v_ygo_fusion", "fusion.png");
     }
     //注册额外卡组
     static void RegisterCardPile() {
