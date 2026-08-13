@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b4p30nw486jx5"
-path="res://.godot/imported/update_log.png-06da9f576ff9576dd32fe5a9923fd2d4.ctex"
+uid="uid://ckg5o2qqg7jx3"
+path="res://.godot/imported/menu.png-98b3b89430556c433a6081085ac6ef5d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://VYgo/ui/images/top_menus/update_log.png"
-dest_files=["res://.godot/imported/update_log.png-06da9f576ff9576dd32fe5a9923fd2d4.ctex"]
+source_file="res://VYgo/ui/images/top_menus/menu.png"
+dest_files=["res://.godot/imported/menu.png-98b3b89430556c433a6081085ac6ef5d.ctex"]
 
 [params]
 
