@@ -50,6 +50,7 @@ public static class Entry {
     public static void Initialize() {
         var assembly = Assembly.GetExecutingAssembly();
         Logger = RitsuLibFramework.CreateLogger(ModId);
+        RitsuLibCompatibility.DisableMainMenuSettingsButtonPatch();
         RegisterSaveData();
         RegisterCharacterCardPoolLinks();
         var harmony = new Harmony("sts2.vitech." + ModId.ToLowerInvariant());
