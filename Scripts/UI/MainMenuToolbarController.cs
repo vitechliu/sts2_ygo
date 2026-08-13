@@ -14,16 +14,22 @@ namespace VYgo.Scripts.UI;
 internal sealed class MainMenuToolbarController {
     public static readonly StringName ToolbarName = "VYgoMainMenuToolbar";
 
-    private const string IconRoot = "res://VYgo/images/ui/main_menu/icons";
+    private const string IconRoot = "res://VYgo/ui/images/top_menus/";
+    private const float ToolbarSeparation = 12f;
 
     private static readonly Vector2 ToolbarItemSize = new(88f, 84f);
-    private static readonly Vector2 ToolbarVisualSize = new(88f, 84f);
+    private static readonly Vector2 ToolbarVisualSize = new Vector2(88f, 84f);
+    private static readonly Color ToolbarHoverColor = new("72ff72");
+    private static readonly Color ToolbarShadowColor = new(0.25f, 1f, 0.25f, 0.48f);
+    private static readonly Color TransparentWhite = new(1f, 1f, 1f, 0f);
 
     private readonly NMainMenu _mainMenu;
     private readonly MainMenuLeftMenuController _leftMenuController;
     private readonly MainMenuSkinController.MenuLayout _menuLayout;
-    private readonly Dictionary<NButton, Control> _toolbarVisuals = new();
+    private readonly List<NButton> _toolbarButtons = new();
+    private readonly Dictionary<NButton, ToolbarButtonVisual> _toolbarVisuals = new();
     private readonly Dictionary<NButton, Label> _toolbarCaptions = new();
+    private readonly Dictionary<NButton, Tween> _toolbarTweens = new();
 
     private HBoxContainer _toolbar = null!;
     private NButton _profileButton = null!;
@@ -51,12 +57,60 @@ internal sealed class MainMenuToolbarController {
         _compendiumButton = GetToolbarTextButton("CompendiumButton");
 
         CreateToolbar();
-        ConfigureToolbarButton(_profileButton, "profile.png", "P");
-        ConfigureToolbarButton(_patchNotesButton, "patch_notes.png", "N");
-        ConfigureToolbarButton(_settingsButton, "settings.png", "S");
-        ConfigureToolbarButton(_compendiumButton, "compendium.png", "C");
+        MoveReleaseInfo();
+        var profile = IconRoot + $"profile_icon_{SaveManager.Instance.CurrentProfileId}.png";
+        ConfigureToolbarButton(_profileButton, profile, "P");
+        ConfigureToolbarButton(_patchNotesButton, IconRoot + "patch_notes.png", "N");
+        ConfigureToolbarButton(_compendiumButton, IconRoot + "wiki.png", "C");
+        ConfigureToolbarButton(_settingsButton, IconRoot + "settings.png", "S");
         RefreshCaptions();
+        RefreshToolbarSize();
         UpdateFocusNavigation(force: true);
+    }
+
+    void MoveReleaseInfo() {
+        var releaseInfoLabel = _mainMenu.GetNodeOrNull<Label>("%ReleaseInfo");
+        if (releaseInfoLabel == null) return;
+        
+    }
+
+    /// <summary>
+    /// 创建一个原主菜单中不存在的工具栏按钮，并套用与现有按钮相同的图标、标题、hover 和焦点导航样式。
+    /// </summary>
+    public NButton AddToolbarButton(
+        string nodeName,
+        string iconPath,
+        string text,
+        Action<NButton>? onReleased = null,
+        string placeholderGlyph = "?"
+    ) {
+        if (!GodotObject.IsInstanceValid(_toolbar)) {
+            throw new InvalidOperationException("工具栏尚未安装，无法新增按钮。");
+        }
+        if (string.IsNullOrWhiteSpace(nodeName)) {
+            throw new ArgumentException("按钮节点名不能为空。", nameof(nodeName));
+        }
+        if (_toolbarButtons.Any(button => button.Name.ToString() == nodeName)) {
+            throw new InvalidOperationException($"工具栏按钮 {nodeName} 已存在。");
+        }
+
+        // NButton 会在 AddChild 时执行 _Ready；提前设定 FocusMode，确保其内部也记录为可手柄导航。
+        var button = new NButton {
+            Name = nodeName,
+            FocusMode = Control.FocusModeEnum.All
+        };
+        _toolbar.AddChild(button);
+        ConfigureToolbarButton(button, iconPath, placeholderGlyph);
+        SetToolbarCaption(button, text);
+
+        if (onReleased != null) {
+            button.Connect(NClickableControl.SignalName.Released,
+                Callable.From<NClickableControl>(_ => onReleased(button)));
+        }
+
+        RefreshToolbarSize();
+        UpdateFocusNavigation(force: true);
+        return button;
     }
 
     private NMainMenuTextButton GetToolbarTextButton(string nodeName) {
@@ -66,18 +120,17 @@ internal sealed class MainMenuToolbarController {
     }
 
     private void CreateToolbar() {
-        // TODO: 后续确定版本号/发布日期与“更新记录”按钮的整合样式；本阶段为 ReleaseInfo 预留右侧空间。
         _toolbar = new HBoxContainer {
             Name = ToolbarName,
             CustomMinimumSize = new Vector2(388f, 84f),
             MouseFilter = Control.MouseFilterEnum.Ignore,
             Alignment = BoxContainer.AlignmentMode.End
         };
-        _toolbar.AddThemeConstantOverride("separation", 12);
+        _toolbar.AddThemeConstantOverride("separation", (int)ToolbarSeparation);
         _toolbar.SetAnchorsPreset(Control.LayoutPreset.TopRight, keepOffsets: false);
         _toolbar.OffsetLeft = -730f;
         _toolbar.OffsetTop = 16f;
-        _toolbar.OffsetRight = -330f;
+        _toolbar.OffsetRight = -70f;
         _toolbar.OffsetBottom = 100f;
 
         _mainMenu.AddChild(_toolbar);
@@ -87,8 +140,10 @@ internal sealed class MainMenuToolbarController {
         }
     }
 
-    private void ConfigureToolbarButton(NButton button, string iconFileName, string placeholderGlyph) {
-        button.Reparent(_toolbar, keepGlobalTransform: false);
+    private void ConfigureToolbarButton(NButton button, string customIconPath, string placeholderGlyph) {
+        if (button.GetParent() != _toolbar) {
+            button.Reparent(_toolbar, keepGlobalTransform: false);
+        }
         button.CustomMinimumSize = ToolbarItemSize;
         button.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
         button.SizeFlagsVertical = Control.SizeFlags.ShrinkCenter;
@@ -99,7 +154,8 @@ internal sealed class MainMenuToolbarController {
             child.Visible = false;
         }
 
-        Control visual = CreateToolbarVisual(button, iconFileName, placeholderGlyph);
+        ToolbarButtonVisual visual = CreateToolbarVisual(button, customIconPath, placeholderGlyph);
+        _toolbarButtons.Add(button);
         _toolbarVisuals[button] = visual;
         button.Connect(NClickableControl.SignalName.Focused,
             Callable.From<NClickableControl>(_ => AnimateToolbarFocus(button, focused: true)));
@@ -107,37 +163,51 @@ internal sealed class MainMenuToolbarController {
             Callable.From<NClickableControl>(_ => AnimateToolbarFocus(button, focused: false)));
     }
 
-    private Control CreateToolbarVisual(NButton button, string iconFileName, string placeholderGlyph) {
-        var visual = new VBoxContainer {
+    private ToolbarButtonVisual CreateToolbarVisual(
+        NButton button,
+        string customIconPath,
+        string placeholderGlyph
+    ) {
+        var visual = new Control {
             Name = "VYgoToolbarVisual",
             MouseFilter = Control.MouseFilterEnum.Ignore,
             CustomMinimumSize = ToolbarVisualSize,
-            Alignment = BoxContainer.AlignmentMode.Center,
             PivotOffset = ToolbarVisualSize * 0.5f
         };
         visual.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
-        visual.AddThemeConstantOverride("separation", 0);
         button.AddChild(visual);
+
+        var content = new VBoxContainer {
+            Name = "Content",
+            MouseFilter = Control.MouseFilterEnum.Ignore,
+            Alignment = BoxContainer.AlignmentMode.Center
+        };
+        content.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+        content.AddThemeConstantOverride("separation", 0);
+        visual.AddChild(content);
 
         var iconHolder = new Control {
             Name = "IconHolder",
             MouseFilter = Control.MouseFilterEnum.Ignore,
-            CustomMinimumSize = new Vector2(56f, 56f),
+            CustomMinimumSize = new Vector2(56f, 56f) * 1.3f,
             SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter
         };
-        visual.AddChild(iconHolder);
+        content.AddChild(iconHolder);
 
-        string customIconPath = $"{IconRoot}/{iconFileName}";
-        Texture2D? icon = LoadOptionalTexture(customIconPath) ?? LoadFallbackIcon(button);
+        var iconShadows = new List<CanvasItem>();
+        var textShadowTargets = new List<Label>();
+        Texture2D? icon = LoadOptionalTexture(customIconPath) ?? null;
         if (icon != null) {
-            var iconRect = new TextureRect {
-                Name = "Icon",
-                Texture = icon,
-                ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
-                StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
-                MouseFilter = Control.MouseFilterEnum.Ignore
-            };
-            iconRect.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+            var iconShadow = CreateIconRect(icon, "IconShadow");
+            iconShadow.SelfModulate = TransparentWhite;
+            iconShadow.OffsetLeft = 2f;
+            iconShadow.OffsetTop = 3f;
+            iconShadow.OffsetRight = 2f;
+            iconShadow.OffsetBottom = 3f;
+            iconHolder.AddChild(iconShadow);
+            iconShadows.Add(iconShadow);
+
+            var iconRect = CreateIconRect(icon, "Icon");
             iconHolder.AddChild(iconRect);
         }
         else {
@@ -145,15 +215,38 @@ internal sealed class MainMenuToolbarController {
             var placeholder = CreateLabel(placeholderGlyph, 30);
             placeholder.Name = "PlaceholderIcon";
             placeholder.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+            ConfigureTextShadow(placeholder);
             iconHolder.AddChild(placeholder);
+            textShadowTargets.Add(placeholder);
         }
 
         Label caption = CreateLabel(string.Empty, 18);
         caption.Name = "Caption";
         caption.CustomMinimumSize = new Vector2(88f, 24f);
-        visual.AddChild(caption);
+        ConfigureTextShadow(caption);
+        content.AddChild(caption);
+        textShadowTargets.Add(caption);
         _toolbarCaptions[button] = caption;
-        return visual;
+        return new ToolbarButtonVisual(visual, iconShadows, textShadowTargets);
+    }
+
+    private static TextureRect CreateIconRect(Texture2D icon, string name) {
+        var iconRect = new TextureRect {
+            Name = name,
+            Texture = icon,
+            ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+            StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+            MouseFilter = Control.MouseFilterEnum.Ignore
+        };
+        iconRect.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+        return iconRect;
+    }
+
+    private static void ConfigureTextShadow(Label label) {
+        label.AddThemeColorOverride("font_shadow_color", TransparentWhite);
+        label.AddThemeConstantOverride("shadow_offset_x", 1);
+        label.AddThemeConstantOverride("shadow_offset_y", 2);
+        label.AddThemeConstantOverride("shadow_outline_size", 2);
     }
 
     private static Label CreateLabel(string text, int fontSize) {
@@ -181,12 +274,34 @@ internal sealed class MainMenuToolbarController {
     }
 
     private void AnimateToolbarFocus(NButton button, bool focused) {
-        if (!_toolbarVisuals.TryGetValue(button, out Control? visual)) return;
-        Tween tween = visual.CreateTween().SetParallel();
-        tween.TweenProperty(visual, "scale", focused ? Vector2.One * 1.08f : Vector2.One, 0.12)
+        if (!_toolbarVisuals.TryGetValue(button, out ToolbarButtonVisual? visual)) return;
+        if (_toolbarTweens.Remove(button, out Tween? previousTween) &&
+            GodotObject.IsInstanceValid(previousTween)) {
+            previousTween.Kill();
+        }
+
+        Tween tween = visual.Root.CreateTween().SetParallel();
+        _toolbarTweens[button] = tween;
+        tween.TweenProperty(visual.Root, "scale", focused ? Vector2.One * 1.08f : Vector2.One, 0.12)
             .SetEase(Tween.EaseType.Out)
             .SetTrans(Tween.TransitionType.Cubic);
-        tween.TweenProperty(visual, "modulate", focused ? new Color("ffd36a") : Colors.White, 0.12);
+        tween.TweenProperty(visual.Root, "modulate", focused ? ToolbarHoverColor : Colors.White, 0.12);
+        foreach (CanvasItem shadow in visual.IconShadows) {
+            tween.TweenProperty(shadow, "self_modulate", focused ? ToolbarShadowColor : TransparentWhite, 0.12)
+                .SetEase(Tween.EaseType.Out)
+                .SetTrans(Tween.TransitionType.Cubic);
+        }
+        foreach (Label label in visual.TextShadowTargets) {
+            Color currentColor = label.GetThemeColor("font_shadow_color");
+            Color targetColor = focused ? ToolbarShadowColor : TransparentWhite;
+            tween.TweenMethod(
+                    Callable.From<Color>(color => label.AddThemeColorOverride("font_shadow_color", color)),
+                    currentColor,
+                    targetColor,
+                    0.12)
+                .SetEase(Tween.EaseType.Out)
+                .SetTrans(Tween.TransitionType.Cubic);
+        }
     }
 
     public void RefreshCaptions() {
@@ -194,10 +309,14 @@ internal sealed class MainMenuToolbarController {
 
         var profileTitle = new LocString("main_menu_ui", "OPEN_PROFILE_SCREEN.title");
         profileTitle.Add("Id", SaveManager.Instance.CurrentProfileId);
-        _toolbarCaptions[_profileButton].Text = profileTitle.GetFormattedText();
-        _toolbarCaptions[_patchNotesButton].Text = LoadModCaption("PATCH_NOTES", "Patch Notes");
-        _toolbarCaptions[_settingsButton].Text = new LocString("main_menu_ui", "SETTINGS").GetFormattedText();
-        _toolbarCaptions[_compendiumButton].Text = new LocString("main_menu_ui", "COMPENDIUM").GetFormattedText();
+        SetToolbarCaption(_profileButton, profileTitle.GetFormattedText());
+        SetToolbarCaption(_patchNotesButton, LoadModCaption("PATCH_NOTES", "Patch Notes"));
+        SetToolbarCaption(_settingsButton, new LocString("main_menu_ui", "SETTINGS").GetFormattedText());
+        SetToolbarCaption(_compendiumButton, new LocString("main_menu_ui", "COMPENDIUM").GetFormattedText());
+    }
+
+    private void SetToolbarCaption(NButton button, string text) {
+        _toolbarCaptions[button].Text = text;
     }
 
     private static string LoadModCaption(string key, string fallback) {
@@ -219,8 +338,12 @@ internal sealed class MainMenuToolbarController {
 
     private void UpdateFocusNavigation(bool force = false) {
         NButton[] leftButtons = _leftMenuController.GetVisibleButtons();
-        NButton[] toolbarButtons = [_profileButton, _patchNotesButton, _settingsButton, _compendiumButton];
+        NButton[] toolbarButtons = _toolbarButtons
+            .Where(button => GodotObject.IsInstanceValid(button) && button.Visible)
+            .ToArray();
         int stateHash = leftButtons.Aggregate(17, (hash, button) => HashCode.Combine(hash, button.GetInstanceId()));
+        stateHash = toolbarButtons.Aggregate(stateHash,
+            (hash, button) => HashCode.Combine(hash, button.GetInstanceId()));
         if (!force && stateHash == _navigationStateHash) return;
         _navigationStateHash = stateHash;
 
@@ -231,9 +354,16 @@ internal sealed class MainMenuToolbarController {
             if (leftButtons.Length > 0) button.FocusNeighborBottom = leftButtons[0].GetPath();
         }
 
-        if (leftButtons.Length > 0) {
-            leftButtons[0].FocusNeighborTop = _profileButton.GetPath();
+        if (leftButtons.Length > 0 && toolbarButtons.Length > 0) {
+            leftButtons[0].FocusNeighborTop = toolbarButtons[0].GetPath();
         }
+    }
+
+    private void RefreshToolbarSize() {
+        int itemCount = _toolbarButtons.Count(button => GodotObject.IsInstanceValid(button));
+        float width = itemCount * ToolbarItemSize.X + Math.Max(0, itemCount - 1) * ToolbarSeparation;
+        _toolbar.CustomMinimumSize = new Vector2(width, ToolbarItemSize.Y);
+        _toolbar.OffsetLeft = _toolbar.OffsetRight - width;
     }
 
     public void Update() {
@@ -247,4 +377,10 @@ internal sealed class MainMenuToolbarController {
     private static Texture2D? LoadOptionalTexture(string path) {
         return ResourceLoader.Exists(path) ? ResourceLoader.Load<Texture2D>(path) : null;
     }
+
+    private sealed record ToolbarButtonVisual(
+        Control Root,
+        IReadOnlyList<CanvasItem> IconShadows,
+        IReadOnlyList<Label> TextShadowTargets
+    );
 }
