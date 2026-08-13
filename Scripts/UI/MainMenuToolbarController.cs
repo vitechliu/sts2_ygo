@@ -1,10 +1,12 @@
 using System.Text.Json;
 using Godot;
+using HarmonyLib;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Nodes.Screens.MainMenu;
 using MegaCrit.Sts2.Core.Saves;
 using FileAccess = Godot.FileAccess;
+using STS2RitsuLib.Settings.Patches;
 
 namespace VYgo.Scripts.UI;
 
@@ -63,6 +65,10 @@ internal sealed class MainMenuToolbarController {
         ConfigureToolbarButton(_patchNotesButton, IconRoot + "patch_notes.png", "N");
         ConfigureToolbarButton(_compendiumButton, IconRoot + "wiki.png", "C");
         ConfigureToolbarButton(_settingsButton, IconRoot + "settings.png", "S");
+        AddToolbarButton("RitsuLibButton", IconRoot + "ritsulib.png", "RitsuLib", button => {
+            Traverse.Create("STS2RitsuLib.Settings.Patches.MainMenuModSettingsButtonPatch")
+                .Method("OpenModSettings").GetValue(_mainMenu);
+        }, "R");
         RefreshCaptions();
         RefreshToolbarSize();
         UpdateFocusNavigation(force: true);
@@ -71,7 +77,8 @@ internal sealed class MainMenuToolbarController {
     void MoveReleaseInfo() {
         var releaseInfoLabel = _mainMenu.GetNodeOrNull<Label>("%ReleaseInfo");
         if (releaseInfoLabel == null) return;
-        
+
+        releaseInfoLabel.Position += new Vector2(100f, 60f);
     }
 
     /// <summary>
