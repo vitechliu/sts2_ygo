@@ -214,6 +214,25 @@
 
     <div id="toast" class="toast hidden"></div>
 
+    <dialog id="recropDialog" class="script-dialog recrop-dialog">
+        <form id="recropForm">
+            <div class="dialog-header">
+                <h2>修改卡图</h2>
+                <button id="closeRecropDialogBtn" type="button" class="dialog-close" aria-label="关闭">×</button>
+            </div>
+            <p id="recropCardInfo" class="dialog-card-info"></p>
+            <div class="crop-wrapper">
+                <canvas id="recropCanvas"></canvas>
+            </div>
+            <p class="crop-hint">鼠标滚轮缩放，拖拽移动，将需要的部分对准裁剪框</p>
+            <div class="dialog-actions">
+                <button id="resetRecropBtn" type="button" class="btn-secondary">重置视图</button>
+                <button id="cancelRecropBtn" type="button" class="btn-secondary">取消</button>
+                <button id="saveRecropBtn" type="submit" class="btn-primary">保存卡图</button>
+            </div>
+        </form>
+    </dialog>
+
     <script src="/js/app.js"></script>
 </body>
 </html>

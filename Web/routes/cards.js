@@ -337,8 +337,8 @@ router.post('/:cardId/scene', async (req, res) => {
     }
 });
 
-// 生成卡图（从外部卡图目录按 cardId 查找并直接裁剪/缩放）
-router.post('/:cardId/card-image', async (req, res) => {
+// 获取外部卡图源文件路径（用于重新裁剪）
+router.get('/:cardId/card-image-source', async (req, res) => {
     try {
         const cardId = req.cardId;
         const sourcePath = await imageService.findImageFile(cardId);
@@ -347,9 +347,38 @@ router.post('/:cardId/card-image', async (req, res) => {
             return res.status(404).json({ success: false, error: 'External card image not found' });
         }
 
-        const imagePath = await imageService.processCroppedImage(sourcePath, cardId, null);
+        res.json({ success: true, data: { path: sourcePath } });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// 生成卡图（从外部卡图目录按 cardId 查找并直接裁剪/缩放，或按提供的源文件与裁剪参数重新裁剪）
+router.post('/:cardId/card-image', async (req, res) => {
+    try {
+        const cardId = req.cardId;
+        const { cropParams, cardImagePath } = req.body || {};
+        let sourcePath;
+
+        if (cardImagePath) {
+            if (!await imageService.isAllowedExternalImage(cardImagePath)) {
+                throw new ValidationError('Card image must be inside a configured external image directory');
+            }
+            sourcePath = cardImagePath;
+        } else {
+            sourcePath = await imageService.findImageFile(cardId);
+        }
+
+        if (!sourcePath) {
+            return res.status(404).json({ success: false, error: 'External card image not found' });
+        }
+
+        const imagePath = await imageService.processCroppedImage(sourcePath, cardId, cropParams ?? null);
         res.json({ success: true, data: { imagePath } });
     } catch (error) {
+        if (error instanceof ValidationError) {
+            return res.status(400).json({ success: false, error: error.message });
+        }
         res.status(500).json({ success: false, error: error.message });
     }
 });
