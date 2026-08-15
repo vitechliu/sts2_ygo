@@ -1,5 +1,22 @@
 [
     {
+        "id": 64,
+        "card_id": 33041277,
+        "name": "",
+        "cn_name": "电子革命系统",
+        "en_name": "CyberRevsystem",
+        "types": "[魔法]",
+        "description": "①：从自己的手卡·墓地选1只「电子龙」特殊召唤。这个效果特殊召唤的怪兽不会被效果破坏。",
+        "atk": 0,
+        "def": 0,
+        "level": 0,
+        "attribute": "",
+        "race": "",
+        "archetypes": [
+            147
+        ]
+    },
+    {
         "id": 63,
         "card_id": 87116928,
         "name": "",

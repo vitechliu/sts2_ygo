@@ -161,5 +161,8 @@
     "V_YGO_CARD_CYBER_NETWORK.title": "电子网络",
     "V_YGO_CARD_CYBER_NETWORK.description": "你的回合结束时，随机将抽牌堆中的{ExhaustCount:diff()}只机械族怪兽[gold]消耗[/gold]。\n{Turns:diff()}回合后的回合开始时，移除此能力，将消耗堆中的机械族怪兽{IfUpgraded:show:[gold]升级[/gold]并|}尽可能地[gold]特召[/gold]。",
     "V_YGO_CARD_ATTACK_REFLECTOR_UNIT.title": "攻击反射装置",
-    "V_YGO_CARD_ATTACK_REFLECTOR_UNIT.description": "[gold]盖伏[/gold]。\n[gold]启动[/gold]：[gold]消耗[/gold]此牌，[gold]特召[/gold]{SummonCount:diff()}只「电子障壁龙」。"
+    "V_YGO_CARD_ATTACK_REFLECTOR_UNIT.description": "[gold]盖伏[/gold]。\n[gold]启动[/gold]：[gold]消耗[/gold]此牌，[gold]特召[/gold]{SummonCount:diff()}只「电子障壁龙」。",
+    "V_YGO_CARD_CYBER_REVSYSTEM.title": "电子革命系统",
+    "V_YGO_CARD_CYBER_REVSYSTEM.description": "从[gold]弃牌堆[/gold]中选择1只[gold]「电子龙」[/gold]怪兽[gold]特召[/gold]。",
+    "V_YGO_CARD_CYBER_REVSYSTEM.selectionScreenPrompt": "请选择要特召的「电子龙」怪兽。"
 }
