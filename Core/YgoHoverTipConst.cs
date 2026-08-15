@@ -40,6 +40,9 @@ public static class YgoHoverTipConst {
     public static IHoverTip FusionSummon() {
         return Base("FUSION_SUMMON");
     }
+    public static IHoverTip ContactFusion() {
+        return Base("CONTACT_FUSION");
+    }
     public static IHoverTip XyzSummon() {
         return Base("XYZ_SUMMON");
     }
@@ -63,6 +66,10 @@ public static class YgoHoverTipConst {
 
     public static IHoverTip Enhance() {
         return Base("ENHANCE");
+    }
+
+    public static IHoverTip SetCard() {
+        return Base("SET_CARD");
     }
     
     //卡牌启动
