@@ -375,6 +375,22 @@ button:disabled {
     cursor: grabbing;
 }
 
+/* 重新裁剪弹窗 */
+.recrop-dialog {
+    width: min(860px, calc(100vw - 32px));
+}
+
+#recropCanvas {
+    display: block;
+    cursor: grab;
+    max-width: 100%;
+    height: auto;
+}
+
+#recropCanvas:active {
+    cursor: grabbing;
+}
+
 .crop-hint {
     color: #888;
     font-size: 0.85em;

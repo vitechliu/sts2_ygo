@@ -6,33 +6,43 @@ let currentCardData = null;
 let cardsState = {
     allCards: [],
     currentPage: 1,
-    pageSize: 12
+    pageSize: 12,
+    imageVersions: {}
 };
 let cardScriptState = {
     cardId: null,
     options: null
 };
-let cropState = {
-    canvas: null,
-    ctx: null,
-    image: null,
-    scale: 1,
-    offsetX: 0,
-    offsetY: 0,
-    isDragging: false,
-    lastX: 0,
-    lastY: 0,
-    cropWidth: 500,   // 裁剪框在canvas上的显示宽度
-    cropHeight: 380   // 裁剪框在canvas上的显示高度（1000x760的一半）
-};
+function createCropState() {
+    return {
+        canvas: null,
+        ctx: null,
+        image: null,
+        scale: 1,
+        offsetX: 0,
+        offsetY: 0,
+        isDragging: false,
+        lastX: 0,
+        lastY: 0,
+        cropWidth: 500,   // 裁剪框在canvas上的显示宽度
+        cropHeight: 380   // 裁剪框在canvas上的显示高度（1000x760的一半）
+    };
+}
+
+let cropState = createCropState();
+const recropState = createCropState();
+let recropCardId = null;
+let recropSourcePath = null;
 
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', () => {
     initTabs();
     initCardSearch();
     initConfig();
-    initCropCanvas();
+    initCropCanvas(cropState, 'cropCanvas');
+    initCropCanvas(recropState, 'recropCanvas');
     initCardScriptDialog();
+    initRecropDialog();
     loadCards();
 });
 
@@ -91,7 +101,7 @@ function initCardSearch() {
     });
 
     document.getElementById('genLocaleBtn').addEventListener('click', generateLocalizationEntry);
-    document.getElementById('resetCropBtn').addEventListener('click', resetCropView);
+    document.getElementById('resetCropBtn').addEventListener('click', () => resetCropView(cropState));
     document.getElementById('generateCardBtn').addEventListener('click', generateCard);
     document.getElementById('refreshBtn').addEventListener('click', loadCards);
     document.getElementById('generateLocaleBtn').addEventListener('click', generateFullLocalization);
@@ -341,7 +351,7 @@ function displayQueryResult(data) {
         generateBtn.disabled = false;
         
         // 加载图片到裁剪画布
-        loadImageToCrop(data.cardImage.path);
+        loadImageToCrop(cropState, data.cardImage.path);
     } else {
         cropContainer.classList.add('hidden');
         noCardImage.classList.remove('hidden');
@@ -418,32 +428,32 @@ async function generateLocalizationEntry() {
 
 // ===================== 卡图裁剪 =====================
 
-function initCropCanvas() {
-    const canvas = document.getElementById('cropCanvas');
+function initCropCanvas(state, canvasId) {
+    const canvas = document.getElementById(canvasId);
     const ctx = canvas.getContext('2d');
-    
+
     // 设置canvas尺寸
     canvas.width = 800;
     canvas.height = 600;
-    
-    cropState.canvas = canvas;
-    cropState.ctx = ctx;
-    
+
+    state.canvas = canvas;
+    state.ctx = ctx;
+
     // 滚轮缩放
-    canvas.addEventListener('wheel', handleCropWheel, { passive: false });
-    
+    canvas.addEventListener('wheel', (e) => handleCropWheel(state, e), { passive: false });
+
     // 拖拽
-    canvas.addEventListener('mousedown', handleCropMouseDown);
-    canvas.addEventListener('mousemove', handleCropMouseMove);
-    canvas.addEventListener('mouseup', handleCropMouseUp);
-    canvas.addEventListener('mouseleave', handleCropMouseUp);
+    canvas.addEventListener('mousedown', (e) => handleCropMouseDown(state, e));
+    canvas.addEventListener('mousemove', (e) => handleCropMouseMove(state, e));
+    canvas.addEventListener('mouseup', () => handleCropMouseUp(state));
+    canvas.addEventListener('mouseleave', () => handleCropMouseUp(state));
 }
 
-function loadImageToCrop(imagePath) {
+function loadImageToCrop(state, imagePath) {
     const img = new Image();
     img.onload = () => {
-        cropState.image = img;
-        resetCropView();
+        state.image = img;
+        resetCropView(state);
     };
     img.onerror = () => {
         showToast('卡图加载失败: ' + imagePath, 'error');
@@ -452,57 +462,57 @@ function loadImageToCrop(imagePath) {
     img.src = `${API_BASE}/cards/image-preview?path=${encodeURIComponent(imagePath)}`;
 }
 
-function resetCropView() {
-    if (!cropState.image) return;
-    
-    const img = cropState.image;
-    const canvas = cropState.canvas;
-    
+function resetCropView(state) {
+    if (!state.image) return;
+
+    const img = state.image;
+    const canvas = state.canvas;
+
     // 计算最小缩放：使图片刚好填满裁剪框，不留 gap
     const minScale = Math.max(
-        cropState.cropWidth / img.width,
-        cropState.cropHeight / img.height
+        state.cropWidth / img.width,
+        state.cropHeight / img.height
     );
-    
-    cropState.scale = minScale;
-    
+
+    state.scale = minScale;
+
     // 居中
-    cropState.offsetX = canvas.width / 2 - img.width * cropState.scale / 2;
-    cropState.offsetY = canvas.height / 2 - img.height * cropState.scale / 2;
-    
-    drawCropCanvas();
+    state.offsetX = canvas.width / 2 - img.width * state.scale / 2;
+    state.offsetY = canvas.height / 2 - img.height * state.scale / 2;
+
+    drawCropCanvas(state);
 }
 
-function drawCropCanvas() {
-    const { canvas, ctx, image, scale, offsetX, offsetY, cropWidth, cropHeight } = cropState;
-    
+function drawCropCanvas(state) {
+    const { canvas, ctx, image, scale, offsetX, offsetY, cropWidth, cropHeight } = state;
+
     if (!image) return;
-    
+
     // 清空
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     // 绘制图片
     ctx.save();
     ctx.setTransform(scale, 0, 0, scale, offsetX, offsetY);
     ctx.drawImage(image, 0, 0);
     ctx.restore();
-    
+
     // 绘制遮罩和裁剪框
     const cropX = canvas.width / 2 - cropWidth / 2;
     const cropY = canvas.height / 2 - cropHeight / 2;
-    
+
     // 半透明遮罩
     ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
     ctx.fillRect(0, 0, canvas.width, cropY);
     ctx.fillRect(0, cropY + cropHeight, canvas.width, canvas.height - cropY - cropHeight);
     ctx.fillRect(0, cropY, cropX, cropHeight);
     ctx.fillRect(cropX + cropWidth, cropY, canvas.width - cropX - cropWidth, cropHeight);
-    
+
     // 裁剪框边框
     ctx.strokeStyle = '#e94560';
     ctx.lineWidth = 3;
     ctx.strokeRect(cropX, cropY, cropWidth, cropHeight);
-    
+
     // 角标
     ctx.fillStyle = '#e94560';
     const cornerSize = 10;
@@ -518,24 +528,24 @@ function drawCropCanvas() {
     // 右下
     ctx.fillRect(cropX + cropWidth - cornerSize + 1, cropY + cropHeight - 2, cornerSize, 3);
     ctx.fillRect(cropX + cropWidth - 2, cropY + cropHeight - cornerSize + 1, 3, cornerSize);
-    
+
     // 尺寸提示
     ctx.fillStyle = '#fff';
     ctx.font = '12px sans-serif';
     ctx.fillText('1000 x 760', cropX + 5, cropY + 15);
 }
 
-function handleCropWheel(e) {
+function handleCropWheel(state, e) {
     e.preventDefault();
-    
-    const { canvas, scale, offsetX, offsetY, image } = cropState;
+
+    const { canvas, scale, offsetX, offsetY, image } = state;
     const rect = canvas.getBoundingClientRect();
     const mx = e.clientX - rect.left;
     const my = e.clientY - rect.top;
-    
+
     const delta = e.deltaY > 0 ? 0.9 : 1.1;
     const newScale = scale * delta;
-    
+
     // 限制缩放范围
     let finalScale = newScale;
     let finalOffsetX = mx * (1 - delta) + offsetX * delta;
@@ -543,8 +553,8 @@ function handleCropWheel(e) {
 
     if (image) {
         const minScale = Math.max(
-            cropState.cropWidth / image.width,
-            cropState.cropHeight / image.height
+            state.cropWidth / image.width,
+            state.cropHeight / image.height
         );
         if (newScale < minScale) {
             // 吸附到最小：刚好填满裁剪框
@@ -554,39 +564,67 @@ function handleCropWheel(e) {
         }
     }
 
-    cropState.offsetX = finalOffsetX;
-    cropState.offsetY = finalOffsetY;
-    cropState.scale = finalScale;
-    
-    drawCropCanvas();
+    state.offsetX = finalOffsetX;
+    state.offsetY = finalOffsetY;
+    state.scale = finalScale;
+
+    drawCropCanvas(state);
 }
 
-function handleCropMouseDown(e) {
-    cropState.isDragging = true;
-    cropState.lastX = e.clientX;
-    cropState.lastY = e.clientY;
-    cropState.canvas.style.cursor = 'grabbing';
+function handleCropMouseDown(state, e) {
+    state.isDragging = true;
+    state.lastX = e.clientX;
+    state.lastY = e.clientY;
+    state.canvas.style.cursor = 'grabbing';
 }
 
-function handleCropMouseMove(e) {
-    if (!cropState.isDragging) return;
-    
-    const dx = e.clientX - cropState.lastX;
-    const dy = e.clientY - cropState.lastY;
-    
-    cropState.offsetX += dx;
-    cropState.offsetY += dy;
-    cropState.lastX = e.clientX;
-    cropState.lastY = e.clientY;
-    
-    drawCropCanvas();
+function handleCropMouseMove(state, e) {
+    if (!state.isDragging) return;
+
+    const dx = e.clientX - state.lastX;
+    const dy = e.clientY - state.lastY;
+
+    state.offsetX += dx;
+    state.offsetY += dy;
+    state.lastX = e.clientX;
+    state.lastY = e.clientY;
+
+    drawCropCanvas(state);
 }
 
-function handleCropMouseUp() {
-    cropState.isDragging = false;
-    if (cropState.canvas) {
-        cropState.canvas.style.cursor = 'grab';
+function handleCropMouseUp(state) {
+    state.isDragging = false;
+    if (state.canvas) {
+        state.canvas.style.cursor = 'grab';
     }
+}
+
+// 根据当前视图计算原图上的裁剪参数
+function computeCropParams(state) {
+    if (!state.image) return null;
+
+    const { scale, offsetX, offsetY, cropWidth, cropHeight, image: img, canvas } = state;
+
+    // 裁剪框在canvas上的位置
+    const cropX = canvas.width / 2 - cropWidth / 2;
+    const cropY = canvas.height / 2 - cropHeight / 2;
+
+    // 计算原图上的裁剪坐标
+    // canvas坐标 = offsetX + 原图坐标 * scale
+    // 原图坐标 = (canvas坐标 - offsetX) / scale
+    const x = (cropX - offsetX) / scale;
+    const y = (cropY - offsetY) / scale;
+    const width = cropWidth / scale;
+    const height = cropHeight / scale;
+
+    return {
+        x: Math.max(0, x),
+        y: Math.max(0, y),
+        width: Math.min(width, img.width),
+        height: Math.min(height, img.height),
+        sourceWidth: img.width,
+        sourceHeight: img.height
+    };
 }
 
 // ===================== 生成卡牌 =====================
@@ -612,29 +650,7 @@ async function generateCard() {
         // 计算裁剪参数
         let cropParams = null;
         if (cropState.image && cardImage && cardImage.found) {
-            const { scale, offsetX, offsetY, cropWidth, cropHeight, image: img } = cropState;
-            
-            // 裁剪框在canvas上的位置
-            const canvas = cropState.canvas;
-            const cropX = canvas.width / 2 - cropWidth / 2;
-            const cropY = canvas.height / 2 - cropHeight / 2;
-            
-            // 计算原图上的裁剪坐标
-            // canvas坐标 = offsetX + 原图坐标 * scale
-            // 原图坐标 = (canvas坐标 - offsetX) / scale
-            const x = (cropX - offsetX) / scale;
-            const y = (cropY - offsetY) / scale;
-            const width = cropWidth / scale;
-            const height = cropHeight / scale;
-            
-            cropParams = {
-                x: Math.max(0, x),
-                y: Math.max(0, y),
-                width: Math.min(width, img.width),
-                height: Math.min(height, img.height),
-                sourceWidth: img.width,
-                sourceHeight: img.height
-            };
+            cropParams = computeCropParams(cropState);
         }
 
         const response = await fetch(`${API_BASE}/cards`, {
@@ -736,16 +752,19 @@ function renderCardsTable() {
     const start = (cardsState.currentPage - 1) * cardsState.pageSize;
     const pageCards = cards.slice(start, start + cardsState.pageSize);
 
-    tbody.innerHTML = pageCards.map(card => `
+    tbody.innerHTML = pageCards.map(card => {
+        const imageVersion = cardsState.imageVersions[card.card_id];
+        const thumbUrl = `/VYgo/images/cards/${card.card_id}.png${imageVersion ? `?v=${imageVersion}` : ''}`;
+        return `
         <tr>
             <td class="col-image">
                 <div class="card-thumb"
-                     style="background-image: url('/VYgo/images/cards/${card.card_id}.png'), url('https://cdn.233.momobako.com/ygopro/pics/${card.card_id}.jpg');"></div>
+                     style="background-image: url('${thumbUrl}'), url('https://cdn.233.momobako.com/ygopro/pics/${card.card_id}.jpg');"></div>
             </td>
             <td class="card-id">${card.card_id}</td>
             <td class="card-title" title="${escapeHtml(card.cn_name || card.name || '')}">${escapeHtml(card.cn_name || card.name || '-')}</td>
             <td>${renderArchetypesCell(card)}</td>
-            <td>${renderResourceCell(card, 'cardImage', '生成卡图', 'card-image')}</td>
+            <td>${renderCardImageCell(card)}</td>
             <td>${renderResourceCell(card, 'localization', '生成本地化', 'localization')}</td>
             <td>${renderResourceCell(card, 'cardData', '生成数据', 'data')}</td>
             <td>${renderResourceCell(card, 'portrait', '生成立绘', 'portrait', { monsterOnly: true })}</td>
@@ -758,7 +777,8 @@ function renderCardsTable() {
                 </div>
             </td>
         </tr>
-    `).join('');
+    `;
+    }).join('');
 
     pageInfo.textContent = `第 ${cardsState.currentPage} / ${totalPages} 页，共 ${cards.length} 张`;
     prevBtn.disabled = cardsState.currentPage === 1;
@@ -770,6 +790,13 @@ function renderCardScriptCell(card) {
         return '<span class="resource-status resource-ok">已存在</span>';
     }
     return `<button onclick="openCardScriptDialog(${card.card_id})" class="resource-btn">添加脚本</button>`;
+}
+
+function renderCardImageCell(card) {
+    if (card.resource_status?.cardImage) {
+        return `<button onclick="openRecropDialog(${card.card_id})" class="resource-btn">修改</button>`;
+    }
+    return `<button onclick="generateCardResource(${card.card_id}, 'card-image')" class="resource-btn">生成卡图</button>`;
 }
 
 function renderArchetypesCell(card) {
@@ -944,6 +971,76 @@ async function submitCardScript(event) {
     } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = '创建脚本';
+    }
+}
+
+function initRecropDialog() {
+    const dialog = document.getElementById('recropDialog');
+
+    document.getElementById('recropForm').addEventListener('submit', submitRecrop);
+    document.getElementById('resetRecropBtn').addEventListener('click', () => resetCropView(recropState));
+    document.getElementById('closeRecropDialogBtn').addEventListener('click', () => dialog.close());
+    document.getElementById('cancelRecropBtn').addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', event => {
+        if (event.target === dialog) dialog.close();
+    });
+}
+
+async function openRecropDialog(cardId) {
+    const card = cardsState.allCards.find(item => Number(item.card_id) === Number(cardId));
+    if (!card) {
+        showToast('未找到卡牌数据', 'error');
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE}/cards/${cardId}/card-image-source`);
+        const result = await response.json();
+        if (!result.success) throw new Error(result.error);
+
+        recropCardId = cardId;
+        recropSourcePath = result.data.path;
+        document.getElementById('recropCardInfo').textContent = `${card.cn_name || card.name || '-'} · ${card.en_name || '-'} · ${card.card_id}`;
+        document.getElementById('recropDialog').showModal();
+        loadImageToCrop(recropState, recropSourcePath);
+    } catch (error) {
+        showToast('加载外部卡图失败: ' + error.message, 'error');
+    }
+}
+
+async function submitRecrop(event) {
+    event.preventDefault();
+    if (!recropState.image || !recropSourcePath) {
+        showToast('卡图尚未加载完成，请稍候', 'warning');
+        return;
+    }
+
+    const saveBtn = document.getElementById('saveRecropBtn');
+
+    try {
+        saveBtn.disabled = true;
+        saveBtn.textContent = '保存中...';
+
+        const response = await fetch(`${API_BASE}/cards/${recropCardId}/card-image`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                cropParams: computeCropParams(recropState),
+                cardImagePath: recropSourcePath
+            })
+        });
+        const result = await response.json();
+        if (!result.success) throw new Error(result.error);
+
+        document.getElementById('recropDialog').close();
+        showToast('卡图已更新');
+        cardsState.imageVersions[recropCardId] = Date.now();
+        loadCards();
+    } catch (error) {
+        showToast('卡图保存失败: ' + error.message, 'error');
+    } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = '保存卡图';
     }
 }
 
