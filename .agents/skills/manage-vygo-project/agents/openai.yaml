@@ -1,0 +1,4 @@
+interface:
+  display_name: "统筹 VYgo 项目"
+  short_description: "以核心腾讯文档统筹项目任务进度并驱动卡牌批量设计开发"
+  default_prompt: "使用 $manage-vygo-project 读取核心文档，统筹任务进度并开发指定人物卡池中的待开发卡牌。"
