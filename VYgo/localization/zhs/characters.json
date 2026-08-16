@@ -28,5 +28,20 @@
   "V_YGO_CHARACTER_ZANE_TRUESDALE_CHARACTER.pronounSubject": "他",
   "V_YGO_CHARACTER_ZANE_TRUESDALE_CHARACTER.title": "丸藤亮",
   "V_YGO_CHARACTER_ZANE_TRUESDALE_CHARACTER.titleObject": "丸藤亮",
-  "V_YGO_CHARACTER_ZANE_TRUESDALE_CHARACTER.unlockText": "用[pink]{Prerequisite}[/pink]进行一局游戏来解锁丸藤亮。"
+  "V_YGO_CHARACTER_ZANE_TRUESDALE_CHARACTER.unlockText": "用[pink]{Prerequisite}[/pink]进行一局游戏来解锁丸藤亮。",
+  "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.aromaPrinciple": "[sine][blue]我有三个理由。[/blue][/sine]",
+  "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.banter.alive.endTurnPing": "回合结束。",
+  "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.banter.dead.endTurnPing": "……",
+  "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.cardsModifierDescription": "Playmaker的卡牌现在会出现在奖励和商店中。",
+  "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.cardsModifierTitle": "Playmaker卡牌",
+  "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.description": "潜入 LINK VRAINS 的神秘决斗者。\n以冷静的判断驾驭电子界族与连接召唤，向高塔顶端发起挑战。",
+  "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.eventDeathPrevention": "我的决斗……还没有结束。",
+  "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.goldMonologue": "资源会拓展胜利的路径。",
+  "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.possessiveAdjective": "他的",
+  "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.pronounObject": "他",
+  "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.pronounPossessive": "他的",
+  "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.pronounSubject": "他",
+  "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.title": "Playmaker",
+  "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.titleObject": "Playmaker",
+  "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.unlockText": "用[pink]{Prerequisite}[/pink]进行一局游戏来解锁Playmaker。"
 }
