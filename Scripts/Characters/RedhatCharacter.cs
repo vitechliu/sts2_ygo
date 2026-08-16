@@ -106,6 +106,5 @@ public class RedhatCharacter : BaseYgoCharacter<RedhatCardPool, RedhatRelicPool,
 	protected override IEnumerable<Type> StartingRelicTypes => [
 #pragma warning restore CS0672 // Member overrides obsolete member
 		typeof(BagOfPreparation),
-		typeof(BagOfPreparation),
 	];
 }
