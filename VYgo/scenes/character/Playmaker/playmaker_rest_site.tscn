@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://VYgo/images/playmaker/idle.png" id="1_idle"]
+
+[node name="PlaymakerRestSite" type="Node2D"]
+
+[node name="Visuals" type="Sprite2D" parent="."]
+position = Vector2(0, -225)
+scale = Vector2(0.29, 0.29)
+texture = ExtResource("1_idle")
+
+[node name="ControlRoot" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="SelectionReticle" type="Control" parent="ControlRoot"]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_left = -150.0
+offset_top = -470.0
+offset_right = 150.0
+offset_bottom = 18.0
+
+[node name="Hitbox" type="Control" parent="ControlRoot"]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_left = -140.0
+offset_top = -455.0
+offset_right = 140.0
+offset_bottom = 5.0
+
+[node name="ThoughtBubbleRight" type="Control" parent="ControlRoot"]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_left = 118.0
+offset_top = -350.0
+offset_right = 118.0
+offset_bottom = -350.0
+
+[node name="ThoughtBubbleLeft" type="Control" parent="ControlRoot"]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_left = -110.0
+offset_top = -330.0
+offset_right = -110.0
+offset_bottom = -330.0
