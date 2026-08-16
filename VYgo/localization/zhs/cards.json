@@ -164,5 +164,7 @@
     "V_YGO_CARD_ATTACK_REFLECTOR_UNIT.description": "[gold]盖伏[/gold]。\n[gold]启动[/gold]：[gold]消耗[/gold]此牌，[gold]特召[/gold]{SummonCount:diff()}只「电子障壁龙」。",
     "V_YGO_CARD_CYBER_REVSYSTEM.title": "电子革命系统",
     "V_YGO_CARD_CYBER_REVSYSTEM.description": "从[gold]弃牌堆[/gold]中选择1只[gold]「电子龙」[/gold]怪兽[gold]特召[/gold]。",
-    "V_YGO_CARD_CYBER_REVSYSTEM.selectionScreenPrompt": "请选择要特召的「电子龙」怪兽。"
+    "V_YGO_CARD_CYBER_REVSYSTEM.selectionScreenPrompt": "请选择要特召的「电子龙」怪兽。",
+    "V_YGO_CARD_LINKSLAYER.title": "猞猁连接杀手",
+    "V_YGO_CARD_LINKSLAYER.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n场上没有怪兽时可以[gold]特召[/gold]。\n[gold]启动[/gold]：丢弃2张手牌，对目标造成{Damage:diff()}点伤害2次。"
 }
