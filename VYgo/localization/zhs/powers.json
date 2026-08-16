@@ -65,5 +65,7 @@
   "V_YGO_POWER_BORNFROM_DRACONIS_POWER.smartDescription": "从下个回合起可[gold]启动[/gold]：选择手牌中的{SummonCount}只机械族·光属性怪兽[gold]特召[/gold]。将弃牌堆中所有机械族·光属性怪兽[gold]消耗[/gold]；每消耗1张，使特召的怪兽[gold]强化[/gold]{BoostAttack}/{BoostLife}。",
   "V_YGO_POWER_BORNFROM_DRACONIS_POWER.selectionScreenPrompt": "请选择要特召的机械族·光属性怪兽。",
   "HEOSVAROGTHE_MECHANICAL_DAWN_ACTION.title": "黎明无效",
-  "HEOSVAROGTHE_MECHANICAL_DAWN_ACTION.description": "[gold]启动[/gold]：获得{Amount}层[gold]无效[/gold]，对所有敌人施加{Amount}层[gold]虚弱[/gold]。每回合限1次。"
+  "HEOSVAROGTHE_MECHANICAL_DAWN_ACTION.description": "[gold]启动[/gold]：获得{Amount}层[gold]无效[/gold]，对所有敌人施加{Amount}层[gold]虚弱[/gold]。每回合限1次。",
+  "LINKSLAYER_ACTION.title": "双重斩击",
+  "LINKSLAYER_ACTION.description": "[gold]启动[/gold]：丢弃2张手牌，对目标造成{Amount}点伤害2次。每回合限1次。"
 }
