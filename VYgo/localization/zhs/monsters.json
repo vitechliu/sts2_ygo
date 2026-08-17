@@ -63,5 +63,14 @@
     "CYBER_NETWORK_MINION.name": "电子网络",
     "ATTACK_REFLECTOR_UNIT_MINION.name": "攻击反射装置",
     "CYBER_REVSYSTEM_MINION.name": "电子革命系统",
-    "LINKSLAYER_MINION.name": "猞猁连接杀手"
+    "LINKSLAYER_MINION.name": "猞猁连接杀手",
+    "BITRON_MINION.name": "比特机灵",
+    "DIGITRON_MINION.name": "数字机灵",
+    "BACKUP_SECRETARY_MINION.name": "备份秘书",
+    "BALANCER_LORD_MINION.name": "均衡负载王",
+    "DUAL_ASSEMBWURM_MINION.name": "双汇编亚龙",
+    "CYBERSE_WIZARD_MINION.name": "电子界男巫",
+    "STACK_REVIVER_MINION.name": "堆栈修复员",
+    "BOOT_STAGGERED_MINION.name": "引导交错鹿",
+    "CYNET_CROSSWIPE_MINION.name": "电脑网交叉清除"
 }

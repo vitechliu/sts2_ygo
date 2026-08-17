@@ -53,6 +53,7 @@ public abstract class BaseExtraLinkCard(
                 (_, _) => SummonUtil.GetFieldMonsterMaterials(owner)
             ),
             PlayAnimation: ExtraDeckSummonAnimations.PlayLinkSummonAnimation,
+            AfterAutoPlay: SummonUtil.TriggerLinkMaterialEffects,
             FinalWaitSeconds: 0.8f
         );
     }
