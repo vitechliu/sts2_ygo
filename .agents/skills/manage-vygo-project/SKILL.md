@@ -70,7 +70,7 @@ Use the `任务进度` sheet for project-wide planning and status reporting.
 6. Let `$design-cards` complete research, implementation, paired minion/Power work, localization, JSON validation, and build verification.
 7. After success, re-read the workbook row, then:
    - fill `卡片id` only when it is blank and the importer or repository resolved it unambiguously;
-   - set `状态` to `已完成` only when implementation and required validation succeeded;
+   - set `状态` to `待测试` only when implementation and required validation succeeded;
    - set `AI自动化进度/备注` to a concise completion note including the build result and any remaining in-game check.
 8. Read the updated cells back and verify them before moving to the next card.
 

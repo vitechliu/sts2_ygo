@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://dahcqljihlqts"]
+[gd_scene load_steps=3 format=3 uid="uid://co0c5oknw3oiw"]
 
 [ext_resource type="Script" uid="uid://h0d6hoyg0e81" path="res://Core/NMonsterVisuals.cs" id="1_1rdtl"]
-[ext_resource type="Texture2D" uid="uid://ccerbh7gx32ax" path="res://VYgo/images/monster/63528891.png" id="1_8kv8s"]
+[ext_resource type="Texture2D" uid="uid://c6qo67r4i4iy7" path="res://VYgo/images/monster/70950699.png" id="1_8kv8s"]
 
 [node name="Monster" type="Node2D"]
 script = ExtResource("1_1rdtl")
@@ -11,7 +11,7 @@ unique_name_in_owner = true
 position = Vector2(7, -138)
 
 [node name="Image" type="Sprite2D" parent="Visuals"]
-position = Vector2(-7, 51)
+position = Vector2(-5, 84)
 scale = Vector2(0.6397059, 0.6397059)
 texture = ExtResource("1_8kv8s")
 
@@ -19,15 +19,15 @@ texture = ExtResource("1_8kv8s")
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
-offset_left = -82.0
-offset_top = -149.0
-offset_right = 76.0
-offset_bottom = 7.0
+offset_left = -38.0
+offset_top = -102.0
+offset_right = 35.0
+offset_bottom = -4.0
 
 [node name="CenterPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -76)
+position = Vector2(0, -56)
 
 [node name="IntentPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -173)
+position = Vector2(1, -111)

@@ -3,6 +3,8 @@
     "V_YGO_CARD_DEFENSE_BASIC.description": "占位符",
     "V_YGO_CARD_ATTACK_BASIC.title": "占位符",
     "V_YGO_CARD_ATTACK_BASIC.description": "占位符",
+    "V_YGO_CARD_TEST_YGO_CARD.title": "测试1",
+    "V_YGO_CARD_TEST_YGO_CARD.description": "测试1",
     "V_YGO_CARD_CYBER_DRAGON.title": "电子龙",
     "V_YGO_CARD_CYBER_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n如果你没有控制任何随从，可以[gold]特召[/gold]",
     "V_YGO_CARD_PROTO_CYBER_DRAGON.title": "原始电子龙",
@@ -185,5 +187,7 @@
     "V_YGO_CARD_BOOT_STAGGERED.title": "引导交错鹿",
     "V_YGO_CARD_BOOT_STAGGERED.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n当你[gold]通召[/gold]怪兽后，手牌的这张牌[gold]特召[/gold]。",
     "V_YGO_CARD_CYNET_CROSSWIPE.title": "电脑网交叉清除",
-    "V_YGO_CARD_CYNET_CROSSWIPE.description": "场上有电子界族怪兽时才可以发动。\n造成{Damage:diff()}点伤害。"
+    "V_YGO_CARD_CYNET_CROSSWIPE.description": "场上有电子界族怪兽时才可以发动。\n造成{Damage:diff()}点伤害。",
+    "V_YGO_CARD_BOOT_STAGGERED_TOKEN.title": "引导交错鹿衍生物",
+    "V_YGO_CARD_BOOT_STAGGERED_TOKEN.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])"
 }

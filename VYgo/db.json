@@ -1,5 +1,20 @@
 [
     {
+      "id": 75,
+      "card_id": 70950699,
+      "name": "",
+      "cn_name": "引导交错鹿衍生物",
+      "en_name": "BootStaggeredToken",
+      "types": "[怪兽|效果] 电子界/地\n[★1] 0/0",
+      "description": "",
+      "atk": 0,
+      "def": 0,
+      "level": 1,
+      "attribute": "地",
+      "race": "电子界族",
+      "archetypes": []
+    },
+    {
         "id": 74,
         "card_id": 77449773,
         "name": "",
