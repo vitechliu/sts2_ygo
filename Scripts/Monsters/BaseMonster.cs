@@ -144,6 +144,14 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
         Player owner
         ) {}
 
+    //作为连接素材送墓后触发（连接召唤成功时，由 SummonUtil 统一调用）
+    public virtual async Task OnUsedAsLinkMaterial(
+        PlayerChoiceContext choiceContext,
+        Player owner,
+        IReadOnlyList<SummonMaterial> materials) {
+        await Task.CompletedTask;
+    }
+
     public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength) {
         //怪兽死亡后，对应的怪兽卡置入弃牌堆
         if (creature == Creature) {

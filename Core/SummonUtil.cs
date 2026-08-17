@@ -168,8 +168,22 @@ public static class SummonUtil {
                 request.GetAvailableMaterials
             ),
             PlayAnimation: ExtraDeckSummonAnimations.PlayLinkSummonAnimation,
+            AfterAutoPlay: TriggerLinkMaterialEffects,
             FinalWaitSeconds: 0.8f
         ));
+    }
+
+    internal static async Task<bool> TriggerLinkMaterialEffects(SummonPostPlayContext context) {
+        foreach (SummonMaterial material in context.Materials) {
+            if (material.Creature?.Monster is BaseMonster monster) {
+                await monster.OnUsedAsLinkMaterial(
+                    context.ChoiceContext,
+                    context.Owner,
+                    context.Materials
+                );
+            }
+        }
+        return true;
     }
 
     public static Task<ExtraDeckSummonResult> ExecuteXyzSummon(XyzSummonRequest request) {
