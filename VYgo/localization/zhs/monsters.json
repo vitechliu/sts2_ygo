@@ -73,5 +73,7 @@
     "STACK_REVIVER_MINION.name": "堆栈修复员",
     "BOOT_STAGGERED_MINION.name": "引导交错鹿",
     "CYNET_CROSSWIPE_MINION.name": "电脑网交叉清除",
-    "BOOT_STAGGERED_TOKEN_MINION.name": "引导交错鹿衍生物"
+    "BOOT_STAGGERED_TOKEN_MINION.name": "引导交错鹿衍生物",
+    "CLOCK_WYVERN_MINION.name": "时钟翼龙",
+    "CLOCK_WYVERN_TOKEN_MINION.name": "时钟衍生物"
 }

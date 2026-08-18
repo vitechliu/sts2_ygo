@@ -23,7 +23,7 @@ public class BootStaggered() : BaseMonsterCard(2, CardRarity.Uncommon, TargetTyp
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         BaseSummonHoverTip,
-        YgoHoverTipConst.SummonNormal(),
+        HoverTipFactory.FromCard<BootStaggeredToken>(),
         YgoHoverTipConst.SpecialSummon(),
     ];
 
