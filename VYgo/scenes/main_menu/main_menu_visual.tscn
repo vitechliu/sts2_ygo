@@ -1,6 +1,35 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=7 format=3 uid="uid://8k3i3532hqrp"]
 
-[ext_resource type="Texture2D" path="res://VYgo/ui/images/ShopBGBase02.png" id="1_background"]
+[ext_resource type="Texture2D" uid="uid://dsh2j4gcfyx7l" path="res://VYgo/ui/images/ShopBGBase02.png" id="1_background"]
+[ext_resource type="Texture2D" uid="uid://bi7qoerdyr4bf" path="res://VYgo/ui/images/bg_particle.png" id="2_y6t2j"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_trr8m"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_y6t2j"]
+_data = [Vector2(0.009881422, 1), 0.0, 0.0, 0, 0, Vector2(0.7252964, 1), 0.021146763, -3.6950877, 0, 0, Vector2(1, 0.022066236), -7.5874286, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_trr8m"]
+curve = SubResource("Curve_y6t2j")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bj24l"]
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(1920, 1, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 40.0
+initial_velocity_max = 108.619995
+gravity = Vector3(0, 0, 0)
+damping_min = 2.5870001
+damping_max = 17.415
+alpha_curve = SubResource("CurveTexture_trr8m")
+anim_offset_max = 1.0
 
 [node name="VYgoMainMenuVisual" type="Control"]
 layout_mode = 3
@@ -20,9 +49,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+texture = ExtResource("1_background")
 expand_mode = 1
 stretch_mode = 6
-texture = ExtResource("1_background")
 
 [node name="MonsterHost" type="Control" parent="."]
 unique_name_in_owner = true
@@ -33,3 +62,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="Particles" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_trr8m")
+position = Vector2(582, 660)
+amount = 70
+texture = ExtResource("2_y6t2j")
+lifetime = 10.0
+preprocess = 2.0
+randomness = 0.5
+process_material = SubResource("ParticleProcessMaterial_bj24l")
