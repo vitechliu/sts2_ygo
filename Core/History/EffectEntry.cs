@@ -21,8 +21,10 @@ public sealed class EffectEntry(
 
     public int CardId { get; } = cardId;
 
+    public string Sign { get; } = sign;
+
     public override string Description =>
-        $"{Player.Character.Id.Entry} use {CardId}'s effect: {sign}";
+        $"{Player.Character.Id.Entry} use {CardId}'s effect: {Sign}";
 }
 
 public static class EffectHistory {

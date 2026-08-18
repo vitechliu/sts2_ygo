@@ -75,5 +75,22 @@
     "CYNET_CROSSWIPE_MINION.name": "电脑网交叉清除",
     "BOOT_STAGGERED_TOKEN_MINION.name": "引导交错鹿衍生物",
     "CLOCK_WYVERN_MINION.name": "时钟翼龙",
-    "CLOCK_WYVERN_TOKEN_MINION.name": "时钟衍生物"
+    "CLOCK_WYVERN_TOKEN_MINION.name": "时钟衍生物",
+    "LADY_DEBUG_MINION.name": "调试瓢虫女郎",
+    "DRACONNET_MINION.name": "网络小龙",
+    "LINK_SPIDER_MINION.name": "连接蜘蛛",
+    "CODE_TALKER_MINION.name": "码语者",
+    "DECODE_TALKER_MINION.name": "解码语者",
+    "RAM_CLOUDER_MINION.name": "RAM云雄羊",
+    "LATENCY_MINION.name": "延迟天使",
+    "CAPACITOR_STALKER_MINION.name": "电容跟踪杀人蝎",
+    "INTERRUPT_RESISTOR_MINION.name": "中断反抗军",
+    "LOCKOUT_GARDNA_MINION.name": "封锁守卫者",
+    "FLICK_CLOWN_MINION.name": "滑动触控王冠人",
+    "LINK_INFRA_FLIER_MINION.name": "连接设施飞行员",
+    "FLAME_BUFFERLO_MINION.name": "帧缓存火牛",
+    "CATCHE_EVE_L2_MINION.name": "缓存猫娃L2",
+    "CYBERSE_WHITE_HAT_MINION.name": "电子界白帽客",
+    "DOTSCAPER_MINION.name": "点阵图跳离士",
+    "ROM_CLOUDIA_MINION.name": "ROM云雌羊"
 }

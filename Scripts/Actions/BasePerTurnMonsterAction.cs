@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using VYgo.Core;
 using VYgo.RitsuAdapters;
+using VYgo.Scripts.Powers;
 
 namespace VYgo.Scripts.Actions;
 
@@ -36,7 +37,11 @@ public abstract class BasePerTurnMonsterAction : ModActionTemplate {
 
     public override bool CanAct(ICombatState combatState) {
         Creature owner = Owner;
-        return RemainingUses > 0 && Amount > 0M && owner.IsAlive && owner.CombatState == combatState;
+        return RemainingUses > 0
+            && Amount > 0M
+            && owner.IsAlive
+            && owner.CombatState == combatState
+            && !owner.HasPower<MonsterActionLockedThisTurnPower>();
     }
 
     public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
