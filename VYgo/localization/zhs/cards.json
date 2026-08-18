@@ -189,5 +189,9 @@
     "V_YGO_CARD_CYNET_CROSSWIPE.title": "电脑网交叉清除",
     "V_YGO_CARD_CYNET_CROSSWIPE.description": "场上有电子界族怪兽时才可以发动。\n造成{Damage:diff()}点伤害。",
     "V_YGO_CARD_BOOT_STAGGERED_TOKEN.title": "引导交错鹿衍生物",
-    "V_YGO_CARD_BOOT_STAGGERED_TOKEN.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])"
+    "V_YGO_CARD_BOOT_STAGGERED_TOKEN.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])",
+    "V_YGO_CARD_CLOCK_WYVERN.title": "时钟翼龙",
+    "V_YGO_CARD_CLOCK_WYVERN.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]：[gold]特召[/gold]1只[gold]时钟衍生物[/gold]。{IfUpgraded:show:|\n这张卡的攻击力变成一半（向下取整）。}",
+    "V_YGO_CARD_CLOCK_WYVERN_TOKEN.title": "时钟衍生物",
+    "V_YGO_CARD_CLOCK_WYVERN_TOKEN.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])"
 }

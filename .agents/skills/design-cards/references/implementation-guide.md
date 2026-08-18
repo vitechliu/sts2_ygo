@@ -11,6 +11,7 @@
 - [Commands and patterns to verify](#commands-and-patterns-to-verify)
 - [DynamicVars and upgrades](#dynamicvars-and-upgrades)
 - [Registration, IDs, and localization](#registration-ids-and-localization)
+- [Token monsters summoned by a source card](#token-monsters-summoned-by-a-source-card)
 - [Validation checklist](#validation-checklist)
 
 ## Project map
@@ -23,6 +24,7 @@
 | Card localization | `VYgo/localization/zhs/cards.json` |
 | Monster localization | `VYgo/localization/zhs/monsters.json` |
 | YGO data | `VYgo/db.json`, loaded through `Entry.CoreCardCache` |
+| Web card database/import | `Web/cards.db`, `Web/scripts/import-card.js` |
 | Card art | `res://VYgo/images/cards/<CardId>.png` |
 | Monster art/scene | `res://VYgo/images/monster/<CardId>.png`, `res://VYgo/scenes/monsters/<CardId>.tscn` |
 | Vanilla localization | `${STS2_VANILLA_ROOT}/localization/zhs/cards.json`, `relics.json` |
@@ -189,12 +191,61 @@ When an upgrade changes rules instead of a number, keep the branch explicit and 
 - Use `.selectionScreenPrompt` only when code reads `SelectionScreenPrompt`.
 - Include required hover tips for keywords or custom mechanics, but avoid duplicating automatically supplied tips.
 
+## Token monsters summoned by a source card
+
+Apply this complete branch whenever a source card effect Special Summons a named Token. Treat the source card, Token card, Token minion, data, resources, localization, and trigger as one deliverable. Use `Scripts/Cards/Category/Playmaker/BootStaggeredToken.cs` and `Scripts/Actions/BootStaggeredAttackAction.cs` as the canonical project example.
+
+### Resolve identity and ownership
+
+1. Read the source card from its C# model and `VYgo/db.json` entry.
+2. Derive the Token ID exactly as `SourceCardId + 1`; for example, `70950698` produces `70950699`. Search C#, `Web/cards.db`, `VYgo/db.json`, and resource filenames to prove that the ID is unused before creating anything. Do not choose a fallback ID when it collides; report the conflict.
+3. Name the C# class and `en_name` `<SourceClassName>Token`, such as `BootStaggeredToken`. Use the source card's Chinese name plus `衍生物` for the Token title unless the user explicitly supplies another title.
+4. Place the Token card beside the source card with the same category folder, namespace, and `[RegisterCard(typeof(<SourcePool>))]`. Do not add a starter-card registration. Copy the source card's archetypes to the Token data.
+
+### Synthesize data without ygocdb
+
+The derived Token ID is not a real ygocdb card record. Do not require `/api/cards/query/<TokenId>` to return `apiData`, and do not guess its metadata from the source monster's own stats.
+
+1. Read the Token clause in the source card's `VYgo/db.json` `description`. Parse the named parenthetical specification, such as `（电子界族·地·1星·攻/守0）`, for race, attribute, level, and attack/defense when stated. If race, attribute, or level is ambiguous or absent, ask for the missing value instead of inventing it.
+2. Create a manual `Web/cards.db` row for the Token with the derived `card_id`, synthesized names, `types`, `description`, `atk`, `def`, `level`, `attribute`, and `race`. Keep `raw_data` empty unless a project tool deliberately records the source-card payload as provenance; never present it as Token API data.
+3. Create or update the matching `VYgo/db.json` entry. Use the same synthesized values and copy the source entry's `archetypes`. A typical type string is `[怪兽|效果] <种族>/<属性>\n[★<星级>] <攻>/<守>`.
+4. Do not copy the source monster's race, attribute, level, attack, or defense when the Token clause says something different. Runtime VYgo `BaseAttackVar` and `BaseLifeVar` remain gameplay values and must follow the requested card design rather than blindly mirroring YGO attack/defense.
+
+### Import resources and scaffold files
+
+Reuse the local, ID-based portions of `Web/scripts/import-card.js`; only the ygocdb metadata lookup is skipped.
+
+1. Search configured external card-image and portrait directories for files named with the derived Token ID.
+2. Process the card image with the normal centered cover crop into `VYgo/images/cards/<TokenId>.png`, and copy/convert the portrait into `VYgo/images/monster/<TokenId>.png`.
+3. After the manual `Web/cards.db` row exists, use the normal Web generators for localization, `VYgo/db.json` export, monster scene, monster script, and card script. Pass the source card's pool/folder to card-script generation.
+4. If either external image is missing, report the exact missing asset instead of substituting the source card's art. Do not hand-create Godot `.uid` or `.import` files.
+
+The completed Token must include:
+
+- `Scripts/Cards/Category/<SourceCategory>/<SourceClassName>Token.cs`
+- `Scripts/Monsters/YGO/<SourceClassName>TokenMinion.cs`
+- `VYgo/images/cards/<TokenId>.png`
+- `VYgo/images/monster/<TokenId>.png`
+- `VYgo/scenes/monsters/<TokenId>.tscn`
+- card and monster localization entries
+- consistent records in `Web/cards.db` and `VYgo/db.json`
+
+### Implement the summon trigger
+
+- Start the Token card from `BaseMonsterCard(0, CardRarity.Token, TargetType.None)` unless a verified compatible base is required. Keep its `CardId`, paired minion `CardId`, assets, scene, and localization identity aligned.
+- Put attack/death/turn or other summoned-monster triggers in the source card's paired minion or visible Action, not in a card callback that cannot observe the event reliably.
+- Before creating the Token, verify ownership, combat state, trigger conditions, and `MinionUtil.MaxMinionCount`.
+- Follow the current compiling generated-card sequence: create the Token for the source owner with `CombatState.CreateCard<TToken>`, add it to combat with `CardPileCmd.AddGeneratedCardToCombat`, then `CardCmd.AutoPlay` it using the current `PlayerChoiceContext`.
+- Add only the hover tips needed to expose the source/Token relationship. Preserve the Token monster's normal summon flow and do not place it in the ordinary starting or draw deck.
+
 ## Validation checklist
 
 - Target path, namespace, class name, and localization prefix agree.
 - Constructor cost/type/rarity/target agree with actual behavior.
 - Registration and starter counts remain intended.
 - `CardId`, card art, paired minion, monster art, and scene agree.
+- A source-card Token uses `SourceCardId + 1`, `<SourceClassName>Token`, the source pool/category/archetypes, manually synthesized metadata, and complete Token resources.
+- A Token's race/attribute/level come from the source entry's Token clause, not from a failed ygocdb lookup or the source monster's own metadata.
 - `CanonicalVars`, command values, descriptions, and upgrades agree.
 - Global callbacks guard owner/combat and reset state correctly.
 - Mutated collections are snapshotted before iteration.

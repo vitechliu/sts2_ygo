@@ -1,6 +1,6 @@
 ---
 name: design-cards
-description: Design, implement, and verify VYgo card scripts from a target C# path and an effect specification. Use when Codex needs to add or modify a card under Scripts/Cards, research analogous effects in this mod or vanilla STS2 Chinese card/relic localization, map vanilla localization model IDs to read-only source, choose exact commands and lifecycle hooks, implement DynamicVars and upgrades, update card/minion localization or paired monster code, and build-check the result.
+description: Design, implement, and verify VYgo card scripts from a target C# path and an effect specification. Use when Codex needs to add or modify a card under Scripts/Cards, create a Token monster summoned by its source card, research analogous effects in this mod or vanilla STS2 Chinese card/relic localization, map vanilla localization model IDs to read-only source, choose exact commands and lifecycle hooks, implement DynamicVars and upgrades, update card/minion localization or paired monster code, and build-check the result.
 ---
 
 # Design Cards
@@ -13,8 +13,9 @@ Turn a target card path and effect description into a working, localized VYgo im
 2. Normalize the supplied path relative to the repository and inspect the file when it exists. Preserve its class name, `CardId`, base class, cost, type, rarity, target, pool registrations, starter registrations, stats, and art behavior unless the user asks to change them.
 3. Map Chinese rarity labels exactly: `基础` → `CardRarity.Basic`, `普通` → `CardRarity.Common`, `罕见` → `CardRarity.Uncommon`, and `稀有` → `CardRarity.Rare`. Treat `罕见` and `稀有` as distinct; never translate `罕见` as `Rare`.
 4. Translate the effect into an explicit contract: trigger, timing, target, amount, duration, limit, zone, randomness or selection rule, upgrade delta, and whether the action mutates a collection.
-5. Derive omitted facts from the target file, paired monster, localization, and neighboring cards when there is one clear answer. State material assumptions. Ask one concise question only when different answers would produce meaningfully different gameplay and the repository cannot resolve the choice.
-6. For a missing target file, search the intended category, `VYgo/db.json`, pools, and localization before deciding metadata. Do not invent a YGO `CardId`, registration pool, starter count, or monster stats when they cannot be discovered.
+5. When the effect Special Summons a named Token, treat the source card and Token as one implementation unit and follow [Token monsters summoned by a source card](references/implementation-guide.md#token-monsters-summoned-by-a-source-card).
+6. Derive omitted facts from the target file, paired monster, localization, and neighboring cards when there is one clear answer. State material assumptions. Ask one concise question only when different answers would produce meaningfully different gameplay and the repository cannot resolve the choice.
+7. For a missing target file, search the intended category, `VYgo/db.json`, pools, and localization before deciding metadata. Do not invent a YGO `CardId`, registration pool, starter count, or monster stats when they cannot be discovered.
 
 ## Research before coding
 
@@ -49,6 +50,15 @@ Turn a target card path and effect description into a working, localized VYgo im
 6. Add only hover tips required by mechanics in the description. Preserve the base summon hover tip for monster cards.
 7. If a new monster/minion pair is introduced, keep the shared `CardId`, namespace, cache discovery, scene/image conventions, and localization identity aligned.
 
+## Implement a source-card Token
+
+1. Set `TokenCardId = SourceCardId + 1`, verify that the derived ID is unused, and never substitute another ID. Use `<SourceClassName>Token` for the Token class and English name.
+2. Put the Token in the source card's category, namespace, and registered card pool. Use a zero-cost `BaseMonsterCard` with `CardRarity.Token` unless the existing requested design explicitly requires a narrower compatible base. Do not add it to a starter loadout.
+3. Do not query ygocdb for the Token's card information. Read the source card entry in `VYgo/db.json`, parse the named Token clause in its `description`, and manually populate the Token's race, attribute, level, and stated attack/defense. Copy the source card's pool and archetypes, not its monster metadata.
+4. Manually add the synthesized Token record to `Web/cards.db` and `VYgo/db.json`. Keep its ID, `<SourceClassName>Token` English name, source-card Chinese name plus `衍生物`, monster type line, and parsed fields consistent across both stores.
+5. Reuse the local image and portrait lookup/processing steps from `Web/scripts/import-card.js`, but search by the derived Token ID without requiring `apiData`. Generate or update `VYgo/images/cards/<TokenCardId>.png`, `VYgo/images/monster/<TokenCardId>.png`, the monster scene, Token card class, paired minion class, and both localization entries.
+6. Implement the source trigger at its correct lifecycle site. Create the Token as a generated combat card for the source owner, add it to combat, and auto-play it through the current `PlayerChoiceContext`; enforce the minion cap and other trigger guards before creating it. Use `BootStaggeredToken`, `BootStaggeredAttackAction`, and their paired minions as the canonical project pattern.
+
 ## Update localization
 
 1. Edit `VYgo/localization/zhs/cards.json` as UTF-8. Derive the prefix from the class name as uppercase snake case with `V_YGO_CARD_`; for example, `CyberDragon` becomes `V_YGO_CARD_CYBER_DRAGON`.
@@ -59,7 +69,7 @@ Turn a target card path and effect description into a working, localized VYgo im
 
 ## Validate and report
 
-1. Review the diff for path/class/namespace, `CardId`, base class, registrations, requested rarity using the fixed Chinese mapping, target type, DynamicVars, upgrade behavior, localization keys, and paired minion consistency.
+1. Review the diff for path/class/namespace, `CardId`, base class, registrations, requested rarity using the fixed Chinese mapping, target type, DynamicVars, upgrade behavior, localization keys, and paired minion consistency. For a Token, additionally verify the `+1` ID invariant, source pool/category, both data stores, both images, scene, and source-trigger integration.
 2. Run `dotnet build`. Fix errors caused by the implementation; do not modify read-only vanilla source or unrelated user changes.
 3. When no automated test covers the behavior, identify the smallest in-game scenario that verifies trigger timing, target selection, upgrade behavior, and zone transitions.
 4. Report the vanilla/project references used, implemented semantics, assumptions, changed files, JSON validation, build result, and any remaining in-game visual or behavioral check.
@@ -68,6 +78,7 @@ Turn a target card path and effect description into a working, localized VYgo im
 
 - Do not guess APIs from memory when local source is available.
 - Do not stop after writing a plausible method body; integrate registration, variables, upgrade behavior, localization, and paired monster logic required by the effect.
+- Do not call ygocdb to fill a derived Token record, copy the source monster's race/attribute/level over the Token clause, or omit `Web/cards.db` because `VYgo/db.json` already exists.
 - Do not change cost, rarity, target, stats, pool, starter loadout, or effect wording beyond the requested scope without explaining why.
 - Treat the resolved vanilla reference root, including its `src/` and `localization/` directories, as read-only.
 - Do not hand-edit generated Godot `.uid` or `.import` files unless the task specifically requires an asset workflow.
