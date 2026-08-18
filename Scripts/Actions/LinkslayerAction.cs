@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MinionLib.Commands;
 using VYgo.Core;
 using VYgo.Scripts.Cards.Category.Playmaker;
@@ -20,7 +21,8 @@ public sealed class LinkslayerAction : BasePerTurnMonsterAction {
         "res://images/packed/intents/attack";
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        YgoHoverTipConst.Action()
+        YgoHoverTipConst.Action(),
+        HoverTipFactory.FromPower<WeakPower>()
     ];
 
     protected override bool IsVisibleInternal => true;
@@ -72,6 +74,15 @@ public sealed class LinkslayerAction : BasePerTurnMonsterAction {
             .WithNoAttackerAnim()
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
+        if (target.IsAlive) {
+            await PowerCmd.Apply<WeakPower>(
+                choiceContext,
+                target,
+                sourceCard.Weak,
+                Owner,
+                sourceCard
+            );
+        }
     }
 
     private static int GetAttackIntentTier(int damage) {

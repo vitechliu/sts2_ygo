@@ -3,10 +3,12 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
 using VYgo.Core.Summon;
+using VYgo.Scripts.Characters;
 using VYgo.Scripts.Pools;
 using VYgo.Scripts.Var;
 using VYgo.Utils;
@@ -14,19 +16,20 @@ using VYgo.Utils;
 namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
-public class Linkslayer() : BaseMonsterCard(1, CardRarity.Basic, TargetType.None) {
+[RegisterCharacterStarterCard(typeof(PlaymakerCharacter), 1)]
+public class Linkslayer() : BaseMonsterCard(2, CardRarity.Basic, TargetType.None) {
     public override int CardId => 35595518;
 
     public override int BaseAttackVar => 5;
     public override int BaseLifeVar => 1;
-    public override int UpgradeAttackVar => 2;
-
     public int Damage => DynamicVars.Damage.IntValue;
+    public int Weak => DynamicVars["WeakPower"].IntValue;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new AttackVar(BaseAttackVar),
         new LifeVar(BaseLifeVar),
-        new DamageVar(9m, ValueProp.Move)
+        new DamageVar(9m, ValueProp.Move),
+        new PowerVar<WeakPower>(2m)
     ];
 
     protected override bool ShouldGlowGoldInternal => CanSpecialSummon;
