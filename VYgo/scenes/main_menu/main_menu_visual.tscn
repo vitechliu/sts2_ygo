@@ -53,6 +53,26 @@ texture = ExtResource("1_background")
 expand_mode = 1
 stretch_mode = 6
 
+[node name="ParticleAnchor" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="Particles" type="GPUParticles2D" parent="ParticleAnchor"]
+material = SubResource("CanvasItemMaterial_trr8m")
+amount = 70
+texture = ExtResource("2_y6t2j")
+lifetime = 10.0
+preprocess = 2.0
+randomness = 0.5
+process_material = SubResource("ParticleProcessMaterial_bj24l")
+
 [node name="MonsterHost" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 1
@@ -62,13 +82,3 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-
-[node name="Particles" type="GPUParticles2D" parent="."]
-material = SubResource("CanvasItemMaterial_trr8m")
-position = Vector2(582, 660)
-amount = 70
-texture = ExtResource("2_y6t2j")
-lifetime = 10.0
-preprocess = 2.0
-randomness = 0.5
-process_material = SubResource("ParticleProcessMaterial_bj24l")
