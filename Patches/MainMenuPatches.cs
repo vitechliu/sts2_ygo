@@ -16,6 +16,7 @@ public static class MainMenuPatches {
     private static bool _deferredAudioReady;
 
     [HarmonyPostfix]
+    [HarmonyPriority(Priority.Last)]
     [HarmonyPatch(typeof(NMainMenu), nameof(NMainMenu._Ready))]
     private static void AfterMainMenuReady(NMainMenu __instance) {
         _activeMainMenu = new WeakReference<NMainMenu>(__instance);
