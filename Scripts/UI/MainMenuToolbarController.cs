@@ -65,9 +65,16 @@ internal sealed class MainMenuToolbarController {
         ConfigureToolbarButton(_patchNotesButton, IconRoot + "patch_notes.png", "N");
         ConfigureToolbarButton(_compendiumButton, IconRoot + "wiki.png", "C");
         ConfigureToolbarButton(_settingsButton, IconRoot + "settings.png", "S");
+        
         AddToolbarButton("RitsuLibButton", IconRoot + "ritsulib.png", "RitsuLib", button => {
-            Traverse.Create("STS2RitsuLib.Settings.Patches.MainMenuModSettingsButtonPatch")
-                .Method("OpenModSettings").GetValue(_mainMenu);
+            Type internalClassType = AccessTools.TypeByName("STS2RitsuLib.Settings.Patches.MainMenuModSettingsButtonPatch");
+            if (internalClassType != null) {
+                Traverse.Create(internalClassType).Method("OpenModSettings", _mainMenu).GetValue();
+            }
+            else {
+                Entry.Logger.Warn("Cannot Find RitsuType");
+            }
+            
         }, "R");
         RefreshCaptions();
         RefreshToolbarSize();
