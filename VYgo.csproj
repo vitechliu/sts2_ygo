@@ -56,6 +56,7 @@
         <Compile Remove="External\**\*.cs;Web\**\*.cs"/>
     </ItemGroup>
     <ItemGroup>
+        <Folder Include="Scripts\Cards\Category\Synchro\" />
         <Folder Include="VYgo\images\relics\" />
         <Folder Include="VYgo\images\cards\"/>
         <Folder Include="VYgo\images\monster\"/>

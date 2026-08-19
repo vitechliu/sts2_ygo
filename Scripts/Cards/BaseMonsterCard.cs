@@ -31,6 +31,8 @@ public abstract class BaseMonsterCard(
 
     public virtual bool IsExtra => false;
 
+    public virtual bool ForceAsTuner => false;
+
     public virtual int BaseAttackVar => 1;
     public virtual int BaseLifeVar => 1;
     public virtual int UpgradeAttackVar => 0;
