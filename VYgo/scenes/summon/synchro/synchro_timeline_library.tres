@@ -1,0 +1,145 @@
+[gd_resource type="AnimationLibrary" load_steps=29 format=3]
+
+[sub_resource type="Animation" id="Animation_01"]
+resource_name = "SummonSynchroCircle01TL"
+length = 5.01666667
+
+[sub_resource type="Animation" id="Animation_02"]
+resource_name = "SummonSynchroCircle02TL"
+length = 5.01666667
+
+[sub_resource type="Animation" id="Animation_03"]
+resource_name = "SummonSynchroCircle03TL"
+length = 5.01666667
+
+[sub_resource type="Animation" id="Animation_04"]
+resource_name = "SummonSynchroCircleSSTL"
+length = 3.00000004
+
+[sub_resource type="Animation" id="Animation_05"]
+resource_name = "SummonSynchro01TL"
+length = 5.01666667
+
+[sub_resource type="Animation" id="Animation_06"]
+resource_name = "SummonSynchro02TL"
+length = 3.93333333
+
+[sub_resource type="Animation" id="Animation_07"]
+resource_name = "SummonSynchroPostSynchroTL"
+length = 2.01666667
+
+[sub_resource type="Animation" id="Animation_08"]
+resource_name = "SummonSynchroShowUnitCard02TL"
+length = 1.33333333
+
+[sub_resource type="Animation" id="Animation_09"]
+resource_name = "SummonSynchroShowUnitCard03TL"
+length = 1.33333333
+
+[sub_resource type="Animation" id="Animation_10"]
+resource_name = "SummonSynchroShowUnitCard04TL"
+length = 1.33333333
+
+[sub_resource type="Animation" id="Animation_11"]
+resource_name = "SummonSynchroShowUnitCard05TL"
+length = 1.33333333
+
+[sub_resource type="Animation" id="Animation_12"]
+resource_name = "SummonSynchroShowUnitCard06TL"
+length = 1.33333333
+
+[sub_resource type="Animation" id="Animation_13"]
+resource_name = "SummonSynchroShowUnitCardNumTL"
+length = 1.33333333
+
+[sub_resource type="Animation" id="Animation_14"]
+resource_name = "SummonSynchroShowUnitParts01TL"
+length = 1.33333333
+
+[sub_resource type="Animation" id="Animation_15"]
+resource_name = "SummonSynchroShowUnitParts02TL"
+length = 1.33333333
+
+[sub_resource type="Animation" id="Animation_16"]
+resource_name = "SynchroStarLevel01TL"
+length = 0.833333373
+
+[sub_resource type="Animation" id="Animation_17"]
+resource_name = "SynchroStarLevel02TL"
+length = 0.833333373
+
+[sub_resource type="Animation" id="Animation_18"]
+resource_name = "SynchroStarLevel03TL"
+length = 0.833333373
+
+[sub_resource type="Animation" id="Animation_19"]
+resource_name = "SynchroStarLevel04TL"
+length = 0.833333373
+
+[sub_resource type="Animation" id="Animation_20"]
+resource_name = "SynchroStarLevel05TL"
+length = 0.833333373
+
+[sub_resource type="Animation" id="Animation_21"]
+resource_name = "SynchroStarLevel06TL"
+length = 0.833333373
+
+[sub_resource type="Animation" id="Animation_22"]
+resource_name = "SynchroStarLevel07TL"
+length = 0.833333373
+
+[sub_resource type="Animation" id="Animation_23"]
+resource_name = "SynchroStarLevel08TL"
+length = 0.833333373
+
+[sub_resource type="Animation" id="Animation_24"]
+resource_name = "SynchroStarLevel09TL"
+length = 0.833333373
+
+[sub_resource type="Animation" id="Animation_25"]
+resource_name = "SynchroStarLevel10TL"
+length = 0.833333373
+
+[sub_resource type="Animation" id="Animation_26"]
+resource_name = "SynchroStarLevel11TL"
+length = 0.833333373
+
+[sub_resource type="Animation" id="Animation_27"]
+resource_name = "Synchro00TrailFieldCard01TL"
+length = 1.13333333
+
+[sub_resource type="Animation" id="Animation_28"]
+resource_name = "Synchro01TrailFieldCard01TL"
+length = 1.13333333
+
+[resource]
+_data = {
+"SummonSynchroCircle01TL": SubResource("Animation_01"),
+"SummonSynchroCircle02TL": SubResource("Animation_02"),
+"SummonSynchroCircle03TL": SubResource("Animation_03"),
+"SummonSynchroCircleSSTL": SubResource("Animation_04"),
+"SummonSynchro01TL": SubResource("Animation_05"),
+"SummonSynchro02TL": SubResource("Animation_06"),
+"SummonSynchroPostSynchroTL": SubResource("Animation_07"),
+"SummonSynchroShowUnitCard02TL": SubResource("Animation_08"),
+"SummonSynchroShowUnitCard03TL": SubResource("Animation_09"),
+"SummonSynchroShowUnitCard04TL": SubResource("Animation_10"),
+"SummonSynchroShowUnitCard05TL": SubResource("Animation_11"),
+"SummonSynchroShowUnitCard06TL": SubResource("Animation_12"),
+"SummonSynchroShowUnitCardNumTL": SubResource("Animation_13"),
+"SummonSynchroShowUnitParts01TL": SubResource("Animation_14"),
+"SummonSynchroShowUnitParts02TL": SubResource("Animation_15"),
+"SynchroStarLevel01TL": SubResource("Animation_16"),
+"SynchroStarLevel02TL": SubResource("Animation_17"),
+"SynchroStarLevel03TL": SubResource("Animation_18"),
+"SynchroStarLevel04TL": SubResource("Animation_19"),
+"SynchroStarLevel05TL": SubResource("Animation_20"),
+"SynchroStarLevel06TL": SubResource("Animation_21"),
+"SynchroStarLevel07TL": SubResource("Animation_22"),
+"SynchroStarLevel08TL": SubResource("Animation_23"),
+"SynchroStarLevel09TL": SubResource("Animation_24"),
+"SynchroStarLevel10TL": SubResource("Animation_25"),
+"SynchroStarLevel11TL": SubResource("Animation_26"),
+"Synchro00TrailFieldCard01TL": SubResource("Animation_27"),
+"Synchro01TrailFieldCard01TL": SubResource("Animation_28")
+}

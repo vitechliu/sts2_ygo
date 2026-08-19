@@ -78,27 +78,39 @@ def add_event(
             return
 
     duration, frequency_khz, channels = probe(source)
-    audio_id = new_guid()
+    existing_audio_id = None
+    for audio_path in audio_dir.glob("*.xml"):
+        audio_text = audio_path.read_text(encoding="utf-8")
+        if f"<value>{source.name}</value>" in audio_text:
+            id_match = GUID_PATTERN.search(audio_text)
+            if id_match is None:
+                raise ValueError(f"AudioFile metadata has no GUID: {audio_path}")
+            existing_audio_id = id_match.group(0)
+            break
+
+    audio_id = existing_audio_id or new_guid()
     event_id = new_guid()
 
-    audio_xml = audio_template
-    audio_xml = audio_xml.replace(AUDIO_TEMPLATE_ID, audio_id)
-    audio_xml = audio_xml.replace("SE_SMN_LINK_01.ogg", source.name)
-    audio_xml = re.sub(
-        r"(<property name=\"frequencyInKHz\">\s*<value>)[^<]+",
-        rf"\g<1>{format_number(frequency_khz)}",
-        audio_xml,
-    )
-    audio_xml = re.sub(
-        r"(<property name=\"channelCount\">\s*<value>)[^<]+",
-        rf"\g<1>{channels}",
-        audio_xml,
-    )
-    audio_xml = re.sub(
-        r"(<property name=\"length\">\s*<value>)[^<]+",
-        rf"\g<1>{format_number(duration)}",
-        audio_xml,
-    )
+    audio_xml = None
+    if existing_audio_id is None:
+        audio_xml = audio_template
+        audio_xml = audio_xml.replace(AUDIO_TEMPLATE_ID, audio_id)
+        audio_xml = audio_xml.replace("SE_SMN_LINK_01.ogg", source.name)
+        audio_xml = re.sub(
+            r"(<property name=\"frequencyInKHz\">\s*<value>)[^<]+",
+            rf"\g<1>{format_number(frequency_khz)}",
+            audio_xml,
+        )
+        audio_xml = re.sub(
+            r"(<property name=\"channelCount\">\s*<value>)[^<]+",
+            rf"\g<1>{channels}",
+            audio_xml,
+        )
+        audio_xml = re.sub(
+            r"(<property name=\"length\">\s*<value>)[^<]+",
+            rf"\g<1>{format_number(duration)}",
+            audio_xml,
+        )
 
     guid_map: dict[str, str] = {
         EVENT_TEMPLATE_ID: event_id,
@@ -122,17 +134,25 @@ def add_event(
     for old_guid, replacement in guid_map.items():
         event_xml = event_xml.replace(old_guid, replacement)
 
-    asset_dir.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(source, asset_dir / source.name)
-    (audio_dir / f"{audio_id}.xml").write_text(audio_xml, encoding="utf-8")
+    if audio_xml is not None:
+        asset_dir.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, asset_dir / source.name)
+        (audio_dir / f"{audio_id}.xml").write_text(audio_xml, encoding="utf-8")
     (event_dir / f"{event_id}.xml").write_text(event_xml, encoding="utf-8")
-    print(f"Added event:/vygo/sfx/{event_name} from {source.name}")
+    reuse_note = " (reused AudioFile)" if existing_audio_id else ""
+    print(f"Added event:/vygo/sfx/{event_name} from {source.name}{reuse_note}")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("project", type=Path)
     parser.add_argument("source_directory", type=Path)
+    parser.add_argument(
+        "--set",
+        choices=("xyz", "synchro", "all"),
+        default="xyz",
+        help="要写入的事件组；默认保持旧脚本的 XYZ 行为。",
+    )
     args = parser.parse_args()
 
     project = args.project.resolve()
@@ -144,7 +164,7 @@ def main() -> None:
         project / "Metadata" / "AudioFile" / f"{AUDIO_TEMPLATE_ID}.xml"
     ).read_text(encoding="utf-8")
 
-    events = {
+    xyz_events = {
         "xyz_01": "SE_SMN_XYZ_01.ogg",
         "xyz_02_01": "SE_SMN_XYZ_02_01.ogg",
         "xyz_02_02": "SE_SMN_XYZ_02_02.ogg",
@@ -153,10 +173,34 @@ def main() -> None:
         "xyz_04": "SE_SMN_XYZ_04.ogg",
         "xyz_material": "SE_SUMMON_XYZ_MATERIAL.ogg",
     }
+    synchro_events = {
+        "synchro_01_01": "SE_SMN_SYNCHRO_01_01.ogg",
+        "synchro_01_04": "SE_SMN_SYNCHRO_01_04.ogg",
+        "synchro_02": "SE_SMN_SYNCHRO_02.ogg",
+        "synchro_03_01": "SE_SMN_SYNCHRO_03_01.ogg",
+        "synchro_03_02": "SE_SMN_SYNCHRO_03_02.ogg",
+        "synchro_03_03": "SE_SMN_SYNCHRO_03_03.ogg",
+        "synchro_03_04": "SE_SMN_SYNCHRO_03_04.ogg",
+        "synchro_04_01": "SE_SMN_SYNCHRO_04_01.ogg",
+        "synchro_04_02": "SE_SMN_SYNCHRO_04_02.ogg",
+        "synchro_04_03": "SE_SMN_SYNCHRO_04_03.ogg",
+        "synchro_04_04": "SE_SMN_SYNCHRO_04_04.ogg",
+        "synchro_05": "SE_SMN_SYNCHRO_05.ogg",
+        "synchro_card_01": "SE_SMN_CMN_CARD_01.ogg",
+        "synchro_card_02": "SE_SMN_CMN_CARD_02.ogg",
+    }
+    events = {}
+    if args.set in ("xyz", "all"):
+        events.update(xyz_events)
+    if args.set in ("synchro", "all"):
+        events.update(synchro_events)
     for event_name, filename in events.items():
+        source = source_directory / filename
+        if not source.is_file():
+            raise FileNotFoundError(f"Missing source audio: {source}")
         add_event(
             project,
-            source_directory / filename,
+            source,
             event_name,
             event_template,
             audio_template,

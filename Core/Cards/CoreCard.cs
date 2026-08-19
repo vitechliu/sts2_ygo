@@ -59,6 +59,14 @@ public record CoreCard(
         || Types?.Contains("XYZ", StringComparison.OrdinalIgnoreCase) == true;
 
     /// <summary>
+    /// 卡表中的调整标记可能来自中文 ygocdb 数据，也可能来自英文导入数据。
+    /// 特殊的“视为调整”效果由同调怪兽卡的规则钩子处理，不应写回核心卡数据。
+    /// </summary>
+    public bool IsTuner =>
+        Types?.Contains("调整", StringComparison.Ordinal) == true
+        || Types?.Contains("Tuner", StringComparison.OrdinalIgnoreCase) == true;
+
+    /// <summary>
     /// ygocdb stores an Xyz monster's Rank in the same numeric field used by monster Levels.
     /// Keep the distinction at the runtime-model boundary so Rank is never exposed as a normal Level.
     /// </summary>

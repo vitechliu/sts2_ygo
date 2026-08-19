@@ -1,3 +1,4 @@
 {
-  "V_YGO_SUMMON_MESSAGE_NO_VALID_FUSION": "没有满足召唤条件的融合怪兽。"
+  "V_YGO_SUMMON_MESSAGE_NO_VALID_FUSION": "没有满足召唤条件的融合怪兽。",
+  "V_YGO_SUMMON_MESSAGE_NO_VALID_SYNCHRO": "没有满足等级与调整素材条件的同调怪兽。"
 }
