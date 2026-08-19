@@ -490,7 +490,8 @@ internal static class ExtraDeckSummonAnimations {
             await mainAnim2D.manager.PlayAnimMain();
             await PlayLinkMarkers(mainAnim2D, coreCard.Def.Value, coreCard.LinkCount.Value);
             await VFXUtil.Wait(0.5f);
-
+            
+            mainAnim2D.manager.ShineFinal();
             SFXUtil.Play("event:/vygo/sfx/link_summon_04");
             await VFXUtil.Wait(0.1f);
             SFXUtil.Play("event:/vygo/sfx/link_summon_05");

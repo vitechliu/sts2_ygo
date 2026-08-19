@@ -762,10 +762,15 @@ public static class SummonUtil {
                 SFXUtil.Play("event:/vygo/sfx/material_shine");
             }
 
-            foreach ((SummonMaterial material, PileType destination) in moves
-                         .Where(move => move.Material.IsField)) {
+            List<(SummonMaterial Material, PileType Destination)> fieldMoves = moves
+                .Where(move => move.Material.IsField)
+                .ToList();
+
+            await Task.WhenAll(fieldMoves.Select(move =>
+                MaterialSacrifice(move.Material.Creature!)));
+
+            foreach ((SummonMaterial material, PileType destination) in fieldMoves) {
                 BaseMonster monster = (BaseMonster)material.Creature!.Monster;
-                await MaterialSacrifice(material.Creature);
                 if (!await monster.SendReservedSourceCardAsSummonMaterial(
                         choiceContext,
                         owner,
