@@ -39,9 +39,16 @@ public partial class NLinkSummonManager: Node3D {
 			.SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Cubic);
 		// GD.Print("ShineSquare");
 	}
+
+	public void ShineFinal() {
+		if (_shineTween != null) {_shineTween.Kill();}
+		_shineTween = CreateTween();
+		_shineTween.TweenProperty(_shineSquare, "modulate:a", 1f, 0.2f)
+			.SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Cubic);
+	}
 	
 	public void onHit() {
-		ShineSquare(1f);
+		ShineSquare(0.5f);
 	}
 
 	public void PlaySfx(string path) {
@@ -66,7 +73,6 @@ public partial class NLinkSummonManager: Node3D {
 	
 	
 	public void PlayPostEffect() {
-		_shineSquare.Modulate = _shineSquare.Modulate with { A = 1f };
 		_lineAnimationPlayer.Play("line");
 	}
 }
