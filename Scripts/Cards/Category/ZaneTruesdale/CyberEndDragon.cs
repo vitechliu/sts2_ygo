@@ -16,7 +16,7 @@ public class CyberEndDragon() : BaseExtraFusionCard(energyCost, rarity, targetTy
     public override int FusionMaterialCount => 3;
     
     private const int energyCost = -1;
-    private const CardRarity rarity = CardRarity.Uncommon;
+    private const CardRarity rarity = CardRarity.Common;
     private const TargetType targetType = TargetType.None;
     private const bool shouldShowInCardLibrary = true;
 

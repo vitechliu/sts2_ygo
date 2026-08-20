@@ -19,7 +19,7 @@ public class CyberDragonInfinity()
     public override int XyzMaterialCount => 1;
     
     private const int energyCost = -1;
-    private const CardRarity rarity = CardRarity.Common;
+    private const CardRarity rarity = CardRarity.Uncommon;
     private const TargetType targetType = TargetType.None;
     private const bool shouldShowInCardLibrary = true;
 
