@@ -12,10 +12,11 @@
 | sheet_id | 名称 | 用途 |
 |---|---|---|
 | `9hpha0` | 任务进度 | 全局需求、优先级、详情、负责人和状态统筹 |
-| `nn0dx0` | 已知问题Bug | 已知缺陷跟踪 |
+| `nn0dx0` | Bug | 已知缺陷跟踪 |
 | `ivfhxx` | 规则与关键词 | 设计规则与关键词意图；可能含历史条目 |
-| `nygoh8` | 流派,人物 | 人物与基础卡池映射 |
+| `nygoh8` | 角色和卡池 | 人物与基础卡池映射 |
 | `imlwgw` | 丸藤亮卡池 | 丸藤亮角色卡牌设计与开发状态 |
+| `ouj0ec` | 不动游星卡池 | 不动游星角色卡牌设计；尚无对应代码卡池，`状态` 列当前基本为空 |
 | `k9ch5x` | 藤木游作卡池 | 藤木游作角色卡牌设计与开发状态 |
 | `BB08J2` | 泛用卡池(尚未归类的卡池) | 融合、泛用、机械、连接等尚未最终归类的卡牌 |
 
@@ -47,6 +48,7 @@
 |---|---|---|
 | 丸藤亮卡池 | `ZaneTruesdaleCardPool` | `Scripts/Cards/Category/ZaneTruesdale/` |
 | 藤木游作卡池 | `PlaymakerCardPool` | `Scripts/Cards/Category/Playmaker/` |
+| 不动游星卡池 | （无，`Scripts/Pools/` 中尚不存在对应代码池） | — |
 
 `Web/scripts/import-card.js` 也接受去掉 `CardPool` 后缀的文件夹简写。优先传完整池类名，并在运行前确认 `Scripts/Pools/` 与导入器 `/api/cards/card-script-options` 返回的选项仍一致。
 

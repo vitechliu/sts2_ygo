@@ -15,7 +15,7 @@ public class CyberTwinDragon() : BaseExtraFusionCard(energyCost, rarity, targetT
     public override int FusionMaterialCount => 2;
     
     private const int energyCost = -1;
-    private const CardRarity rarity = CardRarity.Uncommon;
+    private const CardRarity rarity = CardRarity.Basic;
     private const TargetType targetType = TargetType.None;
     private const bool shouldShowInCardLibrary = true;
 

@@ -20,7 +20,7 @@ public class ProtoCyberDragon() : BaseMonsterCard(energyCost,rarity, targetType,
     ];
     
     private const int energyCost = 0;
-    private const CardRarity rarity = CardRarity.Common;
+    private const CardRarity rarity = CardRarity.Basic;
     private const TargetType targetType = TargetType.None;
     private const bool shouldShowInCardLibrary = true;
 

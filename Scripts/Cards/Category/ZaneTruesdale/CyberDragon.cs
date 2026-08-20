@@ -22,7 +22,7 @@ public class CyberDragon() : BaseMonsterCard(energyCost, rarity, targetType, sho
     public override YgoMaterialNames? MaterialCardName => YgoMaterialNames.电子龙;
     
     private const int energyCost = 2;
-    private const CardRarity rarity = CardRarity.Common;
+    private const CardRarity rarity = CardRarity.Basic;
     private const TargetType targetType = TargetType.None;
     private const bool shouldShowInCardLibrary = true;
 

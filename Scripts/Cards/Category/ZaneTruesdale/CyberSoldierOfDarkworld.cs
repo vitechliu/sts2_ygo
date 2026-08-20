@@ -8,7 +8,7 @@ namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
 [RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 2)]
-public class CyberSoldierOfDarkworld() : BaseMonsterCard(1, CardRarity.Common, TargetType.None) {
+public class CyberSoldierOfDarkworld() : BaseMonsterCard(1, CardRarity.Basic, TargetType.None) {
     public override int CardId => 75559356;
 
     public override int BaseAttackVar => 3;
