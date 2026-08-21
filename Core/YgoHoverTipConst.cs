@@ -46,6 +46,9 @@ public static class YgoHoverTipConst {
     public static IHoverTip XyzSummon() {
         return Base("XYZ_SUMMON");
     }
+    public static IHoverTip SynchroSummon() {
+        return Base("SYNCHRO_SUMMON");
+    }
     //送墓
     public static IHoverTip SendToGraveyard() {
         return Base("SEND_TO_GRAVEYARD");
