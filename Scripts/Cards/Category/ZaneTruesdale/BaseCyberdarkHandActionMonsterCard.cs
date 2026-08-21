@@ -24,6 +24,8 @@ public abstract class BaseCyberdarkHandActionMonsterCard(
     protected virtual int EquipAttack => 3;
     protected virtual int EquipLife => 0;
 
+    protected override RightClickType ClickType => RightClickType.Hand;
+    
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new AttackVar(BaseAttackVar),
         new LifeVar(BaseLifeVar),
