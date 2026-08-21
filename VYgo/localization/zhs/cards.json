@@ -235,7 +235,7 @@
     "V_YGO_CARD_ROM_CLOUDIA.selectionScreenPrompt": "请选择要放入手牌的电子界族怪兽。",
     "V_YGO_CARD_ROM_CLOUDIA.graveyardSelectionScreenPrompt": "请选择要特召的4星以下电子界族怪兽。",
     "V_YGO_CARD_ASH_BLOSSOM_JOYOUS_SPRING.title": "灰流丽",
-    "V_YGO_CARD_ASH_BLOSSOM_JOYOUS_SPRING.description": "[gold]召唤[/gold]([gold]{Attack}[/gold]/[blue]{Life}[/blue])\n",
+    "V_YGO_CARD_ASH_BLOSSOM_JOYOUS_SPRING.description": "[gold]召唤[/gold]([gold]{Attack}[/gold]/[blue]{Life}[/blue]),[gold]调整[/gold]\n",
     "V_YGO_CARD_STARDUST_DRAGON.title": "星尘龙",
     "V_YGO_CARD_STARDUST_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack}[/gold]/[blue]{Life}[/blue])\n登场:获得1层[gold]缓冲[/gold]"
 }
