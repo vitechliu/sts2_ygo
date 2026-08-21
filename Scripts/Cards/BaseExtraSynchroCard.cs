@@ -9,6 +9,7 @@ namespace VYgo.Scripts.Cards;
 /// <summary>
 /// 同调怪兽的通用规则基类。默认规则是一只以上调整加一只以上非调整，
 /// 全部素材来自己方场上，且有效等级总和等于目标怪兽等级。
+/// 暂未支持:暗黑同调等
 /// </summary>
 public abstract class BaseExtraSynchroCard(
     int baseCost,
@@ -35,7 +36,7 @@ public abstract class BaseExtraSynchroCard(
     public virtual bool IsSynchroTuner(
         CoreCard coreCard,
         SummonMaterial material
-    ) => material.CoreCard?.IsTuner == true;
+    ) => material.IsTuner;
 
     public virtual bool CanUseSynchroMaterial(
         CoreCard coreCard,
