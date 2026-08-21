@@ -17,6 +17,8 @@
   "V_YGO_CONTACT_FUSION.description": "无需融合魔法卡。打开额外卡组并点击此怪兽，可以只使用场上的怪兽作为融合素材直接进行融合召唤。",
   "V_YGO_XYZ_SUMMON.title": "超量召唤",
   "V_YGO_XYZ_SUMMON.description": "将场上相同等级的怪兽作为素材叠放，召唤对应阶级的超量怪兽。打开额外卡组点击超量怪兽即可进行。",
+  "V_YGO_SYNCHRO_SUMMON.title": "同调召唤",
+  "V_YGO_SYNCHRO_SUMMON.description": "将场上一只以上调整和一只以上非调整怪兽作为素材，等级合计等于目标等级时进行同调召唤。打开额外卡组点击同调怪兽即可进行。",
   "V_YGO_SEND_TO_GRAVEYARD.title": "送墓",
   "V_YGO_SEND_TO_GRAVEYARD.description": "当怪兽死亡时触发。",
   "V_YGO_BATTLE_DESTROYED.title": "战斗破坏",

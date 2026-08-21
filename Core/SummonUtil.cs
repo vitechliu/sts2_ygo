@@ -48,6 +48,15 @@ public sealed record XyzSummonRequest(
     Func<BaseExtraXyzCard, bool>? XyzCardFilter = null
 );
 
+public sealed record SynchroSummonRequest(
+    CardModel? SourceCard,
+    Player Owner,
+    PlayerChoiceContext ChoiceContext,
+    LocString SelectionPrompt,
+    Func<BaseExtraSynchroCard, CoreCard, IReadOnlyList<SummonMaterial>> GetAvailableMaterials,
+    Func<BaseExtraSynchroCard, bool>? SynchroCardFilter = null
+);
+
 public sealed record ExtraDeckSummonRequest(
     CardModel? SourceCard,
     Player Owner,
@@ -113,6 +122,8 @@ public sealed record ExtraDeckSummonResult(
 public static class SummonUtil {
     private const string NoValidFusionSummonMessage =
         "V_YGO_SUMMON_MESSAGE_NO_VALID_FUSION";
+    private const string NoValidSynchroSummonMessage =
+        "V_YGO_SUMMON_MESSAGE_NO_VALID_SYNCHRO";
 
     public static Task<ExtraDeckSummonResult> ExecuteFusionSummon(FusionSummonRequest request) {
         if (!HasFusionSummonTarget(
@@ -209,6 +220,40 @@ public static class SummonUtil {
         ));
     }
 
+    public static Task<ExtraDeckSummonResult> ExecuteSynchroSummon(
+        SynchroSummonRequest request
+    ) {
+        if (!HasSynchroSummonTarget(
+                request.Owner,
+                request.GetAvailableMaterials,
+                request.SynchroCardFilter
+            )) {
+            Entry.Logger.Info("Synchro summon rejected: no legal target/material combination.");
+            ThinkCmd.Play(
+                new LocString("combat_messages", NoValidSynchroSummonMessage),
+                request.Owner.Creature,
+                3
+            );
+            return Task.FromResult(ExtraDeckSummonResult.Failed());
+        }
+
+        return ExecuteExtraDeckSummon(new ExtraDeckSummonRequest(
+            SourceCard: request.SourceCard,
+            Owner: request.Owner,
+            ChoiceContext: request.ChoiceContext,
+            SelectionPrompt: request.SelectionPrompt,
+            ExtraCardFilter: card => card is BaseExtraSynchroCard synchroCard
+                && (request.SynchroCardFilter?.Invoke(synchroCard) ?? true),
+            BuildMaterialSelection: card => BuildSynchroMaterialSelection(
+                card,
+                request.Owner,
+                request.GetAvailableMaterials
+            ),
+            PlayAnimation: ExtraDeckSummonAnimations.PlaySynchroSummonAnimation,
+            FinalWaitSeconds: 0.45f
+        ));
+    }
+
     internal static DirectExtraDeckSummonSpec CreateDirectXyzSummonSpec(
         BaseExtraXyzCard card,
         Player owner,
@@ -226,6 +271,22 @@ public static class SummonUtil {
             AfterAutoPlay: XyzMaterialCmd.AttachReservedToSummonedMonster,
             OnSummonFailedAfterConsumption: materials =>
                 XyzMaterialCmd.SendReservedToGraveyard(owner, materials),
+            FinalWaitSeconds: 0.45f
+        );
+    }
+
+    internal static DirectExtraDeckSummonSpec CreateDirectSynchroSummonSpec(
+        BaseExtraSynchroCard card,
+        Player owner,
+        Func<BaseExtraSynchroCard, CoreCard, IReadOnlyList<SummonMaterial>> getAvailableMaterials
+    ) {
+        return new DirectExtraDeckSummonSpec(
+            BuildMaterialSelection: () => BuildSynchroMaterialSelection(
+                card,
+                owner,
+                getAvailableMaterials
+            ),
+            PlayAnimation: ExtraDeckSummonAnimations.PlaySynchroSummonAnimation,
             FinalWaitSeconds: 0.45f
         );
     }
@@ -366,6 +427,21 @@ public static class SummonUtil {
                 owner,
                 getAvailableMaterials,
                 getMaterialDestination
+            )?.HasValidCombination == true);
+    }
+
+    public static bool HasSynchroSummonTarget(
+        Player owner,
+        Func<BaseExtraSynchroCard, CoreCard, IReadOnlyList<SummonMaterial>> getAvailableMaterials,
+        Func<BaseExtraSynchroCard, bool>? synchroCardFilter = null
+    ) {
+        return Entry.ExtraPile.GetPile(owner).Cards
+            .OfType<BaseExtraSynchroCard>()
+            .Where(card => synchroCardFilter?.Invoke(card) ?? true)
+            .Any(card => BuildSynchroMaterialSelection(
+                card,
+                owner,
+                getAvailableMaterials
             )?.HasValidCombination == true);
     }
 
@@ -631,6 +707,41 @@ public static class SummonUtil {
             xyzCard.MinXyzMaterialCount,
             xyzCard.MaxXyzMaterialCount,
             materials => xyzCard.HasValidXyzMaterials(coreCard, materials)
+                && CanSummonWithMaterials(owner, materials)
+        );
+    }
+
+    internal static SummonMaterialSelectionSpec? BuildSynchroMaterialSelection(
+        CardModel card,
+        Player owner,
+        Func<BaseExtraSynchroCard, CoreCard, IReadOnlyList<SummonMaterial>> getAvailableMaterials
+    ) {
+        if (card is not BaseExtraSynchroCard synchroCard) return null;
+
+        CoreCard? coreCard = synchroCard.YgoGetCore();
+        int? targetLevel = coreCard == null
+            ? null
+            : synchroCard.GetSynchroTargetLevel(coreCard);
+        if (coreCard == null || targetLevel is not > 0) {
+            Entry.Logger.Error($"Failed to get Synchro target level data: {synchroCard.CardId}");
+            return null;
+        }
+
+        IReadOnlyList<SummonMaterial> candidates = getAvailableMaterials(synchroCard, coreCard)
+            .Where(material => material.Card != null)
+            .Where(material => synchroCard.GetSynchroMaterialLevel(coreCard, material) is > 0)
+            .Where(material => synchroCard.CanUseSynchroMaterial(coreCard, material))
+            .ToList();
+
+        if (candidates.Count == 0) {
+            Entry.Logger.Info($"Synchro summon {synchroCard.CardId} has no usable field materials.");
+        }
+
+        return new SummonMaterialSelectionSpec(
+            candidates,
+            synchroCard.GetMinSynchroMaterialCount(coreCard),
+            synchroCard.GetMaxSynchroMaterialCount(coreCard),
+            materials => synchroCard.HasValidSynchroMaterials(coreCard, materials)
                 && CanSummonWithMaterials(owner, materials)
         );
     }

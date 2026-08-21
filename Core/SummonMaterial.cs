@@ -73,6 +73,13 @@ public sealed record SummonMaterial {
         return creature.Monster is BaseMonster;
     }
 
+    public bool IsTuner {
+        get {
+            if (VYgoCard is BaseMonsterCard monsterCard && monsterCard.ForceAsTuner) return true;
+            return CoreCard?.IsTuner == true;
+        }
+    }
+
     public static bool IsHandMonsterCard(CardModel card) {
         return IsMonsterCardInPile(card, PileType.Hand);
     }

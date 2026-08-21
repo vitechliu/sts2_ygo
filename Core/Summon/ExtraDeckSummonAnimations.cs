@@ -25,6 +25,7 @@ internal static class ExtraDeckSummonAnimations {
     public const string FusionSummon2DAssets = "res://VYgo/scenes/summon/fusion/fusion_summon_2d.tscn";
     public const string LinkSummon2DAssets = "res://VYgo/scenes/summon/link/link_summon_2d.tscn";
     public const string XyzSummon2DAssets = "res://VYgo/scenes/summon/xyz/xyz_summon_2d.tscn";
+    public const string SynchroSummon2DAssets = "res://VYgo/scenes/summon/synchro/synchro_summon_2d.tscn";
 
     private static readonly Color FusionRed = new("ff315e");
     private static readonly Color FusionBlue = new("3fb4ff");
@@ -32,6 +33,8 @@ internal static class ExtraDeckSummonAnimations {
     private static readonly Color LinkMagenta = new("ff00ff");
     private static readonly Color XyzBlue = new("55bfff");
     private static readonly Color XyzViolet = new("8a63ff");
+    private static readonly Color SynchroCyan = new("39eeff");
+    private static readonly Color SynchroGreen = new("74ff8d");
 
     private static readonly List<(int Trail, CardLinkMarker Marker)> LinkMarkers = new() {
         (2, CardLinkMarker.Top),
@@ -283,6 +286,193 @@ internal static class ExtraDeckSummonAnimations {
                 xyzAnim2D.QueueFreeSafely();
             }
         }
+    }
+
+    internal static async Task PlaySynchroSummonAnimation(SummonAnimationContext context) {
+        if (context.FinalCard is not BaseExtraSynchroCard synchroCard) return;
+        CoreCard? coreCard = synchroCard.YgoGetCore();
+        int? targetLevel = coreCard == null
+            ? null
+            : synchroCard.GetSynchroTargetLevel(coreCard);
+        if (coreCard == null || targetLevel is not > 0) {
+            Entry.Logger.Error("Failed to get Synchro animation level data: " + synchroCard.CardId);
+            return;
+        }
+
+        List<SummonMaterial> visibleMaterials = context.Materials.Take(6).ToList();
+        int tunerLevel = context.Materials
+            .Where(material => synchroCard.IsSynchroTuner(coreCard, material))
+            .Sum(material => synchroCard.GetSynchroMaterialLevel(coreCard, material) ?? 0);
+        int nonTunerLevel = context.Materials
+            .Where(material => !synchroCard.IsSynchroTuner(coreCard, material))
+            .Sum(material => synchroCard.GetSynchroMaterialLevel(coreCard, material) ?? 0);
+
+        var synchroAnim = VFXUtil.GenVFXNode<NSynchroSummon2D>(SynchroSummon2DAssets);
+        NCombatRoom.Instance.CombatVfxContainer.AddChild(synchroAnim);
+        synchroAnim.GlobalPosition = context.ScreenCenterPos;
+        Task? mainTask = null;
+        try {
+            await Card3DEffectUtil.RunMultipleCard3DEffect(
+                visibleMaterials.Select(material => material.Card!).ToList(),
+                async (ctxs, center) => {
+                    mainTask = synchroAnim.Manager.PlayMain(
+                        targetLevel.Value,
+                        tunerLevel,
+                        nonTunerLevel
+                    );
+                    SFXUtil.Play(ctxs.Count <= 4
+                        ? "event:/vygo/sfx/synchro_card_01"
+                        : "event:/vygo/sfx/synchro_card_02");
+                    await AnimateSynchroMaterials(ctxs, visibleMaterials, synchroCard, coreCard, center);
+                },
+                context.ScreenCenterPos,
+                scaleMultiplier: 0.92f,
+                horizontalSpacing: 275f,
+                initialOpacity: 0f
+            );
+
+            await VFXUtil.Wait(Math.Max(
+                0f,
+                NSynchroSummonManager.PostStart - synchroAnim.Manager.TimelineElapsed
+            ));
+            Task foregroundTask = synchroAnim.ForegroundManager.PlayForegroundPost();
+            await PlaySynchroResultCard(
+                context.FinalCard,
+                context.ScreenCenterPos,
+                synchroAnim.Manager
+            );
+            await Task.WhenAll(mainTask ?? Task.CompletedTask, foregroundTask);
+        }
+        finally {
+            if (GodotObject.IsInstanceValid(synchroAnim)) synchroAnim.QueueFreeSafely();
+        }
+    }
+
+    private static async Task AnimateSynchroMaterials(
+        IReadOnlyList<Card3DEffectContext> contexts,
+        IReadOnlyList<SummonMaterial> materials,
+        BaseExtraSynchroCard synchroCard,
+        CoreCard coreCard,
+        Vector2 center
+    ) {
+        if (contexts.Count == 0) return;
+        Tween tween = contexts[0].DisplaySprite.CreateTween().SetParallel();
+        float totalWidth = (contexts.Count - 1) * 275f;
+        float exitDistance = Math.Max(
+            420f,
+            contexts[0].DisplaySprite.GetViewportRect().Size.Y * 0.46f
+        );
+        for (int i = 0; i < contexts.Count; i++) {
+            Card3DEffectContext ctx = contexts[i];
+            bool tuner = synchroCard.IsSynchroTuner(coreCard, materials[i]);
+            ConfigureCardEffect(
+                ctx,
+                tuner ? SynchroCyan : SynchroGreen,
+                tuner ? SynchroCyan : SynchroGreen,
+                2.1f,
+                0.12f
+            );
+            ctx.DisplaySprite.ZIndex = 1005;
+            ctx.DisplaySprite.GlobalPosition = center + new Vector2(i * 275f - totalWidth * 0.5f, 20f);
+            ctx.Pivot.RotationDegrees = new Vector3(-9f, (i - (contexts.Count - 1) * 0.5f) * -7f, 0f);
+            tween.TweenProperty(ctx.DisplaySprite, "modulate:a", 1f, 0.3f)
+                .SetDelay(i * 0.035f)
+                .SetEase(Tween.EaseType.Out)
+                .SetTrans(Tween.TransitionType.Cubic);
+            tween.TweenProperty(ctx.DisplaySprite, "global_position:y", center.Y - 28f, 0.72f)
+                .SetDelay(i * 0.035f)
+                .SetEase(Tween.EaseType.Out)
+                .SetTrans(Tween.TransitionType.Back);
+            // Unity/实机素材卡是向屏幕上方的同步光源汇聚，而不是缩入画面深处。
+            // 保留横向间隔的一小部分，避免多素材完全重叠成一个黑点。
+            float exitX = (i - (contexts.Count - 1) * 0.5f) * 42f;
+            Vector2 exitPoint = center + new Vector2(exitX, -exitDistance);
+            tween.TweenProperty(ctx.DisplaySprite, "global_position", exitPoint, 0.48f)
+                .SetDelay(0.72f)
+                .SetEase(Tween.EaseType.In)
+                .SetTrans(Tween.TransitionType.Quart);
+            tween.TweenProperty(ctx.DisplaySprite, "scale", Vector2.One * 0.38f, 0.48f)
+                .SetDelay(0.72f)
+                .SetEase(Tween.EaseType.In)
+                .SetTrans(Tween.TransitionType.Cubic);
+            tween.TweenProperty(
+                    ctx.Pivot,
+                    "rotation_degrees",
+                    new Vector3(-18f, exitX * 0.12f, 0f),
+                    0.48f
+                )
+                .SetDelay(0.72f)
+                .SetEase(Tween.EaseType.In)
+                .SetTrans(Tween.TransitionType.Cubic);
+            tween.TweenProperty(ctx.DisplaySprite, "modulate:a", 0f, 0.16f)
+                .SetDelay(1.04f);
+        }
+        await tween.AwaitFinished(contexts[0].DisplaySprite);
+    }
+
+    private static async Task PlaySynchroResultCard(
+        CardModel finalCard,
+        Vector2 center,
+        NSynchroSummonManager manager
+    ) {
+        await Card3DEffectUtil.RunMultipleCard3DEffect(
+            [finalCard],
+            async (contexts, target) => {
+                if (contexts.Count == 0) return;
+                Card3DEffectContext ctx = contexts[0];
+                ConfigureCardEffect(ctx, SynchroCyan, Colors.White, 2.8f, 0.08f);
+                ctx.DisplaySprite.GlobalPosition = target;
+                ctx.DisplaySprite.ZIndex = 1050;
+                ctx.Pivot.Position = new Vector3(0f, 0f, -2200f);
+                ctx.Pivot.RotationDegrees = new Vector3(-24f, 92f, -12f);
+
+                await VFXUtil.Wait(Math.Max(
+                    0f,
+                    NSynchroSummonManager.StrongSummon - manager.TimelineElapsed
+                ));
+                float revealDuration = Math.Max(
+                    0.05f,
+                    NSynchroSummonManager.StartCard - manager.TimelineElapsed
+                );
+                Tween strong = ctx.Pivot.CreateTween().SetParallel();
+                strong.TweenProperty(ctx.DisplaySprite, "modulate:a", 1f, 0.16f)
+                    .SetEase(Tween.EaseType.Out)
+                    .SetTrans(Tween.TransitionType.Cubic);
+                // 提前开始后保留到 StartCard 的完整时长；三次方 InOut 让首尾更稳、
+                // 中段斜率更陡，卡牌从纵深飞出的 3D 过程更容易被看清。
+                strong.TweenProperty(ctx.Pivot, "position", Vector3.Zero, revealDuration)
+                    .SetEase(Tween.EaseType.InOut)
+                    .SetTrans(Tween.TransitionType.Cubic);
+                strong.TweenProperty(ctx.Pivot, "rotation_degrees", new Vector3(0f, -4f, 0f), revealDuration)
+                    .SetEase(Tween.EaseType.InOut)
+                    .SetTrans(Tween.TransitionType.Cubic);
+                TweenShaderFloat(strong, ctx.CardMaterial, "outline_strength", 0.5f, 4.6f, 0.22f);
+                TweenShaderFloat(strong, ctx.GlowMaterial, "glow_opacity", 0f, 0.95f, 0.25f);
+                await strong.AwaitFinished(ctx.Pivot);
+
+                float settleDuration = Math.Max(
+                    0.05f,
+                    NSynchroSummonManager.MainDuration - manager.TimelineElapsed
+                );
+                Tween settle = ctx.Pivot.CreateTween().SetParallel();
+                settle.TweenProperty(ctx.Pivot, "rotation_degrees", new Vector3(0f, 3f, 0f), settleDuration)
+                    .SetEase(Tween.EaseType.InOut)
+                    .SetTrans(Tween.TransitionType.Sine);
+                TweenShaderFloat(
+                    settle,
+                    ctx.GlowMaterial,
+                    "glow_opacity",
+                    0.95f,
+                    0.55f,
+                    settleDuration
+                );
+                await settle.AwaitFinished(ctx.Pivot);
+            },
+            center,
+            scaleMultiplier: 1.34f,
+            horizontalSpacing: 0f,
+            initialOpacity: 0f
+        );
     }
 
     private static async Task AnimateXyzMaterials(
