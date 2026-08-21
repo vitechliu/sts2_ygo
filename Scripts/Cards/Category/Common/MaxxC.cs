@@ -13,6 +13,8 @@ namespace VYgo.Scripts.Cards.Category.Common;
 public class MaxxC() : BaseRightClickableMonsterCard(1, CardRarity.Rare, TargetType.None), IModRightClickableCard {
     public override int CardId => 23434538;
 
+    protected override RightClickType ClickType => RightClickType.Hand;
+
     public override int BaseAttackVar => 2;
     public override int BaseLifeVar => 2;
     

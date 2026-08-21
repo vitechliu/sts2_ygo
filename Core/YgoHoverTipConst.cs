@@ -88,7 +88,10 @@ public static class YgoHoverTipConst {
     public static IHoverTip HandAction() {
         return Base("HAND_ACTION");
     }
-    
+    //墓效
+    public static IHoverTip GraveyardAction() {
+        return Base("GRAVEYARD_ACTION");
+    }
     //超量素材
     public static IHoverTip XYZMaterial() {
         return Base("XYZ_MATERIAL");

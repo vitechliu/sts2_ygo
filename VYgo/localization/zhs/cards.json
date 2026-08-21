@@ -237,5 +237,8 @@
     "V_YGO_CARD_ASH_BLOSSOM_JOYOUS_SPRING.title": "灰流丽",
     "V_YGO_CARD_ASH_BLOSSOM_JOYOUS_SPRING.description": "[gold]召唤[/gold]([gold]{Attack}[/gold]/[blue]{Life}[/blue]),[gold]调整[/gold]\n",
     "V_YGO_CARD_STARDUST_DRAGON.title": "星尘龙",
-    "V_YGO_CARD_STARDUST_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack}[/gold]/[blue]{Life}[/blue])\n登场:获得1层[gold]缓冲[/gold]"
+    "V_YGO_CARD_STARDUST_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack}[/gold]/[blue]{Life}[/blue])\n登场:获得1层[gold]缓冲[/gold]",
+    "V_YGO_CARD_GLOW_UP_BULB.title": "成长的鳞茎",
+    "V_YGO_CARD_GLOW_UP_BULB.description": "[gold]召唤[/gold]([gold]{Attack}[/gold]/[blue]{Life}[/blue]),[gold]调整[/gold]\n[gold]墓效[/gold]:将[gold]抽牌堆[/gold]顶部的牌送入[gold]弃牌堆[/gold]，[gold]特召[/gold]，这个卡名的效果一场对局只能使用一次。",
+    "V_YGO_CARD_GLOW_UP_BULB.hintNoCards": "抽牌堆是空的，无法堆墓。"
 }

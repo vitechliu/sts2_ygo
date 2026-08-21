@@ -18,6 +18,8 @@ namespace VYgo.Scripts.Cards.Category.Playmaker;
 public class CatcheEveL2() : BaseRightClickableMonsterCard(1, CardRarity.Common, TargetType.None) {
     public override int CardId => 50690129;
 
+    protected override RightClickType ClickType => RightClickType.Hand;
+    
     public override int BaseAttackVar => 3;
     public override int BaseLifeVar => 2;
     public override int UpgradeAttackVar => 2;
