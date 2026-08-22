@@ -22,7 +22,7 @@ public sealed class CyberDragonSiegerAction : BasePerTurnMonsterAction {
 
     public override TargetType TargetType => MinionTargetTypes.AnyMinion;
 
-    protected override string? IntentIconPath => "res://images/powers/strength_power.png";
+    protected override string? IntentIconPath => "res://images/packed/intents/intent_buff.png";
     public override string? CustomIconPath => IntentIconPath;
 
     protected override async Task OnAct(

@@ -85,5 +85,7 @@
   "V_YGO_POWER_BATTLE_DESTRUCTION_PROTECTION_POWER.title": "战破抗性",
   "V_YGO_POWER_BATTLE_DESTRUCTION_PROTECTION_POWER.description": "本次攻击中不会被战斗破坏。",
   "FLICK_CLOWN_ACTION.title": "滑动抽取",
-  "FLICK_CLOWN_ACTION.description": "[gold]启动[/gold]：失去1点生命，抽{Amount}张牌。每回合限1次。"
+  "FLICK_CLOWN_ACTION.description": "[gold]启动[/gold]：失去1点生命，抽{Amount}张牌。每回合限1次。",
+  "CYBER_VALLEY_ACTION.title": "形态变换",
+  "CYBER_VALLEY_ACTION.description": "[gold]启动[/gold]：将自身的来源卡牌[gold]消耗[/gold]并使自身离场，从当前可发动的形态中选择1项。每回合限1次。"
 }
