@@ -22,6 +22,10 @@ public abstract class BaseMonsterCard(
     bool showInCardLibrary = true)
     : BaseVYgoCard(baseCost, CardType.Skill, rarity, target, showInCardLibrary) {
     private Action<Creature>? _summonResultObserver;
+    private SummonContext? _lastSummonContext;
+
+    /// <summary>最近一次召唤的上下文，供配对随从在 OnSummonYgo 中判断是否为特召。</summary>
+    internal SummonContext? LastSummonContext => _lastSummonContext;
 
     protected IHoverTip BaseSummonHoverTip => YgoHoverTipConst.Summon(this);
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [BaseSummonHoverTip];
@@ -97,6 +101,7 @@ public abstract class BaseMonsterCard(
         var c = this.YgoGetMonster();
         if (c == null) return null;
         var combatState = Owner.Creature.CombatState;
+        _lastSummonContext = summonContext;
         await MonsterSummonHook.BeforeMonsterSummon(
             combatState,
             choiceContext,
