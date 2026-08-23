@@ -8,6 +8,7 @@ using VYgo.Core.Cards;
 using VYgo.Scripts.Characters;
 using VYgo.Scripts.Pools;
 using VYgo.Scripts.Powers;
+using VYgo.Scripts.Var;
 
 namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
@@ -24,6 +25,8 @@ public class CyberDragonInfinity()
     private const bool shouldShowInCardLibrary = true;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new AttackVar(BaseAttackVar),
+        new LifeVar(BaseLifeVar),
         new PowerVar<NegatingPower>(1m)
     ];
     
