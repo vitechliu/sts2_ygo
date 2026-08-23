@@ -250,5 +250,19 @@
     "V_YGO_CARD_CYBER_VALLEY_TRIBUTE_FORM.selectionScreenPrompt": "请选择1只怪兽作为祭品。",
     "V_YGO_CARD_CYBER_VALLEY_RECYCLE_FORM.title": "电子多变龙·回收形态",
     "V_YGO_CARD_CYBER_VALLEY_RECYCLE_FORM.description": "从[gold]弃牌堆[/gold]选择1张牌加入[gold]手牌[/gold]。",
-    "V_YGO_CARD_CYBER_VALLEY_RECYCLE_FORM.selectionScreenPrompt": "请选择1张牌加入手牌。"
+    "V_YGO_CARD_CYBER_VALLEY_RECYCLE_FORM.selectionScreenPrompt": "请选择1张牌加入手牌。",
+    "V_YGO_CARD_CYBER_ETERNITY_DRAGON.title": "电子永恒龙",
+    "V_YGO_CARD_CYBER_ETERNITY_DRAGON.description": "[gold]融合召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]「电子龙」怪兽＋机械族怪兽×2。[/aqua]\n[gold]启动[/gold]：[gold]弃牌堆[/gold]每有一只融合怪兽，获得[gold]强化[/gold]0/{BoostLife:diff()}，并获得{Energy:energyIcons()}。",
+    "V_YGO_CARD_FINAL_STRIKE_CYBER_END_DRAGON.title": "终击龙-电子终结龙",
+    "V_YGO_CARD_FINAL_STRIKE_CYBER_END_DRAGON.description": "[gold]融合召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]机械族怪兽×3。[/aqua]\n[gold]登场[/gold]：失去{LifeLoss}点生命，将1张「[gold]限制解除[/gold]」加入手牌；若融合素材均为光属性，则不失去生命。",
+    "V_YGO_CARD_LIMITER_REMOVAL.title": "限制解除",
+    "V_YGO_CARD_LIMITER_REMOVAL.description": "本回合，场上所有机械族怪兽攻击力翻倍；回合结束时破坏这些怪兽。",
+    "V_YGO_CARD_CYBERDARK_DRAGON.title": "铠黑龙-电子暗黑龙",
+    "V_YGO_CARD_CYBERDARK_DRAGON.description": "[gold]融合召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]「电子暗黑」怪兽×3。[/aqua]\n[gold]登场[/gold]：从[gold]弃牌堆[/gold]选择1只怪兽[gold]装备[/gold]，并获得其攻击力加成；弃牌堆每有1只怪兽，获得[gold]强化[/gold]{BoostAttack:diff()}/0。",
+    "V_YGO_CARD_CYBERDARK_DRAGON.selectionScreenPrompt": "请选择要装备的怪兽。",
+    "V_YGO_CARD_CYBERDARKNESS_DRAGON.title": "铠狱龙-电子暗冥龙",
+    "V_YGO_CARD_CYBERDARKNESS_DRAGON.description": "[gold]融合召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]「电子暗黑」怪兽×5。[/aqua]\n[gold]登场[/gold]：从[gold]弃牌堆[/gold]选择1只怪兽[gold]装备[/gold]，并获得其攻击力加成。\n你的回合结束时，获得{NegatingPower:diff()}层[gold]无效[/gold]。",
+    "V_YGO_CARD_CYBERDARKNESS_DRAGON.selectionScreenPrompt": "请选择要装备的怪兽。",
+    "V_YGO_CARD_CYBERDARK_END_DRAGON.title": "铠皇龙-电子暗黑终结龙",
+    "V_YGO_CARD_CYBERDARK_END_DRAGON.description": "[gold]融合召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]「铠黑龙-电子暗黑龙」＋「电子终结龙」。[/aqua]\n每[gold]装备[/gold]1张卡，每回合可以额外攻击1次。\n你的回合结束时，从[gold]弃牌堆[/gold]选择1只怪兽[gold]装备[/gold]给此怪兽。"
 }

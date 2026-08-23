@@ -87,5 +87,14 @@
   "FLICK_CLOWN_ACTION.title": "滑动抽取",
   "FLICK_CLOWN_ACTION.description": "[gold]启动[/gold]：失去1点生命，抽{Amount}张牌。每回合限1次。",
   "CYBER_VALLEY_ACTION.title": "形态变换",
-  "CYBER_VALLEY_ACTION.description": "[gold]启动[/gold]：将自身的来源卡牌[gold]消耗[/gold]并使自身离场，从当前可发动的形态中选择1项。每回合限1次。"
+  "CYBER_VALLEY_ACTION.description": "[gold]启动[/gold]：将自身的来源卡牌[gold]消耗[/gold]并使自身离场，从当前可发动的形态中选择1项。每回合限1次。",
+  "CYBER_ETERNITY_DRAGON_ACTION.title": "永恒汲取",
+  "CYBER_ETERNITY_DRAGON_ACTION.description": "[gold]启动[/gold]：[gold]弃牌堆[/gold]每有一只融合怪兽，获得[gold]强化[/gold]0/{Amount}，并获得1点能量。每回合限1次。",
+  "V_YGO_POWER_CYBERDARKNESS_DRAGON_POWER.title": "暗冥障壁",
+  "V_YGO_POWER_CYBERDARKNESS_DRAGON_POWER.description": "你的回合结束时，获得{Amount}层[gold]无效[/gold]。",
+  "V_YGO_POWER_SELF_DESTROY_POWER.title": "限制解除",
+  "V_YGO_POWER_SELF_DESTROY_POWER.description": "回合结束时被破坏。",
+  "V_YGO_POWER_CYBERDARK_END_DRAGON_POWER.title": "暗黑终结装备",
+  "V_YGO_POWER_CYBERDARK_END_DRAGON_POWER.description": "你的回合结束时，从[gold]弃牌堆[/gold]选择1只怪兽[gold]装备[/gold]给此怪兽。",
+  "V_YGO_POWER_CYBERDARK_END_DRAGON_POWER.selectionScreenPrompt": "请选择要装备的怪兽。"
 }
