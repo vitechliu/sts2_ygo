@@ -7,7 +7,7 @@ using VYgo.Core.Cards;
 
 namespace VYgo.Scripts.Cards.Category.Common;
 
-[RegisterCard(typeof(CommonCardPool))]
+[RegisterCard(typeof(EventCardPool))]
 public class SprightElf() : BaseExtraLinkCard(-1, CardRarity.Event, TargetType.None) {
     public override int CardId => 27381364;
 

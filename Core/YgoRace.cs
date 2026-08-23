@@ -11,6 +11,7 @@ public enum YgoRace {
     Machine,
     Dragon,
     Cyberse,
+    Fiend,
 }
 
 public static class YgoRaceExtensions {
@@ -31,6 +32,7 @@ public static class YgoRaceExtensions {
             YgoRace.Machine => "机械族",
             YgoRace.Dragon => "龙族",
             YgoRace.Cyberse => "电子界族",
+            YgoRace.Fiend => "恶魔族",
             _ => throw new ArgumentOutOfRangeException(nameof(race), race, null),
         };
     }

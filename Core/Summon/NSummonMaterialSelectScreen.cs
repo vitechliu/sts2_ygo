@@ -294,6 +294,8 @@ public sealed partial class NSummonMaterialSelectScreen : NCardGridSelectionScre
                 PileType.Hand => "V_YGO_SUMMON_MATERIAL_SELECT.hand",
                 PileType.Discard => "V_YGO_SUMMON_MATERIAL_SELECT.discard",
                 PileType.Exhaust => "V_YGO_SUMMON_MATERIAL_SELECT.exhaust",
+                _ when material.SourcePile == Entry.EquipPile =>
+                    "V_YGO_SUMMON_MATERIAL_SELECT.equip",
                 _ => "V_YGO_SUMMON_MATERIAL_SELECT.pile"
             };
         badge.Text = new LocString("cards", key).GetFormattedText();
@@ -306,6 +308,7 @@ public sealed partial class NSummonMaterialSelectScreen : NCardGridSelectionScre
                     PileType.Hand => new Color("ffd76a"),
                     PileType.Discard => new Color("c5b3ff"),
                     PileType.Exhaust => new Color("ff9a8f"),
+                    _ when material.SourcePile == Entry.EquipPile => new Color("67d9ff"),
                     _ => Colors.White
                 }
         );
@@ -336,7 +339,8 @@ public sealed partial class NSummonMaterialSelectScreen : NCardGridSelectionScre
                 PileType.Hand,
                 PileType.Discard,
                 PileType.Exhaust,
-                Entry.MonsterPile
+                Entry.MonsterPile,
+                Entry.EquipPile
             }
             .Distinct()
             .Select(pileType => pileType.GetPile(_owner)));
