@@ -102,5 +102,13 @@
     "LIMITER_REMOVAL_MINION.name": "限制解除",
     "CYBERDARK_DRAGON_MINION.name": "铠黑龙-电子暗黑龙",
     "CYBERDARKNESS_DRAGON_MINION.name": "铠狱龙-电子暗冥龙",
-    "CYBERDARK_END_DRAGON_MINION.name": "铠皇龙-电子暗黑终结龙"
+    "CYBERDARK_END_DRAGON_MINION.name": "铠皇龙-电子暗黑终结龙",
+    "SPRIGHT_BLUE_MINION.name": "卫星闪灵·蓝色喷流灵",
+    "SPRIGHT_JET_MINION.name": "卫星闪灵·喷流灵",
+    "SPRIGHT_RED_MINION.name": "卫星闪灵·红色精灵",
+    "SPRIGHT_CARROT_MINION.name": "卫星闪灵·萝卜精灵",
+    "GIGANTIC_SPRIGHT_MINION.name": "巨大喷流卫星闪灵",
+    "SPRIGHT_ELF_MINION.name": "卫星闪灵·淘气精灵",
+    "SPRIGHT_STARTER_MINION.name": "卫星闪灵启辉器",
+    "SPRIGHT_GAMMA_BURST_MINION.name": "卫星闪灵伽马暴"
 }

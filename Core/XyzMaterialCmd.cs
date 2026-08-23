@@ -118,6 +118,10 @@ public static class XyzMaterialCmd {
             return false;
         }
 
+        if (target.Monster is BaseMonster baseMonster) {
+            await baseMonster.OnXyzMaterialsAttached(context.ChoiceContext, context.Owner, cards);
+        }
+
         return true;
     }
 
