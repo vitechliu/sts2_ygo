@@ -48,6 +48,7 @@
         <Content Include="publish.sh"/>
         <Content Include="README.md"/>
         <Content Include="Scripts\Cards\.gdignore"/>
+        <Content Include="STEAM_DESC_CN.md" />
         <Content Include="VYgo\localization\**"/>
         <Content Include="Web\.gdignore" />
     </ItemGroup>
