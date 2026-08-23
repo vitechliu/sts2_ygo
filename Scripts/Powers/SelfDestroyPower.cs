@@ -22,9 +22,9 @@ public class SelfDestroyPower : ModPowerTemplate
         BigIconPath: "res://VYgo/images/powers/self_destroy_power.png"
     );
 
-    public override async Task BeforeSideTurnEndEarly(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
-    {
-        if (participants.Contains(Owner)) {
+    public override async Task BeforeSideTurnEndEarly(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants) {
+        var enumerable = participants.ToList();
+        if (enumerable.Contains(Owner) || enumerable.Contains(Owner.PetOwner?.Creature)) {
             await PowerCmd.Remove(this);
             Flash();
             await CreatureCmd.Kill(Owner);
