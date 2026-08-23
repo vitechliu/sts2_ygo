@@ -406,6 +406,17 @@ public static class SummonUtil {
         return materials;
     }
 
+    public static IReadOnlyList<SummonMaterial> GetEquippedMonsterMaterials(
+        Player owner,
+        Func<SummonMaterial, bool>? filter = null
+    ) {
+        return EquipCmd.GetAllEquipment(owner)
+            .Where(card => card is BaseMonsterCard && card.Pile?.Type == Entry.EquipPile)
+            .Select(SummonMaterial.FromMonsterCard)
+            .Where(material => filter?.Invoke(material) ?? true)
+            .ToList();
+    }
+
     public static IReadOnlyList<SummonMaterial> GetFieldAndHandMonsterMaterials(
         Player owner,
         Func<SummonMaterial, bool>? filter = null
@@ -777,13 +788,18 @@ public static class SummonUtil {
                 continue;
             }
 
-            if (card is not BaseMonsterCard { IsExtra: false }
-                || material.SourcePile is not (
-                    PileType.Draw
-                    or PileType.Hand
-                    or PileType.Discard
-                    or PileType.Exhaust
-                )) {
+            if (card is not BaseMonsterCard monsterCard) {
+                return false;
+            }
+
+            bool validPile = material.SourcePile switch {
+                PileType.Draw or PileType.Hand or PileType.Discard or PileType.Exhaust =>
+                    !monsterCard.IsExtra,
+                _ when material.SourcePile == Entry.EquipPile =>
+                    EquipCmd.IsOnField(owner, card),
+                _ => false
+            };
+            if (!validPile) {
                 return false;
             }
         }
@@ -795,7 +811,8 @@ public static class SummonUtil {
         SummonMaterial material,
         PileType destination
     ) {
-        return destination is PileType.Draw or PileType.Discard or PileType.Exhaust
+        bool validDestination = destination is PileType.Draw or PileType.Discard or PileType.Exhaust;
+        return validDestination
             && (material.IsField || destination != material.SourcePile);
     }
 
@@ -891,8 +908,21 @@ public static class SummonUtil {
                 }
             }
 
+            List<CardModel> equippedCards = moves
+                .Where(move => !move.Material.IsField
+                    && move.Material.SourcePile == Entry.EquipPile
+                    && move.Destination == PileType.Discard)
+                .Select(move => move.Material.Card!)
+                .ToList();
+            foreach (CardModel equippedCard in equippedCards) {
+                if (!await EquipCmd.SendToGraveyard(choiceContext, equippedCard)) {
+                    return false;
+                }
+            }
+
             List<CardModel> discardCards = moves
                 .Where(move => !move.Material.IsField
+                    && move.Material.SourcePile != Entry.EquipPile
                     && move.Destination == PileType.Discard)
                 .Select(move => move.Material.Card!)
                 .ToList();

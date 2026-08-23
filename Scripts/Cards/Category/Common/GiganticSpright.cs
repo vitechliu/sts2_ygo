@@ -7,7 +7,7 @@ using VYgo.Core.Cards;
 
 namespace VYgo.Scripts.Cards.Category.Common;
 
-[RegisterCard(typeof(CommonCardPool))]
+[RegisterCard(typeof(EventCardPool))]
 public class GiganticSpright() : BaseExtraXyzCard(-1, CardRarity.Event, TargetType.None) {
     public override int CardId => 54498517;
 

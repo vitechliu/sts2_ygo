@@ -5,7 +5,7 @@ using VYgo.Core;
 
 namespace VYgo.Scripts.Cards.Category.Common;
 
-[RegisterCard(typeof(CommonCardPool))]
+[RegisterCard(typeof(EventCardPool))]
 public class SprightBlue() : BaseSprightMonsterCard(1, CardRarity.Event) {
     public override int CardId => 76145933;
 

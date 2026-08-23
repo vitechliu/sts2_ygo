@@ -16,4 +16,5 @@ public static class YgoArchetypes {
     public static readonly YgoArchetypeCode CyberDragon = new(0x1093); // 电子龙
     public static readonly YgoArchetypeCode Cyberdark = new(0x4093); // 电子暗黑
     public static readonly YgoArchetypeCode Spright = new(0x0180); // 卫星闪灵
+    public static readonly YgoArchetypeCode Fiendsmith = new(0x01B0); // 刻魔
 }

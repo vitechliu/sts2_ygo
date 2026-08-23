@@ -11,7 +11,7 @@ using VYgo.Utils;
 
 namespace VYgo.Scripts.Cards.Category.Common;
 
-[RegisterCard(typeof(CommonCardPool))]
+[RegisterCard(typeof(EventCardPool))]
 public class SprightStarter() : BaseSpellCard(1, CardType.Skill, CardRarity.Event, TargetType.None) {
     public override int CardId => 15443125;
 
