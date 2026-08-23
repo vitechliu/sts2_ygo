@@ -3,12 +3,12 @@ using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Multiplayer;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Multiplayer;
 using MegaCrit.Sts2.Core.Multiplayer.Serialization;
 using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib;
-using STS2RitsuLib.Models.Identity;
 using STS2RitsuLib.Networking.ManagedActions;
 using VYgo.Scripts;
 
@@ -16,7 +16,7 @@ namespace VYgo.Core;
 
 public static class DirectExtraDeckSummonNetAction {
     private const string ActionModuleId = "vygo";
-    private const string ActionKey = "direct_extra_deck_summon_v1";
+    private const string ActionKey = "direct_extra_deck_summon_v2";
 
     private static readonly RitsuLibManagedNetActionDescriptor<Payload> Descriptor = new(
         ActionModuleId,
@@ -43,20 +43,19 @@ public static class DirectExtraDeckSummonNetAction {
             return false;
         }
 
-        return RitsuLibFramework.TryGetModelIdentity(card, out _);
+        return NetCombatCardDb.Instance.TryGetCardId(card, out _);
     }
 
     public static bool Request(CardModel card) {
         if (!CanRequest(card)
-            || card.Owner == null
-            || !RitsuLibFramework.TryGetModelIdentity(card, out ModModelIdentityToken token)) {
+            || card.Owner == null) {
             return false;
         }
 
         return RitsuLibManagedNetActions.Request(
             RunManager.Instance,
             Descriptor,
-            new Payload(card.Owner.NetId, token),
+            new Payload(card.Owner.NetId, card.Id, NetCombatCard.FromModel(card)),
             card.Owner.NetId
         );
     }
@@ -87,8 +86,8 @@ public static class DirectExtraDeckSummonNetAction {
     private static byte[] Serialize(Payload payload) {
         var writer = new PacketWriter { WarnOnGrow = false };
         writer.WriteULong(payload.OwnerNetId);
-        writer.WriteFullModelId(payload.TargetToken.ModelId);
-        writer.WriteUInt(payload.TargetToken.Identity.Value);
+        writer.WriteFullModelId(payload.TargetModelId);
+        writer.Write(payload.TargetCard);
         writer.ZeroByteRemainder();
         return writer.Buffer.AsSpan(0, writer.BytePosition).ToArray();
     }
@@ -98,18 +97,36 @@ public static class DirectExtraDeckSummonNetAction {
         reader.Reset(bytes.ToArray());
         ulong ownerNetId = reader.ReadULong();
         var modelId = reader.ReadFullModelId();
-        var identity = new ModModelIdentity(reader.ReadUInt());
-        return new Payload(ownerNetId, new ModModelIdentityToken(identity, modelId));
+        var targetCard = reader.Read<NetCombatCard>();
+        return new Payload(ownerNetId, modelId, targetCard);
     }
 
     private static async Task Execute(RitsuLibManagedNetActionContext<Payload> context) {
         if (context.Message.OwnerNetId != context.Player.NetId
             || !CombatManager.Instance.IsInProgress
             || CombatManager.Instance.IsEnding
-            || !context.Player.Creature.IsAlive
-            || !RitsuLibFramework.TryResolveModelIdentity(context.Message.TargetToken, out var model)
-            || model is not CardModel card
-            || !TryGetAvailableSpec(card, context.Player, out DirectExtraDeckSummonSpec spec)) {
+            || !context.Player.Creature.IsAlive) {
+            Entry.Logger.Warn(
+                $"直接额外卡组召唤在执行前失效：玩家={context.Player.NetId}，" +
+                $"载荷玩家={context.Message.OwnerNetId}，战斗中={CombatManager.Instance.IsInProgress}，" +
+                $"战斗结束中={CombatManager.Instance.IsEnding}，玩家存活={context.Player.Creature.IsAlive}。");
+            return;
+        }
+
+        CardModel? card = context.Message.TargetCard.ToCardModelOrNull();
+        if (card == null || card.Id != context.Message.TargetModelId) {
+            Entry.Logger.Warn(
+                $"直接额外卡组召唤无法解析目标卡：玩家={context.Player.NetId}，" +
+                $"战斗卡编号={context.Message.TargetCard.CombatCardIndex}，" +
+                $"预期模型={context.Message.TargetModelId}，实际模型={card?.Id.ToString() ?? "<null>"}。");
+            return;
+        }
+
+        if (!TryGetAvailableSpec(card, context.Player, out DirectExtraDeckSummonSpec spec)) {
+            Entry.Logger.Warn(
+                $"直接额外卡组召唤目标当前不可用：玩家={context.Player.NetId}，" +
+                $"战斗卡编号={context.Message.TargetCard.CombatCardIndex}，目标={card.Id}，" +
+                $"牌堆={card.Pile?.Type.ToString() ?? "<null>"}。");
             return;
         }
 
@@ -128,6 +145,7 @@ public static class DirectExtraDeckSummonNetAction {
 
     private readonly record struct Payload(
         ulong OwnerNetId,
-        ModModelIdentityToken TargetToken
+        ModelId TargetModelId,
+        NetCombatCard TargetCard
     );
 }
