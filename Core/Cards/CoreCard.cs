@@ -58,6 +58,10 @@ public record CoreCard(
         Types?.Contains("超量") == true
         || Types?.Contains("XYZ", StringComparison.OrdinalIgnoreCase) == true;
 
+    public bool IsLinkMonster =>
+        Types?.Contains("连接", StringComparison.Ordinal) == true
+        || Types?.Contains("Link", StringComparison.OrdinalIgnoreCase) == true;
+
     /// <summary>
     /// 卡表中的调整标记可能来自中文 ygocdb 数据，也可能来自英文导入数据。
     /// 特殊的“视为调整”效果由同调怪兽卡的规则钩子处理，不应写回核心卡数据。
@@ -74,7 +78,8 @@ public record CoreCard(
 
     public int? LinkCount {
         get {
-            if (Def == null) return null;
+            // 非连接怪兽的 Def 是普通防御力，不能按连接标记位图解析。
+            if (!IsLinkMonster || Def == null) return null;
             int linkCount = 0;
             for (int i = 0; i < 9; i++)
                 if (((Def >> i) & 1u) > 0 && i != 4)

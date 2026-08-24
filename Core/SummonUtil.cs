@@ -676,8 +676,8 @@ public static class SummonUtil {
         if (card is not BaseExtraLinkCard linkCard) return null;
 
         CoreCard? coreCard = linkCard.YgoGetCore();
-        if (coreCard == null) {
-            Entry.Logger.Error("Failed to get core card: " + linkCard.CardId);
+        if (coreCard?.LinkCount is not > 0) {
+            Entry.Logger.Error("Failed to get Link rating data: " + linkCard.CardId);
             return null;
         }
 
@@ -686,13 +686,56 @@ public static class SummonUtil {
             .Where(linkCard.CanUseLinkMaterial)
             .ToList();
 
+        int targetLinkValue = coreCard.LinkCount.Value;
+        int? configuredMax = linkCard.GetMaxLinkMaterialCount(coreCard);
+        int maxMaterialCount = Math.Min(configuredMax ?? targetLinkValue, targetLinkValue);
+
         return new SummonMaterialSelectionSpec(
             candidates,
             linkCard.GetMinLinkMaterialCount(coreCard),
-            linkCard.GetMaxLinkMaterialCount(coreCard),
+            maxMaterialCount,
             materials => linkCard.HasValidLinkMaterials(coreCard, materials)
                 && CanSummonWithMaterials(owner, materials)
         );
+    }
+
+    /// <summary>
+    /// 校验一组素材能否精确组成目标怪兽的连接值。
+    /// 普通怪兽只能计为 1；连接怪兽可以计为 1 或自身 LINK 值，
+    /// 但不能计为两者之间的数值。
+    /// </summary>
+    public static bool HasExactLinkMaterialValue(
+        CoreCard targetCard,
+        IReadOnlyList<SummonMaterial> materials
+    ) {
+        if (targetCard.LinkCount is not > 0 || materials.Count == 0) return false;
+
+        int targetLinkValue = targetCard.LinkCount.Value;
+        HashSet<int> reachableValues = [0];
+
+        foreach (SummonMaterial material in materials) {
+            int materialLinkValue = Math.Max(1, material.CoreCard?.LinkCount ?? 1);
+            HashSet<int> nextValues = [];
+
+            foreach (int currentValue in reachableValues) {
+                int valueAsOneMaterial = currentValue + 1;
+                if (valueAsOneMaterial <= targetLinkValue) {
+                    nextValues.Add(valueAsOneMaterial);
+                }
+
+                if (materialLinkValue > 1) {
+                    int valueAsLinkRating = currentValue + materialLinkValue;
+                    if (valueAsLinkRating <= targetLinkValue) {
+                        nextValues.Add(valueAsLinkRating);
+                    }
+                }
+            }
+
+            if (nextValues.Count == 0) return false;
+            reachableValues = nextValues;
+        }
+
+        return reachableValues.Contains(targetLinkValue);
     }
 
     internal static SummonMaterialSelectionSpec? BuildXyzMaterialSelection(
