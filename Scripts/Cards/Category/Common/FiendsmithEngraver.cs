@@ -25,7 +25,6 @@ public class FiendsmithEngraver()
     public override int BaseLifeVar => 7;
 
     protected override RightClickType ClickType => RightClickType.Hand;
-    protected override int RightClickCost => IsUpgraded ? 1 : 2;
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         BaseSummonHoverTip,

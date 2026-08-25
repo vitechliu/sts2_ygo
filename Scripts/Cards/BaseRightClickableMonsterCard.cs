@@ -11,7 +11,7 @@ public abstract class BaseRightClickableMonsterCard(
     bool showInCardLibrary = true)
     : BaseMonsterCard(baseCost, rarity, target, showInCardLibrary), IModRightClickableCard {
 
-    protected virtual int RightClickCost => baseCost;
+    protected virtual int RightClickCost => EnergyCost.GetAmountToSpend();
     
     protected virtual bool ShouldSpendResources => ClickType == RightClickType.Hand;
     

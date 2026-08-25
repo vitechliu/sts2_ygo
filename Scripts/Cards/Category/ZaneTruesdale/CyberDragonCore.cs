@@ -47,7 +47,7 @@ public class CyberDragonCore() : BaseMonsterCard(energyCost,rarity, targetType, 
 
     private static bool IsCyberDragonSpellOrTrap(CardModel card) {
         return card is BaseVYgoCard ygoCard
-            && ygoCard.ContainArchetype(YgoArchetypes.CyberDragon)
+            && ygoCard.ContainArchetype(YgoArchetypes.Cyber)
             && ygoCard.YgoCardType is YgoType.spell or YgoType.trap;
     }
 

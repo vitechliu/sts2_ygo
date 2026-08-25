@@ -1,4 +1,7 @@
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Combat.Powers;
@@ -22,4 +25,18 @@ public abstract class TemporaryAttackPower<T> : ModTemporaryAppliedPowerTemplate
         BigIconPath: "res://images/powers/strength_power.png"
     );
     public override LocString Description => new("powers", "V_YGO_POWER_TEMPORARY_ATTACK_POWER.description");
+
+    public override Task AfterSideTurnEnd(
+        PlayerChoiceContext choiceContext,
+        CombatSide side,
+        IEnumerable<Creature> participants
+    ) {
+        List<Creature> effectiveParticipants = participants.ToList();
+        if (Owner.PetOwner is { } petOwner
+            && effectiveParticipants.Contains(petOwner.Creature)) {
+            effectiveParticipants.Add(Owner);
+        }
+
+        return base.AfterSideTurnEnd(choiceContext, side, effectiveParticipants);
+    }
 }

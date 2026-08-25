@@ -37,11 +37,11 @@ public class PowerBond() : BaseSpellCard(energyCost, CardType.Skill, rarity, tar
         ));
 
         if (!result.Success
-            || result.SummonedCard is not BaseMonsterCard fusionCard
+            || result.SummonedCard is not BaseMonsterCard
             || result.SummonedCreature is not { } summonedCreature) {
             return;
         }
-        int attackIncrease = fusionCard.Attack;
+        int attackIncrease = summonedCreature.GetPower<AttackPower>()?.Amount ?? 0;
         if (attackIncrease <= 0) return;
 
         await PowerCmd.Apply<AttackPower>(

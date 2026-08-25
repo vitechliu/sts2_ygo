@@ -836,8 +836,8 @@ public static class SummonUtil {
             }
 
             bool validPile = material.SourcePile switch {
-                PileType.Draw or PileType.Hand or PileType.Discard or PileType.Exhaust =>
-                    !monsterCard.IsExtra,
+                PileType.Draw or PileType.Hand => !monsterCard.IsExtra,
+                PileType.Discard or PileType.Exhaust => true,
                 _ when material.SourcePile == Entry.EquipPile =>
                     EquipCmd.IsOnField(owner, card),
                 _ => false
@@ -985,7 +985,9 @@ public static class SummonUtil {
                 }
             }
 
-            return moves.All(move => move.Material.Card?.Pile?.Type == move.Destination);
+            // 素材移动成功后，送墓/除外触发可以立即把卡移动到其他区域。
+            // 此类后续移动不应反过来令已经完成的素材消费失败。
+            return true;
         }
         catch (Exception ex) {
             Entry.Logger.Error("Failed to consume summon materials: " + ex);
