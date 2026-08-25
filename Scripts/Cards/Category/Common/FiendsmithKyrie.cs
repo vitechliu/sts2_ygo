@@ -11,7 +11,7 @@ using VYgo.Scripts.Powers;
 
 namespace VYgo.Scripts.Cards.Category.Common;
 
-[RegisterCard(typeof(EventCardPool))]
+[RegisterCard(typeof(YgoEventCardPool))]
 public class FiendsmithKyrie()
     : BaseTrapCard(1, CardType.Power, CardRarity.Event, TargetType.None),
         IModRightClickableCard {

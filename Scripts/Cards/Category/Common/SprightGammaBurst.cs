@@ -12,7 +12,7 @@ using VYgo.Scripts.Var;
 
 namespace VYgo.Scripts.Cards.Category.Common;
 
-[RegisterCard(typeof(EventCardPool))]
+[RegisterCard(typeof(YgoEventCardPool))]
 public class SprightGammaBurst() : BaseSpellCard(1, CardType.Skill, CardRarity.Event, TargetType.None) {
     public override int CardId => 42431833;
 

@@ -182,7 +182,7 @@ public static class Entry {
         RegisterCommonPool<CommonCardPool>("v_ygo_common", "common.png");
         RegisterCommonPool<LinkCardPool>("v_ygo_link", "link.png");
         RegisterCommonPool<FusionCardPool>("v_ygo_fusion", "fusion.png");
-        RegisterCommonPool<EventCardPool>("v_ygo_event", "event.png");
+        RegisterCommonPool<YgoEventCardPool>("v_ygo_event", "event.png");
     }
     //注册额外卡组
     static void RegisterCardPile() {
