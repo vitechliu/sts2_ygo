@@ -222,40 +222,6 @@ public static class Entry {
             BuildYgoIdCaches();
         });
         
-        //令额外卡组的卡永远不能出现在抽牌堆和手牌
-        RitsuLibFramework.SubscribeLifecycle<CardMovedBetweenPilesEvent>(
-            evt => {
-                CardModel card = evt.Card;
-                HashSet<PileType> types = [PileType.Draw, PileType.Hand];
-                if (card is not BaseMonsterCard { IsExtra: true }) {
-                    return;
-                }
-
-                if (card.Pile != null && types.Contains(card.Pile.Type)) {
-                    CardPile extraPile = ExtraPile.GetPile(card.Owner);
-                    card.Pile.RemoveInternal(card, silent: true);
-                    extraPile.AddInternal(card, silent: true);
-                    extraPile.InvokeCardAddFinished();
-                    Logger.Info($"CardForceToExtra:{card.Title} From:{evt.PreviousPile}");
-                }
-            });
-        // RitsuLibFramework.SubscribeLifecycle<CombatStartingEvent>((@event, disposable) => {
-        //     Logger.Info("CombatStarting");
-        //     var combatState = @event.CombatState;
-        //     foreach (var p in combatState.Players) {
-        //         if (p.Character is RedhatCharacter) {
-        //             Logger.Info("Found Redhat Character");
-        //             //查找额外卡牌
-        //             if (p.PlayerCombatState == null) continue;
-        //             foreach (var card in p.PlayerCombatState.AllCards) {
-        //                 Logger.Info("Found Redhat Character Card:" + card.Title);
-        //                 if (card is BaseMonsterCard monsterCard && monsterCard.IsExtra) {
-        //                     CardPileCmd.Add(card, ExtraPile);
-        //                 }
-        //             }
-        //         }
-        //     }
-        // });
     }
 
     static void BuildYgoIdCaches() {
