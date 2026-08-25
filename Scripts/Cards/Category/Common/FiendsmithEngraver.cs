@@ -16,7 +16,7 @@ using VYgo.Utils;
 
 namespace VYgo.Scripts.Cards.Category.Common;
 
-[RegisterCard(typeof(EventCardPool))]
+[RegisterCard(typeof(YgoEventCardPool))]
 public class FiendsmithEngraver()
     : BaseRightClickableMonsterCard(2, CardRarity.Event, TargetType.None) {
     public override int CardId => 60764609;

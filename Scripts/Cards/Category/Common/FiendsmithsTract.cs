@@ -10,7 +10,7 @@ using VYgo.Scripts.Pools;
 
 namespace VYgo.Scripts.Cards.Category.Common;
 
-[RegisterCard(typeof(EventCardPool))]
+[RegisterCard(typeof(YgoEventCardPool))]
 public class FiendsmithsTract() : BaseSpellCard(1, CardType.Skill, CardRarity.Event, TargetType.None) {
     public override int CardId => 98567237;
 

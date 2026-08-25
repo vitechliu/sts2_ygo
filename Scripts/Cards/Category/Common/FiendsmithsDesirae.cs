@@ -10,7 +10,7 @@ using VYgo.Scripts.Var;
 
 namespace VYgo.Scripts.Cards.Category.Common;
 
-[RegisterCard(typeof(EventCardPool))]
+[RegisterCard(typeof(YgoEventCardPool))]
 public class FiendsmithsDesirae()
     : BaseExtraFusionCard(-1, CardRarity.Event, TargetType.None) {
     public override int CardId => 82135803;
