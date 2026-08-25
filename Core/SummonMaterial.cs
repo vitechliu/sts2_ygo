@@ -85,8 +85,12 @@ public sealed record SummonMaterial {
     }
 
     public static bool IsMonsterCardInPile(CardModel card, PileType pileType) {
-        return card is BaseMonsterCard { IsExtra: false }
-            && card.Pile?.Type == pileType;
+        if (card is not BaseMonsterCard monsterCard || card.Pile?.Type != pileType) {
+            return false;
+        }
+
+        return pileType is PileType.Discard or PileType.Exhaust
+            || !monsterCard.IsExtra;
     }
 
     public static SummonMaterial FromFieldMonster(Creature creature) {
