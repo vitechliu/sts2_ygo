@@ -6,10 +6,12 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using VYgo.Core;
+using VYgo.Scripts.Characters;
 
 namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
+[RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter))]
 public class CyberRepairPlant() : BaseSpellCard(1, CardType.Skill, CardRarity.Basic, TargetType.None) {
     public override int CardId => 86686671;
 

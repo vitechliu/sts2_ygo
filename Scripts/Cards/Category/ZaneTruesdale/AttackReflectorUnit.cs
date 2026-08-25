@@ -11,7 +11,7 @@ using VYgo.Scripts.Powers;
 namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
-public class AttackReflectorUnit() : BaseTrapCard(1, CardType.Power, CardRarity.Common, TargetType.None) {
+public class AttackReflectorUnit() : BaseTrapCard(0, CardType.Power, CardRarity.Common, TargetType.None) {
     public override int CardId => 91989718;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];

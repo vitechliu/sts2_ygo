@@ -11,7 +11,6 @@ using VYgo.Scripts.Pools;
 namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
-[RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 2)]
 public class PowerBond() : BaseSpellCard(energyCost, CardType.Skill, rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 37630732;
 
