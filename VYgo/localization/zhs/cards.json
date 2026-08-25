@@ -152,7 +152,7 @@
     "V_YGO_CARD_EXPLODER_DRAGON.title": "轰炸龙",
     "V_YGO_CARD_EXPLODER_DRAGON.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n这张卡被[gold]战斗破坏[/gold]时，对伤害来源造成{Damage:diff()}点伤害。",
     "V_YGO_CARD_CHIMERATECH_OVERDRAGON.title": "嵌合超载龙",
-    "V_YGO_CARD_CHIMERATECH_OVERDRAGON.description": "[gold]融合召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]「电子龙」＋机械族怪兽1只以上。[/aqua]\n[gold]登场[/gold]：消灭你的其他友方怪兽，获得[gold]强化[/gold]{BoostAttack:diff()}(X{IfUpgraded:show:+1|})/{BoostLife:diff()}(X{IfUpgraded:show:+1|})，每回合可以攻击(X{IfUpgraded:show:+1|})次。\n(X为融合素材的数量)",
+    "V_YGO_CARD_CHIMERATECH_OVERDRAGON.description": "[gold]融合召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]「电子龙」＋机械族怪兽1只以上。[/aqua]\n[gold]登场[/gold]：消灭你的其他友方怪兽，获得[gold]强化[/gold]{BoostAttack:diff()}X{IfUpgraded:show:+1|}/{BoostLife:diff()}X{IfUpgraded:show:+1|}，每回合可以攻击X{IfUpgraded:show:+1|}次。\n(X为融合素材的数量)",
     "V_YGO_CARD_CHIMERATECH_MEGAFLEET_DRAGON.title": "嵌合巨舰龙",
     "V_YGO_CARD_CHIMERATECH_MEGAFLEET_DRAGON.description": "[gold]融合召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]「电子龙」＋额外卡组怪兽1只以上。[/aqua]\n[gold]接触融合[/gold]。\n[gold]登场[/gold]：每有一个融合素材，获得[gold]强化[/gold]{BoostAttack:diff()}/0。",
     "V_YGO_CARD_CHIMERATECH_FORTRESS_DRAGON.title": "嵌合要塞龙",

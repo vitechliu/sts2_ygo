@@ -699,13 +699,16 @@ internal static class ExtraDeckSummonAnimations {
         if (cardModels.Count <= 0) return;
 
         try {
+            // 素材送墓触发可能已将同一卡片移回手牌；此时只播放素材克隆动画，
+            // 不隐藏新生成的手牌节点，避免卡片在动画期间消失后又恢复。
             await Card3DEffectUtil.RunMultipleCard3DEffect(
                 cardModels,
                 AnimateLinkSummonPreview,
                 screenCenterPos,
                 scaleMultiplier: 1.1f,
                 horizontalSpacing: 380f,
-                initialOpacity: 0f
+                initialOpacity: 0f,
+                hideSourceNodes: false
             );
         }
         catch (Exception ex) {
