@@ -105,7 +105,7 @@ public class CyberNetworkPower : ModPowerTemplate {
         await PowerCmd.Remove(this);
 
         foreach (BaseMonsterCard monsterCard in machineMonsters) {
-            if (player.MinionCount() >= MinionUtil.MaxMinionCount) break;
+            if (player.MinionCount() >= player.GetMaxMinionCount()) break;
 
             if (data.UpgradeSummons) {
                 CardCmd.Upgrade(monsterCard, CardPreviewStyle.None);

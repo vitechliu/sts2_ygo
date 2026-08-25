@@ -17,7 +17,7 @@ public class DotscaperMinion: BaseMonster {
         Player owner
     ) {
         if (SourceCard is not Dotscaper sourceCard
-            || owner.MinionCount() >= MinionUtil.MaxMinionCount
+            || owner.MinionCount() >= owner.GetMaxMinionCount()
             || !sourceCard.CanUseEffectOncePerDuelByCard(
                 creature.CombatState,
                 owner,

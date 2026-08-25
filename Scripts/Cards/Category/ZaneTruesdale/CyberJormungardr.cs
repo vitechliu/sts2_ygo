@@ -45,7 +45,7 @@ public class CyberJormungardr() : BaseMonsterCard(2, CardRarity.Rare, TargetType
             new SummonContext(IsSpecialSummon: CanSpecialSummon)
         );
         if (summonedCreature is not { IsAlive: true }
-            || Owner.MinionCount() >= MinionUtil.MaxMinionCount) {
+            || Owner.MinionCount() >= Owner.GetMaxMinionCount()) {
             return;
         }
 

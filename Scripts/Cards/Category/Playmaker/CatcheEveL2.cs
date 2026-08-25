@@ -33,7 +33,7 @@ public class CatcheEveL2() : BaseRightClickableMonsterCard(1, CardRarity.Common,
     public override bool CanExecuteRightClick(ModRightClickExecutionContext context) {
         return base.CanExecuteRightClick(context)
             && Pile?.Type == PileType.Hand
-            && Owner.MinionCount() < MinionUtil.MaxMinionCount
+            && Owner.MinionCount() < Owner.GetMaxMinionCount()
             && GetTargets().Count > 0;
     }
 

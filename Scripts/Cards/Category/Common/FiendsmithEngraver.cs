@@ -39,7 +39,7 @@ public class FiendsmithEngraver()
         return Pile?.Type switch {
             PileType.Hand => Owner.GetEnergy() >= RightClickCost
                 && PileType.Draw.GetPile(Owner).Cards.Any(FiendsmithUtil.IsFiendsmithSpellTrap),
-            PileType.Discard => Owner.MinionCount() < MinionUtil.MaxMinionCount
+            PileType.Discard => Owner.MinionCount() < Owner.GetMaxMinionCount()
                 && !Owner.Creature.HasPower<FiendsmithEngraverUsedThisTurnPower>()
                 && PileType.Discard.GetPile(Owner).Cards.Any(card =>
                     card != this && FiendsmithUtil.IsLightFiendMonster(card)),
@@ -84,7 +84,7 @@ public class FiendsmithEngraver()
                 card => card != this && FiendsmithUtil.IsLightFiendMonster(card)))
             .OfType<BaseMonsterCard>()
             .FirstOrDefault();
-        if (returnedMonster == null || Owner.MinionCount() >= MinionUtil.MaxMinionCount) return;
+        if (returnedMonster == null || Owner.MinionCount() >= Owner.GetMaxMinionCount()) return;
 
         await CardPileCmd.Add(
             returnedMonster,

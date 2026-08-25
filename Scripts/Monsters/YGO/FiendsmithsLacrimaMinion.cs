@@ -21,7 +21,7 @@ public class FiendsmithsLacrimaMinion: BaseMonster {
         MinionSummonOptions options
     ) {
         if (options.Source is not FiendsmithsLacrima sourceCard
-            || owner.MinionCount() >= MinionUtil.MaxMinionCount) {
+            || owner.MinionCount() >= owner.GetMaxMinionCount()) {
             return;
         }
 
@@ -33,7 +33,7 @@ public class FiendsmithsLacrimaMinion: BaseMonster {
                 FiendsmithUtil.IsLightFiendMonster))
             .OfType<BaseMonsterCard>()
             .FirstOrDefault();
-        if (selected != null && owner.MinionCount() < MinionUtil.MaxMinionCount) {
+        if (selected != null && owner.MinionCount() < owner.GetMaxMinionCount()) {
             await selected.AutoPlayAndCaptureSummonedCreature(choiceContext, null);
         }
     }

@@ -22,7 +22,7 @@ public class GiganticSprightMinion: BaseMonster {
         MinionSummonOptions options
     ) {
         if (options.Source is not GiganticSpright sourceCard
-            || owner.MinionCount() >= MinionUtil.MaxMinionCount) {
+            || owner.MinionCount() >= owner.GetMaxMinionCount()) {
             return;
         }
 
@@ -34,7 +34,7 @@ public class GiganticSprightMinion: BaseMonster {
                 IsLevel2Monster))
             .OfType<BaseMonsterCard>()
             .FirstOrDefault();
-        if (selected == null || owner.MinionCount() >= MinionUtil.MaxMinionCount) return;
+        if (selected == null || owner.MinionCount() >= owner.GetMaxMinionCount()) return;
 
         await selected.AutoPlayAndCaptureSummonedCreature(choiceContext, null);
     }

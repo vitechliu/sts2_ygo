@@ -48,7 +48,7 @@ public class BootStaggered() : BaseMonsterCard(2, CardRarity.Uncommon, TargetTyp
         if (summonContext.IsSpecialSummon
             || card.Owner != Owner
             || Pile?.Type != PileType.Hand
-            || Owner.MinionCount() >= MinionUtil.MaxMinionCount) {
+            || Owner.MinionCount() >= Owner.GetMaxMinionCount()) {
             return;
         }
 

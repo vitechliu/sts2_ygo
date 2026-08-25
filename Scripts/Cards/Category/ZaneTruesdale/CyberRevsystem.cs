@@ -22,7 +22,7 @@ public class CyberRevsystem() : BaseSpellCard(0, CardType.Skill, CardRarity.Comm
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        if (Owner.MinionCount() >= MinionUtil.MaxMinionCount) {
+        if (Owner.MinionCount() >= Owner.GetMaxMinionCount()) {
             return;
         }
 

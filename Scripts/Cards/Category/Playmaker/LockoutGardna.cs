@@ -28,7 +28,7 @@ public class LockoutGardna() : BaseMonsterCard(1, CardRarity.Common, TargetType.
         if (Pile?.Type != PileType.Hand
             || command.Attacker is not { } attacker
             || attacker.Side == Owner.Creature.Side
-            || Owner.MinionCount() >= MinionUtil.MaxMinionCount) {
+            || Owner.MinionCount() >= Owner.GetMaxMinionCount()) {
             return;
         }
 

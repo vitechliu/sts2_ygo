@@ -32,7 +32,7 @@ public class CyberDragonNachster() : BaseMonsterCard(1, CardRarity.Uncommon, Tar
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         await base.OnPlay(choiceContext, cardPlay);
 
-        if (Owner.MinionCount() >= MinionUtil.MaxMinionCount) {
+        if (Owner.MinionCount() >= Owner.GetMaxMinionCount()) {
             return;
         }
 

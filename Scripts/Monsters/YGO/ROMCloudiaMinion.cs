@@ -22,7 +22,7 @@ public class ROMCloudiaMinion: BaseMonster {
         Player owner
     ) {
         if (SourceCard is not ROMCloudia { IsUpgraded: true } sourceCard
-            || owner.MinionCount() >= MinionUtil.MaxMinionCount) {
+            || owner.MinionCount() >= owner.GetMaxMinionCount()) {
             return;
         }
 
@@ -35,7 +35,7 @@ public class ROMCloudiaMinion: BaseMonster {
                     1),
                 IsLowLevelCyberseMonster))
             .FirstOrDefault();
-        if (selected != null && owner.MinionCount() < MinionUtil.MaxMinionCount) {
+        if (selected != null && owner.MinionCount() < owner.GetMaxMinionCount()) {
             await CardCmd.AutoPlay(choiceContext, selected, null);
         }
     }

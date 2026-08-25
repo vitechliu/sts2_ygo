@@ -21,7 +21,7 @@ public class StackReviverMinion : BaseMonster {
     ) {
         if (SourceCard is not StackReviver sourceCard
             || sourceCard.Pile?.Type != PileType.Discard
-            || owner.MinionCount() >= MinionUtil.MaxMinionCount) {
+            || owner.MinionCount() >= owner.GetMaxMinionCount()) {
             return;
         }
 
@@ -41,7 +41,7 @@ public class StackReviverMinion : BaseMonster {
             )).FirstOrDefault() is not { } selectedCard) {
             return;
         }
-        if (owner.MinionCount() >= MinionUtil.MaxMinionCount) return;
+        if (owner.MinionCount() >= owner.GetMaxMinionCount()) return;
 
         await CardCmd.AutoPlay(choiceContext, selectedCard, null);
     }

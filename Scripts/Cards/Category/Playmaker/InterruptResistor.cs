@@ -39,7 +39,7 @@ public class InterruptResistor() : BaseMonsterCard(2, CardRarity.Common, TargetT
             || Pile?.Type != PileType.Hand
             || target != Owner.Creature
             || result.UnblockedDamage <= 0
-            || Owner.MinionCount() >= MinionUtil.MaxMinionCount) {
+            || Owner.MinionCount() >= Owner.GetMaxMinionCount()) {
             return;
         }
 
