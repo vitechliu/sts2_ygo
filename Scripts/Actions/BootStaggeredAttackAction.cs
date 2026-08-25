@@ -20,7 +20,7 @@ public class BootStaggeredAttackAction : TargetingAttackAction {
             return;
         }
 
-        if (Owner.PetOwner != null && Owner.PetOwner.MinionCount() < MinionUtil.MaxMinionCount) {
+        if (Owner.PetOwner != null && Owner.PetOwner.MinionCount() < Owner.PetOwner.GetMaxMinionCount()) {
             CardModel token = CombatState.CreateCard<BootStaggeredToken>(Owner.PetOwner);
             await CardPileCmd.AddGeneratedCardToCombat(
                 token,

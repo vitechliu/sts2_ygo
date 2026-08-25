@@ -27,7 +27,7 @@ public sealed class LinkSpiderAction : BasePerTurnMonsterAction {
     public override bool CanAct(ICombatState combatState) {
         return base.CanAct(combatState)
             && Owner.PetOwner is { } player
-            && player.MinionCount() < MinionUtil.MaxMinionCount
+            && player.MinionCount() < player.GetMaxMinionCount()
             && PileType.Hand.GetPile(player).Cards.Any(IsNormalMonster);
     }
 
@@ -37,7 +37,7 @@ public sealed class LinkSpiderAction : BasePerTurnMonsterAction {
     ) {
         if (Owner.PetOwner is not { } player
             || Owner.Monster is not BaseMonster { SourceCard: { } sourceCard }
-            || player.MinionCount() >= MinionUtil.MaxMinionCount) {
+            || player.MinionCount() >= player.GetMaxMinionCount()) {
             return;
         }
 
@@ -49,7 +49,7 @@ public sealed class LinkSpiderAction : BasePerTurnMonsterAction {
                 sourceCard))
             .OfType<BaseMonsterCard>()
             .FirstOrDefault();
-        if (selected == null || player.MinionCount() >= MinionUtil.MaxMinionCount) return;
+        if (selected == null || player.MinionCount() >= player.GetMaxMinionCount()) return;
 
         SpendUses();
         await CardCmd.AutoPlay(choiceContext, selected, null);

@@ -20,7 +20,7 @@ public class SprightStarter() : BaseSpellCard(1, CardType.Skill, CardRarity.Even
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        if (Owner.MinionCount() >= MinionUtil.MaxMinionCount) return;
+        if (Owner.MinionCount() >= Owner.GetMaxMinionCount()) return;
 
         BaseMonsterCard? selected = (await CardSelectCmd.FromCombatPile(
                 choiceContext,
@@ -30,7 +30,7 @@ public class SprightStarter() : BaseSpellCard(1, CardType.Skill, CardRarity.Even
                 IsLevel2Monster))
             .OfType<BaseMonsterCard>()
             .FirstOrDefault();
-        if (selected == null || Owner.MinionCount() >= MinionUtil.MaxMinionCount) return;
+        if (selected == null || Owner.MinionCount() >= Owner.GetMaxMinionCount()) return;
 
         await selected.AutoPlayAndCaptureSummonedCreature(choiceContext, null);
     }

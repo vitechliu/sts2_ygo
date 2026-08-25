@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.ValueProps;
 using MinionLib.Commands;
+using VYgo.Scripts.Monsters;
 using VYgo.Scripts.Powers;
 
 namespace VYgo.Scripts.Actions;
@@ -34,6 +35,9 @@ public class TargetingAttackAction : BasePerTurnMonsterAction {
         SpendUses();
         await MinionAnimCmd.PlayBumpAttackAsync(Owner, target);
         await CreatureCmd.Damage(choiceContext, target, StrengthPowerAmount, ValueProp.Move, null, null);
+        if (Owner.Monster is BaseMonster monster) {
+            await monster.AfterAttack(choiceContext);
+        }
     }
 
     private static int GetAttackIntentTier(int damage) {

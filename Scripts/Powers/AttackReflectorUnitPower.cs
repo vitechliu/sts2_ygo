@@ -56,7 +56,7 @@ public class AttackReflectorUnitPower : BaseActionPower {
         return base.CanExecuteRightClick(context)
             && data.SourceCard != null
             && context.Player.PlayerCombatState.TurnNumber > data.SetTurnNumber
-            && context.Player.MinionCount() < MinionUtil.MaxMinionCount;
+            && context.Player.MinionCount() < context.Player.GetMaxMinionCount();
     }
 
     protected override async Task<bool> OnAction(ModRightClickExecutionContext context) {
@@ -70,7 +70,7 @@ public class AttackReflectorUnitPower : BaseActionPower {
         await PowerCmd.Remove(this);
 
         for (int i = 0;
-             i < Amount && context.Player.MinionCount() < MinionUtil.MaxMinionCount;
+             i < Amount && context.Player.MinionCount() < context.Player.GetMaxMinionCount();
              i++) {
             CardModel cyberBarrierDragon = context.Player.Creature.CombatState
                 .CreateCard<CyberBarrierDragon>(context.Player);

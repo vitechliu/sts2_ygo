@@ -72,7 +72,7 @@ public class BornfromDraconisPower : BaseActionPower {
         return base.CanExecuteRightClick(context)
             && data.SourceCard != null
             && context.Player.PlayerCombatState.TurnNumber > data.SetTurnNumber
-            && context.Player.MinionCount() < MinionUtil.MaxMinionCount
+            && context.Player.MinionCount() < context.Player.GetMaxMinionCount()
             && PileType.Hand.GetPile(context.Player).Cards.Any(IsLightMachineMonster);
     }
 

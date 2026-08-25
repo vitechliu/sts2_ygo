@@ -120,5 +120,20 @@
     "FIENDSMITHS_SANCT_MINION.name": "刻魔的赞圣",
     "FIENDSMITHS_DESIRAE_MINION.name": "刻魔 震怒之日",
     "FIENDSMITH_KYRIE_MINION.name": "刻魔的怜歌",
-    "FIENDSMITHS_SANCT_TOKEN_MINION.name": "刻魔衍生物"
+    "FIENDSMITHS_SANCT_TOKEN_MINION.name": "刻魔衍生物",
+    "FIREWALL_DRAGON_MINION.name": "防火龙",
+    "CODE_TALKER_INVERTED_MINION.name": "码语者·翻转",
+    "ENCODE_TALKER_MINION.name": "编码语者",
+    "EXCODE_TALKER_MINION.name": "余码语者",
+    "POWERCODE_TALKER_MINION.name": "电源代码语者",
+    "TRANSCODE_TALKER_MINION.name": "转码语者",
+    "SHOOTINGCODE_TALKER_MINION.name": "排错代码语者",
+    "DECODE_TALKER_HEATSOUL_MINION.name": "解码语者·炽热之魂",
+    "DECODE_TALKER_EXTENDED_MINION.name": "解码语者·扩展",
+    "THRESHOLD_BORG_MINION.name": "阈电压电子人",
+    "CYNET_UNIVERSE_MINION.name": "电脑网宇宙",
+    "CYNET_STORM_MINION.name": "电脑网风暴",
+    "CYNET_RECOVERY_MINION.name": "电脑网恢复",
+    "CYNET_REGRESSION_MINION.name": "电脑网回归",
+    "DECODE_TALKER_INTEGRATION_MINION.name": "解码语者·集成"
 }

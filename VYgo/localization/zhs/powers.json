@@ -112,5 +112,20 @@
   "V_YGO_POWER_SELF_DESTROY_POWER.description": "回合结束时被破坏。",
   "V_YGO_POWER_CYBERDARK_END_DRAGON_POWER.title": "暗黑终结装备",
   "V_YGO_POWER_CYBERDARK_END_DRAGON_POWER.description": "你的回合结束时，从[gold]弃牌堆[/gold]选择1只怪兽[gold]装备[/gold]给此怪兽。",
-  "V_YGO_POWER_CYBERDARK_END_DRAGON_POWER.selectionScreenPrompt": "请选择要装备的怪兽。"
+  "V_YGO_POWER_CYBERDARK_END_DRAGON_POWER.selectionScreenPrompt": "请选择要装备的怪兽。",
+  "DECODE_TALKER_INTEGRATION_ACTION.title": "集成传输",
+  "DECODE_TALKER_INTEGRATION_ACTION.description": "[gold]启动[/gold]：从额外卡组选1只电子界族怪兽送去弃牌堆。每回合限1次。",
+  "DECODE_TALKER_INTEGRATION_ACTION.selectionScreenPrompt": "请选择要送去弃牌堆的电子界族怪兽。",
+  "V_YGO_POWER_UNTIL_NEXT_TURN_BATTLE_DESTRUCTION_PROTECTION_POWER.title": "编码防护",
+  "V_YGO_POWER_UNTIL_NEXT_TURN_BATTLE_DESTRUCTION_PROTECTION_POWER.description": "在你的下个回合开始前不会被战斗破坏。",
+  "V_YGO_POWER_MINION_CAPACITY_REDUCTION_POWER.title": "余码限制",
+  "V_YGO_POWER_MINION_CAPACITY_REDUCTION_POWER.description": "本场战斗，你的怪兽上限减少{Amount}。",
+  "V_YGO_POWER_HEATSOUL_DRAW_POWER.title": "炽热抽取",
+  "V_YGO_POWER_HEATSOUL_DRAW_POWER.description": "你的回合开始时额外抽{Amount}张牌。",
+  "V_YGO_POWER_CYNET_STORM_POWER.title": "电脑网风暴",
+  "V_YGO_POWER_CYNET_STORM_POWER.description": "每当你召唤连接怪兽，使其获得[gold]强化[/gold]{Amount}/0。一次受到超过20点伤害时，随机[gold]特召[/gold]1只电子界族连接怪兽并失去本能力。",
+  "V_YGO_POWER_CYNET_RECOVERY_POWER.title": "电脑网恢复",
+  "V_YGO_POWER_CYNET_RECOVERY_POWER.description": "每当你的电子界族怪兽被[gold]战斗破坏[/gold]，你下回合获得{Amount}点能量。",
+  "V_YGO_POWER_CYNET_REGRESSION_POWER.title": "电脑网回归（盖伏）",
+  "V_YGO_POWER_CYNET_REGRESSION_POWER.description": "当你[gold]特召[/gold]连接怪兽时，消耗盖伏的「电脑网回归」，对所有敌人造成10点伤害并抽牌。"
 }

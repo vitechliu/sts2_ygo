@@ -30,7 +30,7 @@ public class Dotscaper() : BaseMonsterCard(0, CardRarity.Uncommon, TargetType.No
     ) {
         if (card != this
             || CombatState is not { } combatState
-            || Owner.MinionCount() >= MinionUtil.MaxMinionCount
+            || Owner.MinionCount() >= Owner.GetMaxMinionCount()
             || !this.CanUseEffectOncePerDuelByCard(combatState, Owner, "exhaust")) {
             return;
         }

@@ -23,7 +23,7 @@ public class DraconnetMinion: BaseMonster {
         MinionSummonOptions options
     ) {
         if (options.Source is not Draconnet sourceCard
-            || owner.MinionCount() >= MinionUtil.MaxMinionCount) {
+            || owner.MinionCount() >= owner.GetMaxMinionCount()) {
             return;
         }
 
@@ -35,7 +35,7 @@ public class DraconnetMinion: BaseMonster {
                 IsLowLevelNormalMonster))
             .OfType<BaseMonsterCard>()
             .FirstOrDefault();
-        if (selected == null || owner.MinionCount() >= MinionUtil.MaxMinionCount) return;
+        if (selected == null || owner.MinionCount() >= owner.GetMaxMinionCount()) return;
 
         if (sourceCard.IsUpgraded) {
             CardCmd.Upgrade(selected);

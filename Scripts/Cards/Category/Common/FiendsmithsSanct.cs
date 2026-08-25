@@ -23,7 +23,7 @@ public class FiendsmithsSanct() : BaseSpellCard(0, CardType.Skill, CardRarity.Ev
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        if (Owner.MinionCount() >= MinionUtil.MaxMinionCount) return;
+        if (Owner.MinionCount() >= Owner.GetMaxMinionCount()) return;
 
         CardModel token = CombatState.CreateCard<FiendsmithsSanctToken>(Owner);
         await CardPileCmd.AddGeneratedCardToCombat(token, PileType.Play, Owner);

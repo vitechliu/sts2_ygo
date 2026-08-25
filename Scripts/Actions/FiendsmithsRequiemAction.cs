@@ -27,7 +27,7 @@ public sealed class FiendsmithsRequiemAction : BasePerTurnMonsterAction {
     public override bool CanAct(ICombatState combatState) {
         return base.CanAct(combatState)
             && Owner.PetOwner is { } player
-            && player.MinionCount() < MinionUtil.MaxMinionCount
+            && player.MinionCount() < player.GetMaxMinionCount()
             && PileType.Draw.GetPile(player).Cards.Any(FiendsmithUtil.IsLightFiendMonster);
     }
 
@@ -36,7 +36,7 @@ public sealed class FiendsmithsRequiemAction : BasePerTurnMonsterAction {
         Creature? target
     ) {
         Player? player = Owner.PetOwner;
-        if (player == null || player.MinionCount() >= MinionUtil.MaxMinionCount) return;
+        if (player == null || player.MinionCount() >= player.GetMaxMinionCount()) return;
 
         BaseMonsterCard? selected = (await CardSelectCmd.FromCombatPile(
                 choiceContext,
@@ -46,7 +46,7 @@ public sealed class FiendsmithsRequiemAction : BasePerTurnMonsterAction {
                 FiendsmithUtil.IsLightFiendMonster))
             .OfType<BaseMonsterCard>()
             .FirstOrDefault();
-        if (selected == null || player.MinionCount() >= MinionUtil.MaxMinionCount) return;
+        if (selected == null || player.MinionCount() >= player.GetMaxMinionCount()) return;
 
         Creature? summoned = await selected.AutoPlayAndCaptureSummonedCreature(
             choiceContext,

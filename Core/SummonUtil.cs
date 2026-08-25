@@ -847,7 +847,7 @@ public static class SummonUtil {
             }
         }
 
-        return owner.MinionCount() - consumedFieldMonsterCount < MinionUtil.MaxMinionCount;
+        return owner.MinionCount() - consumedFieldMonsterCount < owner.GetMaxMinionCount();
     }
 
     private static bool CanMoveMaterialToDestination(

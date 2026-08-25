@@ -5,12 +5,18 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MinionLib.Commands;
 using MinionLib.Minion;
+using VYgo.Scripts.Powers;
 
 namespace VYgo.Utils;
 
 public static class MinionUtil {
 
     public const int MaxMinionCount = 5;
+
+    public static int GetMaxMinionCount(this Player player) {
+        int reduction = player.Creature.GetPowerAmount<MinionCapacityReductionPower>();
+        return Math.Max(0, MaxMinionCount - reduction);
+    }
 
     public static async Task AddHp(Creature creature, int amount) {
         if (amount <= 0) return;

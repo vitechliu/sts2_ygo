@@ -17,7 +17,7 @@ public class ClockWyvernMinion: BaseMonster {
         PlayerChoiceContext choiceContext,
         Player owner,
         MinionSummonOptions options) {
-        if (owner.MinionCount() < MinionUtil.MaxMinionCount) {
+        if (owner.MinionCount() < owner.GetMaxMinionCount()) {
             CardModel token = owner.Creature.CombatState.CreateCard<ClockWyvernToken>(owner);
             await CardPileCmd.AddGeneratedCardToCombat(token, PileType.Play, owner);
             await CardCmd.AutoPlay(choiceContext, token, null);
