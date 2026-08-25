@@ -21,12 +21,13 @@ public class CyberDragonDrei() : BaseMonsterCard(1, CardRarity.Common, TargetTyp
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new AttackVar(BaseAttackVar),
         new LifeVar(BaseLifeVar),
-        new PowerVar<MonsterLevelPower>("Level", BaseTargetLevel)
+        new PowerVar<MonsterLevelPower>("Level", BaseTargetLevel),
     ];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         BaseSummonHoverTip,
-        YgoHoverTipConst.EnterField()
+        YgoHoverTipConst.EnterField(),
+        YgoHoverTipConst.NameAs(YgoMaterialNames.电子龙)
     ];
 
     public int TargetLevel => DynamicVars["Level"].IntValue;

@@ -23,8 +23,11 @@ public class CyberDragonNachster() : BaseMonsterCard(1, CardRarity.Uncommon, Tar
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         BaseSummonHoverTip,
         YgoHoverTipConst.EnterField(),
-        YgoHoverTipConst.SpecialSummon()
+        YgoHoverTipConst.SpecialSummon(),
+        YgoHoverTipConst.NameAs(YgoMaterialNames.电子龙)
     ];
+    
+    public override YgoMaterialNames? MaterialCardName => YgoMaterialNames.电子龙;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         await base.OnPlay(choiceContext, cardPlay);

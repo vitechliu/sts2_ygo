@@ -309,7 +309,7 @@
     "V_YGO_CARD_FIENDSMITHS_DESIRAE.title": "刻魔 震怒之日",
     "V_YGO_CARD_FIENDSMITHS_DESIRAE.description": "[gold]融合召唤[/gold]([gold]{Attack}[/gold]/[blue]{Life}[/blue])\n[aqua]「刻印群魔的刻魔锻冶师」＋恶魔族·光属性怪兽×2。[/aqua]\n[gold]登场[/gold]：获得{NegatingPower:diff()}层[gold]无效[/gold]。\n[gold]送墓[/gold]：对所有敌人造成{GraveyardDamage:diff()}点伤害。",
     "V_YGO_CARD_FIENDSMITH_KYRIE.title": "刻魔的怜歌",
-    "V_YGO_CARD_FIENDSMITH_KYRIE.description": "[gold]盖伏[/gold]。从下个回合起可[gold]启动[/gold]：消耗盖伏卡，直到你的下个回合开始，受到的伤害减半。\n[gold]墓效[/gold]：消耗此牌，以场上的怪兽和已装备的怪兽卡作为融合素材，融合召唤1只「刻魔」融合怪兽。",
+    "V_YGO_CARD_FIENDSMITH_KYRIE.description": "[gold]盖伏[/gold]。[gold]启动[/gold]：消耗，直到你的下个回合开始，受到的伤害减半。\n[gold]墓效[/gold]：消耗，以场上的怪兽和已装备的怪兽卡作为融合素材，融合召唤1只「刻魔」怪兽。",
     "V_YGO_CARD_FIENDSMITH_KYRIE.selectionScreenPrompt": "请选择要融合召唤的「刻魔」融合怪兽。",
     "V_YGO_CARD_FIENDSMITHS_SANCT_TOKEN.title": "刻魔衍生物",
     "V_YGO_CARD_FIENDSMITHS_SANCT_TOKEN.description": "[gold]召唤[/gold]([gold]{Attack}[/gold]/[blue]{Life}[/blue])\n[gold]衍生物[/gold]。"

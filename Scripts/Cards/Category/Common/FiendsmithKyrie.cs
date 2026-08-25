@@ -17,8 +17,6 @@ public class FiendsmithKyrie()
         IModRightClickableCard {
     public override int CardId => 26434972;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<FiendsmithKyriePower>(),
         HoverTipFactory.FromPower<FiendsmithKyrieDamageReductionPower>(),
