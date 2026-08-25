@@ -5,6 +5,8 @@ YGOMD 是一个仍在开发中的《杀戮尖塔 2》Mod，将游戏王的怪兽
 
 
 > 项目处于早期开发阶段，卡牌数值、资源、界面和存档格式仍可能调整。
+> 
+# 仅支持beta版！测试阶段最好不要游玩除丸藤亮以外的角色！
 
 - [Bug反馈（腾讯问卷)](
   https://docs.qq.com/form/page/DRGNGWkRmQUhLT2FX)

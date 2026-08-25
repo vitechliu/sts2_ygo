@@ -65,7 +65,7 @@ public class CyberDragon() : BaseMonsterCard(energyCost, rarity, targetType, sho
 
 
     public static bool PlayerHasCyberDragon(Player player) {
-        return player.Creature.Pets.Count(c => c.Monster is BaseMonster bm 
-                                               && bm.YgoGetCard()?.MaterialCardName == YgoMaterialNames.电子龙) > 0;
+        return player.Creature.Pets.Any(c => c.Monster is BaseMonster bm 
+             && bm.YgoGetCard()?.ContainArchetype(YgoArchetypes.CyberDragon) == true);
     }
 }
