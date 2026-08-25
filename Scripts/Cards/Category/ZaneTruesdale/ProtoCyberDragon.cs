@@ -8,7 +8,7 @@ using VYgo.Scripts.Pools;
 namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
-[RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 3)]
+[RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 2)]
 public class ProtoCyberDragon() : BaseMonsterCard(energyCost,rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 26439287;
 

@@ -8,8 +8,6 @@ using VYgo.Scripts.Pools;
 namespace VYgo.Scripts.Cards.Category.Link;
 
 [RegisterCard(typeof(LinkCardPool))]
-[RegisterCharacterStarterCard(typeof(RedhatCharacter), 2)]
-[RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 1)]
 public class SPLittleKnight() : BaseExtraLinkCard(energyCost,rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 29301450;
     

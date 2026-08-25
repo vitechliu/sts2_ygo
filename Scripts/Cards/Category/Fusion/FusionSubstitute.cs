@@ -10,7 +10,6 @@ using VYgo.Scripts.Pools;
 namespace VYgo.Scripts.Cards.Category.Fusion;
 
 [RegisterCard(typeof(FusionCardPool))]
-// [RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 1)]
 public class FusionSubstitute()
     : BaseSpellCard(1, CardType.Skill, CardRarity.Common, TargetType.None) {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [

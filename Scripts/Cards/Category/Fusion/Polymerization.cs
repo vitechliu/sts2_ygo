@@ -9,7 +9,7 @@ using VYgo.Scripts.Pools;
 namespace VYgo.Scripts.Cards.Category.Fusion;
 
 [RegisterCard(typeof(FusionCardPool))]
-[RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 1)]
+[RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 2)]
 [RegisterCharacterStarterCard(typeof(RedhatCharacter))]
 public class Polymerization()
     : BaseSpellCard(2, CardType.Skill, CardRarity.Basic, TargetType.None) {

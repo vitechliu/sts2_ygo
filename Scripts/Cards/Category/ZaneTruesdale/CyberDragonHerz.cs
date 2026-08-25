@@ -10,7 +10,6 @@ using VYgo.Scripts.Var;
 namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
-[RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 2)]
 public class CyberDragonHerz() : BaseMonsterCard(energyCost,rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 56364287;
     
