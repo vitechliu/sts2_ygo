@@ -58,7 +58,8 @@ public static class Card3DEffectUtil {
         Vector2? centerPosition = null,
         float scaleMultiplier = 1.4f,
         float horizontalSpacing = 360f,
-        float initialOpacity = 1f
+        float initialOpacity = 1f,
+        bool hideSourceNodes = true
     ) {
         List<CardModel> modelList = models.Where(m => m != null).ToList();
         if (modelList.Count == 0) {
@@ -93,7 +94,9 @@ public static class Card3DEffectUtil {
                 await WaitFrames(flipper, 1);
 
                 NCard? sourceNode = NCard.FindOnTable(model);
-                if (sourceNode != null && GodotObject.IsInstanceValid(sourceNode)) {
+                if (hideSourceNodes
+                    && sourceNode != null
+                    && GodotObject.IsInstanceValid(sourceNode)) {
                     sourceNode.Visible = false;
                     hiddenSourceNodes[model] = sourceNode;
                 }

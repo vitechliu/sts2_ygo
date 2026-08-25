@@ -1,9 +1,9 @@
 {
   "id": "VYgo",
   "name": "游戏王大师决斗",
-  "author": "Vitech, HypnosPD",
-  "description": "WIP.\nA mod that adds gameplay elements from the Yu-Gi-Oh! franchise to Slay the Spire. This mod is still in development, and is not yet complete.",
-  "version": "0.1.0",
+  "author": "Vitech",
+  "description": "游戏王大师决斗(YuGiOh MasterDuel)同人mod，感谢以下测试者:",
+  "version": "0.1.1",
   "has_pck": true,
   "has_dll": true,
   "dependencies": [
@@ -16,6 +16,6 @@
       "min_version": "0.6.0"
     }
   ],
-  "min_game_version": "0.106.0",
+  "min_game_version": "0.111.0",
   "affects_gameplay": true
 }

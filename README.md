@@ -163,3 +163,5 @@ OPEN_BROWSER=false npm start
 
 - 感谢 [苍蓝 coccvo](https://code.moenext.com/coccvo) 制作 ygopro2 怪兽立绘并授权本项目使用。
 - 感谢赤子奈落（MDPro3 作者）的授权。
+- 感谢水产品群OLC,Reme,Fuyn等群友的答疑和支持。
+- 感谢以下beta测试者的bug反馈:摸摸摸摸摸摸鱼,Inkpasta,枫叶y

@@ -10,6 +10,9 @@ YGOMD 是一个仍在开发中的《杀戮尖塔 2》Mod，将游戏王的怪兽
   https://docs.qq.com/form/page/DRGNGWkRmQUhLT2FX)
 - Q群：757479698
 
+
+### beta 0.1.1
+- 修复了大量bug，具体见[更新内容](https://github.com/vitechliu/sts2_ygo/blob/master/CHANGELOG.md)。
 ### beta 0.1.0
 - 实装了丸藤亮（完成度90%），藤木游作（完成度50%）两位可游玩人物。
 - 融合召唤、连接召唤、超量召唤等特效演出，装备、手发与怪兽行动额外卡组交互。
@@ -51,3 +54,4 @@ YGOMD 是一个仍在开发中的《杀戮尖塔 2》Mod，将游戏王的怪兽
 - 感谢 [苍蓝 coccvo](https://code.moenext.com/coccvo) 制作 ygopro2 怪兽立绘并授权本项目使用。
 - 感谢赤子奈落（MDPro3 作者）的授权。
 - 感谢水产品群OLC,Reme,Fuyn等群友的答疑和支持。
+- 感谢以下beta测试者的bug反馈:摸摸摸摸摸摸鱼,Inkpasta,枫叶y
