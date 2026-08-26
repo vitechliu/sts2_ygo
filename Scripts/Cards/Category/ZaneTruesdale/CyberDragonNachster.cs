@@ -41,15 +41,15 @@ public class CyberDragonNachster() : BaseMonsterCard(1, CardRarity.Uncommon, Tar
                 context: choiceContext,
                 pile: PileType.Discard.GetPile(Owner),
                 player: Owner,
-                filter: IsMachineMonster))
+                filter: IsCyberDragonMonster))
             .FirstOrDefault();
         if (selectedCard != null) {
             await CardCmd.AutoPlay(choiceContext, selectedCard, null);
         }
     }
 
-    private static bool IsMachineMonster(CardModel card) {
+    private static bool IsCyberDragonMonster(CardModel card) {
         return card is BaseMonsterCard monsterCard
-            && monsterCard.YgoGetCore().IsRace(YgoRace.Machine);
+               && monsterCard.YgoGetCard()?.ContainArchetype(YgoArchetypes.CyberDragon) == true;
     }
 }

@@ -40,7 +40,7 @@ public class CyberRevsystem() : BaseSpellCard(0, CardType.Skill, CardRarity.Comm
 
     private static bool IsCyberDragonMonster(CardModel card) {
         return card is BaseMonsterCard monsterCard
-            && monsterCard.NameEquals(YgoMaterialNames.电子龙);
+               && monsterCard.ContainArchetype(YgoArchetypes.CyberDragon);
     }
 
     protected override void OnUpgrade() {

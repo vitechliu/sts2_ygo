@@ -63,6 +63,10 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
     ) {
         if (!PileSent || SourceCard is not { } card || card.Owner != owner) return false;
 
+        if (card is BaseTokenCard token) {
+            return await token.DisappearFromCombat();
+        }
+
         if (destination == PileType.Exhaust) {
             await CardCmd.Exhaust(choiceContext, card);
         }
@@ -166,12 +170,17 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
             if (!wasRemovalPrevented && !PileSent) {
                 PileSent = true;
                 // Entry.Logger.Info("AfterDeath:" + GetType().Name);
-                var card = this.YgoGetCard();
+                var card = SourceCard;
                 if (card != null) {
-                    var owner = creature.PetOwner;
-                    if (owner != null) {
-                        await ReturnCard(owner, choiceContext);
-                        await OnSendToGraveyard(choiceContext, creature, owner);
+                    if (card is BaseTokenCard token) {
+                        await token.DisappearFromCombat();
+                    }
+                    else {
+                        var owner = creature.PetOwner;
+                        if (owner != null) {
+                            await ReturnCard(owner);
+                            await OnSendToGraveyard(choiceContext, creature, owner);
+                        }
                     }
                 }
                 else {
@@ -189,7 +198,7 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
 
     public virtual async Task AfterAttack(PlayerChoiceContext choiceContext) { }
 
-    private async Task ReturnCard(Player player, PlayerChoiceContext choiceContext) {
+    private async Task ReturnCard(Player player) {
         if (SourceCard == null) return;
         if (CombatManager.Instance?.IsOverOrEnding != false) return;
         var discardPile = PileType.Discard.GetPile(player);

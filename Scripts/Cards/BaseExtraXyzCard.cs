@@ -33,6 +33,7 @@ public abstract class BaseExtraXyzCard(
         int? rank = GetXyzRank(coreCard);
         return rank is > 0
             && material.IsField
+            && material.Card is not BaseTokenCard
             && material.Creature is { IsAlive: true }
             && material.Level == rank;
     }

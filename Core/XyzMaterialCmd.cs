@@ -47,6 +47,7 @@ public static class XyzMaterialCmd {
                 || !owner.Creature.Pets.Contains(creature)
                 || creature.Monster is not BaseMonster monster
                 || monster.SourceCard != card
+                || card is BaseTokenCard
                 || card.Owner != owner
                 || card.Pile != monsterPile
                 || !monster.TryReserveSourceCardAsSummonMaterial(card)) {
@@ -133,6 +134,7 @@ public static class XyzMaterialCmd {
         if (CombatManager.Instance.IsOverOrEnding
             || target is not { IsAlive: true, PetOwner: { } owner }
             || card.Owner != owner
+            || card is BaseTokenCard
             || target.Monster is not BaseMonster { SourceCard: BaseExtraXyzCard }) {
             return false;
         }
@@ -197,11 +199,7 @@ public static class XyzMaterialCmd {
             return null;
         }
 
-        await CardPileCmd.Add(
-            card,
-            PileType.Discard.GetPile(card.Owner),
-            skipVisuals: false
-        );
+        await SendMaterialToGraveyard(card);
         await PowerCmd.ModifyAmount(
             choiceContext,
             power,
@@ -235,11 +233,7 @@ public static class XyzMaterialCmd {
 
         foreach (CardModel card in cards) {
             if (card.Pile?.Type == Entry.XyzMaterialPile) {
-                await CardPileCmd.Add(
-                    card,
-                    PileType.Discard.GetPile(card.Owner),
-                    skipVisuals: false
-                );
+                await SendMaterialToGraveyard(card);
             }
         }
     }
@@ -256,13 +250,25 @@ public static class XyzMaterialCmd {
                      .Distinct()
                      .ToList()) {
             if (card.Pile == xyzPile) {
-                await CardPileCmd.Add(
-                    card,
-                    PileType.Discard.GetPile(owner),
-                    skipVisuals: false
-                );
+                await SendMaterialToGraveyard(card);
             }
         }
+    }
+
+    /// <summary>
+    /// 正常超量素材送入墓地；若旧存档或其他模组令衍生物异常进入素材区，则令其消失。
+    /// </summary>
+    private static async Task SendMaterialToGraveyard(CardModel card) {
+        if (card is BaseTokenCard token) {
+            await token.DisappearFromCombat();
+            return;
+        }
+
+        await CardPileCmd.Add(
+            card,
+            PileType.Discard.GetPile(card.Owner),
+            skipVisuals: false
+        );
     }
 
     private static async Task CancelReservations(
