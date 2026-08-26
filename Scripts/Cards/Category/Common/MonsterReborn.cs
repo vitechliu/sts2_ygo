@@ -5,7 +5,6 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
-using VYgo.Scripts.Characters;
 using VYgo.Scripts.Pools;
 
 namespace VYgo.Scripts.Cards.Category.Common;
@@ -15,7 +14,7 @@ public class MonsterReborn()
     : BaseSpellCard(0, CardType.Skill, CardRarity.Common, TargetType.None) {
     
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        YgoHoverTipConst.SummonNormal()
+        YgoHoverTipConst.SpecialSummon()
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
@@ -33,4 +32,8 @@ public class MonsterReborn()
     }
 
     public override int CardId => 83764718;
+
+    protected override void OnUpgrade() {
+        AddKeyword(CardKeyword.Retain);
+    }
 }

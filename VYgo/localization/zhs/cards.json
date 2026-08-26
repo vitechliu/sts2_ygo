@@ -22,7 +22,7 @@
     "V_YGO_CARD_SP_LITTLE_KNIGHT.title": "S：P小夜",
     "V_YGO_CARD_SP_LITTLE_KNIGHT.description": "[gold]连接召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]效果怪兽2只。[/aqua]\n[gold]召唤[/gold]:对随机一名敌人造成7点[gold]虚空[/gold]伤害。",
     "V_YGO_CARD_MONSTER_REBORN.title": "死者苏生",
-    "V_YGO_CARD_MONSTER_REBORN.description": "从[gold]弃牌堆[/gold]选择1只怪兽并[gold]召唤[/gold]",
+    "V_YGO_CARD_MONSTER_REBORN.description": "从[gold]弃牌堆[/gold]选择1只怪兽并[gold]特召[/gold]",
     "V_YGO_CARD_MONSTER_REBORN.selectionScreenPrompt": "请选择需要复活的怪兽。",
     "V_YGO_CARD_CYBER_DRAGON_ZWEI.title": "电子龙二型",
     "V_YGO_CARD_CYBER_DRAGON_ZWEI.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n攻击后，[gold]攻击力[/gold]提升{AttackAdd}。",
