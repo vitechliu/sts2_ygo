@@ -752,7 +752,9 @@ public static class SummonUtil {
         }
 
         IReadOnlyList<SummonMaterial> candidates = getAvailableMaterials(xyzCard, coreCard)
-            .Where(material => material.Card != null)
+            // 衍生物离场即消失，不能成为需要长期挂载的超量素材。
+            // 此处独立过滤，避免具体超量卡覆写 CanUseXyzMaterial 时绕过规则。
+            .Where(material => material.Card is not BaseTokenCard)
             .Where(material => xyzCard.CanUseXyzMaterial(coreCard, material))
             .ToList();
 
@@ -995,6 +997,11 @@ public static class SummonUtil {
         }
         finally {
             foreach ((BaseMonster monster, CardModel card) in fieldReservations) {
+                // 并行牺牲或后续素材移动部分失败时，已经死亡的衍生物也不能滞留在场上牌堆。
+                if (card is BaseTokenCard token
+                    && monster.Creature is not { IsAlive: true }) {
+                    await token.DisappearFromCombat();
+                }
                 monster.CancelSourceCardMaterialReservation(card);
             }
         }

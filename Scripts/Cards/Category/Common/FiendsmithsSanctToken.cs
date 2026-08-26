@@ -7,7 +7,7 @@ using VYgo.Core;
 namespace VYgo.Scripts.Cards.Category.Common;
 
 [RegisterCard(typeof(CommonCardPool))]
-public class FiendsmithsSanctToken() : BaseMonsterCard(0, CardRarity.Token, TargetType.None) {
+public class FiendsmithsSanctToken() : BaseTokenCard(TargetType.None) {
     public override int CardId => 35552986;
 
     public override int BaseAttackVar => 0;
