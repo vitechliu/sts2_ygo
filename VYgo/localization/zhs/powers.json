@@ -83,7 +83,7 @@
   "HEOSVAROGTHE_MECHANICAL_DAWN_ACTION.title": "黎明无效",
   "HEOSVAROGTHE_MECHANICAL_DAWN_ACTION.description": "[gold]启动[/gold]：获得{Amount}层[gold]无效[/gold]，对所有敌人施加{Amount}层[gold]虚弱[/gold]。每回合限1次。",
   "LINKSLAYER_ACTION.title": "双重斩击",
-  "LINKSLAYER_ACTION.description": "[gold]启动[/gold]：丢弃2张手牌，对目标造成{Amount}点伤害2次，并给予2层[weak]虚弱[/weak]。每回合限1次。",
+  "LINKSLAYER_ACTION.description": "[gold]启动[/gold]：丢弃2张手牌，对目标造成{Amount}点伤害2次，并给予2层[gold]虚弱[/gold]。每回合限1次。",
   "BALANCER_LORD_ACTION.title": "均衡负载",
   "BALANCER_LORD_ACTION.description": "[gold]启动[/gold]：选择手牌一只电子界族怪兽，使其费用-1。每回合限1次。",
   "BALANCER_LORD_ACTION.selectionScreenPrompt": "请选择一只电子界族怪兽，使其费用-1。",
