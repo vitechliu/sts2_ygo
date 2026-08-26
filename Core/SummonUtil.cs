@@ -14,6 +14,7 @@ using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.TestSupport;
 using VYgo.Core.Cards;
+using VYgo.Core.Settings;
 using VYgo.Scripts;
 using VYgo.Scripts.Cards;
 using VYgo.Scripts.Monsters;
@@ -564,7 +565,8 @@ public static class SummonUtil {
             }
 
             bool playedAnimation = false;
-            if (combatRoom != null) {
+            if (combatRoom != null
+                && VYgoModSettings.GetEffectMode(request.Owner) != EffectMode.none) {
                 Vector2 screenCenterPos = combatRoom.GetViewportRect().Size * 0.5f;
                 try {
                     await request.PlayAnimation(new SummonAnimationContext(
@@ -930,7 +932,8 @@ public static class SummonUtil {
         }
 
         try {
-            if (fieldReservations.Count > 0) {
+            EffectMode effectMode = VYgoModSettings.GetEffectMode(owner);
+            if (fieldReservations.Count > 0 && effectMode != EffectMode.none) {
                 //召唤素材发光的音效
                 SFXUtil.Play("event:/vygo/sfx/material_shine");
             }
@@ -940,7 +943,7 @@ public static class SummonUtil {
                 .ToList();
 
             await Task.WhenAll(fieldMoves.Select(move =>
-                MaterialSacrifice(move.Material.Creature!)));
+                MaterialSacrifice(move.Material.Creature!, effectMode)));
 
             foreach ((SummonMaterial material, PileType destination) in fieldMoves) {
                 BaseMonster monster = (BaseMonster)material.Creature!.Monster;
@@ -1007,15 +1010,39 @@ public static class SummonUtil {
         }
     }
 
-    internal static async Task MaterialSacrifice(Creature material) {
+    internal static async Task MaterialSacrifice(Creature material, EffectMode effectMode) {
         var nCreature = material.GetCreatureNode();
-        if (nCreature?.Visuals is not NMonsterVisuals visuals) {
+        if (nCreature == null) {
             await CreatureCmd.Kill(material, true);
             return;
         }
 
         nCreature.ToggleIsInteractable(false);
         nCreature.AnimHideIntent();
+
+        if (effectMode == EffectMode.none) {
+            // CreatureCmd.Kill 会在没有预设 DeathAnimationTask 时启动原版死亡动画。
+            // 用一个待完成任务占位，保留完整死亡结算，同时阻止任何死亡演出。
+            var animationBlocker = new TaskCompletionSource(
+                TaskCreationOptions.RunContinuationsAsynchronously
+            );
+            nCreature.DeathAnimationTask = animationBlocker.Task;
+            try {
+                await CreatureCmd.Kill(material, true);
+            }
+            finally {
+                if (GodotObject.IsInstanceValid(nCreature)) {
+                    nCreature.QueueFreeSafely();
+                }
+                animationBlocker.TrySetResult();
+            }
+            return;
+        }
+
+        if (nCreature.Visuals is not NMonsterVisuals visuals) {
+            await CreatureCmd.Kill(material, true);
+            return;
+        }
 
         async Task PlayDeathAnimation() {
             try {

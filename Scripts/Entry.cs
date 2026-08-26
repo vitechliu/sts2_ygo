@@ -14,6 +14,7 @@ using VYgo.Core;
 using VYgo.Core.CardPools;
 using VYgo.Core.Cards;
 using VYgo.Core.Saves;
+using VYgo.Core.Settings;
 using VYgo.Patches;
 using VYgo.Scripts.Cards;
 using VYgo.Scripts.Characters;
@@ -52,6 +53,7 @@ public static class Entry {
         Logger = RitsuLibFramework.CreateLogger(ModId);
         RitsuLibCompatibility.DisableMainMenuSettingsButtonPatch();
         RegisterSaveData();
+        VYgoModSettings.RegisterPage();
         RegisterCharacterCardPoolLinks();
         var harmony = new Harmony("sts2.vitech." + ModId.ToLowerInvariant());
         harmony.PatchAll();
@@ -85,6 +87,7 @@ public static class Entry {
     private static void RegisterSaveData() {
         using (RitsuLibFramework.BeginModDataRegistration(ModId)) {
             YgoSave.Instance.Register();
+            VYgoModSettings.RegisterData();
         }
     }
 
