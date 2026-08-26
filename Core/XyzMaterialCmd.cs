@@ -10,6 +10,7 @@ using VYgo.Scripts;
 using VYgo.Scripts.Cards;
 using VYgo.Scripts.Monsters;
 using VYgo.Scripts.Powers;
+using VYgo.Core.Settings;
 using VYgo.Utils;
 
 namespace VYgo.Core;
@@ -81,9 +82,12 @@ public static class XyzMaterialCmd {
         ReserveInheritedMaterials(reservations);
 
         try {
-            SFXUtil.Play("event:/vygo/sfx/material_shine");
+            EffectMode effectMode = VYgoModSettings.GetEffectMode(owner);
+            if (effectMode != EffectMode.none) {
+                SFXUtil.Play("event:/vygo/sfx/material_shine");
+            }
             await Task.WhenAll(reservations.Select(reservation =>
-                SummonUtil.MaterialSacrifice(reservation.Monster.Creature)));
+                SummonUtil.MaterialSacrifice(reservation.Monster.Creature, effectMode)));
             return true;
         }
         catch (Exception ex) {
