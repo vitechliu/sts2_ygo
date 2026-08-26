@@ -35,7 +35,7 @@ public static class VYgoModSettings {
 
     private static readonly Dictionary<EffectMode, string> EffectModeText = new() {
         [EffectMode.full] = "完整动画",
-        [EffectMode.minimal] = "少量动画",
+        // [EffectMode.minimal] = "少量动画",
         [EffectMode.none] = "无动画"
     };
 
