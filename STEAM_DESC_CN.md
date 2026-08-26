@@ -12,7 +12,10 @@ YGOMD 是一个仍在开发中的《杀戮尖塔 2》Mod，将游戏王的怪兽
   https://docs.qq.com/form/page/DRGNGWkRmQUhLT2FX)
 - Q群：757479698
 
-
+### beta 0.1.2
+- 新增基础 Mod 设置页面，并预留可持久化的开关与数值设置项,新增召唤动画复杂度设置；选择“无动画”时会跳过召唤演出，联机中其他玩家的召唤也会自动跳过演出。
+- 藤木游作卡池加入14张新卡。
+- 修复了大量bug。
 ### beta 0.1.1
 - 修复了大量bug，具体见[更新内容](https://github.com/vitechliu/sts2_ygo/blob/master/CHANGELOG.md)。
 ### beta 0.1.0
