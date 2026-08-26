@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
+using VYgo.Core.Cards;
 using VYgo.Scripts.Characters;
 using VYgo.Scripts.Powers;
 using VYgo.Scripts.Pools;
@@ -29,8 +30,11 @@ public class CyberDragonSieger() : BaseExtraLinkCard(energyCost,rarity, targetTy
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         ..base.AdditionalHoverTips,
         YgoHoverTipConst.Action(),
-        YgoHoverTipConst.Enhance()
+        YgoHoverTipConst.Enhance(),
+        YgoHoverTipConst.NameAs(YgoMaterialNames.电子龙)
     ];
+
+    public override YgoMaterialNames? MaterialCardName => YgoMaterialNames.电子龙;
 
     public int BoostAttack => DynamicVars["BoostAttack"].IntValue;
 
@@ -38,6 +42,18 @@ public class CyberDragonSieger() : BaseExtraLinkCard(energyCost,rarity, targetTy
     public override int BaseLifeVar => 1;
     public override int UpgradeAttackVar => 2;
     public override int UpgradeLifeVar => 0;
+
+    public override bool CanUseLinkMaterial(SummonMaterial material) {
+        return material.CoreCard.IsRace(YgoRace.Machine);
+    }
+
+    public override bool HasValidLinkMaterials(
+        CoreCard coreCard,
+        IReadOnlyList<SummonMaterial> materials
+    ) {
+        return base.HasValidLinkMaterials(coreCard, materials)
+            && materials.Any(material => material.NameEquals(YgoMaterialNames.电子龙));
+    }
 
     protected override void OnUpgrade() {
         base.OnUpgrade();
