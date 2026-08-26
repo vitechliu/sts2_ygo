@@ -15,6 +15,9 @@ using VYgo.Utils;
 namespace VYgo.Core;
 
 public static class XyzMaterialCmd {
+    // 被选中的超量怪兽死亡前，暂存其已有素材，待新超量怪兽登场后统一转移。
+    private static readonly Dictionary<CardModel, List<CardModel>> InheritedMaterialsBySource = [];
+
     public static IReadOnlyList<CardModel> GetMaterials(Creature target) {
         return target.GetPower<XyzMaterialPower>()?.Materials
             ?? Array.Empty<CardModel>();
@@ -58,6 +61,11 @@ public static class XyzMaterialCmd {
             reservations.Add((monster, card));
         }
 
+        if (!CanReserveInheritedMaterials(owner, reservations)) {
+            await CancelReservations(owner, reservations);
+            return false;
+        }
+
         foreach ((_, CardModel card) in reservations) {
             CardPileAddResult result = await CardPileCmd.Add(
                 card,
@@ -69,6 +77,8 @@ public static class XyzMaterialCmd {
                 return false;
             }
         }
+
+        ReserveInheritedMaterials(reservations);
 
         try {
             SFXUtil.Play("event:/vygo/sfx/material_shine");
@@ -95,13 +105,10 @@ public static class XyzMaterialCmd {
             return false;
         }
 
-        List<CardModel> cards = context.Materials
-            .Select(material => material.Card)
-            .OfType<CardModel>()
-            .Distinct()
-            .ToList();
+        List<CardModel> cards = GetAllReservedMaterialCards(context.Materials);
         CardPile xyzPile = Entry.XyzMaterialPile.GetPile(context.Owner);
-        if (cards.Count != context.Materials.Count
+        if (cards.Count < context.Materials.Count
+            || cards.Distinct().Count() != cards.Count
             || cards.Any(card => card.Owner != context.Owner || card.Pile != xyzPile)) {
             return false;
         }
@@ -118,6 +125,8 @@ public static class XyzMaterialCmd {
             if (power != null) await PowerCmd.Remove(power);
             return false;
         }
+
+        ForgetInheritedMaterials(context.Materials);
 
         if (target.Monster is BaseMonster baseMonster) {
             await baseMonster.OnXyzMaterialsAttached(context.ChoiceContext, context.Owner, cards);
@@ -242,13 +251,12 @@ public static class XyzMaterialCmd {
         Player owner,
         IReadOnlyList<SummonMaterial> materials
     ) {
+        List<CardModel> cards = GetAllReservedMaterialCards(materials);
+        ForgetInheritedMaterials(materials);
         if (CombatManager.Instance.IsOverOrEnding) return;
+
         CardPile xyzPile = Entry.XyzMaterialPile.GetPile(owner);
-        foreach (CardModel card in materials
-                     .Select(material => material.Card)
-                     .OfType<CardModel>()
-                     .Distinct()
-                     .ToList()) {
+        foreach (CardModel card in cards.Distinct().ToList()) {
             if (card.Pile == xyzPile) {
                 await SendMaterialToGraveyard(card);
             }
@@ -293,15 +301,108 @@ public static class XyzMaterialCmd {
         CardPile monsterPile = Entry.MonsterPile.GetPile(owner);
         CardPile discardPile = PileType.Discard.GetPile(owner);
         foreach ((BaseMonster monster, CardModel card) in reservations) {
-            if (card.Pile?.Type != Entry.XyzMaterialPile) continue;
+            List<CardModel> inheritedMaterials = TakeInheritedMaterials(card);
+            if (card.Pile?.Type != Entry.XyzMaterialPile) {
+                foreach (CardModel inheritedMaterial in inheritedMaterials) {
+                    if (inheritedMaterial.Pile?.Type == Entry.XyzMaterialPile) {
+                        await SendMaterialToGraveyard(inheritedMaterial);
+                    }
+                }
+                continue;
+            }
 
             if (monster.Creature is { IsAlive: true }) {
                 monster.CancelSourceCardMaterialReservation(card);
                 await CardPileCmd.Add(card, monsterPile, skipVisuals: true);
+                XyzMaterialPower? power = monster.Creature.GetPower<XyzMaterialPower>();
+                if (inheritedMaterials.Count > 0
+                    && (power == null || !power.InitializeMaterials(inheritedMaterials))) {
+                    foreach (CardModel inheritedMaterial in inheritedMaterials) {
+                        if (inheritedMaterial.Pile?.Type == Entry.XyzMaterialPile) {
+                            await SendMaterialToGraveyard(inheritedMaterial);
+                        }
+                    }
+                }
             }
             else {
                 await CardPileCmd.Add(card, discardPile, skipVisuals: false);
+                foreach (CardModel inheritedMaterial in inheritedMaterials) {
+                    if (inheritedMaterial.Pile?.Type == Entry.XyzMaterialPile) {
+                        await SendMaterialToGraveyard(inheritedMaterial);
+                    }
+                }
             }
         }
+    }
+
+    private static bool CanReserveInheritedMaterials(
+        Player owner,
+        IReadOnlyList<(BaseMonster Monster, CardModel Card)> reservations
+    ) {
+        CardPile xyzPile = Entry.XyzMaterialPile.GetPile(owner);
+        HashSet<CardModel> reservedCards = reservations
+            .Select(reservation => reservation.Card)
+            .ToHashSet();
+
+        foreach ((BaseMonster monster, CardModel sourceCard) in reservations) {
+            if (InheritedMaterialsBySource.ContainsKey(sourceCard)) return false;
+
+            XyzMaterialPower? power = monster.Creature.GetPower<XyzMaterialPower>();
+            if (power == null) continue;
+
+            IReadOnlyList<CardModel> inheritedMaterials = power.Materials;
+            if (inheritedMaterials.Count != power.Amount
+                || inheritedMaterials.Any(card => card.Owner != owner
+                    || card.Pile != xyzPile
+                    || !reservedCards.Add(card))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static void ReserveInheritedMaterials(
+        IReadOnlyList<(BaseMonster Monster, CardModel Card)> reservations
+    ) {
+        foreach ((BaseMonster monster, CardModel sourceCard) in reservations) {
+            XyzMaterialPower? power = monster.Creature.GetPower<XyzMaterialPower>();
+            if (power == null || power.Materials.Count == 0) continue;
+
+            InheritedMaterialsBySource[sourceCard] = power.DetachAllMaterials();
+        }
+    }
+
+    private static List<CardModel> GetAllReservedMaterialCards(
+        IReadOnlyList<SummonMaterial> materials
+    ) {
+        List<CardModel> cards = [];
+        foreach (CardModel sourceCard in materials
+                     .Select(material => material.Card)
+                     .OfType<CardModel>()
+                     .Distinct()) {
+            cards.Add(sourceCard);
+            if (InheritedMaterialsBySource.TryGetValue(sourceCard, out List<CardModel>? inherited)) {
+                cards.AddRange(inherited);
+            }
+        }
+
+        return cards;
+    }
+
+    private static void ForgetInheritedMaterials(IReadOnlyList<SummonMaterial> materials) {
+        foreach (CardModel sourceCard in materials
+                     .Select(material => material.Card)
+                     .OfType<CardModel>()) {
+            InheritedMaterialsBySource.Remove(sourceCard);
+        }
+    }
+
+    private static List<CardModel> TakeInheritedMaterials(CardModel sourceCard) {
+        if (!InheritedMaterialsBySource.Remove(sourceCard, out List<CardModel>? materials)) {
+            return [];
+        }
+
+        return materials;
     }
 }
