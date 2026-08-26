@@ -38,7 +38,7 @@ public abstract class BaseRightClickableMonsterCard(
                 break;
         }
 
-        if (RightClickCost <= Owner.GetEnergy()) {
+        if (RightClickCost > Owner.GetEnergy()) {
             if (toast) {
                 RitsuToastService.ShowWarning(
                     new LocString("combat_messages", "USE_EFFECT_ERROR_ENERGY.body").GetFormattedText(),
