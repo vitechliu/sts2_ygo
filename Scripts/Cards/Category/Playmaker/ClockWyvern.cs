@@ -7,7 +7,7 @@ using VYgo.Scripts.Pools;
 namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
-public class ClockWyvern() : BaseMonsterCard(1, CardRarity.Uncommon, TargetType.None) {
+public class ClockWyvern() : BaseMonsterCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.None) {
     public override int CardId => 21830679;
 
     public override int BaseAttackVar => 6;

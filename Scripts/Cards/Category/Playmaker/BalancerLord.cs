@@ -13,7 +13,7 @@ using VYgo.Utils;
 namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
-public class BalancerLord() : BaseMonsterCard(2, CardRarity.Common, TargetType.None) {
+public class BalancerLord() : BaseMonsterCard(2, CardType.Skill, CardRarity.Common, TargetType.None) {
     public override int CardId => 8567955;
 
     public override int BaseAttackVar => 5;

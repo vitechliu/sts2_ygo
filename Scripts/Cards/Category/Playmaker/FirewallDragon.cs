@@ -11,7 +11,7 @@ namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
 [RegisterCharacterStarterCard(typeof(PlaymakerCharacter), 1)]
-public class FirewallDragon() : BaseExtraLinkCard(-1, CardRarity.Basic, TargetType.None) {
+public class FirewallDragon() : BaseExtraLinkCard(-1, CardType.Skill, CardRarity.Basic, TargetType.None) {
     public override int CardId => 5043010;
 
     public override int BaseAttackVar => 10;

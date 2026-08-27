@@ -8,7 +8,7 @@ namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
 [RegisterCharacterStarterCard(typeof(PlaymakerCharacter), 2)]
-public class Digitron() : BaseMonsterCard(1, CardRarity.Basic, TargetType.None) {
+public class Digitron() : BaseMonsterCard(1, CardType.Attack, CardRarity.Basic, TargetType.None) {
     public override int CardId => 32295838;
 
     public override int BaseAttackVar => 4;

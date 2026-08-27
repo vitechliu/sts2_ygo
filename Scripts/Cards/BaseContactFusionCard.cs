@@ -10,10 +10,11 @@ namespace VYgo.Scripts.Cards;
 /// </summary>
 public abstract class BaseContactFusionCard(
     int baseCost,
+    CardType type,
     CardRarity rarity,
     TargetType target,
     bool showInCardLibrary = true)
-    : BaseExtraFusionCard(baseCost, rarity, target, showInCardLibrary),
+    : BaseExtraFusionCard(baseCost, type, rarity, target, showInCardLibrary),
         IDirectExtraDeckSummonCard {
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [

@@ -8,7 +8,7 @@ namespace VYgo.Scripts.Cards.Category.Common;
 /// 仅供同调测试，实际未开发
 /// </summary>
 [RegisterCard(typeof(CommonCardPool))]
-public class AshBlossomJoyousSpring() : BaseMonsterCard(1, CardRarity.Rare, TargetType.None) {
+public class AshBlossomJoyousSpring() : BaseMonsterCard(1, CardType.Skill, CardRarity.Rare, TargetType.None) {
     public override int CardId => 14558127;
 
     public override int BaseAttackVar => 0;

@@ -17,9 +17,10 @@ namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 public abstract class BaseCyberdarkHandActionMonsterCard(
     int baseCost,
+    CardType type,
     CardRarity rarity,
     TargetType target)
-    : BaseRightClickableMonsterCard(baseCost, rarity, target),
+    : BaseRightClickableMonsterCard(baseCost, type, rarity, target),
         IEquipmentEffect {
     protected virtual int EquipAttack => 3;
     protected virtual int EquipLife => 0;

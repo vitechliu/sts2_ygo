@@ -7,7 +7,7 @@ using VYgo.Core.Cards;
 namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
-public class CodeTalkerInverted() : BaseExtraLinkCard(-1, CardRarity.Uncommon, TargetType.None) {
+public class CodeTalkerInverted() : BaseExtraLinkCard(-1, CardType.Attack, CardRarity.Uncommon, TargetType.None) {
     public override int CardId => 45462149;
 
     public override int BaseAttackVar => 7;

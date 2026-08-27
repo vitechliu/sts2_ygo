@@ -15,7 +15,7 @@ using VYgo.Utils;
 namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
-public class InterruptResistor() : BaseMonsterCard(2, CardRarity.Common, TargetType.None) {
+public class InterruptResistor() : BaseMonsterCard(2, CardType.Skill, CardRarity.Common, TargetType.None) {
     public override int CardId => 2414168;
 
     public override int BaseAttackVar => 0;

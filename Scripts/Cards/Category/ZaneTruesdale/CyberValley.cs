@@ -10,7 +10,7 @@ using VYgo.Scripts.Var;
 namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
-public class CyberValley() : BaseMonsterCard(1, CardRarity.Common, TargetType.None) {
+public class CyberValley() : BaseMonsterCard(1, CardType.Skill, CardRarity.Common, TargetType.None) {
     public const int GuardBlock = 5;
     public const int GuardDraw = 1;
     public const int TributeDraw = 2;

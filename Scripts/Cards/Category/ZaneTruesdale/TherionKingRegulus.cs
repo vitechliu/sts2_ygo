@@ -16,7 +16,7 @@ namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
 public class TherionKingRegulus()
-    : BaseMonsterCard(2, CardRarity.Rare, TargetType.None) {
+    : BaseMonsterCard(2, CardType.Attack, CardRarity.Rare, TargetType.None) {
     public override int CardId => 10604644;
 
     public override int BaseAttackVar => 8;

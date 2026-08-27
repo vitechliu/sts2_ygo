@@ -15,7 +15,7 @@ using VYgo.Utils;
 namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
-public class CyberJormungardr() : BaseMonsterCard(2, CardRarity.Rare, TargetType.None) {
+public class CyberJormungardr() : BaseMonsterCard(2, CardType.Skill, CardRarity.Rare, TargetType.None) {
     public override int CardId => 19715246;
 
     public override int BaseAttackVar => 3;

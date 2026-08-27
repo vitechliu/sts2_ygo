@@ -9,7 +9,7 @@ using VYgo.Scripts.Var;
 namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
-public class DecodeTalkerExtended() : BaseExtraLinkCard(-1, CardRarity.Event, TargetType.None) {
+public class DecodeTalkerExtended() : BaseExtraLinkCard(-1, CardType.Attack, CardRarity.Event, TargetType.None) {
     public override int CardId => 30822527;
 
     public override int BaseAttackVar => 7;

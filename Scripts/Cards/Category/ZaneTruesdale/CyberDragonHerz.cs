@@ -10,7 +10,7 @@ using VYgo.Scripts.Var;
 namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
-public class CyberDragonHerz() : BaseMonsterCard(energyCost,rarity, targetType, shouldShowInCardLibrary) {
+public class CyberDragonHerz() : BaseMonsterCard(energyCost, CardType.Attack, rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 56364287;
     
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [

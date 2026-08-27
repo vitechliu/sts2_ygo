@@ -14,7 +14,7 @@ using VYgo.Scripts.Var;
 namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
-public class CyberseWhiteHat() : BaseMonsterCard(2, CardRarity.Uncommon, TargetType.None) {
+public class CyberseWhiteHat() : BaseMonsterCard(2, CardType.Skill, CardRarity.Uncommon, TargetType.None) {
     public override int CardId => 46104361;
 
     public override int BaseAttackVar => 5;

@@ -8,7 +8,7 @@ using VYgo.Scripts.Var;
 namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
-public class FlameBufferlo() : BaseMonsterCard(1, CardRarity.Common, TargetType.None) {
+public class FlameBufferlo() : BaseMonsterCard(1, CardType.Attack, CardRarity.Common, TargetType.None) {
     public override int CardId => 80794697;
 
     public override int BaseAttackVar => 5;

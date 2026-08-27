@@ -10,7 +10,7 @@ using VYgo.Scripts.Var;
 namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
-public class CyberseWizard() : BaseMonsterCard(1, CardRarity.Common, TargetType.None) {
+public class CyberseWizard() : BaseMonsterCard(1, CardType.Attack, CardRarity.Common, TargetType.None) {
     public override int CardId => 36033786;
 
     public override int BaseAttackVar => 4;

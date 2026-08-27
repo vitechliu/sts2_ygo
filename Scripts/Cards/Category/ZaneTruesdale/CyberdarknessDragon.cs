@@ -13,7 +13,7 @@ using VYgo.Scripts.Var;
 namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
-public class CyberdarknessDragon() : BaseExtraFusionCard(-1, CardRarity.Token, TargetType.None) {
+public class CyberdarknessDragon() : BaseExtraFusionCard(-1, CardType.Attack, CardRarity.Token, TargetType.None) {
     public override int CardId => 18967507;
 
     public override int BaseAttackVar => 20;

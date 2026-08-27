@@ -9,7 +9,7 @@ using VYgo.Scripts.Var;
 namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
-public class CapacitorStalker() : BaseMonsterCard(2, CardRarity.Common, TargetType.None) {
+public class CapacitorStalker() : BaseMonsterCard(2, CardType.Attack, CardRarity.Common, TargetType.None) {
     public override int CardId => 29716911;
 
     public override int BaseAttackVar => 10;

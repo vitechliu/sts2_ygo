@@ -15,7 +15,7 @@ using VYgo.Utils;
 namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
-public class CatcheEveL2() : BaseRightClickableMonsterCard(1, CardRarity.Common, TargetType.None) {
+public class CatcheEveL2() : BaseRightClickableMonsterCard(1, CardType.Attack, CardRarity.Common, TargetType.None) {
     public override int CardId => 50690129;
 
     protected override RightClickType ClickType => RightClickType.Hand;

@@ -16,7 +16,7 @@ namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
 [RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 2)]
 [RegisterCharacterStarterCard(typeof(RedhatCharacter), 15)]
-public class CyberDragon() : BaseMonsterCard(energyCost, rarity, targetType, shouldShowInCardLibrary) {
+public class CyberDragon() : BaseMonsterCard(energyCost, CardType.Attack, rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 70095154;
 
     public override YgoMaterialNames? MaterialCardName => YgoMaterialNames.电子龙;

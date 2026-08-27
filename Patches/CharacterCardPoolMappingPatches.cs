@@ -2,7 +2,6 @@ using System.Reflection;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Merchant;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -11,27 +10,11 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Runs;
 using VYgo.Core.CardPools;
-using VYgo.Core.Extensions;
-using VYgo.Scripts;
 
 namespace VYgo.Patches;
 
 [HarmonyPatch]
 public static class CharacterCardPoolMappingPatches {
-    private static readonly CardType[] YgoCharacterCardTypes = [
-        CardType.Skill,
-        CardType.Skill,
-        CardType.Skill,
-        CardType.Skill,
-        CardType.Power,
-    ];
-
-    private static readonly FieldInfo? ColoredCardTypesField =
-        AccessTools.Field(typeof(MerchantInventory), "_coloredCardTypes");
-
-    private static readonly FieldInfo? CharacterCardEntriesField =
-        AccessTools.Field(typeof(MerchantInventory), "_characterCardEntries");
-
     private static readonly FieldInfo? DiscoveryMockSelectedCardField =
         AccessTools.Field(typeof(Discovery), "_mockSelectedCard");
 
@@ -52,48 +35,6 @@ public static class CharacterCardPoolMappingPatches {
             .ToList();
 
         __result = __result.WithCardPools(expandedPools);
-    }
-
-    [HarmonyPrefix]
-    [HarmonyPatch(typeof(MerchantInventory), "PopulateCharacterCardEntries")]
-    public static bool PopulateCharacterCardEntriesPrefix(MerchantInventory __instance) {
-        var player = __instance.Player;
-        var character = player.Character;
-        var hasExtraPools = CharacterCardPoolLinks.HasExtraPools(character);
-        var isYgoCharacter = player.IsYgoCharacter();
-        if (!hasExtraPools && !isYgoCharacter) return true;
-
-        CardType[] coloredCardTypes;
-        if (isYgoCharacter) {
-            coloredCardTypes = YgoCharacterCardTypes;
-        }
-        else if (ColoredCardTypesField?.GetValue(null) is CardType[] originalColoredCardTypes) {
-            coloredCardTypes = originalColoredCardTypes;
-        }
-        else {
-            return true;
-        }
-
-        if (CharacterCardEntriesField?.GetValue(__instance) is not List<MerchantCardEntry> characterCardEntries) return true;
-
-        var saleIndex = player.PlayerRng.Shops.NextInt(coloredCardTypes.Length);
-        var cardPool = hasExtraPools
-            ? CharacterCardPoolLinks.GetUnlockedCardsFor(player).ToList()
-            : character.CardPool
-                .GetUnlockedCards(player.UnlockState, player.RunState.CardMultiplayerConstraint)
-                .ToList();
-
-        for (var i = 0; i < coloredCardTypes.Length; i++) {
-            var entry = new MerchantCardEntry(player, __instance, cardPool, coloredCardTypes[i]);
-            entry.Populate();
-            characterCardEntries.Add(entry);
-
-            if (saleIndex == i) {
-                entry.SetOnSale();
-            }
-        }
-
-        return false;
     }
 
     [HarmonyPrefix]

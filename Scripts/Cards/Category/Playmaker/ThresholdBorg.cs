@@ -9,7 +9,7 @@ using VYgo.Scripts.Var;
 namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
-public class ThresholdBorg() : BaseMonsterCard(3, CardRarity.Uncommon, TargetType.None) {
+public class ThresholdBorg() : BaseMonsterCard(3, CardType.Attack, CardRarity.Uncommon, TargetType.None) {
     public override int CardId => 31944175;
 
     public override int BaseAttackVar => 9;

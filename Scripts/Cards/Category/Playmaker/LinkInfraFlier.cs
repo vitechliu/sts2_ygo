@@ -11,7 +11,7 @@ using VYgo.Scripts.Monsters;
 namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
-public class LinkInfraFlier() : BaseMonsterCard(1, CardRarity.Common, TargetType.None) {
+public class LinkInfraFlier() : BaseMonsterCard(1, CardType.Skill, CardRarity.Common, TargetType.None) {
     public override int CardId => 65100616;
 
     public override int BaseAttackVar => 0;

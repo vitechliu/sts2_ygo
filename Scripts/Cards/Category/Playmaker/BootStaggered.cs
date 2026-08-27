@@ -13,7 +13,7 @@ using VYgo.Utils;
 namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
-public class BootStaggered() : BaseMonsterCard(2, CardRarity.Uncommon, TargetType.None), IMonsterSummonHookListener {
+public class BootStaggered() : BaseMonsterCard(2, CardType.Attack, CardRarity.Uncommon, TargetType.None), IMonsterSummonHookListener {
     public override int CardId => 70950698;
 
     public override int BaseAttackVar => 8;

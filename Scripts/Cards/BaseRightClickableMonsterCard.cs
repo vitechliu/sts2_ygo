@@ -8,10 +8,11 @@ namespace VYgo.Scripts.Cards;
 
 public abstract class BaseRightClickableMonsterCard(
     int baseCost,
+    CardType type,
     CardRarity rarity,
     TargetType target,
     bool showInCardLibrary = true)
-    : BaseMonsterCard(baseCost, rarity, target, showInCardLibrary), IModRightClickableCard {
+    : BaseMonsterCard(baseCost, type, rarity, target, showInCardLibrary), IModRightClickableCard {
 
     protected virtual int RightClickCost => EnergyCost.GetAmountToSpend();
     

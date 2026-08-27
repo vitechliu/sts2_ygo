@@ -6,7 +6,7 @@ namespace VYgo.Scripts.Cards;
 public abstract class BaseTokenCard(
     TargetType target,
     bool showInCardLibrary = true)
-    : BaseMonsterCard(0, CardRarity.Token, target, showInCardLibrary) {
+    : BaseMonsterCard(0, CardType.Skill, CardRarity.Token, target, showInCardLibrary) {
     public override bool CanBeGeneratedInCombat => false;
     public override bool CanBeGeneratedByModifiers => false;
 

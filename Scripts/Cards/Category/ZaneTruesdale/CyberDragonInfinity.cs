@@ -14,7 +14,7 @@ namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
 public class CyberDragonInfinity()
-    : BaseExtraXyzCard(energyCost, rarity, targetType, shouldShowInCardLibrary) {
+    : BaseExtraXyzCard(energyCost, CardType.Skill, rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 10443957;
     public override int XyzMaterialCount => 1;
     

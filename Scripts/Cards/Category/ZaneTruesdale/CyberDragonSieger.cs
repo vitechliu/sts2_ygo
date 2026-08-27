@@ -13,7 +13,7 @@ namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
 [RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 1)]
-public class CyberDragonSieger() : BaseExtraLinkCard(energyCost,rarity, targetType, shouldShowInCardLibrary) {
+public class CyberDragonSieger() : BaseExtraLinkCard(energyCost, CardType.Attack, rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 46724542;
     
     private const int energyCost = -1;

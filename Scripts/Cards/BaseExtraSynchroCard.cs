@@ -16,7 +16,7 @@ public abstract class BaseExtraSynchroCard(
     CardRarity rarity,
     TargetType target,
     bool showInCardLibrary = true)
-    : BaseExtraCard(baseCost, rarity, target, showInCardLibrary),
+    : BaseExtraCard(baseCost, CardType.Skill, rarity, target, showInCardLibrary),
         IDirectExtraDeckSummonCard {
 
     protected override YgoType CardYgoType => YgoType.synchro;

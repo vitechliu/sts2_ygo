@@ -7,7 +7,7 @@ using VYgo.Core.Cards;
 namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
-public class TranscodeTalker() : BaseExtraLinkCard(-1, CardRarity.Uncommon, TargetType.None) {
+public class TranscodeTalker() : BaseExtraLinkCard(-1, CardType.Skill, CardRarity.Uncommon, TargetType.None) {
     public override int CardId => 46947713;
 
     public override int BaseAttackVar => 10;

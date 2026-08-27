@@ -10,7 +10,7 @@ using VYgo.Scripts.Powers;
 namespace VYgo.Scripts.Cards.Category.Common;
 
 [RegisterCard(typeof(CommonCardPool))]
-public class MaxxC() : BaseRightClickableMonsterCard(1, CardRarity.Rare, TargetType.None), IModRightClickableCard {
+public class MaxxC() : BaseRightClickableMonsterCard(1, CardType.Skill, CardRarity.Rare, TargetType.None), IModRightClickableCard {
     public override int CardId => 23434538;
 
     protected override RightClickType ClickType => RightClickType.Hand;

@@ -13,7 +13,7 @@ namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
 [RegisterCharacterStarterCard(typeof(PlaymakerCharacter), 1)]
-public class DecodeTalker() : BaseExtraLinkCard(-1, CardRarity.Basic, TargetType.None) {
+public class DecodeTalker() : BaseExtraLinkCard(-1, CardType.Attack, CardRarity.Basic, TargetType.None) {
     public override int CardId => 1861629;
 
     public override int BaseAttackVar => 7;

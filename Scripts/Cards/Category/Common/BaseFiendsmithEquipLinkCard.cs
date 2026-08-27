@@ -16,7 +16,7 @@ using VYgo.Utils;
 namespace VYgo.Scripts.Cards.Category.Common;
 
 public abstract class BaseFiendsmithEquipLinkCard()
-    : BaseExtraLinkCard(-1, CardRarity.Event, TargetType.None),
+    : BaseExtraLinkCard(-1, CardType.Skill, CardRarity.Event, TargetType.None),
         IModRightClickableCard,
         IEquipmentEffect {
     protected virtual int EquipAttack => 0;

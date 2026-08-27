@@ -9,7 +9,7 @@ namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
 [RegisterCharacterStarterCard(typeof(PlaymakerCharacter), 1)]
-public class Draconnet() : BaseMonsterCard(1, CardRarity.Basic, TargetType.None) {
+public class Draconnet() : BaseMonsterCard(1, CardType.Skill, CardRarity.Basic, TargetType.None) {
     public override int CardId => 62706865;
 
     public override int BaseAttackVar => 4;
