@@ -6,10 +6,11 @@ namespace VYgo.Scripts.Cards;
 
 public abstract class BaseExtraFusionCard(
     int baseCost,
+    CardType type,
     CardRarity rarity,
     TargetType target,
     bool showInCardLibrary = true)
-    : BaseExtraCard(baseCost, rarity, target, showInCardLibrary) {
+    : BaseExtraCard(baseCost, type, rarity, target, showInCardLibrary) {
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         BaseSummonHoverTip,

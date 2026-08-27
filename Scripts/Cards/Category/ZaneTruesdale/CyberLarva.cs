@@ -6,7 +6,7 @@ using VYgo.Core;
 namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
-public class CyberLarva() : BaseMonsterCard(0, CardRarity.Common, TargetType.None) {
+public class CyberLarva() : BaseMonsterCard(0, CardType.Skill, CardRarity.Common, TargetType.None) {
     public override int CardId => 35050257;
 
     public override int BaseAttackVar => 0;

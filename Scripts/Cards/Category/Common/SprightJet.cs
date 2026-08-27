@@ -6,7 +6,7 @@ using VYgo.Core;
 namespace VYgo.Scripts.Cards.Category.Common;
 
 [RegisterCard(typeof(YgoEventCardPool))]
-public class SprightJet() : BaseSprightMonsterCard(1, CardRarity.Event) {
+public class SprightJet() : BaseSprightMonsterCard(1, CardType.Attack, CardRarity.Event) {
     public override int CardId => 13533678;
 
     public override int BaseAttackVar => 5;

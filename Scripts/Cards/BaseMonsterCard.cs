@@ -20,10 +20,11 @@ namespace VYgo.Scripts.Cards;
 
 public abstract class BaseMonsterCard(
     int baseCost,
+    CardType type,
     CardRarity rarity,
     TargetType target,
     bool showInCardLibrary = true)
-    : BaseVYgoCard(baseCost, CardType.Skill, rarity, target, showInCardLibrary) {
+    : BaseVYgoCard(baseCost, type, rarity, target, showInCardLibrary) {
     private Action<Creature>? _summonResultObserver;
     private SummonContext? _lastSummonContext;
     private bool _isEphemeralMonsterSource;

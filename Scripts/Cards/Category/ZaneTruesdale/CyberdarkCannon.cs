@@ -8,7 +8,7 @@ namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
 public class CyberdarkCannon()
-    : BaseCyberdarkHandActionMonsterCard(1, CardRarity.Common, TargetType.None) {
+    : BaseCyberdarkHandActionMonsterCard(1, CardType.Attack, CardRarity.Common, TargetType.None) {
     public override int CardId => 45078193;
 
     public override int BaseAttackVar => 4;

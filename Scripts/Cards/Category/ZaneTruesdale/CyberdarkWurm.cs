@@ -12,7 +12,7 @@ using VYgo.Core.Summon;
 namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
-public class CyberdarkWurm() : BaseMonsterCard(2, CardRarity.Rare, TargetType.None) {
+public class CyberdarkWurm() : BaseMonsterCard(2, CardType.Skill, CardRarity.Rare, TargetType.None) {
     public override int CardId => 56100345;
 
     public override int BaseAttackVar => 3;

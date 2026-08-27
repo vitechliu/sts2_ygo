@@ -8,10 +8,11 @@ namespace VYgo.Scripts.Cards;
 
 public abstract class BaseExtraXyzCard(
     int baseCost,
+    CardType type,
     CardRarity rarity,
     TargetType target,
     bool showInCardLibrary = true)
-    : BaseExtraCard(baseCost, rarity, target, showInCardLibrary), IDirectExtraDeckSummonCard {
+    : BaseExtraCard(baseCost, type, rarity, target, showInCardLibrary), IDirectExtraDeckSummonCard {
 
     protected override YgoType CardYgoType => YgoType.xyz;
 

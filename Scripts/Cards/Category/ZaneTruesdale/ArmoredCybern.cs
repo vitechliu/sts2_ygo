@@ -15,7 +15,7 @@ namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
 public class ArmoredCybern()
-    : BaseMonsterCard(1, CardRarity.Uncommon, TargetType.None), IEquipmentEffect {
+    : BaseMonsterCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.None), IEquipmentEffect {
     public override int CardId => 67159705;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [

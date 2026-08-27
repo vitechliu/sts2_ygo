@@ -8,7 +8,7 @@ using VYgo.Scripts.Pools;
 namespace VYgo.Scripts.Cards.Category.Link;
 
 [RegisterCard(typeof(LinkCardPool))]
-public class SPLittleKnight() : BaseExtraLinkCard(energyCost,rarity, targetType, shouldShowInCardLibrary) {
+public class SPLittleKnight() : BaseExtraLinkCard(energyCost, CardType.Skill, rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 29301450;
     
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [

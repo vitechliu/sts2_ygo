@@ -10,7 +10,7 @@ using VYgo.Scripts.Var;
 namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
-public class CyberKirin() : BaseMonsterCard(2, CardRarity.Uncommon, TargetType.None) {
+public class CyberKirin() : BaseMonsterCard(2, CardType.Skill, CardRarity.Uncommon, TargetType.None) {
     public const int IntangibleAmount = 1;
 
     public override int CardId => 76986005;

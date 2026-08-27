@@ -9,7 +9,7 @@ using VYgo.Scripts.Var;
 namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
-public class CyberDragonZwei() : BaseMonsterCard(1, CardRarity.Common, TargetType.None) {
+public class CyberDragonZwei() : BaseMonsterCard(1, CardType.Attack, CardRarity.Common, TargetType.None) {
     public override int CardId => 5373478;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [

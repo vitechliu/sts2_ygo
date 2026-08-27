@@ -12,7 +12,7 @@ using VYgo.Core;
 namespace VYgo.Scripts.Cards.Category.Synchro;
 
 [RegisterCard(typeof(SynchroCardPool))]
-public class GlowUpBulb() : BaseRightClickableMonsterCard(1, CardRarity.Common, TargetType.None) {
+public class GlowUpBulb() : BaseRightClickableMonsterCard(1, CardType.Skill, CardRarity.Common, TargetType.None) {
     public override int CardId => 67441435;
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [

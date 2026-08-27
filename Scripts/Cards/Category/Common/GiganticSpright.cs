@@ -8,7 +8,7 @@ using VYgo.Core.Cards;
 namespace VYgo.Scripts.Cards.Category.Common;
 
 [RegisterCard(typeof(YgoEventCardPool))]
-public class GiganticSpright() : BaseExtraXyzCard(-1, CardRarity.Event, TargetType.None) {
+public class GiganticSpright() : BaseExtraXyzCard(-1, CardType.Attack, CardRarity.Event, TargetType.None) {
     public override int CardId => 54498517;
 
     public override int BaseAttackVar => 8;

@@ -10,7 +10,7 @@ namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
 [RegisterCharacterStarterCard(typeof(ZaneTruesdaleCharacter), 1)]
-public class CyberDragonNova() : BaseExtraXyzCard(1, CardRarity.Basic, TargetType.None, true) {
+public class CyberDragonNova() : BaseExtraXyzCard(1, CardType.Skill, CardRarity.Basic, TargetType.None, true) {
     public override int CardId => 58069384;
     public override int XyzMaterialCount => 2;
     public override int BaseAttackVar => 8;

@@ -8,7 +8,7 @@ namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
 [RegisterCharacterStarterCard(typeof(PlaymakerCharacter), 1)]
-public class LinkSpider() : BaseExtraLinkCard(-1, CardRarity.Basic, TargetType.None) {
+public class LinkSpider() : BaseExtraLinkCard(-1, CardType.Attack, CardRarity.Basic, TargetType.None) {
     public override int CardId => 98978921;
 
     public override int BaseAttackVar => 3;

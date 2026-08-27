@@ -6,7 +6,7 @@ using VYgo.Core;
 namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
-public class RAMClouder() : BaseMonsterCard(2, CardRarity.Common, TargetType.None) {
+public class RAMClouder() : BaseMonsterCard(2, CardType.Attack, CardRarity.Common, TargetType.None) {
     public override int CardId => 9190563;
 
     public override int BaseAttackVar => 8;

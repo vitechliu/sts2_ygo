@@ -11,7 +11,7 @@ namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
 public class ChimeratechOverdragon()
-    : BaseExtraFusionCard(-1, CardRarity.Rare, TargetType.None) {
+    : BaseExtraFusionCard(-1, CardType.Attack, CardRarity.Rare, TargetType.None) {
     public override int CardId => 64599569;
 
     public override int BaseAttackVar => 1;

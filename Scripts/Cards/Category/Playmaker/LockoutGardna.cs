@@ -13,7 +13,7 @@ using VYgo.Utils;
 namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
-public class LockoutGardna() : BaseMonsterCard(1, CardRarity.Common, TargetType.None) {
+public class LockoutGardna() : BaseMonsterCard(1, CardType.Skill, CardRarity.Common, TargetType.None) {
     public override int CardId => 37310367;
 
     public override int BaseAttackVar => 3;

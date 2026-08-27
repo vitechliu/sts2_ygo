@@ -8,7 +8,7 @@ namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
 [RegisterCharacterStarterCard(typeof(PlaymakerCharacter), 2)]
-public class Bitron() : BaseMonsterCard(1, CardRarity.Basic, TargetType.None) {
+public class Bitron() : BaseMonsterCard(1, CardType.Skill, CardRarity.Basic, TargetType.None) {
     public override int CardId => 36211150;
 
     public override int BaseAttackVar => 0;

@@ -10,7 +10,7 @@ using VYgo.Scripts.Var;
 namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
-public class ExploderDragon() : BaseMonsterCard(1, CardRarity.Common, TargetType.None) {
+public class ExploderDragon() : BaseMonsterCard(1, CardType.Attack, CardRarity.Common, TargetType.None) {
     public const int BaseDamage = 7;
 
     public override int CardId => 20586572;

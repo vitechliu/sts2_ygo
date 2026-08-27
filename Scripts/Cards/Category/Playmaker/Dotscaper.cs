@@ -11,7 +11,7 @@ using VYgo.Utils;
 namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
-public class Dotscaper() : BaseMonsterCard(0, CardRarity.Uncommon, TargetType.None) {
+public class Dotscaper() : BaseMonsterCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.None) {
     public override int CardId => 18789533;
 
     public override int BaseAttackVar => 0;

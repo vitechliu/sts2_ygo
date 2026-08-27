@@ -11,7 +11,7 @@ namespace VYgo.Scripts.Cards.Category.Common;
 
 [RegisterCard(typeof(YgoEventCardPool))]
 public class FiendsmithsLacrima()
-    : BaseExtraFusionCard(-1, CardRarity.Event, TargetType.None) {
+    : BaseExtraFusionCard(-1, CardType.Attack, CardRarity.Event, TargetType.None) {
     public override int CardId => 46640168;
 
     public override int BaseAttackVar => 8;

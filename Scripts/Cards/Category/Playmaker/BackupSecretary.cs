@@ -14,7 +14,7 @@ namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
 [RegisterCharacterStarterCard(typeof(PlaymakerCharacter), 1)]
-public class BackupSecretary() : BaseMonsterCard(1, CardRarity.Basic, TargetType.None) {
+public class BackupSecretary() : BaseMonsterCard(1, CardType.Attack, CardRarity.Basic, TargetType.None) {
     public override int CardId => 63528891;
 
     public override int BaseAttackVar => 3;

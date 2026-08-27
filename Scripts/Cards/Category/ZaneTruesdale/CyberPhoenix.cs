@@ -9,7 +9,7 @@ using VYgo.Scripts.Var;
 namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
-public class CyberPhoenix() : BaseMonsterCard(1, CardRarity.Common, TargetType.None) {
+public class CyberPhoenix() : BaseMonsterCard(1, CardType.Skill, CardRarity.Common, TargetType.None) {
     public const int BaseDraw = 1;
     private const int UpgradeDraw = 1;
 

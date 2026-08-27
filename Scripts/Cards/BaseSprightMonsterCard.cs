@@ -10,8 +10,11 @@ namespace VYgo.Scripts.Cards;
 /// <summary>
 /// 卫星闪灵主卡组怪兽基类：场上有2星·2阶的怪兽时可以特召（费用变为0）。
 /// </summary>
-public abstract class BaseSprightMonsterCard(int baseCost, CardRarity rarity)
-    : BaseMonsterCard(baseCost, rarity, TargetType.None) {
+public abstract class BaseSprightMonsterCard(
+    int baseCost,
+    CardType type,
+    CardRarity rarity)
+    : BaseMonsterCard(baseCost, type, rarity, TargetType.None) {
 
     protected bool IsSpecialSummonActive => YgoSummonRules.ControlsLevel2OrRank2Monster(Owner);
 

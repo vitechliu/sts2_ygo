@@ -17,7 +17,7 @@ namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
 [RegisterCharacterStarterCard(typeof(PlaymakerCharacter), 1)]
-public class Linkslayer() : BaseMonsterCard(2, CardRarity.Basic, TargetType.None) {
+public class Linkslayer() : BaseMonsterCard(2, CardType.Attack, CardRarity.Basic, TargetType.None) {
     public override int CardId => 35595518;
 
     public override int BaseAttackVar => 5;

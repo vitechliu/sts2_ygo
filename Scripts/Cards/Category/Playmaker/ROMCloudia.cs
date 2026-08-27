@@ -11,7 +11,7 @@ using VYgo.Core;
 namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
-public class ROMCloudia() : BaseMonsterCard(2, CardRarity.Uncommon, TargetType.None) {
+public class ROMCloudia() : BaseMonsterCard(2, CardType.Attack, CardRarity.Uncommon, TargetType.None) {
     public override int CardId => 44956694;
 
     public override int BaseAttackVar => 6;

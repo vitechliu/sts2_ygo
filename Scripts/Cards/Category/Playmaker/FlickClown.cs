@@ -8,7 +8,7 @@ using VYgo.Scripts.Var;
 namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
-public class FlickClown() : BaseMonsterCard(1, CardRarity.Common, TargetType.None) {
+public class FlickClown() : BaseMonsterCard(1, CardType.Skill, CardRarity.Common, TargetType.None) {
     public override int CardId => 209710;
 
     public override int BaseAttackVar => 2;

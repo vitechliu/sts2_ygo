@@ -15,7 +15,7 @@ namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
 public class CyberDinosaur()
-    : BaseMonsterCard(5, CardRarity.Common, TargetType.None), IMonsterSummonHookListener {
+    : BaseMonsterCard(5, CardType.Attack, CardRarity.Common, TargetType.None), IMonsterSummonHookListener {
     public override int CardId => 39439590;
 
     public override int BaseAttackVar => 7;

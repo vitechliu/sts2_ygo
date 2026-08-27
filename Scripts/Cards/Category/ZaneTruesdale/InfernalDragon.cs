@@ -7,7 +7,7 @@ using VYgo.Core;
 namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
 [RegisterCard(typeof(ZaneTruesdaleCardPool))]
-public class InfernalDragon() : BaseMonsterCard(1, CardRarity.Uncommon, TargetType.None) {
+public class InfernalDragon() : BaseMonsterCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.None) {
     public override int CardId => 47754278;
 
     public override int BaseAttackVar => 6;
