@@ -12,5 +12,19 @@
   "V_YGO_EVENT_FIENDSMITH_FORGE.pages.JOINED.description": "刻刀落下，灼热的纹路沿着伤口蔓延。棺中传来一阵满足的低吼，锻冶师纵身跃下——几道刻魔的影子已悄然加入你的队伍。",
   "V_YGO_EVENT_FIENDSMITH_FORGE.pages.FORGED.description": "金币滚入棺椁的利齿之间。锻冶师接过你的牌，火星与刻痕在他指间交错；再递回来时，它已锋利如新。",
   "V_YGO_EVENT_FIENDSMITH_FORGE.pages.LEFT.description": "你没有回应。身后的敲击声很快再次响起，仿佛这场相遇从未发生。",
-  "V_YGO_EVENT_FIENDSMITH_FORGE.selectionScreenPrompt": "选择要加入牌组的{FiendsmithCards}张「刻魔」卡牌。"
+  "V_YGO_EVENT_FIENDSMITH_FORGE.selectionScreenPrompt": "选择要加入牌组的{FiendsmithCards}张「刻魔」卡牌。",
+  "V_YGO_EVENT_DECODE_EVOLUTION.title": "解码进化",
+  "V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.description": "你的怪兽解码语者接触了电脑网络中异常的能量。紊乱的数据流缠上它的装甲，迫使它的程序与躯体一同重组。\n\n橙黄火焰、青光色能量与深暗的数据洪流在它面前分出三条路径。每一种力量都在呼唤它成为截然不同的形态。\n\n进化尚未定型。请为解码语者选择一个新的进化方向。",
+  "V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.options.INTEGRATION.title": "解码语者·集成",
+  "V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.options.INTEGRATION.description": "将牌组中所有「解码语者」变为「解码语者·集成」。已升级的牌保留升级状态。",
+  "V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.options.HEATSOUL.title": "解码语者·炽热之魂",
+  "V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.options.HEATSOUL.description": "将牌组中所有「解码语者」变为「解码语者·炽热之魂」。已升级的牌保留升级状态。",
+  "V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.options.EXTENDED.title": "解码语者·扩展",
+  "V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.options.EXTENDED.description": "将牌组中所有「解码语者」变为「解码语者·扩展」。已升级的牌保留升级状态。",
+  "V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.options.LEAVE.title": "放弃进化",
+  "V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.options.LEAVE.description": "切断异常能量，保留原本的「解码语者」。",
+  "V_YGO_EVENT_DECODE_EVOLUTION.pages.INTEGRATED.description": "青色数据流汇入核心，散乱的链接被重新编织为完整的网络。光芒退去时，解码语者·集成握紧了重构的光刃。",
+  "V_YGO_EVENT_DECODE_EVOLUTION.pages.HEATSOUL_EVOLVED.description": "橙黄烈焰沿着装甲缝隙喷涌而出，异常能量化作灼热的灵魂。解码语者·炽热之魂从火中昂然现身。",
+  "V_YGO_EVENT_DECODE_EVOLUTION.pages.EXTENDED_EVOLVED.description": "暗色数据吞没了四周的微光，又在一瞬间压缩进新的装甲。解码语者·扩展跨出阴影，延展的力量已完全稳定。",
+  "V_YGO_EVENT_DECODE_EVOLUTION.pages.LEFT.description": "你及时切断连接，三股能量随之消散。解码语者恢复原状，未完成的进化则沉入网络深处。"
 }
