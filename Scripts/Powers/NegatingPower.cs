@@ -9,8 +9,8 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace VYgo.Scripts.Powers;
 
 /// <summary>
-/// Reduces an enemy buff or a debuff applied to the owner by an enemy,
-/// consuming one stack for each power stack negated.
+/// 减少敌人获得的强化，或敌人对同一玩家控制的角色与怪兽施加的负面效果；
+/// 每抵消一层效果，消耗一层无效。
 /// </summary>
 [RegisterPower]
 public class NegatingPower : ModPowerTemplate
@@ -56,13 +56,13 @@ public class NegatingPower : ModPowerTemplate
             amount > 0m &&
             target.Side != Owner.Side &&
             incomingType == PowerType.Buff;
-        bool isEnemyDebuffOnOwner =
-            target == Owner &&
+        bool isEnemyDebuffOnProtectedTarget =
+            IsControlledBySamePlayer(target) &&
             applier != null &&
             applier.Side != Owner.Side &&
             incomingType == PowerType.Debuff;
 
-        if (!isEnemyBuff && !isEnemyDebuffOnOwner)
+        if (!isEnemyBuff && !isEnemyDebuffOnProtectedTarget)
         {
             return false;
         }
@@ -79,6 +79,18 @@ public class NegatingPower : ModPowerTemplate
         data.ReservedAmount += negatedAmount;
         modifiedAmount = amount - negatedAmount;
         return true;
+    }
+
+    private bool IsControlledBySamePlayer(Creature target)
+    {
+        if (target == Owner)
+        {
+            return true;
+        }
+
+        var controller = Owner.Player ?? Owner.PetOwner;
+        return controller != null &&
+               (target.Player == controller || target.PetOwner == controller);
     }
 
     public override async Task AfterModifyingPowerAmountReceived(PowerModel power)
