@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.Localization;
 using VYgo.Core;
 using VYgo.Scripts.Cards;
 using VYgo.Scripts.Powers;
+using VYgo.Utils;
 
 namespace VYgo.Scripts.Actions;
 
@@ -28,7 +29,10 @@ public sealed class CyberDragonNovaAction : BasePerTurnMonsterAction {
 
     public override bool CanAct(ICombatState combatState) {
         var xyzMaterialCount = Owner.GetPowerAmount<XyzMaterialPower>();
-        return base.CanAct(combatState) && Owner.PetOwner != null && xyzMaterialCount > 0;
+        return base.CanAct(combatState)
+            && Owner.PetOwner is { } player
+            && player.MinionCount() < player.GetMaxMinionCount()
+            && xyzMaterialCount > 0;
     }
 
     protected override async Task OnAct(
@@ -36,7 +40,7 @@ public sealed class CyberDragonNovaAction : BasePerTurnMonsterAction {
         Creature? target
     ) {
         Player? player = Owner.PetOwner;
-        if (player == null) return;
+        if (player == null || player.MinionCount() >= player.GetMaxMinionCount()) return;
 
         var material = await XyzMaterialCmd.DetachOne(choiceContext, Owner);
         if (material == null) {
