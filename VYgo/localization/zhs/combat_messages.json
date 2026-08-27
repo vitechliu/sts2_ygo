@@ -3,5 +3,7 @@
   "V_YGO_SUMMON_MESSAGE_NO_VALID_SYNCHRO": "没有满足等级与调整素材条件的同调怪兽。",
   "USE_EFFECT_ERROR.title": "发动失败",
   "USE_EFFECT_ERROR_ONCE_PER_DUEL.body": "卡名为:[gold]{card}[/gold] 的效果在这场对局已经发动过了。",
-  "USE_EFFECT_ERROR_ENERGY.body": "能量不足，无法发动手发效果。"
+  "USE_EFFECT_ERROR_ENERGY.body": "能量不足，无法发动手发效果。",
+  "V_YGO_SUMMON_ERROR.title": "召唤失败",
+  "V_YGO_SUMMON_ERROR_MINION_CAPACITY.body": "怪兽区域已满，[gold]{card}[/gold]的本次召唤未能进行。"
 }

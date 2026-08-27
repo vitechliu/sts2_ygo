@@ -68,8 +68,6 @@ public class CatcheEveL2() : BaseRightClickableMonsterCard(1, CardRarity.Common,
                 SourceCard: BaseMonsterCard,
                 Level: >= 3
             })
-            .ToDictionary(
-                pet => ((BaseMonster)pet.Monster!).SourceCard!,
-                pet => pet);
+            .ToUniqueSourceCardTargets(nameof(CatcheEveL2));
     }
 }

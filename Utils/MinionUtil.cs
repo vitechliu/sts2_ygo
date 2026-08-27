@@ -1,10 +1,14 @@
 ﻿using System.Reflection;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
 using MinionLib.Commands;
 using MinionLib.Minion;
+using VYgo.Scripts;
+using VYgo.Scripts.Monsters;
 using VYgo.Scripts.Powers;
 
 namespace VYgo.Utils;
@@ -26,6 +30,32 @@ public static class MinionUtil {
     
     public static int MinionCount(this Player player) {
         return player.Creature.Pets.Count(c => c.Monster is MinionModel);
+    }
+
+    /// <summary>
+    /// 将场上怪兽按其唯一来源卡映射到 Creature。共享同一来源卡的异常怪兽会整组忽略，
+    /// 防止选择类效果因 ToDictionary 重复键而中断。
+    /// </summary>
+    public static Dictionary<CardModel, Creature> ToUniqueSourceCardTargets(
+        this IEnumerable<Creature> creatures,
+        string selectionContext
+    ) {
+        List<IGrouping<CardModel, Creature>> groups = creatures
+            .Where(creature => creature.Monster is BaseMonster { SourceCard: not null })
+            .GroupBy(creature => ((BaseMonster)creature.Monster!).SourceCard!)
+            .ToList();
+
+        foreach (IGrouping<CardModel, Creature> duplicateGroup in groups
+                     .Where(group => group.Count() > 1)) {
+            Entry.Logger.Error(
+                $"{selectionContext} ignored {duplicateGroup.Count()} field monsters sharing " +
+                $"source card {duplicateGroup.Key}."
+            );
+        }
+
+        return groups
+            .Where(group => group.Count() == 1)
+            .ToDictionary(group => group.Key, group => group.Single());
     }
 
     public static async Task<Creature> AddMinionInstant(

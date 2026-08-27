@@ -1,12 +1,15 @@
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using VYgo.Core.Effects;
 using VYgo.Core.Hooks;
 using MinionLib.Minion;
+using STS2RitsuLib.Ui.Toast;
 using VYgo.Core;
 using VYgo.Core.Summon;
 using VYgo.Scripts.Monsters;
@@ -23,9 +26,17 @@ public abstract class BaseMonsterCard(
     : BaseVYgoCard(baseCost, CardType.Skill, rarity, target, showInCardLibrary) {
     private Action<Creature>? _summonResultObserver;
     private SummonContext? _lastSummonContext;
+    private bool _isEphemeralMonsterSource;
+    private bool _capacityWarningShownForCurrentPlaySeries;
 
     /// <summary>最近一次召唤的上下文，供配对随从在 OnSummonYgo 中判断是否为特召。</summary>
     internal SummonContext? LastSummonContext => _lastSummonContext;
+
+    /// <summary>
+    /// 是否为重放额外结算生成的临时来源卡。临时来源卡只负责给场上怪兽提供唯一同步身份，
+    /// 离场相关效果结算后必须从本场战斗移除，不能进入后续抽牌循环。
+    /// </summary>
+    internal bool IsEphemeralMonsterSource => _isEphemeralMonsterSource;
 
     protected IHoverTip BaseSummonHoverTip => YgoHoverTipConst.Summon(this);
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [BaseSummonHoverTip];
@@ -98,28 +109,68 @@ public abstract class BaseMonsterCard(
         CardPlay cardPlay,
         SummonContext summonContext
     ) {
+        if (cardPlay.IsFirstInSeries) {
+            _capacityWarningShownForCurrentPlaySeries = false;
+        }
+
         var c = this.YgoGetMonster();
         if (c == null) return null;
         var combatState = Owner.Creature.CombatState;
         _lastSummonContext = summonContext;
+        if (!CanSummonAfterCapacityRecheck(cardPlay)) return null;
+
         await MonsterSummonHook.BeforeMonsterSummon(
             combatState,
             choiceContext,
             this,
             cardPlay,
             summonContext);
+        // 召唤前置 Hook 可能改变随从数量或上限，因此在真正创建怪兽前再次确认。
+        if (!CanSummonAfterCapacityRecheck(cardPlay)) return null;
+
+        BaseMonsterCard monsterSource = this;
+        if (!cardPlay.IsFirstInSeries) {
+            monsterSource = (BaseMonsterCard)CreateClone();
+            monsterSource.MarkAsEphemeralMonsterSource(summonContext);
+            CardPileAddResult addResult = await CardPileCmd.AddGeneratedCardToCombat(
+                monsterSource,
+                Entry.MonsterPile,
+                Owner
+            );
+            if (!addResult.success) {
+                Entry.Logger.Error(
+                    $"Failed to add replay monster source {GetType().Name} to the monster pile."
+                );
+                return null;
+            }
+        }
+
         // Entry.Logger.Info("findMonster");
-        var summonedCreature = await MinionUtil.AddMinionInstant(
-            c.GetType(),
-            choiceContext,
-            Owner,
-            new MinionSummonOptions(
-                MaxHp: Life,
-                PrimaryStatAmount: Attack,
-                Source: this,
-                Position: MinionPosition.Front
-            )
-        );
+        Creature summonedCreature;
+        try {
+            summonedCreature = await MinionUtil.AddMinionInstant(
+                c.GetType(),
+                choiceContext,
+                Owner,
+                new MinionSummonOptions(
+                    MaxHp: Life,
+                    PrimaryStatAmount: Attack,
+                    Source: monsterSource,
+                    Position: MinionPosition.Front
+                )
+            );
+        }
+        catch {
+            bool sourceIsInUse = Owner.Creature.Pets.Any(pet =>
+                pet.Monster is BaseMonster { SourceCard: { } sourceCard }
+                && sourceCard == monsterSource);
+            if (!sourceIsInUse
+                && monsterSource.IsEphemeralMonsterSource
+                && monsterSource.Pile?.IsCombatPile == true) {
+                await CardPileCmd.RemoveFromCombat(monsterSource, skipVisuals: true);
+            }
+            throw;
+        }
         if (IsUpgraded && summonedCreature.Monster is BaseMonster m) {
             m.SetUpgraded();
         }
@@ -133,6 +184,38 @@ public abstract class BaseMonsterCard(
         await MonsterCardVfx.PlaySummonCardFly(this, summonedCreature);
         _summonResultObserver?.Invoke(summonedCreature);
         return summonedCreature;
+    }
+
+    private bool CanSummonAfterCapacityRecheck(CardPlay cardPlay) {
+        if (Owner.MinionCount() < Owner.GetMaxMinionCount()) return true;
+
+        if (!_capacityWarningShownForCurrentPlaySeries && LocalContext.IsMe(Owner)) {
+            _capacityWarningShownForCurrentPlaySeries = true;
+            LocString body = new(
+                "combat_messages",
+                "V_YGO_SUMMON_ERROR_MINION_CAPACITY.body"
+            );
+            body.Add("card", Title);
+            RitsuToastService.ShowWarning(
+                body.GetFormattedText(),
+                new LocString(
+                    "combat_messages",
+                    "V_YGO_SUMMON_ERROR.title"
+                ).GetFormattedText()
+            );
+        }
+
+        Entry.Logger.Info(
+            $"Summon of {GetType().Name} at play index {cardPlay.PlayIndex} was blocked " +
+            $"by minion capacity ({Owner.MinionCount()}/{Owner.GetMaxMinionCount()})."
+        );
+        return false;
+    }
+
+    private void MarkAsEphemeralMonsterSource(SummonContext summonContext) {
+        AssertMutable();
+        _isEphemeralMonsterSource = true;
+        _lastSummonContext = summonContext;
     }
 
     // //0.107版本
