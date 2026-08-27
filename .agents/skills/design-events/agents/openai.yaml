@@ -1,0 +1,7 @@
+interface:
+  display_name: "Design VYgo Events"
+  short_description: "Design, illustrate, and implement VYgo events"
+  default_prompt: "Use $design-events to design and implement this VYgo event from my content and parameters."
+
+policy:
+  allow_implicit_invocation: false
