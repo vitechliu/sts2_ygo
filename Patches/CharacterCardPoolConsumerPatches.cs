@@ -58,8 +58,6 @@ public static class CharacterCardPoolConsumerPatches {
         new("MegaCrit.Sts2.Core.Models.Relics.ChoicesParadox", "AfterPlayerTurnStart"),
         new("MegaCrit.Sts2.Core.Models.Relics.Crossbow", "AfterSideTurnStart"),
         new("MegaCrit.Sts2.Core.Models.Relics.DustyTome", "SetupForPlayer", IsAsync: false),
-        new("MegaCrit.Sts2.Core.Models.Relics.LargeCapsule", "GetDefendForCharacter", IsAsync: false),
-        new("MegaCrit.Sts2.Core.Models.Relics.LargeCapsule", "GetStrikeForCharacter", IsAsync: false),
         new("MegaCrit.Sts2.Core.Models.Relics.ScrollBoxes", "CanGenerateBundles", IsAsync: false),
         new("MegaCrit.Sts2.Core.Models.Relics.VexingPuzzlebox", "AfterPlayerTurnStart"),
 
