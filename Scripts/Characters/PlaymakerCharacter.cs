@@ -9,6 +9,7 @@ using STS2RitsuLib.Scaffolding.Characters;
 using STS2RitsuLib.Scaffolding.Godot;
 using STS2RitsuLib.Scaffolding.Visuals;
 using STS2RitsuLib.Scaffolding.Visuals.StateMachine;
+using VYgo.Scripts.Cards.Category.Playmaker;
 using VYgo.Scripts.Pools;
 
 namespace VYgo.Scripts.Characters;
@@ -21,6 +22,9 @@ namespace VYgo.Scripts.Characters;
 public class PlaymakerCharacter
     : BaseYgoCharacter<PlaymakerCardPool, PlaymakerRelicPool, IroncladPotionPool>
 {
+    public override CardModel LargeCapsuleAttackCard => ModelDb.Card<Digitron>();
+    public override CardModel LargeCapsuleDefenseCard => ModelDb.Card<Bitron>();
+    
     private const string AssetRoot = "res://VYgo/scenes/character/Playmaker";
     private const string ImageRoot = "res://VYgo/images/playmaker";
 

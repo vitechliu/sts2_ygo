@@ -50,7 +50,7 @@
     "V_YGO_CARD_CYBER_DRAGON_VIER.title": "电子龙四型",
     "V_YGO_CARD_CYBER_DRAGON_VIER.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n如果你在本回合召唤过「电子龙」怪兽，则耗能减少{CostReduction:energyIcons()}。",
     "V_YGO_CARD_CYBER_DRAGON_NACHSTER.title": "电子龙·次代星",
-    "V_YGO_CARD_CYBER_DRAGON_NACHSTER.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]:从[gold]弃牌堆[/gold]中选择一只机械族怪兽并[gold]特召[/gold]。",
+    "V_YGO_CARD_CYBER_DRAGON_NACHSTER.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]:从[gold]弃牌堆[/gold]中选择一只「电子龙」怪兽并[gold]特召[/gold]。",
     "V_YGO_CARD_CYBER_DRAGON_NACHSTER.selectionScreenPrompt": "请选择要召唤的机械族怪兽。",
     "V_YGO_SUMMON_MATERIAL_SELECT.target": "为「{Target}」选择召唤素材",
     "V_YGO_SUMMON_MATERIAL_SELECT.progress": "已选择 {Selected}/{Max} 张素材；请继续选择素材。",
