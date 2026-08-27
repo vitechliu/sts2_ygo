@@ -1,0 +1,16 @@
+{
+  "V_YGO_EVENT_FIENDSMITH_FORGE.title": "刻魔的邀约",
+  "V_YGO_EVENT_FIENDSMITH_FORGE.pages.INITIAL.description": "金属敲击声从昏暗的岔路深处传来。猩红火星在石壁间跃动，照出一具生着利齿的漆黑棺椁。\n\n刻印群魔的刻魔锻冶师翘着二郎腿坐在棺盖上，像是早已等候多时。他抬眼打量着你，指尖转动一柄尚未冷却的刻刀。\n\n“要同行，就先让我看看你能承受怎样的刻印。若只是想磨利手里的家伙——金币也行。”",
+  "V_YGO_EVENT_FIENDSMITH_FORGE.pages.INITIAL.options.JOIN.title": "接受刻印",
+  "V_YGO_EVENT_FIENDSMITH_FORGE.pages.INITIAL.options.JOIN.description": "失去[red]{HpLoss}[/red]点生命。从「刻魔」系列卡牌中选择[blue]{FiendsmithCards}[/blue]张加入牌组。",
+  "V_YGO_EVENT_FIENDSMITH_FORGE.pages.INITIAL.options.FORGE.title": "委托锻造",
+  "V_YGO_EVENT_FIENDSMITH_FORGE.pages.INITIAL.options.FORGE.description": "失去[gold]{Gold}[/gold]金币。选择[blue]{UpgradeCards}[/blue]张牌升级。",
+  "V_YGO_EVENT_FIENDSMITH_FORGE.pages.INITIAL.options.FORGE_LOCKED.title": "委托锻造",
+  "V_YGO_EVENT_FIENDSMITH_FORGE.pages.INITIAL.options.FORGE_LOCKED.description": "需要至少[gold]{Gold}[/gold]金币，且牌组中有可升级的牌。",
+  "V_YGO_EVENT_FIENDSMITH_FORGE.pages.INITIAL.options.LEAVE.title": "离开",
+  "V_YGO_EVENT_FIENDSMITH_FORGE.pages.INITIAL.options.LEAVE.description": "不接受他的提议。",
+  "V_YGO_EVENT_FIENDSMITH_FORGE.pages.JOINED.description": "刻刀落下，灼热的纹路沿着伤口蔓延。棺中传来一阵满足的低吼，锻冶师纵身跃下——几道刻魔的影子已悄然加入你的队伍。",
+  "V_YGO_EVENT_FIENDSMITH_FORGE.pages.FORGED.description": "金币滚入棺椁的利齿之间。锻冶师接过你的牌，火星与刻痕在他指间交错；再递回来时，它已锋利如新。",
+  "V_YGO_EVENT_FIENDSMITH_FORGE.pages.LEFT.description": "你没有回应。身后的敲击声很快再次响起，仿佛这场相遇从未发生。",
+  "V_YGO_EVENT_FIENDSMITH_FORGE.selectionScreenPrompt": "选择要加入牌组的{FiendsmithCards}张「刻魔」卡牌。"
+}
