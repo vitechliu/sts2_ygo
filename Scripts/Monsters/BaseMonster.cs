@@ -61,28 +61,8 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
         Player owner,
         PileType destination
     ) {
-        if (!PileSent || SourceCard is not { } card || card.Owner != owner) return false;
-
-        if (card is BaseTokenCard token) {
-            return await token.DisappearFromCombat();
-        }
-
-        if (destination == PileType.Exhaust) {
-            await CardCmd.Exhaust(choiceContext, card);
-        }
-        else {
-            CardPile destinationPile = destination.GetPile(owner);
-            CardPileAddResult result = await CardPileCmd.Add(card, destinationPile);
-            if (!result.success) return false;
-            destinationPile.InvokeContentsChanged();
-        }
-
-        if (card.Pile?.Type != destination) return false;
-        if (destination == PileType.Discard && Creature is { } creature) {
-            await OnSendToGraveyard(choiceContext, creature, owner);
-        }
-
-        return true;
+        if (!PileSent || SourceCard?.Owner != owner) return false;
+        return await MoveSourceCardAfterLeavingField(choiceContext, owner, destination);
     }
 
     public virtual bool IsGuardian {
@@ -170,17 +150,16 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
             if (!wasRemovalPrevented && !PileSent) {
                 PileSent = true;
                 // Entry.Logger.Info("AfterDeath:" + GetType().Name);
-                var card = SourceCard;
-                if (card != null) {
-                    if (card is BaseTokenCard token) {
-                        await token.DisappearFromCombat();
-                    }
-                    else {
-                        var owner = creature.PetOwner;
-                        if (owner != null) {
-                            await ReturnCard(owner);
-                            await OnSendToGraveyard(choiceContext, creature, owner);
-                        }
+                if (SourceCard != null) {
+                    var owner = creature.PetOwner;
+                    bool shouldMoveSource = SourceCard is BaseTokenCard
+                        || CombatManager.Instance?.IsOverOrEnding == false;
+                    if (owner != null && shouldMoveSource) {
+                        await MoveSourceCardAfterLeavingField(
+                            choiceContext,
+                            owner,
+                            PileType.Discard
+                        );
                     }
                 }
                 else {
@@ -198,11 +177,47 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
 
     public virtual async Task AfterAttack(PlayerChoiceContext choiceContext) { }
 
-    private async Task ReturnCard(Player player) {
-        if (SourceCard == null) return;
-        if (CombatManager.Instance?.IsOverOrEnding != false) return;
-        var discardPile = PileType.Discard.GetPile(player);
-        await CardPileCmd.Add(SourceCard, discardPile);
-        discardPile.InvokeContentsChanged();
+    private async Task<bool> MoveSourceCardAfterLeavingField(
+        PlayerChoiceContext choiceContext,
+        Player owner,
+        PileType destination
+    ) {
+        if (SourceCard is not { } card || card.Owner != owner) return false;
+
+        if (card is BaseTokenCard token) {
+            return await token.DisappearFromCombat();
+        }
+
+        bool isEphemeralSource = card is BaseMonsterCard {
+            IsEphemeralMonsterSource: true
+        };
+        try {
+            if (destination == PileType.Exhaust) {
+                await CardCmd.Exhaust(choiceContext, card, skipVisuals: isEphemeralSource);
+            }
+            else {
+                CardPile destinationPile = destination.GetPile(owner);
+                CardPileAddResult result = await CardPileCmd.Add(
+                    card,
+                    destinationPile,
+                    skipVisuals: isEphemeralSource
+                );
+                if (!result.success) return false;
+                destinationPile.InvokeContentsChanged();
+            }
+
+            if (card.Pile?.Type != destination) return false;
+            if (destination == PileType.Discard && Creature is { } creature) {
+                await OnSendToGraveyard(choiceContext, creature, owner);
+            }
+        }
+        finally {
+            // 重放代理可以短暂进入目标牌堆以完成送墓/除外及其触发，但不能成为可再次抽到的卡。
+            if (isEphemeralSource && card.Pile?.IsCombatPile == true) {
+                await CardPileCmd.RemoveFromCombat(card, skipVisuals: true);
+            }
+        }
+
+        return !isEphemeralSource || card.Pile == null;
     }
 }

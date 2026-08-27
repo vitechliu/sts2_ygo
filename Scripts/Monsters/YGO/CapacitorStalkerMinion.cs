@@ -11,6 +11,7 @@ using VYgo.Core;
 using VYgo.Scripts.Cards;
 using VYgo.Scripts.Cards.Category.Playmaker;
 using VYgo.Scripts.Powers;
+using VYgo.Utils;
 
 namespace VYgo.Scripts.Monsters.YGO;
 
@@ -28,9 +29,7 @@ public class CapacitorStalkerMinion: BaseMonster {
             .Where(pet => pet != Creature
                 && pet.Monster is BaseMonster { SourceCard: BaseMonsterCard card }
                 && card.YgoGetCore().IsRace(YgoRace.Cyberse))
-            .ToDictionary(
-                pet => ((BaseMonster)pet.Monster!).SourceCard!,
-                pet => pet);
+            .ToUniqueSourceCardTargets(nameof(CapacitorStalkerMinion));
         if (targets.Count == 0) return;
 
         CardModel? selected = (await CardSelectCmd.FromCombatPile(

@@ -47,9 +47,7 @@ public abstract class BaseFiendsmithEquipLinkCard()
         Dictionary<CardModel, Creature> targets = Owner.Creature.Pets
             .Where(FiendsmithUtil.IsLightFiendMonster)
             .Where(creature => creature.Monster is BaseMonster { SourceCard: not null })
-            .ToDictionary(
-                creature => ((BaseMonster)creature.Monster!).SourceCard!,
-                creature => creature);
+            .ToUniqueSourceCardTargets(GetType().Name);
         if (targets.Count == 0) return;
 
         CardModel? selected = (await CardSelectCmd.FromCombatPile(

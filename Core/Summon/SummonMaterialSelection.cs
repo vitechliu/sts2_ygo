@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
+using VYgo.Scripts;
 
 namespace VYgo.Core;
 
@@ -22,9 +23,24 @@ public sealed class SummonMaterialSelectionSpec {
         int? maxSelect,
         Func<IReadOnlyList<SummonMaterial>, bool> isValidCombination
     ) {
-        Candidates = candidates
+        List<IGrouping<CardModel, SummonMaterial>> candidatesByCard = candidates
             .Where(material => material.Card != null)
             .Distinct()
+            .GroupBy(material => material.Card!)
+            .ToList();
+        foreach (IGrouping<CardModel, SummonMaterial> duplicateGroup in candidatesByCard
+                     .Where(group => group.Count() > 1)) {
+            Entry.Logger.Error(
+                $"Ambiguous summon materials share source card {duplicateGroup.Key}: " +
+                $"{duplicateGroup.Count()} field instances were ignored."
+            );
+        }
+
+        // 旧存档或其他异常效果仍可能制造共享来源卡的怪兽。此时安全地禁用歧义素材，
+        // 避免额外牌堆 Glow、点击或融合目标预检因重复字典键而直接中断。
+        Candidates = candidatesByCard
+            .Where(group => group.Count() == 1)
+            .Select(group => group.Single())
             .ToList();
         CandidateCards = Candidates
             .Select(material => material.Card!)
