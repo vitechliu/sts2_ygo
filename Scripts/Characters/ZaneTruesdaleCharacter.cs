@@ -10,6 +10,7 @@ using STS2RitsuLib.Scaffolding.Characters;
 using STS2RitsuLib.Scaffolding.Godot;
 using STS2RitsuLib.Scaffolding.Visuals;
 using STS2RitsuLib.Scaffolding.Visuals.StateMachine;
+using VYgo.Scripts.Cards.Category.ZaneTruesdale;
 using VYgo.Scripts.Pools;
 
 namespace VYgo.Scripts.Characters;
@@ -25,6 +26,9 @@ public class ZaneTruesdaleCharacter
     private const string AssetRoot = "res://VYgo/scenes/character/ZaneTruesdale";
     private const string ImageRoot = "res://VYgo/images/zane_truesdale";
 
+    public override CardModel LargeCapsuleAttackCard => ModelDb.Card<CyberDragon>();
+    public override CardModel LargeCapsuleDefenseCard =>  ModelDb.Card<CyberBarrierDragon>();
+    
     public override Color NameColor => new("5dc8e8");
     public override Color EnergyLabelOutlineColor => new("10253f");
     public override Color MapDrawingColor => new("3aa7ca");
