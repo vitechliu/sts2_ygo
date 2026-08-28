@@ -17,8 +17,8 @@ public sealed class FiendsmithKyrieDamageReductionPower : ModPowerTemplate {
     public override PowerStackType StackType => PowerStackType.Single;
 
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://VYgo/images/cards/26434972.png",
-        BigIconPath: "res://VYgo/images/cards/26434972.png"
+        IconPath: "res://images/powers/colossus_power.png",
+        BigIconPath: "res://images/powers/colossus_power.png"
     );
 
     public override decimal ModifyDamageMultiplicative(

@@ -21,8 +21,8 @@ public abstract class TemporaryAttackPower<T> : ModTemporaryAppliedPowerTemplate
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://images/powers/strength_power.png",
-        BigIconPath: "res://images/powers/strength_power.png"
+        IconPath: "res://images/powers/setup_strike_power.png",
+        BigIconPath: "res://images/powers/setup_strike_power.png"
     );
     public override LocString Description => new("powers", "V_YGO_POWER_TEMPORARY_ATTACK_POWER.description");
 

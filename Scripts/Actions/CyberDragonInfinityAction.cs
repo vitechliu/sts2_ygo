@@ -24,7 +24,7 @@ public sealed class CyberDragonInfinityAction : BasePerTurnMonsterAction {
 
     public override TargetType TargetType => TargetType.None;
 
-    protected override string? IntentIconPath => "res://VYgo/images/powers/negating.png";
+    protected override string? IntentIconPath => "res://VYgo/images/powers/negating_power.png";
     public override string? CustomIconPath => IntentIconPath;
 
     public override bool CanAct(ICombatState combatState) {
