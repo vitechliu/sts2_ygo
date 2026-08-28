@@ -27,8 +27,8 @@ public class AttackReflectorUnitPower : BaseActionPower {
     public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://VYgo/images/cards/91989718.png",
-        BigIconPath: "res://VYgo/images/cards/91989718.png"
+        IconPath: "res://images/powers/covered_power.png",
+        BigIconPath: "res://images/powers/covered_power.png"
     );
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
