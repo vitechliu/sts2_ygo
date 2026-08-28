@@ -96,6 +96,7 @@ public static class Entry {
         CharacterCardPoolLinks.Register<ZaneTruesdaleCharacter, CommonCardPool>();
         CharacterCardPoolLinks.Register<ZaneTruesdaleCharacter, LinkCardPool>();
         CharacterCardPoolLinks.Register<ZaneTruesdaleCharacter, FusionCardPool>();
+        CharacterCardPoolLinks.Register<ZaneTruesdaleCharacter, MachineCardPool>();
 
         CharacterCardPoolLinks.Register<PlaymakerCharacter, CommonCardPool>();
         CharacterCardPoolLinks.Register<PlaymakerCharacter, LinkCardPool>();
