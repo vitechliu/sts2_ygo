@@ -27,7 +27,7 @@ public sealed class FiendsmithForge : ModEventTemplate {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new HpLossVar(10m),
         new GoldVar(15),
-        new CardsVar(FiendsmithCardCountKey, 6),
+        new CardsVar(FiendsmithCardCountKey, 7),
         new CardsVar(UpgradeCardCountKey, 1)
     ];
 
