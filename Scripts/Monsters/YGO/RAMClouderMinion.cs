@@ -16,7 +16,7 @@ public class RAMClouderMinion: BaseMonster {
         Player owner,
         MinionSummonOptions options
     ) {
-        return PowerCmd.Apply<RAMClouderAction>(
+        return ApplyMonsterAction<RAMClouderAction>(
             choiceContext,
             Creature,
             1m,

@@ -15,7 +15,7 @@ public class DecodeTalkerIntegrationMinion: BaseMonster {
         PlayerChoiceContext choiceContext,
         Player owner,
         MinionSummonOptions options) {
-        return PowerCmd.Apply<DecodeTalkerIntegrationAction>(
+        return ApplyMonsterAction<DecodeTalkerIntegrationAction>(
             choiceContext,
             Creature,
             1m,

@@ -16,7 +16,7 @@ public class CyberKirinMinion: BaseMonster {
         PlayerChoiceContext choiceContext,
         Player owner,
         MinionSummonOptions options) {
-        return PowerCmd.Apply<CyberKirinAction>(
+        return ApplyMonsterAction<CyberKirinAction>(
             choiceContext,
             Creature,
             CyberKirin.IntangibleAmount,

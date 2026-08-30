@@ -16,7 +16,7 @@ public class CyberValleyMinion: BaseMonster {
         Player owner,
         MinionSummonOptions options
     ) {
-        return PowerCmd.Apply<CyberValleyAction>(
+        return ApplyMonsterAction<CyberValleyAction>(
             choiceContext,
             Creature,
             1m,

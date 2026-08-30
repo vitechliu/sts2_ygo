@@ -18,7 +18,7 @@ public class FiendsmithsRequiemMinion: BaseMonster {
     ) {
         if (options.Source is not FiendsmithsRequiem sourceCard) return;
 
-        await PowerCmd.Apply<FiendsmithsRequiemAction>(
+        await ApplyMonsterAction<FiendsmithsRequiemAction>(
             choiceContext,
             Creature,
             1m,

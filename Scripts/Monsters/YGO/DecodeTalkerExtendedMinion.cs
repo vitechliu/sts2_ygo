@@ -28,7 +28,7 @@ public class DecodeTalkerExtendedMinion: BaseMonster {
             sourceCard.BoostAttack * linkMonsterCount,
             owner.Creature,
             sourceCard);
-        await PowerCmd.Apply<TemporaryExtraAttackAction>(
+        await ApplyMonsterAction<TemporaryExtraAttackAction>(
             choiceContext,
             Creature,
             linkMonsterCount,

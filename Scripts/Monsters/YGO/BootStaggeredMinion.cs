@@ -13,7 +13,7 @@ public class BootStaggeredMinion: BaseMonster {
 
     public override async Task OnSummonYgo(PlayerChoiceContext choiceContext, Player owner, MinionSummonOptions options) {
         if (options.PrimaryStatAmount is { } strength && strength > 0m)
-            await PowerCmd.Apply<BootStaggeredAttackAction>(choiceContext, Creature, strength, owner.Creature, options.Source,
+            await ApplyMonsterAction<BootStaggeredAttackAction>(choiceContext, Creature, strength, owner.Creature, options.Source,
                 true);
     }
 }

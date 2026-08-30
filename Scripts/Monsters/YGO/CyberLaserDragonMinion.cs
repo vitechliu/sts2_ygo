@@ -18,7 +18,7 @@ public class CyberLaserDragonMinion: BaseMonster {
         Player owner,
         MinionSummonOptions options) {
         if (options.PrimaryStatAmount is { } strength && strength > 0m) {
-            await PowerCmd.Apply<CyberLaserAttackAction>(
+            await ApplyMonsterAction<CyberLaserAttackAction>(
                 choiceContext,
                 Creature,
                 strength,

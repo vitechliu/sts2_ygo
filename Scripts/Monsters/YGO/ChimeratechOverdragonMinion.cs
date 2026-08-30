@@ -43,7 +43,7 @@ public class ChimeratechOverdragonMinion : BaseMonster {
             source
         );
         await MinionUtil.AddHp(Creature, lifeIncrease);
-        await PowerCmd.Apply<ChimeratechOverdragonAttackAction>(
+        await ApplyMonsterAction<ChimeratechOverdragonAttackAction>(
             choiceContext,
             Creature,
             effectiveMaterialCount,

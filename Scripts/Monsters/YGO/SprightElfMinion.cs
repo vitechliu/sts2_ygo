@@ -19,7 +19,7 @@ public class SprightElfMinion: BaseMonster {
     ) {
         if (options.Source is not SprightElf sourceCard) return;
 
-        await PowerCmd.Apply<SprightElfAction>(
+        await ApplyMonsterAction<SprightElfAction>(
             choiceContext,
             Creature,
             1m,

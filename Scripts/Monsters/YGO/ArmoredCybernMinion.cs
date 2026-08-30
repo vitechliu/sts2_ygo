@@ -15,7 +15,7 @@ public class ArmoredCybernMinion: BaseMonster {
         PlayerChoiceContext choiceContext,
         Player owner,
         MinionSummonOptions options) {
-        return PowerCmd.Apply<ArmoredCybernAction>(
+        return ApplyMonsterAction<ArmoredCybernAction>(
             choiceContext,
             Creature,
             1m,

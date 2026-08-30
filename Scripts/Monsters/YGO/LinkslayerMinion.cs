@@ -19,7 +19,7 @@ public class LinkslayerMinion : BaseMonster {
     ) {
         if (options.Source is not Linkslayer sourceCard) return Task.CompletedTask;
 
-        return PowerCmd.Apply<LinkslayerAction>(
+        return ApplyMonsterAction<LinkslayerAction>(
             choiceContext,
             Creature,
             sourceCard.Damage,

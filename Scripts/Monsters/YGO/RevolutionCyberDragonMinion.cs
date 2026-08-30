@@ -19,7 +19,7 @@ public class RevolutionCyberDragonMinion : BaseMonster {
         Player owner,
         MinionSummonOptions options
     ) {
-        await PowerCmd.Apply<RevolutionCyberDragonFusionAction>(
+        await ApplyMonsterAction<RevolutionCyberDragonFusionAction>(
             choiceContext,
             Creature,
             1m,

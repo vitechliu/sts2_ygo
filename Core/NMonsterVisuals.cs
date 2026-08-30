@@ -1,6 +1,8 @@
 using Godot;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
 using VYgo.Scripts;
+using VYgo.Scripts.Actions;
 using VYgo.Utils;
 
 namespace VYgo.Core;
@@ -14,9 +16,13 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 	private const float QuickMaterialVfxDuration = 0.45f;
 	private const float QuickMaterialCompressDuration = 0.12f;
 	private const float QuickMaterialFlyDuration = 0.16f;
-	private const float IntentTextureSize = 144f;
-
-	public static readonly Vector2 BaseIntentScale = new Vector2(-1f, 1f) * 0.35f;
+	private const float ActionIntentSize = 64f;
+	private const float ActionIntentViewportMargin = 40f;
+	private const float ActionIntentHeadClearance = 32f;
+	private const float ActionIntentBobDistance = 10f;
+	private const float ActionIntentBobOffset = 8f;
+	private const double ActionIntentRefreshInterval = 0.1;
+	private const string NativeIntentFontPath = "res://themes/kreon_bold_glyph_space_one.tres";
 
 	private const string MaterialShaderCode = """
 		shader_type canvas_item;
@@ -53,78 +59,265 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 	}
 	
 	private Sprite2D _mainSprite = null!;
-	private Sprite2D? actionReadyIcon;
-	private Tween? actionReadyTween;
-	private string? actionReadyIconPath;
+	private Control? actionIntentOverlay;
+	private Control? actionIntentRoot;
+	private TextureRect? actionIntentIcon;
+	private Label? actionIntentDamage;
+	private Label? actionIntentRemainingUses;
+	private Label? actionIntentAreaBadge;
+	private Tween? actionIntentTween;
+	private string? actionIntentIconPath;
+	private float actionIntentBobPhase;
+	private double actionIntentRefreshElapsed;
+	private MonsterActionIntentState actionIntentState = MonsterActionIntentState.Hidden;
 
 	public override void _Ready() {
 		base._Ready();
 		_mainSprite = GetNode<Sprite2D>("./Visuals/Image");
-		CreateActionReadyIcon();
+		actionIntentBobPhase = (float)(GetInstanceId() % 6283UL) * 0.001f;
+		CreateActionIntentOverlay();
+		if (GetParent() is NCreature creatureNode) {
+			BasePerTurnMonsterAction.RefreshActionIntent(creatureNode.Entity);
+		}
+	}
+
+	public override void _Process(double delta) {
+		base._Process(delta);
+		SyncActionIntentPosition();
+		actionIntentRefreshElapsed += delta;
+		if (actionIntentRefreshElapsed < ActionIntentRefreshInterval) return;
+
+		actionIntentRefreshElapsed = 0;
+		if (GetParent() is NCreature creatureNode) {
+			BasePerTurnMonsterAction.RefreshActionIntent(creatureNode.Entity);
+		}
 	}
 
 	public override void _ExitTree() {
-		actionReadyTween?.Kill();
-		actionReadyTween = null;
+		actionIntentTween?.Kill();
+		actionIntentTween = null;
+		if (GodotObject.IsInstanceValid(actionIntentOverlay)) {
+			actionIntentOverlay!.QueueFree();
+		}
+		actionIntentOverlay = null;
+		actionIntentRoot = null;
 		base._ExitTree();
 	}
 
-	public void SetActionReadyIndicator(string? iconPath) {
-		if (actionReadyIcon == null)
-			CreateActionReadyIcon();
-		if (actionReadyIcon == null) return;
+	public void SetActionIntentState(MonsterActionIntentState state) {
+		if (actionIntentRoot == null || actionIntentIcon == null) {
+			CreateActionIntentOverlay();
+		}
+		if (actionIntentRoot == null || actionIntentIcon == null
+			|| actionIntentDamage == null || actionIntentRemainingUses == null
+			|| actionIntentAreaBadge == null) return;
 
-		bool visible = !string.IsNullOrEmpty(iconPath);
-		bool iconChanged = visible && actionReadyIconPath != iconPath;
+		bool iconChanged = state.Visible && actionIntentIconPath != state.IconPath;
 		if (iconChanged) {
-			actionReadyIcon.Texture = ResourceLoader.Load<Texture2D>(iconPath);
-			actionReadyIconPath = iconPath;
+			actionIntentIcon.Texture = ResourceLoader.Load<Texture2D>(state.IconPath);
+			actionIntentIconPath = state.IconPath;
 		}
 
-		if (actionReadyIcon.Visible == visible && !iconChanged) return;
+		bool visible = state.Visible && actionIntentIcon.Texture != null;
+		MonsterActionIntentState renderedState = state with { Visible = visible };
+		if (renderedState == actionIntentState && !iconChanged) return;
+		actionIntentState = renderedState;
 
-		actionReadyIcon.Visible = visible;
-		actionReadyTween?.Kill();
-		actionReadyTween = null;
+		actionIntentDamage.Visible = visible && state.Damage is > 0;
+		actionIntentDamage.Text = state.Damage?.ToString() ?? string.Empty;
+		actionIntentRemainingUses.Visible = visible
+			&& state.MaxUses > 1
+			&& state.RemainingUses > 0;
+		actionIntentRemainingUses.Text = state.RemainingUses.ToString();
+		actionIntentAreaBadge.Visible = visible && state.IsAreaAttack;
 
+		actionIntentTween?.Kill();
+		actionIntentTween = null;
+		actionIntentRoot.Visible = visible;
+		if (GetParent() is NCreature creatureNode) {
+			creatureNode.Hitbox.MouseDefaultCursorShape = visible
+				? Control.CursorShape.PointingHand
+				: Control.CursorShape.Arrow;
+		}
 		if (!visible) return;
 
-		Vector2 baseScale = GetIntentBaseScale(actionReadyIcon.Texture);
-		actionReadyIcon.Modulate = Colors.White;
-		actionReadyIcon.Scale = baseScale;
-		actionReadyTween = actionReadyIcon.CreateTween().SetLoops();
-		actionReadyTween.TweenProperty(actionReadyIcon, "scale", baseScale * 1.2f, 0.45f)
+		actionIntentRoot.Modulate = state.IsSelectingTarget
+			? new Color(1f, 0.86f, 0.36f, 1f)
+			: Colors.White;
+		actionIntentRoot.Scale = state.IsSelectingTarget
+			? Vector2.One * 1.12f
+			: Vector2.One;
+		if (state.IsSelectingTarget) return;
+
+		actionIntentTween = actionIntentRoot.CreateTween().SetLoops();
+		actionIntentTween.TweenProperty(actionIntentRoot, "scale", Vector2.One * 1.1f, 0.45f)
 			.SetTrans(Tween.TransitionType.Sine)
 			.SetEase(Tween.EaseType.InOut);
-		actionReadyTween.TweenProperty(actionReadyIcon, "scale", baseScale, 0.45f)
+		actionIntentTween.TweenProperty(actionIntentRoot, "scale", Vector2.One, 0.45f)
 			.SetTrans(Tween.TransitionType.Sine)
 			.SetEase(Tween.EaseType.InOut);
 	}
 
-	private static Vector2 GetIntentBaseScale(Texture2D? texture) {
-		if (texture == null) return BaseIntentScale;
+	public void PlayActionIntentConfirmFeedback() {
+		if (actionIntentOverlay == null || actionIntentRoot == null
+			|| actionIntentIcon?.Texture == null || !actionIntentRoot.Visible) return;
 
-		Vector2 textureSize = texture.GetSize();
-		if (Mathf.IsZeroApprox(textureSize.X) || Mathf.IsZeroApprox(textureSize.Y))
-			return BaseIntentScale;
-
-		return BaseIntentScale * new Vector2(
-			IntentTextureSize / textureSize.X,
-			IntentTextureSize / textureSize.Y
-		);
-	}
-
-	private void CreateActionReadyIcon() {
-		if (actionReadyIcon != null || IntentPosition == null) return;
-
-		actionReadyIcon = new Sprite2D {
-			Name = "ActionReadyIcon",
-			Centered = true,
-			Visible = false,
-			ZIndex = 0,
-			Scale = BaseIntentScale
+		var flash = new TextureRect {
+			Name = "ActionIntentConfirmFlash",
+			Texture = actionIntentIcon.Texture,
+			Position = actionIntentRoot.Position,
+			Size = Vector2.One * ActionIntentSize,
+			PivotOffset = Vector2.One * (ActionIntentSize * 0.5f),
+			MouseFilter = Control.MouseFilterEnum.Ignore,
+			ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+			StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+			ZIndex = 1
 		};
-		IntentPosition.AddChild(actionReadyIcon);
+		actionIntentOverlay.AddChild(flash);
+		Tween flashTween = flash.CreateTween().SetParallel();
+		flashTween.TweenProperty(flash, "scale", Vector2.One * 1.38f, 0.16f)
+			.SetTrans(Tween.TransitionType.Back)
+			.SetEase(Tween.EaseType.Out);
+		flashTween.TweenProperty(flash, "modulate:a", 0f, 0.16f)
+			.SetTrans(Tween.TransitionType.Sine)
+			.SetEase(Tween.EaseType.In);
+		flashTween.Finished += flash.QueueFree;
+	}
+
+	private void CreateActionIntentOverlay() {
+		if (actionIntentOverlay != null || IntentPosition == null) return;
+		NCombatRoom? combatRoom = NCombatRoom.Instance;
+		if (combatRoom == null) return;
+
+		// 作为战斗房间最后的子节点显示在血条上方，同时保持低于 Run/GlobalUi 的全屏覆盖层。
+		actionIntentOverlay = new Control {
+			Name = "MonsterActionIntentOverlay",
+			MouseFilter = Control.MouseFilterEnum.Ignore
+		};
+		combatRoom.AddChild(actionIntentOverlay);
+		actionIntentOverlay.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+
+		actionIntentRoot = new Control {
+			Name = "MonsterActionIntent",
+			Visible = false,
+			Size = Vector2.One * ActionIntentSize,
+			PivotOffset = Vector2.One * (ActionIntentSize * 0.5f),
+			MouseFilter = Control.MouseFilterEnum.Ignore
+		};
+		actionIntentOverlay.AddChild(actionIntentRoot);
+
+		actionIntentIcon = new TextureRect {
+			Name = "Icon",
+			Position = new Vector2(-2f, -1f),
+			Size = Vector2.One * ActionIntentSize,
+			MouseFilter = Control.MouseFilterEnum.Ignore,
+			ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+			StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered
+		};
+		actionIntentRoot.AddChild(actionIntentIcon);
+
+		actionIntentDamage = CreateActionIntentDamageLabel();
+		actionIntentRoot.AddChild(actionIntentDamage);
+
+		actionIntentRemainingUses = CreateActionIntentLabel(
+			"RemainingUses",
+			new Vector2(43f, 0f),
+			new Vector2(21f, 23f),
+			16
+		);
+		actionIntentRoot.AddChild(actionIntentRemainingUses);
+
+		actionIntentAreaBadge = CreateActionIntentLabel(
+			"AreaAttack",
+			new Vector2(-4f, 2f),
+			new Vector2(30f, 19f),
+			12
+		);
+		actionIntentAreaBadge.Text = "全";
+		actionIntentRoot.AddChild(actionIntentAreaBadge);
+		SyncActionIntentPosition();
+	}
+
+	private static Label CreateActionIntentDamageLabel() {
+		var label = new Label {
+			Name = "Damage",
+			Position = new Vector2(2f, 40f),
+			Size = new Vector2(62f, 23f),
+			HorizontalAlignment = HorizontalAlignment.Left,
+			VerticalAlignment = VerticalAlignment.Top,
+			MouseFilter = Control.MouseFilterEnum.Ignore
+		};
+		if (ResourceLoader.Exists(NativeIntentFontPath)) {
+			Font? intentFont = ResourceLoader.Load<Font>(NativeIntentFontPath);
+			if (intentFont != null) {
+				label.AddThemeFontOverride("font", intentFont);
+			}
+		}
+		label.AddThemeFontSizeOverride("font_size", 22);
+		label.AddThemeColorOverride(
+			"font_color",
+			new Color(1f, 0.964706f, 0.886275f, 1f)
+		);
+		label.AddThemeColorOverride(
+			"font_outline_color",
+			new Color(0f, 0f, 0f, 0.501961f)
+		);
+		label.AddThemeConstantOverride("outline_size", 12);
+		return label;
+	}
+
+	private static Label CreateActionIntentLabel(
+		string name,
+		Vector2 position,
+		Vector2 size,
+		int fontSize
+	) {
+		var label = new Label {
+			Name = name,
+			Position = position,
+			Size = size,
+			HorizontalAlignment = HorizontalAlignment.Center,
+			VerticalAlignment = VerticalAlignment.Center,
+			MouseFilter = Control.MouseFilterEnum.Ignore
+		};
+		label.AddThemeFontSizeOverride("font_size", fontSize);
+		label.AddThemeColorOverride("font_color", Colors.White);
+		label.AddThemeColorOverride("font_outline_color", Colors.Black);
+		label.AddThemeConstantOverride("outline_size", 7);
+		return label;
+	}
+
+	private void SyncActionIntentPosition() {
+		if (actionIntentRoot == null || IntentPosition == null || !IsInsideTree()) return;
+
+		Vector2 viewportSize = GetViewportRect().Size;
+		Vector2 anchor = IntentPosition.GetGlobalTransformWithCanvas().Origin;
+		float bob = Mathf.Sin(
+			(float)Time.GetTicksMsec() * 0.001f * Mathf.Pi + actionIntentBobPhase
+		) * ActionIntentBobDistance + ActionIntentBobOffset;
+		anchor += Vector2.Up * (ActionIntentHeadClearance + bob);
+		float horizontalMargin = Mathf.Min(
+			ActionIntentViewportMargin,
+			viewportSize.X * 0.5f
+		);
+		float verticalMargin = Mathf.Min(
+			ActionIntentViewportMargin,
+			viewportSize.Y * 0.5f
+		);
+		anchor.X = Mathf.Clamp(
+			anchor.X,
+			horizontalMargin,
+			viewportSize.X - horizontalMargin
+		);
+		anchor.Y = Mathf.Clamp(
+			anchor.Y,
+			verticalMargin,
+			viewportSize.Y - verticalMargin
+		);
+		Vector2 localAnchor = actionIntentOverlay
+			.GetGlobalTransformWithCanvas()
+			.AffineInverse() * anchor;
+		actionIntentRoot.Position = localAnchor - Vector2.One * (ActionIntentSize * 0.5f);
 	}
 
 	public const string MATERIAL_VFX_PATH = "res://VYgo/scenes/vfx/summon/vfx_link_summon_material.tscn";

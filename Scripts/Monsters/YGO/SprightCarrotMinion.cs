@@ -19,7 +19,7 @@ public class SprightCarrotMinion: BaseMonster {
     ) {
         if (options.Source is not SprightCarrot sourceCard) return;
 
-        await PowerCmd.Apply<SprightCarrotAction>(
+        await ApplyMonsterAction<SprightCarrotAction>(
             choiceContext,
             Creature,
             1m,

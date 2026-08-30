@@ -108,9 +108,10 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
         if (options.PrimaryStatAmount is { } strength && strength > 0m)
             await PowerCmd.Apply<AttackPower>(choiceContext, Creature, strength, owner.Creature, options.Source);
         if (BasicAttackAction) {
-            await PowerCmd.Apply<TargetingAttackAction>(choiceContext, Creature, 1m, owner.Creature, options.Source, true);
+            await ApplyMonsterAction<TargetingAttackAction>(choiceContext, Creature, 1m, owner.Creature, options.Source, true);
         }
         await OnSummonYgo(choiceContext, owner, options);
+        AssertSingleMonsterAction();
         if (card?.ContainArchetype(YgoArchetypes.CyberDragon) == true
             && !owner.Creature.HasPower<CyberDragonSummonedThisTurnPower>()) {
             await PowerCmd.Apply<CyberDragonSummonedThisTurnPower>(
@@ -124,6 +125,59 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
     }
 
     public abstract int CardId { get; }
+
+    /// <summary>
+    /// 为怪兽安装唯一的可点击行动。所有普通攻击与专属行动都必须经过此入口。
+    /// </summary>
+    protected Task<TAction?> ApplyMonsterAction<TAction>(
+        PlayerChoiceContext choiceContext,
+        Creature target,
+        decimal amount,
+        Creature? applier,
+        CardModel? cardSource,
+        bool silent = false
+    ) where TAction : BasePerTurnMonsterAction {
+        if (target != Creature) {
+            throw new InvalidOperationException(
+                $"怪兽行动安装目标非法：怪兽={GetType().FullName}，目标={target.Monster?.GetType().FullName ?? target.GetType().FullName}，待安装行动={typeof(TAction).FullName}，源卡={FormatSourceCard(cardSource)}。"
+            );
+        }
+
+        List<BasePerTurnMonsterAction> existingActions = Creature.Powers
+            .OfType<BasePerTurnMonsterAction>()
+            .ToList();
+        if (existingActions.Count > 0) {
+            throw new InvalidOperationException(
+                $"拒绝安装第二个怪兽行动：怪兽={GetType().FullName}，现有行动=[{string.Join(", ", existingActions.Select(action => action.GetType().FullName))}]，待安装行动={typeof(TAction).FullName}，源卡={FormatSourceCard(cardSource ?? SourceCard)}。"
+            );
+        }
+
+        return PowerCmd.Apply<TAction>(
+            choiceContext,
+            Creature,
+            amount,
+            applier,
+            cardSource,
+            silent
+        );
+    }
+
+    private void AssertSingleMonsterAction() {
+        List<BasePerTurnMonsterAction> actions = Creature.Powers
+            .OfType<BasePerTurnMonsterAction>()
+            .ToList();
+        if (actions.Count <= 1) return;
+
+        throw new InvalidOperationException(
+            $"怪兽召唤后存在多个可点击行动：怪兽={GetType().FullName}，行动=[{string.Join(", ", actions.Select(action => action.GetType().FullName))}]，源卡={FormatSourceCard(SourceCard)}。"
+        );
+    }
+
+    private static string FormatSourceCard(CardModel? card) {
+        return card == null
+            ? "<none>"
+            : $"{card.GetType().FullName}({card.Id.Entry})";
+    }
 
     protected virtual async Task OnSendToGraveyard(
         PlayerChoiceContext choiceContext, 

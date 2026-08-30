@@ -21,7 +21,7 @@ public class HeosvarogtheMechanicalDawnMinion : BaseMonster {
         MinionSummonOptions options) {
         if (options.Source is not HeosvarogtheMechanicalDawn sourceCard) return;
 
-        await PowerCmd.Apply<HeosvarogtheMechanicalDawnAction>(
+        await ApplyMonsterAction<HeosvarogtheMechanicalDawnAction>(
             choiceContext,
             Creature,
             sourceCard.NegatingAmount,

@@ -16,7 +16,7 @@ public class FinalStrikeCyberEndDragonMinion : BaseMonster {
         Player owner,
         MinionSummonOptions options) {
         if (options.PrimaryStatAmount is { } strength && strength > 0m)
-            await PowerCmd.Apply<PenetratingAttackAction>(
+            await ApplyMonsterAction<PenetratingAttackAction>(
                 choiceContext,
                 Creature,
                 strength,

@@ -19,7 +19,7 @@ public class CyberEternityDragonMinion : BaseMonster {
     ) {
         if (options.Source is not CyberEternityDragon sourceCard) return;
 
-        await PowerCmd.Apply<CyberEternityDragonAction>(
+        await ApplyMonsterAction<CyberEternityDragonAction>(
             choiceContext,
             Creature,
             sourceCard.BoostLife,

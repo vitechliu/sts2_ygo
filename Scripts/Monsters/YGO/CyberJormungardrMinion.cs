@@ -16,7 +16,7 @@ public class CyberJormungardrMinion : BaseMonster {
         Player owner,
         MinionSummonOptions options
     ) {
-        return PowerCmd.Apply<CyberJormungardrAction>(
+        return ApplyMonsterAction<CyberJormungardrAction>(
             choiceContext,
             Creature,
             1m,
