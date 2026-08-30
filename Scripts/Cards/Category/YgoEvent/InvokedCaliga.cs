@@ -20,6 +20,7 @@ public class InvokedCaliga()
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         ..base.AdditionalHoverTips,
         HoverTipFactory.FromCard<AleistertheInvoker>(),
+        HoverTipFactory.FromPower<InvokedCaligaPower>(),
         HoverTipFactory.FromPower<InvokedCaligaBufferPower>()
     ];
 

@@ -26,5 +26,19 @@
   "V_YGO_EVENT_DECODE_EVOLUTION.pages.INTEGRATED.description": "青色数据流汇入核心，散乱的链接被重新编织为完整的网络。光芒退去时，解码语者·集成握紧了重构的光刃。",
   "V_YGO_EVENT_DECODE_EVOLUTION.pages.HEATSOUL_EVOLVED.description": "橙黄烈焰沿着装甲缝隙喷涌而出，异常能量化作灼热的灵魂。解码语者·炽热之魂从火中昂然现身。",
   "V_YGO_EVENT_DECODE_EVOLUTION.pages.EXTENDED_EVOLVED.description": "暗色数据吞没了四周的微光，又在一瞬间压缩进新的装甲。解码语者·扩展跨出阴影，延展的力量已完全稳定。",
-  "V_YGO_EVENT_DECODE_EVOLUTION.pages.LEFT.description": "你及时切断连接，三股能量随之消散。解码语者恢复原状，未完成的进化则沉入网络深处。"
+  "V_YGO_EVENT_DECODE_EVOLUTION.pages.LEFT.description": "你及时切断连接，三股能量随之消散。解码语者恢复原状，未完成的进化则沉入网络深处。",
+  "V_YGO_EVENT_ALEISTERS_RITUAL.title": "阿莱斯特的仪式",
+  "V_YGO_EVENT_ALEISTERS_RITUAL.pages.INITIAL.description": "荒凉的路旁，一名披着深色长袍的魔术师正俯身刻画繁复的魔法阵。猩红纹路沿石缝逐一亮起，空气里弥漫着金属与硫磺的气味。\n\n最后一笔落下，阿莱斯特·克劳利转过身，法杖轻敲阵心。阵中浮现出六道形貌迥异的召唤兽剪影。\n\n“灵魂、金币，或一纸契约——选一种代价，我就让你见识召唤魔术的真髓。”",
+  "V_YGO_EVENT_ALEISTERS_RITUAL.pages.INITIAL.options.OFFER_SOUL.title": "献上灵魂",
+  "V_YGO_EVENT_ALEISTERS_RITUAL.pages.INITIAL.options.OFFER_SOUL.description": "失去[red]{HpLoss}[/red]点最大生命。获得[gold]魔法阵核心[/gold]，并从[blue]{InvokedCandidates}[/blue]张「召唤兽」融合怪兽中选择[blue]{InvokedCards}[/blue]张加入额外卡组。",
+  "V_YGO_EVENT_ALEISTERS_RITUAL.pages.INITIAL.options.ALCHEMY.title": "满足炼金需求",
+  "V_YGO_EVENT_ALEISTERS_RITUAL.pages.INITIAL.options.ALCHEMY.description": "失去[gold]{Gold}[/gold]金币。获得[blue]{Potions}[/blue]瓶随机药水。",
+  "V_YGO_EVENT_ALEISTERS_RITUAL.pages.INITIAL.options.ALCHEMY_LOCKED.title": "满足炼金需求",
+  "V_YGO_EVENT_ALEISTERS_RITUAL.pages.INITIAL.options.ALCHEMY_LOCKED.description": "需要至少[gold]{Gold}[/gold]金币。",
+  "V_YGO_EVENT_ALEISTERS_RITUAL.pages.INITIAL.options.CONTRACT.title": "签订召唤契约",
+  "V_YGO_EVENT_ALEISTERS_RITUAL.pages.INITIAL.options.CONTRACT.description": "获得[blue]{RareFusionCards}[/blue]张随机的、已升级的[gold]稀有[/gold]融合怪兽卡。",
+  "V_YGO_EVENT_ALEISTERS_RITUAL.pages.SOUL_OFFERED.description": "魔法阵从你的影子里抽走一缕苍白的光。阿莱斯特满意地收起法杖，赤红核心随之凝固，而一道召唤兽的身影穿过阵门，成为了契约的见证。",
+  "V_YGO_EVENT_ALEISTERS_RITUAL.pages.ALCHEMY_COMPLETED.description": "金币在法阵边缘熔成三束异色液光。阿莱斯特将它们封入瓶中递给你，随后继续校准那些危险的刻痕。",
+  "V_YGO_EVENT_ALEISTERS_RITUAL.pages.CONTRACT_ACCEPTED.description": "契约在指尖燃起，又迅速化作一枚烙印。远处传来低沉的咆哮，一头更强大的融合怪兽已经回应了你的召唤。",
+  "V_YGO_EVENT_ALEISTERS_RITUAL.selectionScreenPrompt": "选择要加入额外卡组的{InvokedCards}张「召唤兽」融合怪兽。"
 }

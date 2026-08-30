@@ -11,7 +11,7 @@ namespace VYgo.Scripts.Cards.Category.YgoEvent;
 
 [RegisterCard(typeof(YgoEventCardPool))]
 public class InvokedMechaba()
-    : BaseExtraFusionCard(-1, CardType.Skill, CardRarity.Event, TargetType.None) {
+    : BaseExtraFusionCard(-1, CardType.Attack, CardRarity.Event, TargetType.None) {
     private const string MaterialAttribute = "光";
 
     public override int CardId => 75286621;
