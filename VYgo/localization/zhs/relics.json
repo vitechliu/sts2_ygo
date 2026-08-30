@@ -3,5 +3,8 @@
   "V_YGO_RELIC_CYBER_CORE_RELIC.description": "每场战斗中你首次[gold]召唤[/gold][blue]「电子龙」[/blue]怪兽时，获得{Energy:energyIcons()}。",
   "V_YGO_RELIC_CYBER_CORE_RELIC.flavor": "核心开始运转，钢铁巨龙回应了召唤。",
   "LARGE_CAPSULE.description": "拾起时，获得[blue]{Relics}[/blue]件随机[gold]遗物[/gold]。额外将{AttackCard.StringValue:cond:[gold]{AttackCard}[/gold]和[gold]{DefenseCard}[/gold]|一对[gold]打击[/gold]和[gold]防御[/gold]}，加入你的[gold]牌组[/gold]。",
-  "LARGE_CAPSULE.eventDescription": "获得[blue]{Relics}[/blue]件随机[gold]遗物[/gold]。额外将{AttackCard.StringValue:cond:[gold]{AttackCard}[/gold]和[gold]{DefenseCard}[/gold]|一对[gold]打击[/gold]和[gold]防御[/gold]}，加入你的[gold]牌组[/gold]。"
+  "LARGE_CAPSULE.eventDescription": "获得[blue]{Relics}[/blue]件随机[gold]遗物[/gold]。额外将{AttackCard.StringValue:cond:[gold]{AttackCard}[/gold]和[gold]{DefenseCard}[/gold]|一对[gold]打击[/gold]和[gold]防御[/gold]}，加入你的[gold]牌组[/gold]。",
+  "V_YGO_RELIC_MAGIC_CIRCLE_CORE_RELIC.title": "魔法阵核心",
+  "V_YGO_RELIC_MAGIC_CIRCLE_CORE_RELIC.description": "拾起时，将[blue]{Cards}[/blue]张牌——「暴走魔法阵」、「召唤师 阿莱斯特」和「召唤魔术」加入你的[gold]牌组[/gold]。",
+  "V_YGO_RELIC_MAGIC_CIRCLE_CORE_RELIC.flavor": "凝固在掌心的阵心，仍在等待下一次召唤。"
 }
