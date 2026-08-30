@@ -19,7 +19,7 @@ public class BalancerLordMinion : BaseMonster {
     ) {
         if (options.Source is not BalancerLord sourceCard) return Task.CompletedTask;
 
-        return PowerCmd.Apply<BalancerLordAction>(
+        return ApplyMonsterAction<BalancerLordAction>(
             choiceContext,
             Creature,
             1,

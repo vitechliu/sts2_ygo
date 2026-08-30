@@ -19,7 +19,7 @@ public class CyberseWizardMinion : BaseMonster {
     ) {
         if (options.Source is not CyberseWizard sourceCard) return Task.CompletedTask;
 
-        return PowerCmd.Apply<CyberseWizardAction>(
+        return ApplyMonsterAction<CyberseWizardAction>(
             choiceContext,
             Creature,
             sourceCard.Weak,

@@ -13,7 +13,7 @@ public class CyberTwinDragonMinion: BaseMonster {
 
     public override async Task OnSummonYgo(PlayerChoiceContext choiceContext, Player owner, MinionSummonOptions options) {
         if (options.PrimaryStatAmount is { } strength && strength > 0m)
-            await PowerCmd.Apply<DoubleTargetingAttackAction>(choiceContext, Creature, strength, owner.Creature, options.Source,
+            await ApplyMonsterAction<DoubleTargetingAttackAction>(choiceContext, Creature, strength, owner.Creature, options.Source,
                 true);
     }
 }

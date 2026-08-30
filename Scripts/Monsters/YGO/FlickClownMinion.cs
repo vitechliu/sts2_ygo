@@ -19,7 +19,7 @@ public class FlickClownMinion: BaseMonster {
     ) {
         if (options.Source is not FlickClown sourceCard) return Task.CompletedTask;
 
-        return PowerCmd.Apply<FlickClownAction>(
+        return ApplyMonsterAction<FlickClownAction>(
             choiceContext,
             Creature,
             sourceCard.Draw,

@@ -19,7 +19,7 @@ public class CyberDragonSiegerMinion: BaseMonster {
     ) {
         if (options.Source is not CyberDragonSieger sourceCard) return;
 
-        await PowerCmd.Apply<CyberDragonSiegerAction>(
+        await ApplyMonsterAction<CyberDragonSiegerAction>(
             choiceContext,
             Creature,
             sourceCard.BoostAttack,

@@ -21,7 +21,7 @@ public class ShootingcodeTalkerMinion: BaseMonster {
 
         int linkMonsterCount = owner.Creature.Pets.Count(pet =>
             pet.Monster is BaseMonster { SourceCard: BaseExtraLinkCard });
-        await PowerCmd.Apply<TemporaryExtraAttackAction>(
+        await ApplyMonsterAction<TemporaryExtraAttackAction>(
             choiceContext,
             Creature,
             linkMonsterCount,

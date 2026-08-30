@@ -19,7 +19,7 @@ public class DualAssembwurmMinion : BaseMonster {
     ) {
         if (options.Source is not DualAssembwurm sourceCard) return Task.CompletedTask;
 
-        return PowerCmd.Apply<DualAssembwurmAction>(
+        return ApplyMonsterAction<DualAssembwurmAction>(
             choiceContext,
             Creature,
             sourceCard.Damage,

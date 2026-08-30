@@ -16,7 +16,7 @@ public class LinkSpiderMinion: BaseMonster {
         Player owner,
         MinionSummonOptions options
     ) {
-        return PowerCmd.Apply<LinkSpiderAction>(
+        return ApplyMonsterAction<LinkSpiderAction>(
             choiceContext,
             Creature,
             1m,

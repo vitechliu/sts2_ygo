@@ -15,7 +15,7 @@ public class CyberdarkHornMinion: BaseMonster {
         PlayerChoiceContext choiceContext,
         Player owner,
         MinionSummonOptions options) {
-        await PowerCmd.Apply<PenetratingAttackAction>(
+        await ApplyMonsterAction<PenetratingAttackAction>(
             choiceContext,
             Creature,
             1m,

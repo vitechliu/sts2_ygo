@@ -15,7 +15,7 @@ public class CyberdarkEdgeMinion: BaseMonster {
         PlayerChoiceContext choiceContext,
         Player owner,
         MinionSummonOptions options) {
-        await PowerCmd.Apply<GroupAttackAction>(
+        await ApplyMonsterAction<GroupAttackAction>(
             choiceContext,
             Creature,
             1m,

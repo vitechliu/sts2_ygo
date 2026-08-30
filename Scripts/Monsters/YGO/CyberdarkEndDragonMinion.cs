@@ -18,7 +18,7 @@ public class CyberdarkEndDragonMinion : BaseMonster {
         MinionSummonOptions options
     ) {
         if (options.PrimaryStatAmount is { } strength && strength > 0m)
-            await PowerCmd.Apply<CyberdarkEndDragonAttackAction>(
+            await ApplyMonsterAction<CyberdarkEndDragonAttackAction>(
                 choiceContext,
                 Creature,
                 1m,

@@ -19,6 +19,10 @@ public class TargetingAttackAction : BasePerTurnMonsterAction {
         ? $"{AttackIntentIconDirectory}/intent_attack_{GetAttackIntentTier(StrengthPowerAmount)}.png"
         : null;
 
+    protected override int? IntentDamage => StrengthPowerAmount;
+
+    protected override bool IntentIsAreaAttack => TargetType == TargetType.AllEnemies;
+
     protected int StrengthPowerAmount {
         get {
             var power = Owner.Powers.OfType<AttackPower>().FirstOrDefault();

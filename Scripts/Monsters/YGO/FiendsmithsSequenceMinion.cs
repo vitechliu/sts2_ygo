@@ -18,7 +18,7 @@ public class FiendsmithsSequenceMinion: BaseMonster {
     ) {
         if (options.Source is not FiendsmithsSequence sourceCard) return;
 
-        await PowerCmd.Apply<FiendsmithsSequenceAction>(
+        await ApplyMonsterAction<FiendsmithsSequenceAction>(
             choiceContext,
             Creature,
             1m,
