@@ -88,7 +88,7 @@ theme_override_font_sizes/font_size = 22
 text = "Lv. 1"
 vertical_alignment = 1
 
-[node name="ExperienceTrack" type="PanelContainer" parent="."]
+[node name="ExperienceTrack" type="Panel" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 184.0
@@ -100,9 +100,29 @@ theme_override_styles/panel = SubResource("StyleBox_experience")
 
 [node name="ExperienceFill" type="ColorRect" parent="ExperienceTrack"]
 unique_name_in_owner = true
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 9
+anchor_right = 0.0
+anchor_bottom = 1.0
+grow_vertical = 2
 mouse_filter = 2
 color = Color(0.85, 0.92, 0.9, 1)
+
+[node name="ExperienceLabel" type="Label" parent="ExperienceTrack"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.94, 0.98, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 11
+text = "0 / 530"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="RankIcon" type="TextureRect" parent="."]
 unique_name_in_owner = true
@@ -115,6 +135,22 @@ mouse_filter = 2
 texture = ExtResource("2_rank")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="RankMinorLabel" type="Label" parent="RankIcon"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 0
+offset_left = 20.0
+offset_top = 53.0
+offset_right = 56.0
+offset_bottom = 67.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.055, 0.08, 0.075, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 10
+text = "I"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="AchievementBadge" type="Control" parent="."]
 unique_name_in_owner = true
