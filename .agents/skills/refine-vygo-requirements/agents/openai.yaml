@@ -1,0 +1,7 @@
+interface:
+  display_name: "梳理 VYgo 需求"
+  short_description: "审阅需求与代码现状，通过结构化追问收束为可开发规格"
+  default_prompt: "使用 $refine-vygo-requirements 审阅当前需求，向我提出具体问题并整理成可开发规格。"
+
+policy:
+  allow_implicit_invocation: false
