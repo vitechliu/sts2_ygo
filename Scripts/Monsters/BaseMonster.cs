@@ -92,7 +92,10 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
         PileSent = false;
         if (options.MaxHp is { } maxHp)
             await CreatureCmd.SetMaxAndCurrentHp(Creature, maxHp); // 设置血量
-        Visuals?.OnSummon();
+        if (options.Source is not BaseMonsterCard sourceCard
+            || sourceCard.ShouldPlayMonsterSummonVfx(owner)) {
+            Visuals?.OnSummon();
+        }
         var card = this.YgoGetCard();
         var power = await PowerCmd.Apply<YgoPower>(choiceContext, Creature, 1m, owner.Creature, options.Source, true);
         if (power != null) {

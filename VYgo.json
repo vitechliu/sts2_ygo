@@ -3,7 +3,7 @@
   "name": "游戏王大师决斗",
   "author": "Vitech",
   "description": "游戏王大师决斗(YuGiOh MasterDuel)同人mod，感谢以下测试者:",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "has_pck": true,
   "has_dll": true,
   "dependencies": [

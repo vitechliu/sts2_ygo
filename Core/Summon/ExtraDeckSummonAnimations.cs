@@ -22,6 +22,8 @@ using VYgo.Utils;
 namespace VYgo.Core;
 
 internal static class ExtraDeckSummonAnimations {
+    internal const float MinimalFinalWaitSeconds = 0.05f;
+
     public const string FusionSummon2DAssets = "res://VYgo/scenes/summon/fusion/fusion_summon_2d.tscn";
     public const string LinkSummon2DAssets = "res://VYgo/scenes/summon/link/link_summon_2d.tscn";
     public const string XyzSummon2DAssets = "res://VYgo/scenes/summon/xyz/xyz_summon_2d.tscn";
@@ -35,6 +37,40 @@ internal static class ExtraDeckSummonAnimations {
     private static readonly Color XyzViolet = new("8a63ff");
     private static readonly Color SynchroCyan = new("39eeff");
     private static readonly Color SynchroGreen = new("74ff8d");
+
+    internal static Color GetMinimalAccentColor(ExtraDeckSummonType? summonType) {
+        return summonType switch {
+            ExtraDeckSummonType.Fusion => FusionViolet,
+            ExtraDeckSummonType.Link => XyzBlue,
+            ExtraDeckSummonType.Xyz => XyzViolet,
+            ExtraDeckSummonType.Synchro => SynchroCyan,
+            _ => Colors.White
+        };
+    }
+
+    internal static async Task PlayMinimalSummonAnimation(
+        SummonAnimationContext context,
+        Creature summonedCreature
+    ) {
+        string soundPath = context.SummonType switch {
+            ExtraDeckSummonType.Fusion => "event:/vygo/sfx/link_summon_05",
+            ExtraDeckSummonType.Link => "event:/vygo/sfx/link_summon_05",
+            ExtraDeckSummonType.Xyz => "event:/vygo/sfx/xyz_04",
+            ExtraDeckSummonType.Synchro => "event:/vygo/sfx/synchro_05",
+            _ => "event:/vygo/sfx/link_summon_05"
+        };
+        SFXUtil.Play(soundPath);
+
+        if (context.FinalCard is BaseMonsterCard monsterCard) {
+            await MonsterCardVfx.PlaySummonCardFly(
+                monsterCard,
+                summonedCreature,
+                context.ScreenCenterPos,
+                GetMinimalAccentColor(context.SummonType),
+                emphasizeReveal: true
+            );
+        }
+    }
 
     private static readonly List<(int Trail, CardLinkMarker Marker)> LinkMarkers = new() {
         (2, CardLinkMarker.Top),

@@ -58,6 +58,13 @@ public sealed record SynchroSummonRequest(
     Func<BaseExtraSynchroCard, bool>? SynchroCardFilter = null
 );
 
+public enum ExtraDeckSummonType {
+    Fusion,
+    Link,
+    Xyz,
+    Synchro
+}
+
 public sealed record ExtraDeckSummonRequest(
     CardModel? SourceCard,
     Player Owner,
@@ -65,6 +72,7 @@ public sealed record ExtraDeckSummonRequest(
     LocString SelectionPrompt,
     Func<CardModel, bool> ExtraCardFilter,
     Func<CardModel, SummonMaterialSelectionSpec?> BuildMaterialSelection,
+    ExtraDeckSummonType SummonType,
     Func<SummonAnimationContext, Task> PlayAnimation,
     Func<IReadOnlyList<SummonMaterial>, Task<bool>>? ConsumeMaterials = null,
     Func<SummonPostPlayContext, Task<bool>>? AfterAutoPlay = null,
@@ -77,6 +85,7 @@ public sealed record SelectedExtraDeckSummonRequest(
     Player Owner,
     PlayerChoiceContext ChoiceContext,
     Func<SummonMaterialSelectionSpec?> BuildMaterialSelection,
+    ExtraDeckSummonType SummonType,
     Func<SummonAnimationContext, Task> PlayAnimation,
     CardModel? SourceCard = null,
     Func<IReadOnlyList<SummonMaterial>, Task<bool>>? ConsumeMaterials = null,
@@ -89,7 +98,8 @@ public sealed record SummonAnimationContext(
     CardModel FinalCard,
     IReadOnlyList<SummonMaterial> Materials,
     IReadOnlyList<CardModel> MaterialCards,
-    Vector2 ScreenCenterPos
+    Vector2 ScreenCenterPos,
+    ExtraDeckSummonType SummonType
 );
 
 public sealed record SummonPostPlayContext(
@@ -154,12 +164,14 @@ public static class SummonUtil {
                 request.GetAvailableMaterials,
                 request.GetMaterialDestination
             ),
+            SummonType: ExtraDeckSummonType.Fusion,
             PlayAnimation: ExtraDeckSummonAnimations.PlayFusionSummonAnimation,
             ConsumeMaterials: materials => ConsumeSummonMaterials(
                 request.ChoiceContext,
                 request.Owner,
                 materials,
-                request.GetMaterialDestination
+                request.GetMaterialDestination,
+                ExtraDeckSummonType.Fusion
             ),
             AfterAutoPlay: context =>
                 ((BaseExtraFusionCard)context.FinalCard).InvokeAfterFusionSummoned(context),
@@ -179,6 +191,7 @@ public static class SummonUtil {
                 request.Owner,
                 request.GetAvailableMaterials
             ),
+            SummonType: ExtraDeckSummonType.Link,
             PlayAnimation: ExtraDeckSummonAnimations.PlayLinkSummonAnimation,
             AfterAutoPlay: TriggerLinkMaterialEffects,
             FinalWaitSeconds: 0.8f
@@ -211,9 +224,14 @@ public static class SummonUtil {
                 request.Owner,
                 request.GetAvailableMaterials
             ),
+            SummonType: ExtraDeckSummonType.Xyz,
             PlayAnimation: ExtraDeckSummonAnimations.PlayXyzSummonAnimation,
             ConsumeMaterials: materials =>
-                XyzMaterialCmd.ReserveForSummon(request.Owner, materials),
+                XyzMaterialCmd.ReserveForSummon(
+                    request.Owner,
+                    materials,
+                    ExtraDeckSummonType.Xyz
+                ),
             AfterAutoPlay: XyzMaterialCmd.AttachReservedToSummonedMonster,
             OnSummonFailedAfterConsumption: materials =>
                 XyzMaterialCmd.SendReservedToGraveyard(request.Owner, materials),
@@ -250,6 +268,7 @@ public static class SummonUtil {
                 request.Owner,
                 request.GetAvailableMaterials
             ),
+            SummonType: ExtraDeckSummonType.Synchro,
             PlayAnimation: ExtraDeckSummonAnimations.PlaySynchroSummonAnimation,
             FinalWaitSeconds: 0.45f
         ));
@@ -266,9 +285,14 @@ public static class SummonUtil {
                 owner,
                 getAvailableMaterials
             ),
+            SummonType: ExtraDeckSummonType.Xyz,
             PlayAnimation: ExtraDeckSummonAnimations.PlayXyzSummonAnimation,
             ConsumeMaterials: materials =>
-                XyzMaterialCmd.ReserveForSummon(owner, materials),
+                XyzMaterialCmd.ReserveForSummon(
+                    owner,
+                    materials,
+                    ExtraDeckSummonType.Xyz
+                ),
             AfterAutoPlay: XyzMaterialCmd.AttachReservedToSummonedMonster,
             OnSummonFailedAfterConsumption: materials =>
                 XyzMaterialCmd.SendReservedToGraveyard(owner, materials),
@@ -287,6 +311,7 @@ public static class SummonUtil {
                 owner,
                 getAvailableMaterials
             ),
+            SummonType: ExtraDeckSummonType.Synchro,
             PlayAnimation: ExtraDeckSummonAnimations.PlaySynchroSummonAnimation,
             FinalWaitSeconds: 0.45f
         );
@@ -304,6 +329,7 @@ public static class SummonUtil {
                 getAvailableMaterials,
                 _ => PileType.Discard
             ),
+            SummonType: ExtraDeckSummonType.Fusion,
             PlayAnimation: ExtraDeckSummonAnimations.PlayFusionSummonAnimation,
             AfterAutoPlay: card.InvokeAfterFusionSummoned,
             FinalWaitSeconds: 0.45f
@@ -485,6 +511,7 @@ public static class SummonUtil {
             Owner: request.Owner,
             ChoiceContext: request.ChoiceContext,
             BuildMaterialSelection: () => request.BuildMaterialSelection(selectedExtraCard),
+            SummonType: request.SummonType,
             PlayAnimation: request.PlayAnimation,
             SourceCard: request.SourceCard,
             ConsumeMaterials: request.ConsumeMaterials,
@@ -557,24 +584,31 @@ public static class SummonUtil {
                     request.ChoiceContext,
                     request.Owner,
                     materials,
-                    _ => PileType.Discard
+                    _ => PileType.Discard,
+                    request.SummonType
                 );
             }
             if (!materialsConsumed) {
                 return ExtraDeckSummonResult.Failed(selectedExtraCard, materials: materials);
             }
 
+            EffectMode effectMode = VYgoModSettings.GetEffectMode(request.Owner);
             bool playedAnimation = false;
-            if (combatRoom != null
-                && VYgoModSettings.GetEffectMode(request.Owner) != EffectMode.none) {
+            SummonAnimationContext? animationContext = null;
+            if (combatRoom != null && effectMode != EffectMode.none) {
                 Vector2 screenCenterPos = combatRoom.GetViewportRect().Size * 0.5f;
+                animationContext = new SummonAnimationContext(
+                    FinalCard: selectedExtraCard,
+                    Materials: materials,
+                    MaterialCards: materialCards,
+                    ScreenCenterPos: screenCenterPos,
+                    SummonType: request.SummonType
+                );
+            }
+
+            if (animationContext != null && effectMode == EffectMode.full) {
                 try {
-                    await request.PlayAnimation(new SummonAnimationContext(
-                        FinalCard: selectedExtraCard,
-                        Materials: materials,
-                        MaterialCards: materialCards,
-                        ScreenCenterPos: screenCenterPos
-                    ));
+                    await request.PlayAnimation(animationContext);
                     playedAnimation = true;
                 }
                 catch (Exception ex) {
@@ -590,8 +624,28 @@ public static class SummonUtil {
                     null,
                     AutoPlayType.Default,
                     false,
-                    true
+                    true,
+                    playSummonCardFly: false,
+                    playMonsterSummonVfx: effectMode == EffectMode.full
                 );
+
+                if (summonedCreature != null
+                    && animationContext != null
+                    && effectMode == EffectMode.minimal) {
+                    try {
+                        await ExtraDeckSummonAnimations.PlayMinimalSummonAnimation(
+                            animationContext,
+                            summonedCreature
+                        );
+                        playedAnimation = true;
+                    }
+                    catch (Exception ex) {
+                        Entry.Logger.Warn(
+                            $"快速额外卡组召唤演出失败，已降级继续召唤：" +
+                            $"{selectedExtraCard.GetType().Name}，{ex}"
+                        );
+                    }
+                }
 
                 if (request.AfterAutoPlay != null
                     && summonedCreature != null
@@ -616,7 +670,11 @@ public static class SummonUtil {
             }
 
             if (playedAnimation) {
-                await VFXUtil.Wait(request.FinalWaitSeconds);
+                await VFXUtil.Wait(
+                    effectMode == EffectMode.minimal
+                        ? ExtraDeckSummonAnimations.MinimalFinalWaitSeconds
+                        : request.FinalWaitSeconds
+                );
             }
             return summonCompleted
                 ? new ExtraDeckSummonResult(
@@ -895,7 +953,8 @@ public static class SummonUtil {
         PlayerChoiceContext choiceContext,
         Player owner,
         IReadOnlyList<SummonMaterial> materials,
-        Func<SummonMaterial, PileType> getMaterialDestination
+        Func<SummonMaterial, PileType> getMaterialDestination,
+        ExtraDeckSummonType? summonType = null
     ) {
         if (materials.Count <= 0 || !CanSummonWithMaterials(owner, materials)) {
             return false;
@@ -943,7 +1002,7 @@ public static class SummonUtil {
                 .ToList();
 
             await Task.WhenAll(fieldMoves.Select(move =>
-                MaterialSacrifice(move.Material.Creature!, effectMode)));
+                MaterialSacrifice(move.Material.Creature!, effectMode, summonType)));
 
             foreach ((SummonMaterial material, PileType destination) in fieldMoves) {
                 BaseMonster monster = (BaseMonster)material.Creature!.Monster;
@@ -1010,7 +1069,11 @@ public static class SummonUtil {
         }
     }
 
-    internal static async Task MaterialSacrifice(Creature material, EffectMode effectMode) {
+    internal static async Task MaterialSacrifice(
+        Creature material,
+        EffectMode effectMode,
+        ExtraDeckSummonType? summonType = null
+    ) {
         var nCreature = material.GetCreatureNode();
         if (nCreature == null) {
             await CreatureCmd.Kill(material, true);
@@ -1020,7 +1083,9 @@ public static class SummonUtil {
         nCreature.ToggleIsInteractable(false);
         nCreature.AnimHideIntent();
 
-        if (effectMode == EffectMode.none) {
+        if (effectMode == EffectMode.none
+            || (effectMode == EffectMode.minimal
+                && nCreature.Visuals is not NMonsterVisuals)) {
             // CreatureCmd.Kill 会在没有预设 DeathAnimationTask 时启动原版死亡动画。
             // 用一个待完成任务占位，保留完整死亡结算，同时阻止任何死亡演出。
             var animationBlocker = new TaskCompletionSource(
@@ -1046,8 +1111,20 @@ public static class SummonUtil {
 
         async Task PlayDeathAnimation() {
             try {
-                await visuals.PlayMaterialVfx();
-                await visuals.PlayMaterialExitAnimation();
+                if (effectMode == EffectMode.minimal) {
+                    await visuals.PlayQuickMaterialAnimation(
+                        ExtraDeckSummonAnimations.GetMinimalAccentColor(summonType)
+                    );
+                }
+                else {
+                    await visuals.PlayMaterialVfx();
+                    await visuals.PlayMaterialExitAnimation();
+                }
+            }
+            catch (Exception ex) {
+                Entry.Logger.Warn(
+                    $"召唤素材演出失败，已降级继续清理：{material.Monster?.GetType().Name}，{ex}"
+                );
             }
             finally {
                 if (GodotObject.IsInstanceValid(nCreature)) {

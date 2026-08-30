@@ -30,7 +30,8 @@ public static class XyzMaterialCmd {
 
     public static async Task<bool> ReserveForSummon(
         Player owner,
-        IReadOnlyList<SummonMaterial> materials
+        IReadOnlyList<SummonMaterial> materials,
+        ExtraDeckSummonType summonType
     ) {
         if (CombatManager.Instance.IsOverOrEnding || materials.Count == 0) return false;
         if (materials.Select(material => material.Card).Distinct().Count() != materials.Count
@@ -87,7 +88,11 @@ public static class XyzMaterialCmd {
                 SFXUtil.Play("event:/vygo/sfx/material_shine");
             }
             await Task.WhenAll(reservations.Select(reservation =>
-                SummonUtil.MaterialSacrifice(reservation.Monster.Creature, effectMode)));
+                SummonUtil.MaterialSacrifice(
+                    reservation.Monster.Creature,
+                    effectMode,
+                    summonType
+                )));
             return true;
         }
         catch (Exception ex) {

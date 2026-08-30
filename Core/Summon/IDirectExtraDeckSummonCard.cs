@@ -14,6 +14,7 @@ public interface IDirectExtraDeckSummonCard {
 /// </summary>
 public sealed record DirectExtraDeckSummonSpec(
     Func<SummonMaterialSelectionSpec?> BuildMaterialSelection,
+    ExtraDeckSummonType SummonType,
     Func<SummonAnimationContext, Task> PlayAnimation,
     Func<IReadOnlyList<SummonMaterial>, Task<bool>>? ConsumeMaterials = null,
     Func<SummonPostPlayContext, Task<bool>>? AfterAutoPlay = null,

@@ -135,6 +135,7 @@ public static class DirectExtraDeckSummonNetAction {
             Owner: context.Player,
             ChoiceContext: context.PlayerChoiceContext,
             BuildMaterialSelection: spec.BuildMaterialSelection,
+            SummonType: spec.SummonType,
             PlayAnimation: spec.PlayAnimation,
             ConsumeMaterials: spec.ConsumeMaterials,
             AfterAutoPlay: spec.AfterAutoPlay,
