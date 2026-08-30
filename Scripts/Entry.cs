@@ -13,6 +13,7 @@ using STS2RitsuLib.Content;
 using VYgo.Core;
 using VYgo.Core.CardPools;
 using VYgo.Core.Cards;
+using VYgo.Core.Progression;
 using VYgo.Core.Saves;
 using VYgo.Core.Settings;
 using VYgo.Patches;
@@ -33,6 +34,7 @@ public static class Entry {
 
     public static Logger Logger { get; private set; } = null!;
     private static IDisposable? _mainMenuAudioReadySubscription;
+    private static IDisposable? _runEndedSubscription;
     //额外卡组
     public static PileType ExtraPile;
     //场上的怪兽
@@ -220,6 +222,10 @@ public static class Entry {
     }
 
     static void SubscribeEvents() {
+        _runEndedSubscription ??=
+            RitsuLibFramework.SubscribeLifecycle<RunEndedEvent>(
+                DuelistRunSettlementService.OnRunEnded,
+                replayCurrentState: false);
         
         RitsuLibFramework.SubscribeLifecycleOnce<ModelIdsInitializedEvent>(_ =>
         {
