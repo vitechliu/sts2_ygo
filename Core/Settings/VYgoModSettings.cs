@@ -21,9 +21,9 @@ public sealed class VYgoSettingsData {
 /// 召唤特效动画完整度
 /// </summary>
 public enum EffectMode {
-    none, //完全无动画
-    // minimal, //最小动画
-    full //完整动画
+    none = 0, // 完全无动画
+    full = 1, // 完整动画
+    minimal = 2 // 快速动画
 }
 
 /// <summary>
@@ -32,12 +32,6 @@ public enum EffectMode {
 public static class VYgoModSettings {
     private const string DataKey = "settings";
     private const string FileName = "settings.json";
-
-    private static readonly Dictionary<EffectMode, string> EffectModeText = new() {
-        [EffectMode.full] = "完整动画",
-        // [EffectMode.minimal] = "少量动画",
-        [EffectMode.none] = "无动画"
-    };
 
     /// <summary>
     /// 获取指定玩家在本机应使用的召唤动画模式。
@@ -98,12 +92,25 @@ public static class VYgoModSettings {
             .WithDescription(ModSettingsText.Literal("杀戮尖塔 2 YGO Mod 的基础设置页面。"))
             .AddSection("general", section => section
                 .WithTitle(ModSettingsText.Literal("通用"))
-                .AddEnumChoice(
+                .AddChoice(
                     "effect_animation_mode",
                     ModSettingsText.Literal("召唤动画复杂度"),
                     effectAnimationModeBinding,
-                    mode => ModSettingsText.Literal(EffectModeText[mode]),
-                    ModSettingsText.Literal("连接、融合等召唤动画的复杂度，设置为无动画能显著加快游戏速度。"),
+                    [
+                        new ModSettingsChoiceOption<EffectMode>(
+                            EffectMode.full,
+                            ModSettingsText.Literal("完整动画")
+                        ),
+                        new ModSettingsChoiceOption<EffectMode>(
+                            EffectMode.minimal,
+                            ModSettingsText.Literal("快速动画")
+                        ),
+                        new ModSettingsChoiceOption<EffectMode>(
+                            EffectMode.none,
+                            ModSettingsText.Literal("无动画")
+                        )
+                    ],
+                    ModSettingsText.Literal("完整动画保留全部召唤演出；快速动画只保留素材闪光与结果卡飞出；无动画会跳过所有召唤演出。"),
                     ModSettingsChoicePresentation.Dropdown)
                 // .AddInfoCard(
                 //     "placeholder_notice",

@@ -11,6 +11,9 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 	private const float MaterialVfxCleanupDelay = 3f;
 	private const float MaterialCompressDuration = 0.15f;
 	private const float MaterialFlyDuration = 0.20f;
+	private const float QuickMaterialVfxDuration = 0.45f;
+	private const float QuickMaterialCompressDuration = 0.12f;
+	private const float QuickMaterialFlyDuration = 0.16f;
 	private const float IntentTextureSize = 144f;
 
 	public static readonly Vector2 BaseIntentScale = new Vector2(-1f, 1f) * 0.35f;
@@ -19,10 +22,11 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 		shader_type canvas_item;
 
 		uniform float whiteness : hint_range(0.0, 1.0) = 0.0;
+		uniform vec4 flash_color : source_color = vec4(1.0);
 
 		void fragment() {
 			vec4 texture_color = texture(TEXTURE, UV);
-			vec3 white_silhouette = mix(texture_color.rgb, vec3(1.0), whiteness);
+			vec3 white_silhouette = mix(texture_color.rgb, flash_color.rgb, whiteness);
 			COLOR = vec4(white_silhouette, texture_color.a) * COLOR;
 		}
 		""";
@@ -126,8 +130,9 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 	public const string MATERIAL_VFX_PATH = "res://VYgo/scenes/vfx/summon/vfx_link_summon_material.tscn";
 	public const string SUMMON_VFX_PATH = "res://VYgo/scenes/vfx/summon/vfx_summon_1.tscn";
 	
-	public async Task PlayMaterialVfx() {
-		float totalLifeTime = MaterialVfxDuration + (float)GD.RandRange(0.1f, 1f);
+	public async Task PlayMaterialVfx(float? duration = null) {
+		float totalLifeTime = duration
+			?? MaterialVfxDuration + (float)GD.RandRange(0.1f, 1f);
 		var node = VFXUtil.PlaySimple(
 			MATERIAL_VFX_PATH,
 			VfxSpawnPosition.GlobalPosition,
@@ -145,7 +150,11 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 		}
 	}
 
-	public async Task PlayMaterialExitAnimation() {
+	public async Task PlayMaterialExitAnimation(
+		float compressDuration = MaterialCompressDuration,
+		float flyDuration = MaterialFlyDuration,
+		Color? flashColor = null
+	) {
 		if (!GodotObject.IsInstanceValid(_mainSprite)) return;
 
 		var shader = new Shader {
@@ -155,19 +164,20 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 			Shader = shader
 		};
 		material.SetShaderParameter("whiteness", 0f);
+		material.SetShaderParameter("flash_color", flashColor ?? Colors.White);
 		_mainSprite.Material = material;
 
 		var originalScale = _mainSprite.Scale;
 		var compressedScale = new Vector2(originalScale.X * 0.035f, originalScale.Y * 1.12f);
 		var compressTween = _mainSprite.CreateTween().SetParallel();
-		compressTween.TweenProperty(_mainSprite, "scale", compressedScale, MaterialCompressDuration)
+		compressTween.TweenProperty(_mainSprite, "scale", compressedScale, compressDuration)
 			.SetTrans(Tween.TransitionType.Expo)
 			.SetEase(Tween.EaseType.In);
 		compressTween.TweenMethod(
 				Callable.From<float>(value => material.SetShaderParameter("whiteness", value)),
 				0f,
 				1f,
-				MaterialCompressDuration * 0.75f
+				compressDuration * 0.75f
 			)
 			.SetTrans(Tween.TransitionType.Sine)
 			.SetEase(Tween.EaseType.In);
@@ -183,21 +193,30 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 			-Mathf.Max(160f, viewportHeight * 0.15f)
 		);
 		var flyTween = _mainSprite.CreateTween().SetParallel();
-		flyTween.TweenProperty(_mainSprite, "global_position", targetPosition, MaterialFlyDuration)
+		flyTween.TweenProperty(_mainSprite, "global_position", targetPosition, flyDuration)
 			.SetTrans(Tween.TransitionType.Expo)
 			.SetEase(Tween.EaseType.In);
 		flyTween.TweenProperty(
 				_mainSprite,
 				"scale",
 				new Vector2(compressedScale.X, compressedScale.Y * 1.9f),
-				MaterialFlyDuration
+				flyDuration
 			)
 			.SetTrans(Tween.TransitionType.Expo)
 			.SetEase(Tween.EaseType.In);
-		flyTween.TweenProperty(_mainSprite, "modulate:a", 0f, MaterialFlyDuration * 0.35f)
-			.SetDelay(MaterialFlyDuration * 0.65f)
+		flyTween.TweenProperty(_mainSprite, "modulate:a", 0f, flyDuration * 0.35f)
+			.SetDelay(flyDuration * 0.65f)
 			.SetTrans(Tween.TransitionType.Sine)
 			.SetEase(Tween.EaseType.In);
 		await _mainSprite.ToSignal(flyTween, Tween.SignalName.Finished);
+	}
+
+	public async Task PlayQuickMaterialAnimation(Color accentColor) {
+		await PlayMaterialVfx(QuickMaterialVfxDuration);
+		await PlayMaterialExitAnimation(
+			QuickMaterialCompressDuration,
+			QuickMaterialFlyDuration,
+			accentColor
+		);
 	}
 }

@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
@@ -12,6 +13,7 @@ using MinionLib.Minion;
 using STS2RitsuLib.Ui.Toast;
 using VYgo.Core;
 using VYgo.Core.Summon;
+using VYgo.Core.Settings;
 using VYgo.Scripts.Monsters;
 using VYgo.Scripts.Var;
 using VYgo.Utils;
@@ -29,6 +31,8 @@ public abstract class BaseMonsterCard(
     private SummonContext? _lastSummonContext;
     private bool _isEphemeralMonsterSource;
     private bool _capacityWarningShownForCurrentPlaySeries;
+    private bool _suppressSummonCardFly;
+    private bool _suppressMonsterSummonVfx;
 
     /// <summary>最近一次召唤的上下文，供配对随从在 OnSummonYgo 中判断是否为特召。</summary>
     internal SummonContext? LastSummonContext => _lastSummonContext;
@@ -38,6 +42,11 @@ public abstract class BaseMonsterCard(
     /// 离场相关效果结算后必须从本场战斗移除，不能进入后续抽牌循环。
     /// </summary>
     internal bool IsEphemeralMonsterSource => _isEphemeralMonsterSource;
+
+    internal bool ShouldPlayMonsterSummonVfx(Player owner) {
+        return !_suppressMonsterSummonVfx
+            && VYgoModSettings.GetEffectMode(owner) != EffectMode.none;
+    }
 
     protected IHoverTip BaseSummonHoverTip => YgoHoverTipConst.Summon(this);
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [BaseSummonHoverTip];
@@ -73,7 +82,9 @@ public abstract class BaseMonsterCard(
         Creature? target,
         AutoPlayType type = AutoPlayType.Default,
         bool skipXCapture = false,
-        bool skipCardPileVisuals = false
+        bool skipCardPileVisuals = false,
+        bool playSummonCardFly = true,
+        bool playMonsterSummonVfx = true
     ) {
         if (_summonResultObserver != null) {
             throw new InvalidOperationException(
@@ -83,6 +94,10 @@ public abstract class BaseMonsterCard(
 
         Creature? summonedCreature = null;
         _summonResultObserver = creature => summonedCreature ??= creature;
+        bool previousSuppressSummonCardFly = _suppressSummonCardFly;
+        bool previousSuppressMonsterSummonVfx = _suppressMonsterSummonVfx;
+        _suppressSummonCardFly = !playSummonCardFly;
+        _suppressMonsterSummonVfx = !playMonsterSummonVfx;
         try {
             await CardCmd.AutoPlay(
                 choiceContext,
@@ -95,6 +110,8 @@ public abstract class BaseMonsterCard(
             return summonedCreature;
         }
         finally {
+            _suppressSummonCardFly = previousSuppressSummonCardFly;
+            _suppressMonsterSummonVfx = previousSuppressMonsterSummonVfx;
             _summonResultObserver = null;
         }
     }
@@ -182,7 +199,10 @@ public abstract class BaseMonsterCard(
             cardPlay,
             summonedCreature,
             summonContext);
-        await MonsterCardVfx.PlaySummonCardFly(this, summonedCreature);
+        if (!_suppressSummonCardFly
+            && VYgoModSettings.GetEffectMode(Owner) != EffectMode.none) {
+            await MonsterCardVfx.PlaySummonCardFly(this, summonedCreature);
+        }
         _summonResultObserver?.Invoke(summonedCreature);
         return summonedCreature;
     }
