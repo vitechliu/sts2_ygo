@@ -135,5 +135,14 @@
     "CYNET_STORM_MINION.name": "电脑网风暴",
     "CYNET_RECOVERY_MINION.name": "电脑网恢复",
     "CYNET_REGRESSION_MINION.name": "电脑网回归",
-    "DECODE_TALKER_INTEGRATION_MINION.name": "解码语者·集成"
+    "DECODE_TALKER_INTEGRATION_MINION.name": "解码语者·集成",
+    "MAGICAL_MELTDOWN_MINION.name": "暴走魔法阵",
+    "ALEISTERTHE_INVOKER_MINION.name": "召唤师 阿莱斯特",
+    "INVOCATION_MINION.name": "召唤魔术",
+    "INVOKED_MECHABA_MINION.name": "召唤兽 梅尔卡巴",
+    "INVOKED_CALIGA_MINION.name": "召唤兽 卡利古拉",
+    "INVOKED_MAGELLANICA_MINION.name": "召唤兽 墨瓦腊泥加",
+    "INVOKED_PURGATRIO_MINION.name": "召唤兽 普尔加托里奥",
+    "INVOKED_COCYTUS_MINION.name": "召唤兽 科库托斯",
+    "INVOKED_RAIDJIN_MINION.name": "召唤兽 雷电"
 }
