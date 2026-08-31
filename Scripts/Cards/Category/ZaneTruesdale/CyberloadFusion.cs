@@ -20,6 +20,17 @@ public class CyberloadFusion()
         YgoHoverTipConst.FusionSummon()
     ];
 
+    protected override bool IsPlayable => base.IsPlayable
+        && SummonUtil.HasFusionSummonTarget(
+            Owner,
+            _ => SummonUtil.GetFieldAndMonsterMaterialsFromPiles(
+                Owner,
+                [PileType.Discard]
+            ),
+            _ => PileType.Draw,
+            IsMachineFusionMonster
+        );
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay cardPlay

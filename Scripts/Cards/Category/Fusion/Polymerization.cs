@@ -17,6 +17,13 @@ public class Polymerization()
         YgoHoverTipConst.FusionSummon()
     ];
 
+    protected override bool IsPlayable => base.IsPlayable
+        && SummonUtil.HasFusionSummonTarget(
+            Owner,
+            _ => SummonUtil.GetFieldAndHandMonsterMaterials(Owner),
+            _ => PileType.Discard
+        );
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay cardPlay
