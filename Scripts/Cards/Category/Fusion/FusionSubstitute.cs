@@ -18,6 +18,14 @@ public class FusionSubstitute()
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(1),
     ];
+
+    protected override bool IsPlayable => base.IsPlayable
+        && SummonUtil.HasFusionSummonTarget(
+            Owner,
+            _ => SummonUtil.GetFieldMonsterMaterials(Owner),
+            _ => PileType.Discard
+        );
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay cardPlay

@@ -15,6 +15,16 @@ public class Invocation() : BaseSpellCard(1, CardType.Skill, CardRarity.Event, T
         YgoHoverTipConst.FusionSummon()
     ];
 
+    protected override bool IsPlayable => base.IsPlayable
+        && SummonUtil.HasFusionSummonTarget(
+            Owner,
+            _ => SummonUtil.GetFieldAndMonsterMaterialsFromPiles(
+                Owner,
+                [PileType.Discard]
+            ),
+            _ => PileType.Exhaust
+        );
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         await SummonUtil.ExecuteFusionSummon(new FusionSummonRequest(
             SourceCard: this,

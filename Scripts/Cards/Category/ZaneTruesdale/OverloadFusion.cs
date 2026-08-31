@@ -21,6 +21,17 @@ public class OverloadFusion()
         HoverTipFactory.FromKeyword(CardKeyword.Exhaust)
     ];
 
+    protected override bool IsPlayable => base.IsPlayable
+        && SummonUtil.HasFusionSummonTarget(
+            Owner,
+            _ => SummonUtil.GetFieldAndMonsterMaterialsFromPiles(
+                Owner,
+                [PileType.Discard]
+            ),
+            _ => PileType.Exhaust,
+            IsDarkMachineFusionMonster
+        );
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay cardPlay
