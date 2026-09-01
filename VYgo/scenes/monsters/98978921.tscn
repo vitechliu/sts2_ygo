@@ -11,6 +11,7 @@ unique_name_in_owner = true
 position = Vector2(7, -138)
 
 [node name="Image" type="Sprite2D" parent="Visuals"]
+texture_filter = 4
 position = Vector2(-6.999998, 77)
 scale = Vector2(0.832353, 0.832353)
 texture = ExtResource("1_8kv8s")
