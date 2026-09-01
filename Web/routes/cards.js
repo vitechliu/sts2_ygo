@@ -12,6 +12,7 @@ const {
     normalizeCropParams
 } = require('../services/inputValidation');
 const { readJsonArray, readJsonObject, writeJsonAtomic } = require('../services/jsonFileService');
+const { ensureMonsterImageTextureFilter } = require('../services/monsterSceneService');
 const fs = require('fs');
 const path = require('path');
 
@@ -328,6 +329,7 @@ router.post('/:cardId/scene', async (req, res) => {
             /\[ext_resource type="Texture2D" uid="[^"]+" path="res:\/\/VYgo\/images\/monster\/[^"]+" id="([^"]+)"\]/,
             `[ext_resource type="Texture2D" path="res://VYgo/images/monster/${cardId}.png" id="$1"]`
         );
+        content = ensureMonsterImageTextureFilter(content).content;
 
         fs.writeFileSync(targetPath, content, 'utf8');
 
