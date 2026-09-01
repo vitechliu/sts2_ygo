@@ -1,19 +1,32 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
+using VYgo.Core.Cards;
 using VYgo.Scripts.Characters;
 using VYgo.Scripts.Pools;
+using VYgo.Scripts.Var;
 
 namespace VYgo.Scripts.Cards.Category.Link;
 
 [RegisterCard(typeof(LinkCardPool))]
+[RegisterCharacterStarterCard(typeof(RedhatCharacter))]
 public class SPLittleKnight() : BaseExtraLinkCard(energyCost, CardType.Skill, rarity, targetType, shouldShowInCardLibrary) {
     public override int CardId => 29301450;
-    
+
+    public int BanishAmount => DynamicVars["Banish"].IntValue;
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new AttackVar(BaseAttackVar),
+        new LifeVar(BaseLifeVar),
+        new DynamicVar("Banish", 10m)
+    ];
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        YgoHoverTipConst.LinkSummon(),
-        YgoHoverTipConst.VoidDamage()
+        ..base.AdditionalHoverTips,
+        YgoHoverTipConst.EnterField(),
+        YgoHoverTipConst.Banish()
     ];
     
     private const int energyCost = -1;
@@ -21,24 +34,16 @@ public class SPLittleKnight() : BaseExtraLinkCard(energyCost, CardType.Skill, ra
     private const TargetType targetType = TargetType.None;
     private const bool shouldShowInCardLibrary = true;
 
-    //
-    // protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-    //     // HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
-    //     // HoverTipFactory.FromPower<VigorPower>(),
-    //     // HoverTipFactory.FromPower<StarscourgePower>(),
-    // ];
+    public override int BaseAttackVar => 5;
+    public override int BaseLifeVar => 5;
 
-
-    // protected override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>();{
-    //     HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
-    // }
-
-    public override int BaseAttackVar => 16;
-    public override int BaseLifeVar => 1;
-    public override int UpgradeAttackVar => 5;
-    public override int UpgradeLifeVar => 0;
+    public override int GetLinkMaterialCount(CoreCard coreCard) => 2;
 
     public override bool CanUseLinkMaterial(SummonMaterial material) {
         return material.IsEffectMonster;
+    }
+
+    protected override void OnUpgrade() {
+        DynamicVars["Banish"].UpgradeValueBy(3m);
     }
 }

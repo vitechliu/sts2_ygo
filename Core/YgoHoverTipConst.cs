@@ -31,9 +31,6 @@ public static class YgoHoverTipConst {
     public static IHoverTip SpecialSummon() {
         return Base("SPECIAL_SUMMON");
     }
-    public static IHoverTip VoidDamage() {
-        return Base("VOID_DAMAGE");
-    }
     public static IHoverTip LinkSummon() {
         return Base("LINK_SUMMON");
     }
@@ -95,6 +92,11 @@ public static class YgoHoverTipConst {
     //超量素材
     public static IHoverTip XYZMaterial() {
         return Base("XYZ_MATERIAL");
+    }
+    
+    //除外
+    public static IHoverTip Banish() {
+        return Base("BANISH");
     }
     //卡名替代
     public static IHoverTip NameAs(YgoMaterialNames name) {

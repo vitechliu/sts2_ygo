@@ -42,5 +42,7 @@
   "V_YGO_POWER_ACTION.title": "启动",
   "V_YGO_POWER_ACTION.description": "能力的主动效果，右键能力图标触发，默认1回合1次。",
   "V_YGO_XYZ_MATERIAL.title": "超量素材",
-  "V_YGO_XYZ_MATERIAL.description": "超量召唤的素材"
+  "V_YGO_XYZ_MATERIAL.description": "超量召唤的素材",
+  "V_YGO_BANISH.description": "去除等量最大生命和当前生命。可以使目标死亡，且不受格挡等buff效果影响。",
+  "V_YGO_BANISH.title": "除外"
 }
