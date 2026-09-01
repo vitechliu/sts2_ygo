@@ -916,9 +916,28 @@ public static class SummonUtil {
         SummonMaterial material,
         PileType destination
     ) {
-        bool validDestination = destination is PileType.Draw or PileType.Discard or PileType.Exhaust;
+        destination = ResolveMaterialDestination(material, destination);
+        bool validDestination = destination is PileType.Draw or PileType.Discard or PileType.Exhaust
+            || (destination == Entry.ExtraPile && material.Card is BaseExtraCard);
         return validDestination
             && (material.IsField || destination != material.SourcePile);
+    }
+
+    /// <summary>
+    /// 额外卡组怪兽不能进入手牌或抽牌堆。素材效果要求返回抽牌堆时，
+    /// 必须在消费前就解析为额外牌堆，避免牌堆路由成功后被误判为移动失败。
+    /// </summary>
+    private static PileType ResolveMaterialDestination(
+        SummonMaterial material,
+        PileType requestedDestination
+    ) {
+        if (material.Card is not { } card
+            || requestedDestination is not (PileType.Hand or PileType.Draw)) {
+            return requestedDestination;
+        }
+
+        CardPile requestedPile = requestedDestination.GetPile(card.Owner);
+        return ExtraDeckPileRouter.Resolve(card, requestedPile).Type;
     }
 
     private static SummonMaterialSelectionSpec BuildFieldTributeSelection(
@@ -962,10 +981,11 @@ public static class SummonUtil {
 
         List<(SummonMaterial Material, PileType Destination)> moves = [];
         foreach (SummonMaterial material in materials) {
-            PileType destination = getMaterialDestination(material);
+            PileType requestedDestination = getMaterialDestination(material);
+            PileType destination = ResolveMaterialDestination(material, requestedDestination);
             if (!CanMoveMaterialToDestination(material, destination)) {
                 Entry.Logger.Error(
-                    $"Invalid summon material destination {destination} for " +
+                    $"Invalid summon material destination {requestedDestination} for " +
                     $"{material.Card?.GetType().Name ?? "unknown material"}."
                 );
                 return false;
