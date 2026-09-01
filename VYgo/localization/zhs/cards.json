@@ -20,7 +20,7 @@
     "V_YGO_CARD_CYBER_DRAGON_CORE.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]登场[/gold]:从[gold]抽牌堆[/gold]中选择一张「电子龙」魔陷放入你的[gold]手牌[/gold]。",
     "V_YGO_CARD_CYBER_DRAGON_CORE.selectionScreenPrompt": "请选择要加入手牌的「电子龙」魔法或陷阱牌。",
     "V_YGO_CARD_SP_LITTLE_KNIGHT.title": "S：P小夜",
-    "V_YGO_CARD_SP_LITTLE_KNIGHT.description": "[gold]连接召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]效果怪兽2只。[/aqua]\n[gold]特召登场[/gold]:除外7。",
+    "V_YGO_CARD_SP_LITTLE_KNIGHT.description": "[gold]连接召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[aqua]效果怪兽2只。[/aqua]\n[gold]登场[/gold]：随机对1名敌人[blue]除外[/blue] [blue]{Banish:diff()}[/blue]。",
     "V_YGO_CARD_MONSTER_REBORN.title": "死者苏生",
     "V_YGO_CARD_MONSTER_REBORN.description": "从[gold]弃牌堆[/gold]选择1只怪兽并[gold]特召[/gold]",
     "V_YGO_CARD_MONSTER_REBORN.selectionScreenPrompt": "请选择需要复活的怪兽。",
