@@ -1,6 +1,7 @@
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Scripts.Pools;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using VYgo.Core;
@@ -17,6 +18,13 @@ public class CyberDragonZwei() : BaseMonsterCard(1, CardType.Attack, CardRarity.
         new LifeVar(BaseLifeVar),
         new DynamicVar("AttackAdd", 3m)
     ];
+    
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        ..base.AdditionalHoverTips,
+        YgoHoverTipConst.NameAs(YgoMaterialNames.电子龙)
+    ];
+    
+    public override YgoMaterialNames? MaterialCardName => YgoMaterialNames.电子龙;
 
     public override int BaseAttackVar => 4;
     public override int BaseLifeVar => 3;
