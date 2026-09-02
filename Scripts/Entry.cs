@@ -4,6 +4,7 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Potions;
 using STS2RitsuLib;
 using STS2RitsuLib.CardPiles;
 using STS2RitsuLib.Interop;
@@ -14,6 +15,7 @@ using VYgo.Core;
 using VYgo.Core.CardPools;
 using VYgo.Core.Cards;
 using VYgo.Core.Progression;
+using VYgo.Core.Potions;
 using VYgo.Core.Saves;
 using VYgo.Core.Settings;
 using VYgo.Patches;
@@ -21,6 +23,7 @@ using VYgo.Scripts.Cards;
 using VYgo.Scripts.Characters;
 using VYgo.Scripts.Monsters;
 using VYgo.Scripts.Pools;
+using static VYgo.Core.Potions.PotionTargetModifier;
 using FileAccess = Godot.FileAccess;
 using Logger = MegaCrit.Sts2.Core.Logging.Logger;
 
@@ -59,6 +62,8 @@ public static class Entry {
         RegisterCharacterCardPoolLinks();
         var harmony = new Harmony("sts2.vitech." + ModId.ToLowerInvariant());
         harmony.PatchAll();
+        PotionTargetModifier.Initialize(harmony);
+        ModifyPotionTarget<StrengthPotion>(VYgoPotionTargetTypes.AnyFriendlyCreature);
         try {
             CharacterCardPoolConsumerPatches.Apply(harmony);
         }
