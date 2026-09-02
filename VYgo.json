@@ -9,11 +9,11 @@
   "dependencies": [
     {
       "id": "STS2-RitsuLib",
-      "min_version": "0.5.11"
+      "min_version": "0.5.18"
     },
     {
       "id": "MinionLib",
-      "min_version": "0.6.0"
+      "min_version": "0.6.2"
     }
   ],
   "min_game_version": "0.111.0",
