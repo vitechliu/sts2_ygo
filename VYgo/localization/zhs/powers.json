@@ -77,7 +77,7 @@
   "V_YGO_POWER_CYBER_NETWORK_POWER.title": "电子网络",
   "V_YGO_POWER_CYBER_NETWORK_POWER.description": "你的回合结束时，随机将抽牌堆中的1只机械族怪兽[gold]消耗[/gold]，剩余回合数减少1。\n第3次回合结束后的回合开始时，移除此能力，将消耗堆中的机械族怪兽尽可能地[gold]特召[/gold]。若来源卡已升级，先升级这些怪兽。",
   "V_YGO_POWER_BORNFROM_DRACONIS_POWER.title": "来自天龙座的降诞（盖伏）",
-  "V_YGO_POWER_BORNFROM_DRACONIS_POWER.description": "从下个回合起可[gold]启动[/gold]：选择手牌中的{SummonCount}只机械族·光属性怪兽[gold]特召[/gold]。将弃牌堆中所有机械族·光属性怪兽[gold]消耗[/gold]；每消耗1张，使特召的怪兽[gold]强化[/gold]{BoostAttack}/{BoostLife}。",
+  "V_YGO_POWER_BORNFROM_DRACONIS_POWER.description": "从下个回合起可[gold]启动[/gold]：选择手牌中的1只机械族·光属性怪兽[gold]特召[/gold]。将弃牌堆中所有机械族·光属性怪兽[gold]消耗[/gold]；每消耗1张，使特召的怪兽[gold]强化[/gold]5/5。",
   "V_YGO_POWER_BORNFROM_DRACONIS_POWER.smartDescription": "从下个回合起可[gold]启动[/gold]：选择手牌中的{SummonCount}只机械族·光属性怪兽[gold]特召[/gold]。将弃牌堆中所有机械族·光属性怪兽[gold]消耗[/gold]；每消耗1张，使特召的怪兽[gold]强化[/gold]{BoostAttack}/{BoostLife}。",
   "V_YGO_POWER_BORNFROM_DRACONIS_POWER.selectionScreenPrompt": "请选择要特召的机械族·光属性怪兽。",
   "HEOSVAROGTHE_MECHANICAL_DAWN_ACTION.title": "黎明无效",
