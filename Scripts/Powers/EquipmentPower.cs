@@ -14,6 +14,7 @@ namespace VYgo.Scripts.Powers;
 [RegisterPower]
 public class EquipmentPower : ModPowerTemplate {
     private CardModel? _equipmentCard;
+    private int _effectApplicationCount;
 
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.None;
@@ -39,13 +40,27 @@ public class EquipmentPower : ModPowerTemplate {
         if (_equipmentCard != null) return false;
 
         _equipmentCard = card;
+        _effectApplicationCount = 0;
         return true;
     }
 
-    internal CardModel? TakeEquipmentCard() {
+    internal bool RecordEffectApplication(CardModel card) {
+        AssertMutable();
+        if (_equipmentCard != card) return false;
+
+        _effectApplicationCount++;
+        return true;
+    }
+
+    internal CardModel? TakeEquipmentCard(out int effectApplicationCount) {
         AssertMutable();
         CardModel? card = _equipmentCard;
+        // 兼容计数加入前已经存在的装备能力：只要仍持有装备卡，至少回退一次效果。
+        effectApplicationCount = card == null
+            ? 0
+            : Math.Max(1, _effectApplicationCount);
         _equipmentCard = null;
+        _effectApplicationCount = 0;
         return card;
     }
 
