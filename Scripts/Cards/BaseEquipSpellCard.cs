@@ -18,10 +18,17 @@ public abstract class BaseEquipSpellCard(
         PlayerChoiceContext choiceContext,
         CardPlay cardPlay) {
         if (cardPlay.ResultPile != Entry.EquipPile) return;
-        if (!await EquipCmd.AttachPlayedCard(
+
+        bool success = cardPlay.IsFirstInSeries
+            ? await EquipCmd.AttachPlayedCard(
                 choiceContext,
                 this,
-                cardPlay.Target)) {
+                cardPlay.Target)
+            : await EquipCmd.ReapplyPlayedCard(
+                choiceContext,
+                this,
+                cardPlay.Target);
+        if (!success && cardPlay.IsFirstInSeries) {
             await CardPileCmd.Add(this, PileType.Discard.GetPile(Owner));
         }
     }

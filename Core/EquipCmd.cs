@@ -115,6 +115,31 @@ public static class EquipCmd {
         return Attach(choiceContext, card, target, moveToEquipPile: false);
     }
 
+    /// <summary>
+    /// 重放装备卡时，在同一张装备与同一个能力上再次应用装备效果。
+    /// 装备卡本身仍只计为一张，解除装备时会按累计次数完整回退效果。
+    /// </summary>
+    public static async Task<bool> ReapplyPlayedCard(
+        PlayerChoiceContext choiceContext,
+        CardModel card,
+        Creature? target) {
+        if (CombatManager.Instance.IsOverOrEnding
+            || !IsValidTarget(card, target)
+            || FindPower(card.Owner, card) is not { } power
+            || power.Owner != target) {
+            return false;
+        }
+
+        if (card is not IEquipmentEffect effect) return true;
+
+        await effect.OnEquipped(choiceContext, target!);
+        if (power.RecordEffectApplication(card)) return true;
+
+        // 能力在异步装备效果结算期间被移除时，立即回退刚刚应用的这一次效果。
+        await effect.OnUnequipped(choiceContext, target!);
+        return false;
+    }
+
     public static Task<bool> EquipFromPile(
         PlayerChoiceContext choiceContext,
         CardModel card,
@@ -142,12 +167,14 @@ public static class EquipCmd {
         EquipmentPower power,
         bool removePower,
         Creature? knownOwner = null) {
-        CardModel? card = power.TakeEquipmentCard();
+        CardModel? card = power.TakeEquipmentCard(out int effectApplicationCount);
         if (card == null) return;
 
         Creature target = knownOwner ?? power.Owner;
         if (card is IEquipmentEffect effect) {
-            await effect.OnUnequipped(choiceContext, target);
+            for (int i = 0; i < effectApplicationCount; i++) {
+                await effect.OnUnequipped(choiceContext, target);
+            }
         }
 
         if (!CombatManager.Instance.IsOverOrEnding
@@ -200,7 +227,7 @@ public static class EquipCmd {
             card.Owner.Creature,
             card);
         if (!target!.GetPowerInstances<EquipmentPower>().Contains(power)) {
-            power.TakeEquipmentCard();
+            power.TakeEquipmentCard(out _);
             await RollBackPileMove(card, originalPile, moveToEquipPile);
             return false;
         }
@@ -209,6 +236,11 @@ public static class EquipCmd {
 
         if (card is IEquipmentEffect effect) {
             await effect.OnEquipped(choiceContext, target!);
+            if (!power.RecordEffectApplication(card)) {
+                await effect.OnUnequipped(choiceContext, target!);
+                await RollBackPileMove(card, originalPile, moveToEquipPile);
+                return false;
+            }
         }
 
         return true;
