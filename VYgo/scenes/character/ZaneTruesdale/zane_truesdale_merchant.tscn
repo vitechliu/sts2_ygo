@@ -1,10 +1,10 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://bh0w0vrgwg275"]
 
-[ext_resource type="Texture2D" path="res://VYgo/images/zane_truesdale/idle.png" id="1_idle"]
+[ext_resource type="Texture2D" uid="uid://hjp5oca1rris" path="res://VYgo/images/zane_truesdale/animations/idle/key_00000.png" id="1_klnkd"]
 
 [node name="ZaneTruesdaleMerchant" type="Node2D"]
 
 [node name="Visuals" type="Sprite2D" parent="."]
-position = Vector2(0, -215)
-scale = Vector2(0.28, 0.28)
-texture = ExtResource("1_idle")
+position = Vector2(3.9999924, -162)
+scale = Vector2(0.47472224, 0.47472224)
+texture = ExtResource("1_klnkd")
