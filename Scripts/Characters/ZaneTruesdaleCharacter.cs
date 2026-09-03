@@ -25,6 +25,7 @@ public class ZaneTruesdaleCharacter
 {
     private const string AssetRoot = "res://VYgo/scenes/character/ZaneTruesdale";
     private const string ImageRoot = "res://VYgo/images/zane_truesdale";
+    private const string AnimationRoot = "res://VYgo/images/zane_truesdale/animations";
 
     public override CardModel LargeCapsuleAttackCard => ModelDb.Card<CyberDragon>();
     public override CardModel LargeCapsuleDefenseCard =>  ModelDb.Card<CyberBarrierDragon>();
@@ -56,7 +57,12 @@ public class ZaneTruesdaleCharacter
             )
         ) {
             VisualCues = ModVisualCues.CueSet()
-                .Single("idle", $"{ImageRoot}/idle.png")
+                .Sequence("idle", 
+                    seq => BuildFrames(seq, AnimationRoot + "/idle/", 0.06f, 0, 27)
+                )
+                .Sequence("relaxed", 
+                    seq => BuildFrames(seq, AnimationRoot + "/idle/", 0.06f, 0, 27)
+                )
                 .Build()
         }
     );
