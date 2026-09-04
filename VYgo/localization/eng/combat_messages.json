@@ -1,0 +1,9 @@
+{
+  "V_YGO_SUMMON_MESSAGE_NO_VALID_FUSION": "No Fusion Monsters meet the Summon requirements.",
+  "V_YGO_SUMMON_MESSAGE_NO_VALID_SYNCHRO": "No Synchro Monsters meet the Level and Tuner material requirements.",
+  "USE_EFFECT_ERROR.title": "Activation Failed",
+  "USE_EFFECT_ERROR_ONCE_PER_DUEL.body": "The effect of a card named [gold]{card}[/gold] has already been used this run.",
+  "USE_EFFECT_ERROR_ENERGY.body": "Not enough Energy to activate this Hand Effect.",
+  "V_YGO_SUMMON_ERROR.title": "Summon Failed",
+  "V_YGO_SUMMON_ERROR_MINION_CAPACITY.body": "The monster zone is full. [gold]{card}[/gold] could not be Summoned this time."
+}

@@ -1,6 +1,12 @@
 {
   "NEOWS_TALISMAN.description": "Upon pickup, [gold]Upgrade[/gold] [blue]1[/blue] of your [gold]{AttackCard.StringValue:cond:{AttackCard}|Strikes}[/gold] and [blue]1[/blue] of your [gold]{DefenseCard.StringValue:cond:{DefenseCard}|Defends}[/gold].",
   "NEOWS_TALISMAN.eventDescription": "[gold]Upgrade[/gold] [blue]1[/blue] of your [gold]{AttackCard.StringValue:cond:{AttackCard}|Strikes}[/gold] and [blue]1[/blue] of your [gold]{DefenseCard.StringValue:cond:{DefenseCard}|Defends}[/gold].",
+  "V_YGO_RELIC_CYBER_CORE_RELIC.title": "Cyber Core",
+  "V_YGO_RELIC_CYBER_CORE_RELIC.description": "The first time you [gold]Summon[/gold] a [blue]‘Cyber Dragon’[/blue] monster each combat, gain {Energy:energyIcons()}.",
+  "V_YGO_RELIC_CYBER_CORE_RELIC.flavor": "The core begins to turn, and the steel dragon answers the call.",
   "LARGE_CAPSULE.description": "Upon pickup, obtain [blue]{Relics}[/blue] random [gold]{Relics:plural:Relic|Relics}[/gold]. Add {AttackCard.StringValue:cond:[gold]{AttackCard}[/gold] and [gold]{DefenseCard}[/gold]|an additional [gold]Strike[/gold] and [gold]Defend[/gold]} to your [gold]Deck[/gold].",
-  "LARGE_CAPSULE.eventDescription": "Obtain [blue]{Relics}[/blue] random [gold]{Relics:plural:Relic|Relics}[/gold]. Add {AttackCard.StringValue:cond:[gold]{AttackCard}[/gold] and [gold]{DefenseCard}[/gold]|an additional [gold]Strike[/gold] and [gold]Defend[/gold]} to your [gold]Deck[/gold]."
+  "LARGE_CAPSULE.eventDescription": "Obtain [blue]{Relics}[/blue] random [gold]{Relics:plural:Relic|Relics}[/gold]. Add {AttackCard.StringValue:cond:[gold]{AttackCard}[/gold] and [gold]{DefenseCard}[/gold]|an additional [gold]Strike[/gold] and [gold]Defend[/gold]} to your [gold]Deck[/gold].",
+  "V_YGO_RELIC_MAGIC_CIRCLE_CORE_RELIC.title": "Magic Circle Core",
+  "V_YGO_RELIC_MAGIC_CIRCLE_CORE_RELIC.description": "Upon pickup, add [blue]{Cards}[/blue] cards—‘Magical Meltdown’, ‘Aleister the Invoker’ and ‘Invocation’—to your [gold]Deck[/gold].",
+  "V_YGO_RELIC_MAGIC_CIRCLE_CORE_RELIC.flavor": "The circle's core, solidified in your palm, still awaits the next Summon."
 }

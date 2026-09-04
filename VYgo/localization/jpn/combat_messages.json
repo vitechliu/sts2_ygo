@@ -1,0 +1,9 @@
+{
+  "V_YGO_SUMMON_MESSAGE_NO_VALID_FUSION": "召喚条件を満たす融合モンスターがいません。",
+  "V_YGO_SUMMON_MESSAGE_NO_VALID_SYNCHRO": "レベルとチューナー素材の条件を満たすシンクロモンスターがいません。",
+  "USE_EFFECT_ERROR.title": "発動失敗",
+  "USE_EFFECT_ERROR_ONCE_PER_DUEL.body": "[gold]{card}[/gold]というカード名の効果は、このランですでに発動しています。",
+  "USE_EFFECT_ERROR_ENERGY.body": "エナジーが足りないため、手札効果を発動できません。",
+  "V_YGO_SUMMON_ERROR.title": "召喚失敗",
+  "V_YGO_SUMMON_ERROR_MINION_CAPACITY.body": "モンスターゾーンが埋まっているため、今回の[gold]{card}[/gold]の召喚は行えませんでした。"
+}
