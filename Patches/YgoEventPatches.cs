@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Runs;
 using VYgo.Scripts;
+using VYgo.Scripts.Characters;
 
 namespace VYgo.Patches;
 

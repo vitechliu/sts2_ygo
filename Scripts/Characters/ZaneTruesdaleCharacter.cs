@@ -25,6 +25,7 @@ public class ZaneTruesdaleCharacter
 {
     private const string AssetRoot = "res://VYgo/scenes/character/ZaneTruesdale";
     private const string ImageRoot = "res://VYgo/images/zane_truesdale";
+    private const string AnimationRoot = "res://VYgo/images/zane_truesdale/animations";
 
     public override CardModel LargeCapsuleAttackCard => ModelDb.Card<CyberDragon>();
     public override CardModel LargeCapsuleDefenseCard =>  ModelDb.Card<CyberBarrierDragon>();
@@ -36,6 +37,21 @@ public class ZaneTruesdaleCharacter
     public override CharacterGender Gender => CharacterGender.Masculine;
     public override int StartingHp => 80;
     public override int StartingGold => 99;
+    
+    protected override ModAnimStateMachine? SetupCustomCombatAnimationStateMachine(
+        Node visualsRoot,
+        CharacterModel character)
+    {
+        return ModAnimStateMachines.StandardCue(
+            visualsRoot,
+            character,
+            idleName: "idle",
+            relaxedName:"idle",
+            hitName: "hit",
+            attackName: "draw_1",
+            castName: "draw_2"
+        );
+    }
 
     public override CharacterAssetProfile AssetProfile => CharacterAssetProfiles.Merge(
         CharacterAssetProfiles.Ironclad(),
@@ -56,12 +72,23 @@ public class ZaneTruesdaleCharacter
             )
         ) {
             VisualCues = ModVisualCues.CueSet()
-                .Single("idle", $"{ImageRoot}/idle.png")
+                .Sequence("idle", 
+                    seq => BuildFrames(seq, AnimationRoot + "/idle/", 0.06f, 0, 27)
+                )
+                .Sequence("hit", 
+                    seq => BuildFrames(seq, AnimationRoot + "/hit/", 0.04f, 0, 21)
+                )
+                .Sequence("draw_1", 
+                    seq => BuildFrames(seq, AnimationRoot + "/draw_1/", 0.04f, 0, 47)
+                )
+                .Sequence("draw_2", 
+                    seq => BuildFrames(seq, AnimationRoot + "/draw_2/", 0.04f, 0, 47)
+                )
                 .Build()
         }
     );
 
-    public override float AttackAnimDelay => 0f;
-    public override float CastAnimDelay => 0f;
+    public override float AttackAnimDelay => 0.1f;
+    public override float CastAnimDelay => 0.1f;
     public override bool RequiresEpochAndTimeline => false;
 }
