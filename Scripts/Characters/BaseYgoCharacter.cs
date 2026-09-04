@@ -11,7 +11,7 @@ using VYgo.Core;
 using VYgo.Core.Extensions;
 using VYgo.Scripts.Cards.Placeholders;
 
-namespace VYgo.Scripts;
+namespace VYgo.Scripts.Characters;
 
 [RegisterCharacter]
 public abstract class BaseYgoCharacter<TCardPool, TRelicPool, TPotionPool>
