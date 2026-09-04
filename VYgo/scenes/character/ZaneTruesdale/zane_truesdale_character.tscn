@@ -1,15 +1,15 @@
 [gd_scene load_steps=2 format=3 uid="uid://8l7sl4piysyt"]
 
-[ext_resource type="Texture2D" uid="uid://d1tnrcoc707b2" path="res://VYgo/images/zane_truesdale/idle.png" id="1_idle"]
+[ext_resource type="Texture2D" uid="uid://hjp5oca1rris" path="res://VYgo/images/zane_truesdale/animations/idle/key_00000.png" id="1_1py4n"]
 
 [node name="ZaneTruesdaleCharacter" type="Node2D"]
 
 [node name="Visuals" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 texture_filter = 4
-position = Vector2(3, -163)
-scale = Vector2(-0.23, 0.23)
-texture = ExtResource("1_idle")
+position = Vector2(6, -177)
+scale = Vector2(0.5364236, 0.5364236)
+texture = ExtResource("1_1py4n")
 
 [node name="Bounds" type="Control" parent="."]
 layout_mode = 3

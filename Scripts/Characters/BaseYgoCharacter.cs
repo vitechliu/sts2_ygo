@@ -5,11 +5,13 @@ using MegaCrit.Sts2.Core.Nodes.Combat;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Characters;
 using STS2RitsuLib.Scaffolding.Godot;
+using STS2RitsuLib.Scaffolding.Visuals.Definition;
 using STS2RitsuLib.Scaffolding.Visuals.StateMachine;
+using VYgo.Core;
 using VYgo.Core.Extensions;
 using VYgo.Scripts.Cards.Placeholders;
 
-namespace VYgo.Scripts;
+namespace VYgo.Scripts.Characters;
 
 [RegisterCharacter]
 public abstract class BaseYgoCharacter<TCardPool, TRelicPool, TPotionPool>
@@ -50,6 +52,15 @@ public abstract class BaseYgoCharacter<TCardPool, TRelicPool, TPotionPool>
         "vfx/vfx_bloody_impact",
         "vfx/vfx_rock_shatter",
     ];
+
+
+    protected VisualFrameSequenceBuilder BuildFrames(
+        VisualFrameSequenceBuilder builder, string path, float duration, int from, int to) {
+        for (var i = from; i <= to; i++) {
+            builder.Frame(path + "key_#####.png".FormatWithNumber(i), duration);
+        }
+        return builder;
+    }
 }
 
 /// <summary>

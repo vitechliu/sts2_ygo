@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.TestSupport;
 using STS2RitsuLib;
 using VYgo.Core.Saves;
 using VYgo.Scripts;
+using VYgo.Scripts.Characters;
 
 namespace VYgo.Core.Progression;
 
