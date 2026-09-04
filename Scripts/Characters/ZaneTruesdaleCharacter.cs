@@ -46,7 +46,11 @@ public class ZaneTruesdaleCharacter
             visualsRoot,
             character,
             idleName: "idle",
-            hitName: "hit");
+            relaxedName:"idle",
+            hitName: "hit",
+            attackName: "draw_1",
+            castName: "draw_2"
+        );
     }
 
     public override CharacterAssetProfile AssetProfile => CharacterAssetProfiles.Merge(
@@ -74,11 +78,17 @@ public class ZaneTruesdaleCharacter
                 .Sequence("hit", 
                     seq => BuildFrames(seq, AnimationRoot + "/hit/", 0.04f, 0, 21)
                 )
+                .Sequence("draw_1", 
+                    seq => BuildFrames(seq, AnimationRoot + "/draw_1/", 0.04f, 0, 47)
+                )
+                .Sequence("draw_2", 
+                    seq => BuildFrames(seq, AnimationRoot + "/draw_2/", 0.04f, 0, 47)
+                )
                 .Build()
         }
     );
 
-    public override float AttackAnimDelay => 0f;
-    public override float CastAnimDelay => 0f;
+    public override float AttackAnimDelay => 0.1f;
+    public override float CastAnimDelay => 0.1f;
     public override bool RequiresEpochAndTimeline => false;
 }

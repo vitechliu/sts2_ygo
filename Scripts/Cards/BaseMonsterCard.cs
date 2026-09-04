@@ -73,7 +73,14 @@ public abstract class BaseMonsterCard(
         if (UpgradeLifeVar != 0) DynamicVars["Life"].UpgradeValueBy(UpgradeLifeVar);
     }
 
+    protected async Task PlayAnim() {
+        if (Type == CardType.Attack && Owner.Character.AttackAnimDelay > 0f)
+            await CreatureCmd.TriggerAnim(Owner.Creature, "Attack", base.Owner.Character.AttackAnimDelay);
+        else if (Type == CardType.Skill && Owner.Character.CastAnimDelay > 0f)
+            await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
+    }
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+        await PlayAnim();
         await SummonMonster(choiceContext, cardPlay, new SummonContext(IsSpecialSummon: cardPlay.IsAutoPlay));
     }
 
