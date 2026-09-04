@@ -1,0 +1,4 @@
+interface:
+  display_name: "VYgo 英日文本地化"
+  short_description: "以中文为基础维护英日译文、统一术语并查询有来源的日文卡名与怪兽名"
+  default_prompt: "使用 $design-localization 为指定的 VYgo 中文本地化内容补齐 eng 和 jpn，统一术语并记录日文卡名来源。"
