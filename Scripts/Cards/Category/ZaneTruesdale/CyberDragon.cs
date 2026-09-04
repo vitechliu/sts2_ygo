@@ -40,6 +40,7 @@ public class CyberDragon() : BaseMonsterCard(energyCost, CardType.Attack, rarity
     private bool IsSpecialSummonActive => Owner.MinionCount() == 0;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
+        await PlayAnim();
         await SummonMonster(
             choiceContext,
             cardPlay,
