@@ -38,4 +38,8 @@ public class Invocation() : BaseSpellCard(1, CardType.Skill, CardRarity.Event, T
             GetMaterialDestination: _ => PileType.Exhaust
         ));
     }
+    
+    protected override void OnUpgrade() {
+        base.EnergyCost.UpgradeBy(-1);
+    }
 }
