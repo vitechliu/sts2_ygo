@@ -62,6 +62,7 @@
         <Folder Include="VYgo\images\relics\" />
         <Folder Include="VYgo\images\cards\"/>
         <Folder Include="VYgo\images\monster\"/>
+        <Folder Include="VYgo\localization\jpn\" />
     </ItemGroup>
     <PropertyGroup>
         <NoWarn>$(NoWarn);MSB3270;CS0162;CS1998;CS8600;CS8602;CS8603;CS8604;CS8618;CS8620;CS8622;CS8625;CS8629;CS0436;CS9107</NoWarn>
