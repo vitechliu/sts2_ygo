@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Unlocks;
 using VYgo.Core.CardPools;
 using VYgo.Scripts;
+using VYgo.Scripts.Characters;
 
 namespace VYgo.Patches;
 

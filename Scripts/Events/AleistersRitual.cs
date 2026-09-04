@@ -16,6 +16,7 @@ using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using VYgo.Scripts.Cards;
 using VYgo.Scripts.Cards.Category.YgoEvent;
+using VYgo.Scripts.Characters;
 using VYgo.Scripts.Relics;
 
 namespace VYgo.Scripts.Events;
