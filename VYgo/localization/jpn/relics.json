@@ -1,0 +1,12 @@
+{
+  "NEOWS_TALISMAN.description": "獲得時、[blue]1[/blue]枚の[gold]{AttackCard.StringValue:cond:{AttackCard}|ストライク}[/gold]と[blue]1[/blue]枚の[gold]{DefenseCard.StringValue:cond:{DefenseCard}|防御}[/gold]を[gold]アップグレード[/gold]する。",
+  "NEOWS_TALISMAN.eventDescription": "[blue]1[/blue]枚の[gold]{AttackCard.StringValue:cond:{AttackCard}|ストライク}[/gold]と[blue]1[/blue]枚の[gold]{DefenseCard.StringValue:cond:{DefenseCard}|防御}[/gold]を[gold]アップグレード[/gold]する。",
+  "V_YGO_RELIC_CYBER_CORE_RELIC.title": "サイバー・コア",
+  "V_YGO_RELIC_CYBER_CORE_RELIC.description": "各戦闘で初めて[blue]「サイバー・ドラゴン」[/blue]モンスターを[gold]召喚[/gold]した時、{Energy:energyIcons()}を得る。",
+  "V_YGO_RELIC_CYBER_CORE_RELIC.flavor": "コアが動き出すと、鋼鉄の巨竜が召喚に応えた。",
+  "LARGE_CAPSULE.description": "獲得時、ランダムな[gold]レリック[/gold]を[blue]{Relics}[/blue]個得る。さらに{AttackCard.StringValue:cond:[gold]{AttackCard}[/gold]と[gold]{DefenseCard}[/gold]|[gold]ストライク[/gold]と[gold]防御[/gold]のペア}を[gold]デッキ[/gold]に加える。",
+  "LARGE_CAPSULE.eventDescription": "ランダムな[gold]レリック[/gold]を[blue]{Relics}[/blue]個得る。さらに{AttackCard.StringValue:cond:[gold]{AttackCard}[/gold]と[gold]{DefenseCard}[/gold]|[gold]ストライク[/gold]と[gold]防御[/gold]のペア}を[gold]デッキ[/gold]に加える。",
+  "V_YGO_RELIC_MAGIC_CIRCLE_CORE_RELIC.title": "魔法陣のコア",
+  "V_YGO_RELIC_MAGIC_CIRCLE_CORE_RELIC.description": "獲得時、「暴走魔法陣」「召喚師アレイスター」「召喚魔術」の[blue]{Cards}[/blue]枚を[gold]デッキ[/gold]に加える。",
+  "V_YGO_RELIC_MAGIC_CIRCLE_CORE_RELIC.flavor": "手のひらで凝固した魔法陣の核は、今も次の召喚を待ち続けている。"
+}

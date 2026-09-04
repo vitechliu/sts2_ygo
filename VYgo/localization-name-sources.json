@@ -1,0 +1,3128 @@
+{
+  "records": [
+    {
+      "card_id": 49513164,
+      "localization_keys": [
+        "cards:V_YGO_CARD_INVOKED_RAIDJIN.title",
+        "monsters:INVOKED_RAIDJIN_MINION.name"
+      ],
+      "eng": "Invoked Raidjin",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "召喚獣ライディーン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/YgoEvent/InvokedRaidjin.cs",
+        "Scripts/Monsters/YGO/InvokedRaidjinMinion.cs"
+      ],
+      "cid": 12845,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "49513164.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=12845&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 85908279,
+      "localization_keys": [
+        "cards:V_YGO_CARD_INVOKED_COCYTUS.title",
+        "monsters:INVOKED_COCYTUS_MINION.name"
+      ],
+      "eng": "Invoked Cocytus",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "召喚獣コキュートス",
+      "mapping_basis": [
+        "Scripts/Cards/Category/YgoEvent/InvokedCocytus.cs",
+        "Scripts/Monsters/YGO/InvokedCocytusMinion.cs"
+      ],
+      "cid": 12846,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "85908279.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=12846&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 12307878,
+      "localization_keys": [
+        "cards:V_YGO_CARD_INVOKED_PURGATRIO.title",
+        "monsters:INVOKED_PURGATRIO_MINION.name"
+      ],
+      "eng": "Invoked Purgatrio",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "召喚獣プルガトリオ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/YgoEvent/InvokedPurgatrio.cs",
+        "Scripts/Monsters/YGO/InvokedPurgatrioMinion.cs"
+      ],
+      "cid": 12847,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "12307878.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=12847&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 48791583,
+      "localization_keys": [
+        "cards:V_YGO_CARD_INVOKED_MAGELLANICA.title",
+        "monsters:INVOKED_MAGELLANICA_MINION.name"
+      ],
+      "eng": "Invoked Magellanica",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "召喚獣メガラニカ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/YgoEvent/InvokedMagellanica.cs",
+        "Scripts/Monsters/YGO/InvokedMagellanicaMinion.cs"
+      ],
+      "cid": 12848,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "48791583.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=12848&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 13529466,
+      "localization_keys": [
+        "cards:V_YGO_CARD_INVOKED_CALIGA.title",
+        "monsters:INVOKED_CALIGA_MINION.name"
+      ],
+      "eng": "Invoked Caliga",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "召喚獣カリギュラ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/YgoEvent/InvokedCaliga.cs",
+        "Scripts/Monsters/YGO/InvokedCaligaMinion.cs"
+      ],
+      "cid": 12844,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "13529466.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=12844&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 75286621,
+      "localization_keys": [
+        "cards:V_YGO_CARD_INVOKED_MECHABA.title",
+        "monsters:INVOKED_MECHABA_MINION.name"
+      ],
+      "eng": "Invoked Mechaba",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "召喚獣メルカバー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/YgoEvent/InvokedMechaba.cs",
+        "Scripts/Monsters/YGO/InvokedMechabaMinion.cs"
+      ],
+      "cid": 12849,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "75286621.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=12849&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 74063034,
+      "localization_keys": [
+        "cards:V_YGO_CARD_INVOCATION.title",
+        "monsters:INVOCATION_MINION.name"
+      ],
+      "eng": "Invocation",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "召喚魔術",
+      "mapping_basis": [
+        "Scripts/Cards/Category/YgoEvent/Invocation.cs",
+        "db.json cn_name 精确唯一匹配: 召唤魔术"
+      ],
+      "cid": 12852,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "74063034.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=12852&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "events:V_YGO_EVENT_ALEISTERS_RITUAL.pages.INITIAL.description",
+        "cards:V_YGO_CARD_ALEISTERTHE_INVOKER.description",
+        "relics:V_YGO_RELIC_MAGIC_CIRCLE_CORE_RELIC.description"
+      ]
+    },
+    {
+      "card_id": 86120751,
+      "localization_keys": [
+        "cards:V_YGO_CARD_ALEISTERTHE_INVOKER.title",
+        "monsters:ALEISTERTHE_INVOKER_MINION.name"
+      ],
+      "eng": "Aleister the Invoker",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "召喚師アレイスター",
+      "mapping_basis": [
+        "Scripts/Cards/Category/YgoEvent/AleistertheInvoker.cs",
+        "Scripts/Monsters/YGO/AleistertheInvokerMinion.cs"
+      ],
+      "cid": 12843,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "86120751.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=12843&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "cards:V_YGO_CARD_MAGICAL_MELTDOWN.description",
+        "cards:V_YGO_CARD_INVOKED_MECHABA.description",
+        "cards:V_YGO_CARD_INVOKED_CALIGA.description",
+        "cards:V_YGO_CARD_INVOKED_MAGELLANICA.description",
+        "cards:V_YGO_CARD_INVOKED_PURGATRIO.description",
+        "cards:V_YGO_CARD_INVOKED_COCYTUS.description",
+        "cards:V_YGO_CARD_INVOKED_RAIDJIN.description",
+        "relics:V_YGO_RELIC_MAGIC_CIRCLE_CORE_RELIC.description"
+      ]
+    },
+    {
+      "card_id": 47679935,
+      "localization_keys": [
+        "cards:V_YGO_CARD_MAGICAL_MELTDOWN.title",
+        "monsters:MAGICAL_MELTDOWN_MINION.name"
+      ],
+      "eng": "Magical Meltdown",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "暴走魔法陣",
+      "mapping_basis": [
+        "Scripts/Cards/Category/YgoEvent/MagicalMeltdown.cs",
+        "db.json cn_name 精确唯一匹配: 暴走魔法阵"
+      ],
+      "cid": 12851,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "47679935.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=12851&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "relics:V_YGO_RELIC_MAGIC_CIRCLE_CORE_RELIC.description"
+      ]
+    },
+    {
+      "card_id": 74665150,
+      "localization_keys": [
+        "cards:V_YGO_CARD_DECODE_TALKER_INTEGRATION.title",
+        "monsters:DECODE_TALKER_INTEGRATION_MINION.name"
+      ],
+      "eng": "Decode Talker Integration",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "デコード・トーカー・インテグレーション",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/DecodeTalkerIntegration.cs",
+        "Scripts/Monsters/YGO/DecodeTalkerIntegrationMinion.cs"
+      ],
+      "cid": 22705,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "74665150.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=22705&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "events:V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.options.INTEGRATION.title",
+        "events:V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.options.INTEGRATION.description",
+        "events:V_YGO_EVENT_DECODE_EVOLUTION.pages.INTEGRATED.description"
+      ]
+    },
+    {
+      "card_id": 19943114,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYNET_REGRESSION.title",
+        "monsters:CYNET_REGRESSION_MINION.name"
+      ],
+      "eng": "Cynet Regression",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバネット・リグレッション",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/CynetRegression.cs",
+        "db.json cn_name 精确唯一匹配: 电脑网回归"
+      ],
+      "cid": 13697,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "19943114.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13697&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "powers:V_YGO_POWER_CYNET_REGRESSION_POWER.title",
+        "powers:V_YGO_POWER_CYNET_REGRESSION_POWER.description"
+      ]
+    },
+    {
+      "card_id": 73558460,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYNET_RECOVERY.title",
+        "monsters:CYNET_RECOVERY_MINION.name"
+      ],
+      "eng": "Cynet Recovery",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバネット・リカバー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/CynetRecovery.cs",
+        "db.json cn_name 精确唯一匹配: 电脑网恢复"
+      ],
+      "cid": 13696,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "73558460.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13696&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "powers:V_YGO_POWER_CYNET_RECOVERY_POWER.title"
+      ]
+    },
+    {
+      "card_id": 42461852,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYNET_STORM.title",
+        "monsters:CYNET_STORM_MINION.name"
+      ],
+      "eng": "Cynet Storm",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバネット・ストーム",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/CynetStorm.cs",
+        "db.json cn_name 精确唯一匹配: 电脑网风暴"
+      ],
+      "cid": 13526,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "42461852.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13526&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "powers:V_YGO_POWER_CYNET_STORM_POWER.title"
+      ]
+    },
+    {
+      "card_id": 61583217,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYNET_UNIVERSE.title",
+        "monsters:CYNET_UNIVERSE_MINION.name"
+      ],
+      "eng": "Cynet Universe",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバネット・ユニバース",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/CynetUniverse.cs",
+        "db.json cn_name 精确唯一匹配: 电脑网宇宙"
+      ],
+      "cid": 13033,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "61583217.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13033&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "powers:V_YGO_POWER_CYNET_UNIVERSE_POWER.title"
+      ]
+    },
+    {
+      "card_id": 31944175,
+      "localization_keys": [
+        "cards:V_YGO_CARD_THRESHOLD_BORG.title",
+        "monsters:THRESHOLD_BORG_MINION.name"
+      ],
+      "eng": "Threshold Borg",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "スレッショルド・ボーグ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/ThresholdBorg.cs",
+        "Scripts/Monsters/YGO/ThresholdBorgMinion.cs"
+      ],
+      "cid": 14434,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "31944175.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=14434&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 30822527,
+      "localization_keys": [
+        "cards:V_YGO_CARD_DECODE_TALKER_EXTENDED.title",
+        "monsters:DECODE_TALKER_EXTENDED_MINION.name"
+      ],
+      "eng": "Decode Talker Extended",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "デコード・トーカー・エクステンド",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/DecodeTalkerExtended.cs",
+        "Scripts/Monsters/YGO/DecodeTalkerExtendedMinion.cs"
+      ],
+      "cid": 14437,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "30822527.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=14437&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "events:V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.options.EXTENDED.title",
+        "events:V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.options.EXTENDED.description",
+        "events:V_YGO_EVENT_DECODE_EVOLUTION.pages.EXTENDED_EVOLVED.description"
+      ]
+    },
+    {
+      "card_id": 61245672,
+      "localization_keys": [
+        "cards:V_YGO_CARD_DECODE_TALKER_HEATSOUL.title",
+        "monsters:DECODE_TALKER_HEATSOUL_MINION.name"
+      ],
+      "eng": "Decode Talker Heatsoul",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "デコード・トーカー・ヒートソウル",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/DecodeTalkerHeatsoul.cs",
+        "Scripts/Monsters/YGO/DecodeTalkerHeatsoulMinion.cs"
+      ],
+      "cid": 14962,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "61245672.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=14962&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "events:V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.options.HEATSOUL.title",
+        "events:V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.options.HEATSOUL.description",
+        "events:V_YGO_EVENT_DECODE_EVOLUTION.pages.HEATSOUL_EVOLVED.description"
+      ]
+    },
+    {
+      "card_id": 33897356,
+      "localization_keys": [
+        "cards:V_YGO_CARD_SHOOTINGCODE_TALKER.title",
+        "monsters:SHOOTINGCODE_TALKER_MINION.name"
+      ],
+      "eng": "Shootingcode Talker",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "シューティングコード・トーカー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/ShootingcodeTalker.cs",
+        "Scripts/Monsters/YGO/ShootingcodeTalkerMinion.cs"
+      ],
+      "cid": 13879,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "33897356.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13879&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 46947713,
+      "localization_keys": [
+        "cards:V_YGO_CARD_TRANSCODE_TALKER.title",
+        "monsters:TRANSCODE_TALKER_MINION.name"
+      ],
+      "eng": "Transcode Talker",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "トランスコード・トーカー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/TranscodeTalker.cs",
+        "Scripts/Monsters/YGO/TranscodeTalkerMinion.cs"
+      ],
+      "cid": 13698,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "46947713.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13698&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 15844566,
+      "localization_keys": [
+        "cards:V_YGO_CARD_POWERCODE_TALKER.title",
+        "monsters:POWERCODE_TALKER_MINION.name"
+      ],
+      "eng": "Powercode Talker",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "パワーコード・トーカー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/PowercodeTalker.cs",
+        "Scripts/Monsters/YGO/PowercodeTalkerMinion.cs"
+      ],
+      "cid": 13528,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "15844566.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13528&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 40669071,
+      "localization_keys": [
+        "cards:V_YGO_CARD_EXCODE_TALKER.title",
+        "monsters:EXCODE_TALKER_MINION.name"
+      ],
+      "eng": "Excode Talker",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "エクスコード・トーカー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/ExcodeTalker.cs",
+        "Scripts/Monsters/YGO/ExcodeTalkerMinion.cs"
+      ],
+      "cid": 13409,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "40669071.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13409&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 6622715,
+      "localization_keys": [
+        "cards:V_YGO_CARD_ENCODE_TALKER.title",
+        "monsters:ENCODE_TALKER_MINION.name"
+      ],
+      "eng": "Encode Talker",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "エンコード・トーカー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/EncodeTalker.cs",
+        "Scripts/Monsters/YGO/EncodeTalkerMinion.cs"
+      ],
+      "cid": 13202,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "6622715.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13202&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 45462149,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CODE_TALKER_INVERTED.title",
+        "monsters:CODE_TALKER_INVERTED_MINION.name"
+      ],
+      "eng": "Code Talker Inverted",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "コード・トーカー・インヴァート",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/CodeTalkerInverted.cs",
+        "Scripts/Monsters/YGO/CodeTalkerInvertedMinion.cs"
+      ],
+      "cid": 14542,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "45462149.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=14542&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 5043010,
+      "localization_keys": [
+        "cards:V_YGO_CARD_FIREWALL_DRAGON.title",
+        "monsters:FIREWALL_DRAGON_MINION.name"
+      ],
+      "eng": "Firewall Dragon",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "ファイアウォール・ドラゴン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/FirewallDragon.cs",
+        "Scripts/Monsters/YGO/FirewallDragonMinion.cs"
+      ],
+      "cid": 13082,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "5043010.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13082&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 26434972,
+      "localization_keys": [
+        "cards:V_YGO_CARD_FIENDSMITH_KYRIE.title",
+        "monsters:FIENDSMITH_KYRIE_MINION.name"
+      ],
+      "eng": "Fiendsmith Kyrie",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "刻まれし魔の憐歌",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/FiendsmithKyrie.cs",
+        "db.json cn_name 精确唯一匹配: 刻魔的怜歌"
+      ],
+      "cid": 20816,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "26434972.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=20816&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "powers:V_YGO_POWER_FIENDSMITH_KYRIE_POWER.title"
+      ]
+    },
+    {
+      "card_id": 82135803,
+      "localization_keys": [
+        "cards:V_YGO_CARD_FIENDSMITHS_DESIRAE.title",
+        "monsters:FIENDSMITHS_DESIRAE_MINION.name"
+      ],
+      "eng": "Fiendsmiths Desirae",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "刻まれし魔ディエスイレ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/FiendsmithsDesirae.cs",
+        "Scripts/Monsters/YGO/FiendsmithsDesiraeMinion.cs"
+      ],
+      "cid": 20215,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "82135803.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=20215&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 35552985,
+      "localization_keys": [
+        "cards:V_YGO_CARD_FIENDSMITHS_SANCT.title",
+        "monsters:FIENDSMITHS_SANCT_MINION.name"
+      ],
+      "eng": "Fiendsmiths Sanct",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "刻まれし魔の讃聖",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/FiendsmithsSanct.cs",
+        "db.json cn_name 精确唯一匹配: 刻魔的赞圣"
+      ],
+      "cid": 20241,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "35552985.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=20241&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 98567237,
+      "localization_keys": [
+        "cards:V_YGO_CARD_FIENDSMITHS_TRACT.title",
+        "monsters:FIENDSMITHS_TRACT_MINION.name"
+      ],
+      "eng": "Fiendsmiths Tract",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "刻まれし魔の詠聖",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/FiendsmithsTract.cs",
+        "db.json cn_name 精确唯一匹配: 刻魔的咏圣"
+      ],
+      "cid": 20240,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "98567237.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=20240&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 49867899,
+      "localization_keys": [
+        "cards:V_YGO_CARD_FIENDSMITHS_SEQUENCE.title",
+        "monsters:FIENDSMITHS_SEQUENCE_MINION.name"
+      ],
+      "eng": "Fiendsmiths Sequence",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "刻まれし魔の大聖棺",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/FiendsmithsSequence.cs",
+        "Scripts/Monsters/YGO/FiendsmithsSequenceMinion.cs"
+      ],
+      "cid": 20226,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "49867899.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=20226&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 2463794,
+      "localization_keys": [
+        "cards:V_YGO_CARD_FIENDSMITHS_REQUIEM.title",
+        "monsters:FIENDSMITHS_REQUIEM_MINION.name"
+      ],
+      "eng": "Fiendsmiths Requiem",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "刻まれし魔の鎮魂棺",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/FiendsmithsRequiem.cs",
+        "Scripts/Monsters/YGO/FiendsmithsRequiemMinion.cs"
+      ],
+      "cid": 20225,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "2463794.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=20225&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 46640168,
+      "localization_keys": [
+        "cards:V_YGO_CARD_FIENDSMITHS_LACRIMA.title",
+        "monsters:FIENDSMITHS_LACRIMA_MINION.name"
+      ],
+      "eng": "Fiendsmiths Lacrima",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "刻まれし魔ラクリモーサ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/FiendsmithsLacrima.cs",
+        "Scripts/Monsters/YGO/FiendsmithsLacrimaMinion.cs"
+      ],
+      "cid": 20214,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "46640168.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=20214&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 28803166,
+      "localization_keys": [
+        "cards:V_YGO_CARD_LACRIMATHE_CRIMSON_TEARS.title",
+        "monsters:LACRIMATHE_CRIMSON_TEARS_MINION.name"
+      ],
+      "eng": "Lacrima the Crimson Tears",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "紅涙の魔ラクリモーサ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/LacrimatheCrimsonTears.cs",
+        "Scripts/Monsters/YGO/LacrimatheCrimsonTearsMinion.cs"
+      ],
+      "cid": 20490,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "28803166.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=20490&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 60764609,
+      "localization_keys": [
+        "cards:V_YGO_CARD_FIENDSMITH_ENGRAVER.title",
+        "monsters:FIENDSMITH_ENGRAVER_MINION.name"
+      ],
+      "eng": "Fiendsmith Engraver",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "魔を刻むデモンスミス",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/FiendsmithEngraver.cs",
+        "Scripts/Monsters/YGO/FiendsmithEngraverMinion.cs"
+      ],
+      "cid": 20196,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "60764609.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=20196&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "events:V_YGO_EVENT_FIENDSMITH_FORGE.pages.INITIAL.description",
+        "cards:V_YGO_CARD_FIENDSMITHS_DESIRAE.description"
+      ]
+    },
+    {
+      "card_id": 42431833,
+      "localization_keys": [
+        "cards:V_YGO_CARD_SPRIGHT_GAMMA_BURST.title",
+        "monsters:SPRIGHT_GAMMA_BURST_MINION.name"
+      ],
+      "eng": "Spright Gamma Burst",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "スプライト・ガンマ・バースト",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/SprightGammaBurst.cs",
+        "db.json cn_name 精确唯一匹配: 卫星闪灵伽马暴"
+      ],
+      "cid": 17458,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "42431833.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=17458&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 15443125,
+      "localization_keys": [
+        "cards:V_YGO_CARD_SPRIGHT_STARTER.title",
+        "monsters:SPRIGHT_STARTER_MINION.name"
+      ],
+      "eng": "Spright Starter",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "スプライト・スターター",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/SprightStarter.cs",
+        "db.json cn_name 精确唯一匹配: 卫星闪灵启辉器"
+      ],
+      "cid": 17457,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "15443125.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=17457&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 27381364,
+      "localization_keys": [
+        "cards:V_YGO_CARD_SPRIGHT_ELF.title",
+        "monsters:SPRIGHT_ELF_MINION.name"
+      ],
+      "eng": "Spright Elf",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "スプライト・エルフ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/SprightElf.cs",
+        "Scripts/Monsters/YGO/SprightElfMinion.cs"
+      ],
+      "cid": 17451,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "27381364.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=17451&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 54498517,
+      "localization_keys": [
+        "cards:V_YGO_CARD_GIGANTIC_SPRIGHT.title",
+        "monsters:GIGANTIC_SPRIGHT_MINION.name"
+      ],
+      "eng": "Gigantic Spright",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "ギガンティック・スプライト",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/GiganticSpright.cs",
+        "Scripts/Monsters/YGO/GiganticSprightMinion.cs"
+      ],
+      "cid": 17449,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "54498517.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=17449&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 2311090,
+      "localization_keys": [
+        "cards:V_YGO_CARD_SPRIGHT_CARROT.title",
+        "monsters:SPRIGHT_CARROT_MINION.name"
+      ],
+      "eng": "Spright Carrot",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "スプライト・キャロット",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/SprightCarrot.cs",
+        "Scripts/Monsters/YGO/SprightCarrotMinion.cs"
+      ],
+      "cid": 17409,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "2311090.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=17409&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 75922381,
+      "localization_keys": [
+        "cards:V_YGO_CARD_SPRIGHT_RED.title",
+        "monsters:SPRIGHT_RED_MINION.name"
+      ],
+      "eng": "Spright Red",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "スプライト・レッド",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/SprightRed.cs",
+        "Scripts/Monsters/YGO/SprightRedMinion.cs"
+      ],
+      "cid": 17408,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "75922381.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=17408&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 13533678,
+      "localization_keys": [
+        "cards:V_YGO_CARD_SPRIGHT_JET.title",
+        "monsters:SPRIGHT_JET_MINION.name"
+      ],
+      "eng": "Spright Jet",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "スプライト・ジェット",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/SprightJet.cs",
+        "Scripts/Monsters/YGO/SprightJetMinion.cs"
+      ],
+      "cid": 17406,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "13533678.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=17406&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 76145933,
+      "localization_keys": [
+        "cards:V_YGO_CARD_SPRIGHT_BLUE.title",
+        "monsters:SPRIGHT_BLUE_MINION.name"
+      ],
+      "eng": "Spright Blue",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "スプライト・ブルー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/SprightBlue.cs",
+        "Scripts/Monsters/YGO/SprightBlueMinion.cs"
+      ],
+      "cid": 17405,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "76145933.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=17405&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 37542782,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBERDARK_END_DRAGON.title",
+        "monsters:CYBERDARK_END_DRAGON_MINION.name"
+      ],
+      "eng": "Cyberdark End Dragon",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "鎧皇竜－サイバー・ダーク・エンド・ドラゴン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberdarkEndDragon.cs",
+        "Scripts/Monsters/YGO/CyberdarkEndDragonMinion.cs"
+      ],
+      "cid": 16300,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "37542782.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=16300&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 18967507,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBERDARKNESS_DRAGON.title",
+        "monsters:CYBERDARKNESS_DRAGON_MINION.name"
+      ],
+      "eng": "Cyberdarkness Dragon",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "鎧獄竜－サイバー・ダークネス・ドラゴン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberdarknessDragon.cs",
+        "Scripts/Monsters/YGO/CyberdarknessDragonMinion.cs"
+      ],
+      "cid": 13182,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "18967507.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13182&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 40418351,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBERDARK_DRAGON.title",
+        "monsters:CYBERDARK_DRAGON_MINION.name"
+      ],
+      "eng": "Cyberdark Dragon",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "鎧黒竜－サイバー・ダーク・ドラゴン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberdarkDragon.cs",
+        "Scripts/Monsters/YGO/CyberdarkDragonMinion.cs"
+      ],
+      "cid": 6833,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "40418351.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=6833&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "cards:V_YGO_CARD_CYBERDARK_END_DRAGON.description"
+      ]
+    },
+    {
+      "card_id": 23171610,
+      "localization_keys": [
+        "cards:V_YGO_CARD_LIMITER_REMOVAL.title",
+        "monsters:LIMITER_REMOVAL_MINION.name"
+      ],
+      "eng": "Limiter Removal",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "リミッター解除",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Machine/LimiterRemoval.cs",
+        "db.json cn_name 精确唯一匹配: 限制解除"
+      ],
+      "cid": 5129,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "23171610.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=5129&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "powers:V_YGO_POWER_SELF_DESTROY_POWER.title",
+        "cards:V_YGO_CARD_FINAL_STRIKE_CYBER_END_DRAGON.description"
+      ]
+    },
+    {
+      "card_id": 30275298,
+      "localization_keys": [
+        "cards:V_YGO_CARD_FINAL_STRIKE_CYBER_END_DRAGON.title",
+        "monsters:FINAL_STRIKE_CYBER_END_DRAGON_MINION.name"
+      ],
+      "eng": "Final Strike Cyber End Dragon",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "終撃竜－サイバー・エンド・ドラゴン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/FinalStrikeCyberEndDragon.cs",
+        "Scripts/Monsters/YGO/FinalStrikeCyberEndDragonMinion.cs"
+      ],
+      "cid": 22719,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "30275298.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=22719&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 82315403,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_ETERNITY_DRAGON.title",
+        "monsters:CYBER_ETERNITY_DRAGON_MINION.name"
+      ],
+      "eng": "Cyber Eternity Dragon",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・エタニティ・ドラゴン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberEternityDragon.cs",
+        "Scripts/Monsters/YGO/CyberEternityDragonMinion.cs"
+      ],
+      "cid": 13847,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "82315403.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13847&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 3657444,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_VALLEY.title",
+        "monsters:CYBER_VALLEY_MINION.name"
+      ],
+      "eng": "Cyber Valley",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ヴァリー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberValley.cs",
+        "Scripts/Monsters/YGO/CyberValleyMinion.cs"
+      ],
+      "cid": 7413,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "3657444.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=7413&request_locale=ja",
+      "mod_variants": [
+        {
+          "key": "cards:V_YGO_CARD_CYBER_VALLEY_GUARD_FORM.title",
+          "jpn": "サイバー・ヴァリー・守護形態",
+          "basis": "项目自定义形态；官方基础卡名加中文形态说明的译文"
+        },
+        {
+          "key": "cards:V_YGO_CARD_CYBER_VALLEY_TRIBUTE_FORM.title",
+          "jpn": "サイバー・ヴァリー・リリース形態",
+          "basis": "项目自定义形态；官方基础卡名加中文形态说明的译文"
+        },
+        {
+          "key": "cards:V_YGO_CARD_CYBER_VALLEY_RECYCLE_FORM.title",
+          "jpn": "サイバー・ヴァリー・回収形態",
+          "basis": "项目自定义形态；官方基础卡名加中文形态说明的译文"
+        }
+      ],
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "cards:V_YGO_CARD_CYBER_VALLEY_GUARD_FORM.title",
+        "cards:V_YGO_CARD_CYBER_VALLEY_TRIBUTE_FORM.title",
+        "cards:V_YGO_CARD_CYBER_VALLEY_RECYCLE_FORM.title"
+      ]
+    },
+    {
+      "card_id": 67441435,
+      "localization_keys": [
+        "cards:V_YGO_CARD_GLOW_UP_BULB.title",
+        "monsters:GLOW_UP_BULB_MINION.name"
+      ],
+      "eng": "Glow Up Bulb",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "グローアップ・バルブ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Synchro/GlowUpBulb.cs",
+        "Scripts/Monsters/YGO/GlowUpBulbMinion.cs"
+      ],
+      "cid": 9095,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "67441435.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=9095&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 44508094,
+      "localization_keys": [
+        "cards:V_YGO_CARD_STARDUST_DRAGON.title",
+        "monsters:STARDUST_DRAGON_MINION.name"
+      ],
+      "eng": "Stardust Dragon",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "スターダスト・ドラゴン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Synchro/StardustDragon.cs",
+        "Scripts/Monsters/YGO/StardustDragonMinion.cs"
+      ],
+      "cid": 7734,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "44508094.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=7734&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 14558127,
+      "localization_keys": [
+        "cards:V_YGO_CARD_ASH_BLOSSOM_JOYOUS_SPRING.title",
+        "monsters:ASH_BLOSSOM_JOYOUS_SPRING_MINION.name"
+      ],
+      "eng": "Ash Blossom Joyous Spring",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "灰流うらら",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/AshBlossomJoyousSpring.cs",
+        "Scripts/Monsters/YGO/AshBlossomJoyousSpringMinion.cs"
+      ],
+      "cid": 12950,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "14558127.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=12950&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 44956694,
+      "localization_keys": [
+        "cards:V_YGO_CARD_ROM_CLOUDIA.title",
+        "monsters:ROM_CLOUDIA_MINION.name"
+      ],
+      "eng": "ROM Cloudia",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "ROMクラウディア",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/ROMCloudia.cs",
+        "Scripts/Monsters/YGO/ROMCloudiaMinion.cs"
+      ],
+      "cid": 13197,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "44956694.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13197&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 18789533,
+      "localization_keys": [
+        "cards:V_YGO_CARD_DOTSCAPER.title",
+        "monsters:DOTSCAPER_MINION.name"
+      ],
+      "eng": "Dotscaper",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "ドットスケーパー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/Dotscaper.cs",
+        "Scripts/Monsters/YGO/DotscaperMinion.cs"
+      ],
+      "cid": 13193,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "18789533.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13193&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 46104361,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBERSE_WHITE_HAT.title",
+        "monsters:CYBERSE_WHITE_HAT_MINION.name"
+      ],
+      "eng": "Cyberse White Hat",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバース・ホワイトハット",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/CyberseWhiteHat.cs",
+        "Scripts/Monsters/YGO/CyberseWhiteHatMinion.cs"
+      ],
+      "cid": 13695,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "46104361.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13695&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 50690129,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CATCHE_EVE_L2.title",
+        "monsters:CATCHE_EVE_L2_MINION.name"
+      ],
+      "eng": "Catche Eve L2",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "キャシー・イヴL２",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/CatcheEveL2.cs",
+        "Scripts/Monsters/YGO/CatcheEveL2Minion.cs"
+      ],
+      "cid": 14078,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "50690129.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=14078&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 80794697,
+      "localization_keys": [
+        "cards:V_YGO_CARD_FLAME_BUFFERLO.title",
+        "monsters:FLAME_BUFFERLO_MINION.name"
+      ],
+      "eng": "Flame Bufferlo",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "フレイム・バッファロー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/FlameBufferlo.cs",
+        "Scripts/Monsters/YGO/FlameBufferloMinion.cs"
+      ],
+      "cid": 13521,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "80794697.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13521&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 65100616,
+      "localization_keys": [
+        "cards:V_YGO_CARD_LINK_INFRA_FLIER.title",
+        "monsters:LINK_INFRA_FLIER_MINION.name"
+      ],
+      "eng": "Link Infra Flier",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "リンク・インフライヤー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/LinkInfraFlier.cs",
+        "Scripts/Monsters/YGO/LinkInfraFlierMinion.cs"
+      ],
+      "cid": 13219,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "65100616.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13219&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 209710,
+      "localization_keys": [
+        "cards:V_YGO_CARD_FLICK_CLOWN.title",
+        "monsters:FLICK_CLOWN_MINION.name"
+      ],
+      "eng": "Flick Clown",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "フリック・クラウン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/FlickClown.cs",
+        "Scripts/Monsters/YGO/FlickClownMinion.cs"
+      ],
+      "cid": 13374,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "209710.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13374&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 37310367,
+      "localization_keys": [
+        "cards:V_YGO_CARD_LOCKOUT_GARDNA.title",
+        "monsters:LOCKOUT_GARDNA_MINION.name"
+      ],
+      "eng": "Lockout Gardna",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "ロックアウト・ガードナー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/LockoutGardna.cs",
+        "Scripts/Monsters/YGO/LockoutGardnaMinion.cs"
+      ],
+      "cid": 13372,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "37310367.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13372&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 2414168,
+      "localization_keys": [
+        "cards:V_YGO_CARD_INTERRUPT_RESISTOR.title",
+        "monsters:INTERRUPT_RESISTOR_MINION.name"
+      ],
+      "eng": "Interrupt Resistor",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "インタラプト・レジスタンス",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/InterruptResistor.cs",
+        "Scripts/Monsters/YGO/InterruptResistorMinion.cs"
+      ],
+      "cid": 13305,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "2414168.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13305&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 29716911,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CAPACITOR_STALKER.title",
+        "monsters:CAPACITOR_STALKER_MINION.name"
+      ],
+      "eng": "Capacitor Stalker",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "コンデンサー・デスストーカー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/CapacitorStalker.cs",
+        "Scripts/Monsters/YGO/CapacitorStalkerMinion.cs"
+      ],
+      "cid": 13218,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "29716911.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13218&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 3560069,
+      "localization_keys": [
+        "cards:V_YGO_CARD_LATENCY.title",
+        "monsters:LATENCY_MINION.name"
+      ],
+      "eng": "Latency",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "レイテンシ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/Latency.cs",
+        "Scripts/Monsters/YGO/LatencyMinion.cs"
+      ],
+      "cid": 13869,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "3560069.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13869&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 9190563,
+      "localization_keys": [
+        "cards:V_YGO_CARD_RAM_CLOUDER.title",
+        "monsters:RAM_CLOUDER_MINION.name"
+      ],
+      "eng": "RAM Clouder",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "RAMクラウダー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/RAMClouder.cs",
+        "Scripts/Monsters/YGO/RAMClouderMinion.cs"
+      ],
+      "cid": 13031,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "9190563.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13031&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 1861629,
+      "localization_keys": [
+        "cards:V_YGO_CARD_DECODE_TALKER.title",
+        "monsters:DECODE_TALKER_MINION.name"
+      ],
+      "eng": "Decode Talker",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "デコード・トーカー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/DecodeTalker.cs",
+        "Scripts/Monsters/YGO/DecodeTalkerMinion.cs"
+      ],
+      "cid": 13036,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "1861629.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13036&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "monsters:DECODE_TALKER_HEATSOUL_MINION.name",
+        "monsters:DECODE_TALKER_EXTENDED_MINION.name",
+        "monsters:DECODE_TALKER_INTEGRATION_MINION.name",
+        "events:V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.description",
+        "events:V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.options.INTEGRATION.title",
+        "events:V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.options.INTEGRATION.description",
+        "events:V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.options.HEATSOUL.title",
+        "events:V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.options.HEATSOUL.description",
+        "events:V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.options.EXTENDED.title",
+        "events:V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.options.EXTENDED.description",
+        "events:V_YGO_EVENT_DECODE_EVOLUTION.pages.INITIAL.options.LEAVE.description",
+        "events:V_YGO_EVENT_DECODE_EVOLUTION.pages.INTEGRATED.description",
+        "events:V_YGO_EVENT_DECODE_EVOLUTION.pages.HEATSOUL_EVOLVED.description",
+        "events:V_YGO_EVENT_DECODE_EVOLUTION.pages.EXTENDED_EVOLVED.description",
+        "events:V_YGO_EVENT_DECODE_EVOLUTION.pages.LEFT.description",
+        "cards:V_YGO_CARD_DECODE_TALKER_HEATSOUL.title",
+        "cards:V_YGO_CARD_DECODE_TALKER_EXTENDED.title",
+        "cards:V_YGO_CARD_DECODE_TALKER_INTEGRATION.title"
+      ]
+    },
+    {
+      "card_id": 53413628,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CODE_TALKER.title",
+        "monsters:CODE_TALKER_MINION.name"
+      ],
+      "eng": "Code Talker",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "コード・トーカー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/CodeTalker.cs",
+        "Scripts/Monsters/YGO/CodeTalkerMinion.cs"
+      ],
+      "cid": 13460,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "53413628.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13460&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "monsters:CODE_TALKER_INVERTED_MINION.name",
+        "cards:V_YGO_CARD_CODE_TALKER_INVERTED.title"
+      ]
+    },
+    {
+      "card_id": 98978921,
+      "localization_keys": [
+        "cards:V_YGO_CARD_LINK_SPIDER.title",
+        "monsters:LINK_SPIDER_MINION.name"
+      ],
+      "eng": "Link Spider",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "リンク・スパイダー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/LinkSpider.cs",
+        "Scripts/Monsters/YGO/LinkSpiderMinion.cs"
+      ],
+      "cid": 13034,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "98978921.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13034&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 62706865,
+      "localization_keys": [
+        "cards:V_YGO_CARD_DRACONNET.title",
+        "monsters:DRACONNET_MINION.name"
+      ],
+      "eng": "Draconnet",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "ドラコネット",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/Draconnet.cs",
+        "Scripts/Monsters/YGO/DraconnetMinion.cs"
+      ],
+      "cid": 13030,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "62706865.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13030&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 16188701,
+      "localization_keys": [
+        "cards:V_YGO_CARD_LADY_DEBUG.title",
+        "monsters:LADY_DEBUG_MINION.name"
+      ],
+      "eng": "Lady Debug",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "レディ・デバッガー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/LadyDebug.cs",
+        "Scripts/Monsters/YGO/LadyDebugMinion.cs"
+      ],
+      "cid": 13522,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "16188701.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13522&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 21830679,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CLOCK_WYVERN.title",
+        "monsters:CLOCK_WYVERN_MINION.name"
+      ],
+      "eng": "Clock Wyvern",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "クロック・ワイバーン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/ClockWyvern.cs",
+        "Scripts/Monsters/YGO/ClockWyvernMinion.cs"
+      ],
+      "cid": 13888,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "21830679.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13888&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 77449773,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYNET_CROSSWIPE.title",
+        "monsters:CYNET_CROSSWIPE_MINION.name"
+      ],
+      "eng": "Cynet Crosswipe",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバネット・クロスワイプ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/CynetCrosswipe.cs",
+        "db.json cn_name 精确唯一匹配: 电脑网交叉清除"
+      ],
+      "cid": 14435,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "77449773.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=14435&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 70950698,
+      "localization_keys": [
+        "cards:V_YGO_CARD_BOOT_STAGGERED.title",
+        "monsters:BOOT_STAGGERED_MINION.name"
+      ],
+      "eng": "Boot Staggered",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "ブート・スタッガード",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/BootStaggered.cs",
+        "Scripts/Monsters/YGO/BootStaggeredMinion.cs"
+      ],
+      "cid": 13198,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "70950698.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13198&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 9523599,
+      "localization_keys": [
+        "cards:V_YGO_CARD_STACK_REVIVER.title",
+        "monsters:STACK_REVIVER_MINION.name"
+      ],
+      "eng": "Stack Reviver",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "スタック・リバイバー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/StackReviver.cs",
+        "Scripts/Monsters/YGO/StackReviverMinion.cs"
+      ],
+      "cid": 13042,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "9523599.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13042&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 36033786,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBERSE_WIZARD.title",
+        "monsters:CYBERSE_WIZARD_MINION.name"
+      ],
+      "eng": "Cyberse Wizard",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバース・ウィザード",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/CyberseWizard.cs",
+        "Scripts/Monsters/YGO/CyberseWizardMinion.cs"
+      ],
+      "cid": 13040,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "36033786.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13040&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 7445307,
+      "localization_keys": [
+        "cards:V_YGO_CARD_DUAL_ASSEMBWURM.title",
+        "monsters:DUAL_ASSEMBWURM_MINION.name"
+      ],
+      "eng": "Dual Assembwurm",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "デュアル・アセンブルム",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/DualAssembwurm.cs",
+        "Scripts/Monsters/YGO/DualAssembwurmMinion.cs"
+      ],
+      "cid": 13199,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "7445307.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13199&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 8567955,
+      "localization_keys": [
+        "cards:V_YGO_CARD_BALANCER_LORD.title",
+        "monsters:BALANCER_LORD_MINION.name"
+      ],
+      "eng": "Balancer Lord",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "バランサーロード",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/BalancerLord.cs",
+        "Scripts/Monsters/YGO/BalancerLordMinion.cs"
+      ],
+      "cid": 13196,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "8567955.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13196&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 63528891,
+      "localization_keys": [
+        "cards:V_YGO_CARD_BACKUP_SECRETARY.title",
+        "monsters:BACKUP_SECRETARY_MINION.name"
+      ],
+      "eng": "Backup Secretary",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "バックアップ・セクレタリー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/BackupSecretary.cs",
+        "Scripts/Monsters/YGO/BackupSecretaryMinion.cs"
+      ],
+      "cid": 13041,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "63528891.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13041&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 32295838,
+      "localization_keys": [
+        "cards:V_YGO_CARD_DIGITRON.title",
+        "monsters:DIGITRON_MINION.name"
+      ],
+      "eng": "Digitron",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "デジトロン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/Digitron.cs",
+        "Scripts/Monsters/YGO/DigitronMinion.cs"
+      ],
+      "cid": 13192,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "32295838.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13192&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 36211150,
+      "localization_keys": [
+        "cards:V_YGO_CARD_BITRON.title",
+        "monsters:BITRON_MINION.name"
+      ],
+      "eng": "Bitron",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "ビットロン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/Bitron.cs",
+        "Scripts/Monsters/YGO/BitronMinion.cs"
+      ],
+      "cid": 13029,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "36211150.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13029&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 35595518,
+      "localization_keys": [
+        "cards:V_YGO_CARD_LINKSLAYER.title",
+        "monsters:LINKSLAYER_MINION.name"
+      ],
+      "eng": "Linkslayer",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "リンクスレイヤー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/Linkslayer.cs",
+        "Scripts/Monsters/YGO/LinkslayerMinion.cs"
+      ],
+      "cid": 13032,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "35595518.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13032&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 33041277,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_REVSYSTEM.title",
+        "monsters:CYBER_REVSYSTEM_MINION.name"
+      ],
+      "eng": "Cyber Revsystem",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・レヴシステム",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberRevsystem.cs",
+        "db.json cn_name 精确唯一匹配: 电子革命系统"
+      ],
+      "cid": 13770,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "33041277.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13770&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 87116928,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CHIMERATECH_MEGAFLEET_DRAGON.title",
+        "monsters:CHIMERATECH_MEGAFLEET_DRAGON_MINION.name"
+      ],
+      "eng": "Chimeratech Megafleet Dragon",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "キメラテック・メガフリート・ドラゴン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/ChimeratechMegafleetDragon.cs",
+        "Scripts/Monsters/YGO/ChimeratechMegafleetDragonMinion.cs"
+      ],
+      "cid": 13358,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "87116928.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13358&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 79229522,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CHIMERATECH_FORTRESS_DRAGON.title",
+        "monsters:CHIMERATECH_FORTRESS_DRAGON_MINION.name"
+      ],
+      "eng": "Chimeratech Fortress Dragon",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "キメラテック・フォートレス・ドラゴン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/ChimeratechFortressDragon.cs",
+        "Scripts/Monsters/YGO/ChimeratechFortressDragonMinion.cs"
+      ],
+      "cid": 7403,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "79229522.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=7403&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 8963089,
+      "localization_keys": [
+        "cards:V_YGO_CARD_HEOSVAROGTHE_MECHANICAL_DAWN.title",
+        "monsters:HEOSVAROGTHE_MECHANICAL_DAWN_MINION.name"
+      ],
+      "eng": "Heosvarog the Mechanical Dawn",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "黎銘機ヘオスヴァローグ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/HeosvarogtheMechanicalDawn.cs",
+        "Scripts/Monsters/YGO/HeosvarogtheMechanicalDawnMinion.cs"
+      ],
+      "cid": 20511,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "8963089.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=20511&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 96699830,
+      "localization_keys": [
+        "cards:V_YGO_CARD_BORNFROM_DRACONIS.title",
+        "monsters:BORNFROM_DRACONIS_MINION.name"
+      ],
+      "eng": "Born from Draconis",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "ボーン・フロム・ドラコニス",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/BornfromDraconis.cs",
+        "db.json cn_name 精确唯一匹配: 来自天龙座的降诞"
+      ],
+      "cid": 8429,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "96699830.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=8429&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "powers:V_YGO_POWER_BORNFROM_DRACONIS_POWER.title"
+      ]
+    },
+    {
+      "card_id": 12670770,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_NETWORK.title",
+        "monsters:CYBER_NETWORK_MINION.name"
+      ],
+      "eng": "Cyber Network",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ネットワーク",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberNetwork.cs",
+        "db.json cn_name 精确唯一匹配: 电子网络"
+      ],
+      "cid": 10869,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "12670770.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=10869&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "powers:V_YGO_POWER_CYBER_NETWORK_POWER.title"
+      ]
+    },
+    {
+      "card_id": 91989718,
+      "localization_keys": [
+        "cards:V_YGO_CARD_ATTACK_REFLECTOR_UNIT.title",
+        "monsters:ATTACK_REFLECTOR_UNIT_MINION.name"
+      ],
+      "eng": "Attack Reflector Unit",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "アタック・リフレクター・ユニット",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/AttackReflectorUnit.cs",
+        "db.json cn_name 精确唯一匹配: 攻击反射装置"
+      ],
+      "cid": 6581,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "91989718.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=6581&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "powers:V_YGO_POWER_ATTACK_REFLECTOR_UNIT_POWER.title",
+        "powers:V_YGO_POWER_ATTACK_REFLECTOR_UNIT_POWER.description"
+      ]
+    },
+    {
+      "card_id": 64599569,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CHIMERATECH_OVERDRAGON.title",
+        "monsters:CHIMERATECH_OVERDRAGON_MINION.name"
+      ],
+      "eng": "Chimeratech Overdragon",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "キメラテック・オーバー・ドラゴン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/ChimeratechOverdragon.cs",
+        "Scripts/Monsters/YGO/ChimeratechOverdragonMinion.cs"
+      ],
+      "cid": 6734,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "64599569.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=6734&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 20586572,
+      "localization_keys": [
+        "cards:V_YGO_CARD_EXPLODER_DRAGON.title",
+        "monsters:EXPLODER_DRAGON_MINION.name"
+      ],
+      "eng": "Exploder Dragon",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "ボマー・ドラゴン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/ExploderDragon.cs",
+        "Scripts/Monsters/YGO/ExploderDragonMinion.cs"
+      ],
+      "cid": 7094,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "20586572.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=7094&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 47754278,
+      "localization_keys": [
+        "cards:V_YGO_CARD_INFERNAL_DRAGON.title",
+        "monsters:INFERNAL_DRAGON_MINION.name"
+      ],
+      "eng": "Infernal Dragon",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "ヘル・ドラゴン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/InfernalDragon.cs",
+        "Scripts/Monsters/YGO/InfernalDragonMinion.cs"
+      ],
+      "cid": 6944,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "47754278.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=6944&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 75559356,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_SOLDIER_OF_DARKWORLD.title",
+        "monsters:CYBER_SOLDIER_OF_DARKWORLD_MINION.name"
+      ],
+      "eng": "Cyber Soldier of Darkworld",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "魔界の機械兵",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberSoldierOfDarkworld.cs",
+        "Scripts/Monsters/YGO/CyberSoldierOfDarkworldMinion.cs"
+      ],
+      "cid": 4303,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "75559356.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=4303&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 19715246,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_JORMUNGARDR.title",
+        "monsters:CYBER_JORMUNGARDR_MINION.name"
+      ],
+      "eng": "Cyber Jormungardr",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ヨルムンガンド",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberJormungardr.cs",
+        "Scripts/Monsters/YGO/CyberJormungardrMinion.cs"
+      ],
+      "cid": 21163,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "19715246.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=21163&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 55704856,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBERLOAD_FUSION.title",
+        "monsters:CYBERLOAD_FUSION_MINION.name"
+      ],
+      "eng": "Cyberload Fusion",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバーロード・フュージョン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberloadFusion.cs",
+        "db.json cn_name 精确唯一匹配: 电子负载融合"
+      ],
+      "cid": 13849,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "55704856.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13849&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 3659803,
+      "localization_keys": [
+        "cards:V_YGO_CARD_OVERLOAD_FUSION.title",
+        "monsters:OVERLOAD_FUSION_MINION.name"
+      ],
+      "eng": "Overload Fusion",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "オーバーロード・フュージョン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/OverloadFusion.cs",
+        "db.json cn_name 精确唯一匹配: 超载融合"
+      ],
+      "cid": 6783,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "3659803.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=6783&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 3370104,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_PHOENIX.title",
+        "monsters:CYBER_PHOENIX_MINION.name"
+      ],
+      "eng": "Cyber Phoenix",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・フェニックス",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberPhoenix.cs",
+        "Scripts/Monsters/YGO/CyberPhoenixMinion.cs"
+      ],
+      "cid": 6663,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "3370104.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=6663&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 76986005,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_KIRIN.title",
+        "monsters:CYBER_KIRIN_MINION.name"
+      ],
+      "eng": "Cyber Kirin",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ジラフ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberKirin.cs",
+        "Scripts/Monsters/YGO/CyberKirinMinion.cs"
+      ],
+      "cid": 6662,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "76986005.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=6662&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 35050257,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_LARVA.title",
+        "monsters:CYBER_LARVA_MINION.name"
+      ],
+      "eng": "Cyber Larva",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ラーバァ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberLarva.cs",
+        "Scripts/Monsters/YGO/CyberLarvaMinion.cs"
+      ],
+      "cid": 8421,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "35050257.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=8421&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "cards:V_YGO_CARD_CYBER_LARVA.description"
+      ]
+    },
+    {
+      "card_id": 56100345,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBERDARK_WURM.title",
+        "monsters:CYBERDARK_WURM_MINION.name"
+      ],
+      "eng": "Cyberdark Wurm",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ダーク・ヴルム",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberdarkWurm.cs",
+        "Scripts/Monsters/YGO/CyberdarkWurmMinion.cs"
+      ],
+      "cid": 21164,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "56100345.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=21164&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 1157683,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBERDARK_INVASION.title",
+        "monsters:CYBERDARK_INVASION_MINION.name"
+      ],
+      "eng": "Cyberdark Invasion",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバーダーク・インヴェイジョン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberdarkInvasion.cs",
+        "db.json cn_name 精确唯一匹配: 电子暗黑侵略"
+      ],
+      "cid": 16299,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "1157683.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=16299&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "powers:V_YGO_POWER_CYBERDARK_INVASION_POWER.title"
+      ]
+    },
+    {
+      "card_id": 80033124,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBERDARK_IMPACT.title",
+        "monsters:CYBERDARK_IMPACT_MINION.name"
+      ],
+      "eng": "Cyberdark Impact",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバーダーク・インパクト！",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberdarkImpact.cs",
+        "db.json cn_name 精确唯一匹配: 电子暗黑冲击！"
+      ],
+      "cid": 7217,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "80033124.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=7217&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 5370235,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBERDARK_CHIMERA.title",
+        "monsters:CYBERDARK_CHIMERA_MINION.name"
+      ],
+      "eng": "Cyberdark Chimera",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ダーク・キメラ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberdarkChimera.cs",
+        "Scripts/Monsters/YGO/CyberdarkChimeraMinion.cs"
+      ],
+      "cid": 16296,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "5370235.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=16296&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 44352516,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBERDARK_INFERNO.title",
+        "monsters:CYBERDARK_INFERNO_MINION.name"
+      ],
+      "eng": "Cyberdark Inferno",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバーダーク・インフェルノ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberdarkInferno.cs",
+        "db.json cn_name 精确唯一匹配: 电子暗黑业火"
+      ],
+      "cid": 13183,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "44352516.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13183&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "powers:V_YGO_POWER_CYBERDARK_INFERNO_POWER.title"
+      ]
+    },
+    {
+      "card_id": 63031396,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBERNETIC_HORIZON.title",
+        "monsters:CYBERNETIC_HORIZON_MINION.name"
+      ],
+      "eng": "Cybernetic Horizon",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバネティック・ホライゾン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberneticHorizon.cs",
+        "db.json cn_name 精确唯一匹配: 电子地平线"
+      ],
+      "cid": 16301,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "63031396.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=16301&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 64753988,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBERDARK_REALM.title",
+        "monsters:CYBERDARK_REALM_MINION.name"
+      ],
+      "eng": "Cyberdark Realm",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバーダーク・ワールド",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberdarkRealm.cs",
+        "db.json cn_name 精确唯一匹配: 电子暗黑世界"
+      ],
+      "cid": 16298,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "64753988.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=16298&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "powers:V_YGO_POWER_CYBERDARK_REALM_POWER.title"
+      ]
+    },
+    {
+      "card_id": 67159705,
+      "localization_keys": [
+        "cards:V_YGO_CARD_ARMORED_CYBERN.title",
+        "monsters:ARMORED_CYBERN_MINION.name"
+      ],
+      "eng": "Armored Cybern",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "アーマード・サイバーン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/ArmoredCybern.cs",
+        "Scripts/Monsters/YGO/ArmoredCybernMinion.cs"
+      ],
+      "cid": 7412,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "67159705.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=7412&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 63224564,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_SHIELD.title",
+        "monsters:CYBER_SHIELD_MINION.name"
+      ],
+      "eng": "Cyber Shield",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ボンテージ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberShield.cs",
+        "db.json cn_name 精确唯一匹配: 电子紧身衣"
+      ],
+      "cid": 4323,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "63224564.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=4323&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 86686671,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_REPAIR_PLANT.title",
+        "monsters:CYBER_REPAIR_PLANT_MINION.name"
+      ],
+      "eng": "Cyber Repair Plant",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・リペア・プラント",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberRepairPlant.cs",
+        "db.json cn_name 精确唯一匹配: 电子修理工厂"
+      ],
+      "cid": 10868,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "86686671.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=10868&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 39439590,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_DINOSAUR.title",
+        "monsters:CYBER_DINOSAUR_MINION.name"
+      ],
+      "eng": "Cyber Dinosaur",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ダイナソー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberDinosaur.cs",
+        "Scripts/Monsters/YGO/CyberDinosaurMinion.cs"
+      ],
+      "cid": 6727,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "39439590.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=6727&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "main_menu:NEWS_CAROUSEL_3_DETAIL"
+      ]
+    },
+    {
+      "card_id": 45078193,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBERDARK_CANNON.title",
+        "monsters:CYBERDARK_CANNON_MINION.name"
+      ],
+      "eng": "Cyberdark Cannon",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ダーク・カノン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberdarkCannon.cs",
+        "Scripts/Monsters/YGO/CyberdarkCannonMinion.cs"
+      ],
+      "cid": 13180,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "45078193.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13180&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 82562802,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBERDARK_CLAW.title",
+        "monsters:CYBERDARK_CLAW_MINION.name"
+      ],
+      "eng": "Cyberdark Claw",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ダーク・クロー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberdarkClaw.cs",
+        "Scripts/Monsters/YGO/CyberdarkClawMinion.cs"
+      ],
+      "cid": 13181,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "82562802.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13181&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 3019642,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBERDARK_KEEL.title",
+        "monsters:CYBERDARK_KEEL_MINION.name"
+      ],
+      "eng": "Cyberdark Keel",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ダーク・キール",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberdarkKeel.cs",
+        "Scripts/Monsters/YGO/CyberdarkKeelMinion.cs"
+      ],
+      "cid": 6832,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "3019642.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=6832&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 77625948,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBERDARK_EDGE.title",
+        "monsters:CYBERDARK_EDGE_MINION.name"
+      ],
+      "eng": "Cyberdark Edge",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ダーク・エッジ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberdarkEdge.cs",
+        "Scripts/Monsters/YGO/CyberdarkEdgeMinion.cs"
+      ],
+      "cid": 6831,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "77625948.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=6831&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 58069384,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_DRAGON_NOVA.title",
+        "monsters:CYBER_DRAGON_NOVA_MINION.name"
+      ],
+      "eng": "Cyber Dragon Nova",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ドラゴン・ノヴァ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberDragonNova.cs",
+        "Scripts/Monsters/YGO/CyberDragonNovaMinion.cs"
+      ],
+      "cid": 10870,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "58069384.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=10870&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "cards:V_YGO_CARD_CYBER_DRAGON_INFINITY.description"
+      ]
+    },
+    {
+      "card_id": 41230939,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBERDARK_HORN.title",
+        "monsters:CYBERDARK_HORN_MINION.name"
+      ],
+      "eng": "Cyberdark Horn",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ダーク・ホーン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberdarkHorn.cs",
+        "Scripts/Monsters/YGO/CyberdarkHornMinion.cs"
+      ],
+      "cid": 6830,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "41230939.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=6830&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 92773018,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBERNETIC_HIDDEN_TECHNOLOGY.title",
+        "monsters:CYBERNETIC_HIDDEN_TECHNOLOGY_MINION.name"
+      ],
+      "eng": "Cybernetic Hidden Technology",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバネティック・ヒドゥン・テクノロジー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberneticHiddenTechnology.cs",
+        "db.json cn_name 精确唯一匹配: 电子隐秘技术"
+      ],
+      "cid": 7468,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "92773018.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=7468&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "powers:V_YGO_POWER_CYBERNETIC_HIDDEN_TECHNOLOGY_POWER.title"
+      ]
+    },
+    {
+      "card_id": 23434538,
+      "localization_keys": [
+        "cards:V_YGO_CARD_MAXX_C.title",
+        "monsters:MAXX_C_MINION.name"
+      ],
+      "eng": "Maxx C",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "増殖するG",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/MaxxC.cs",
+        "Scripts/Monsters/YGO/MaxxCMinion.cs"
+      ],
+      "cid": 9455,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "23434538.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=9455&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 66607691,
+      "localization_keys": [
+        "cards:V_YGO_CARD_PHOTON_GENERATOR_UNIT.title",
+        "monsters:PHOTON_GENERATOR_UNIT_MINION.name"
+      ],
+      "eng": "Photon Generator Unit",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "フォトン・ジェネレーター・ユニット",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/PhotonGeneratorUnit.cs",
+        "db.json cn_name 精确唯一匹配: 光子发生装置"
+      ],
+      "cid": 6577,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "66607691.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=6577&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 4162088,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_LASER_DRAGON.title",
+        "monsters:CYBER_LASER_DRAGON_MINION.name"
+      ],
+      "eng": "Cyber Laser Dragon",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・レーザー・ドラゴン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberLaserDragon.cs",
+        "Scripts/Monsters/YGO/CyberLaserDragonMinion.cs"
+      ],
+      "cid": 6569,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "4162088.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=6569&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "cards:V_YGO_CARD_PHOTON_GENERATOR_UNIT.description"
+      ]
+    },
+    {
+      "card_id": 12580477,
+      "localization_keys": [
+        "cards:V_YGO_CARD_RAIGEKI.title",
+        "monsters:RAIGEKI_MINION.name"
+      ],
+      "eng": "Raigeki",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サンダー・ボルト",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/Raigeki.cs",
+        "db.json cn_name 精确唯一匹配: 雷击"
+      ],
+      "cid": 4343,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "12580477.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=4343&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 60600126,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_EMERGENCY.title",
+        "monsters:CYBER_EMERGENCY_MINION.name"
+      ],
+      "eng": "Cyber Emergency",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "エマージェンシー・サイバー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberEmergency.cs",
+        "db.json cn_name 精确唯一匹配: 电子紧急呼救"
+      ],
+      "cid": 8428,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "60600126.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=8428&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 10604644,
+      "localization_keys": [
+        "cards:V_YGO_CARD_THERION_KING_REGULUS.title",
+        "monsters:THERION_KING_REGULUS_MINION.name"
+      ],
+      "eng": "Therion King Regulus",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "セリオンズ“キング”レギュラス",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/TherionKingRegulus.cs",
+        "Scripts/Monsters/YGO/TherionKingRegulusMinion.cs"
+      ],
+      "cid": 17119,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "10604644.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=17119&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 25769732,
+      "localization_keys": [
+        "cards:V_YGO_CARD_MACHINE_CONVERSION_FACTORY.title",
+        "monsters:MACHINE_CONVERSION_FACTORY_MINION.name"
+      ],
+      "eng": "Machine Conversion Factory",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "機械改造工場",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Machine/MachineConversionFactory.cs",
+        "db.json cn_name 精确唯一匹配: 机械改造工厂"
+      ],
+      "cid": 4331,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "25769732.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=4331&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 24224830,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CALLEDBYTHE_GRAVE.title",
+        "monsters:CALLEDBYTHE_GRAVE_MINION.name"
+      ],
+      "eng": "Called by the Grave",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "墓穴の指名者",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/CalledbytheGrave.cs",
+        "db.json cn_name 精确唯一匹配: 墓穴的指名者"
+      ],
+      "cid": 13619,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "24224830.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13619&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 10045474,
+      "localization_keys": [
+        "cards:V_YGO_CARD_INFINITE_IMPERMANENCE.title",
+        "monsters:INFINITE_IMPERMANENCE_MINION.name"
+      ],
+      "eng": "Infinite Impermanence",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "無限泡影",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/InfiniteImpermanence.cs",
+        "db.json cn_name 精确唯一匹配: 无限泡影"
+      ],
+      "cid": 13631,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "10045474.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13631&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 66664203,
+      "localization_keys": [
+        "cards:V_YGO_CARD_REVOLUTION_CYBER_DRAGON.title",
+        "monsters:REVOLUTION_CYBER_DRAGON_MINION.name"
+      ],
+      "eng": "Revolution Cyber Dragon",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "機光竜－サイバー・ドラゴン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/RevolutionCyberDragon.cs",
+        "Scripts/Monsters/YGO/RevolutionCyberDragonMinion.cs"
+      ],
+      "cid": 22720,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "66664203.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=22720&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 1142880,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_DRAGON_NACHSTER.title",
+        "monsters:CYBER_DRAGON_NACHSTER_MINION.name"
+      ],
+      "eng": "Cyber Dragon Nachster",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ドラゴン・ネクステア",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberDragonNachster.cs",
+        "Scripts/Monsters/YGO/CyberDragonNachsterMinion.cs"
+      ],
+      "cid": 14047,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "1142880.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=14047&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 29975188,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_DRAGON_VIER.title",
+        "monsters:CYBER_DRAGON_VIER_MINION.name"
+      ],
+      "eng": "Cyber Dragon Vier",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ドラゴン・フィーア",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberDragonVier.cs",
+        "Scripts/Monsters/YGO/CyberDragonVierMinion.cs"
+      ],
+      "cid": 13722,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "29975188.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13722&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 59281922,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_DRAGON_DREI.title",
+        "monsters:CYBER_DRAGON_DREI_MINION.name"
+      ],
+      "eng": "Cyber Dragon Drei",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ドラゴン・ドライ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberDragonDrei.cs",
+        "Scripts/Monsters/YGO/CyberDragonDreiMinion.cs"
+      ],
+      "cid": 10867,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "59281922.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=10867&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "main_menu:NEWS_CAROUSEL_2_DETAIL"
+      ]
+    },
+    {
+      "card_id": 68774379,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_BARRIER_DRAGON.title",
+        "monsters:CYBER_BARRIER_DRAGON_MINION.name"
+      ],
+      "eng": "Cyber Barrier Dragon",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・バリア・ドラゴン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberBarrierDragon.cs",
+        "Scripts/Monsters/YGO/CyberBarrierDragonMinion.cs"
+      ],
+      "cid": 6568,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "68774379.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=6568&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "powers:V_YGO_POWER_ATTACK_REFLECTOR_UNIT_POWER.description",
+        "cards:V_YGO_CARD_ATTACK_REFLECTOR_UNIT.description"
+      ]
+    },
+    {
+      "card_id": 74157028,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_TWIN_DRAGON.title",
+        "monsters:CYBER_TWIN_DRAGON_MINION.name"
+      ],
+      "eng": "Cyber Twin Dragon",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ツイン・ドラゴン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberTwinDragon.cs",
+        "Scripts/Monsters/YGO/CyberTwinDragonMinion.cs"
+      ],
+      "cid": 6396,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "74157028.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=6396&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 37630732,
+      "localization_keys": [
+        "cards:V_YGO_CARD_POWER_BOND.title",
+        "monsters:POWER_BOND_MINION.name"
+      ],
+      "eng": "Power Bond",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "パワー・ボンド",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/PowerBond.cs",
+        "db.json cn_name 精确唯一匹配: 力量结合"
+      ],
+      "cid": 6398,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "37630732.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=6398&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "powers:V_YGO_POWER_POWER_BOND_DAMAGE_POWER.title",
+        "cards:V_YGO_CARD_CYBERDARK_CHIMERA.description"
+      ]
+    },
+    {
+      "card_id": 52875873,
+      "localization_keys": [
+        "cards:V_YGO_CARD_EVOLUTION_BURST.title",
+        "monsters:EVOLUTION_BURST_MINION.name"
+      ],
+      "eng": "Evolution Burst",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "エヴォリューション・バースト",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/EvolutionBurst.cs",
+        "db.json cn_name 精确唯一匹配: 进化光焰"
+      ],
+      "cid": 7556,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "52875873.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=7556&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 56364287,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_DRAGON_HERZ.title",
+        "monsters:CYBER_DRAGON_HERZ_MINION.name"
+      ],
+      "eng": "Cyber Dragon Herz",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ドラゴン・ヘルツ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberDragonHerz.cs",
+        "Scripts/Monsters/YGO/CyberDragonHerzMinion.cs"
+      ],
+      "cid": 13723,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "56364287.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13723&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 74335036,
+      "localization_keys": [
+        "cards:V_YGO_CARD_FUSION_SUBSTITUTE.title",
+        "monsters:FUSION_SUBSTITUTE_MINION.name"
+      ],
+      "eng": "Fusion Substitute",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "置換融合",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Fusion/FusionSubstitute.cs",
+        "db.json cn_name 精确唯一匹配: 置换融合"
+      ],
+      "cid": 11504,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "74335036.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=11504&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 24094653,
+      "localization_keys": [
+        "cards:V_YGO_CARD_POLYMERIZATION.title",
+        "monsters:POLYMERIZATION_MINION.name"
+      ],
+      "eng": "Polymerization",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "融合",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Fusion/Polymerization.cs",
+        "db.json cn_name 精确唯一匹配: 融合"
+      ],
+      "cid": 4837,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "24094653.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=4837&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "powers:CYBER_JORMUNGARDR_ACTION.title",
+        "powers:CYBER_JORMUNGARDR_ACTION.description",
+        "powers:V_YGO_POWER_CYBERDARK_INFERNO_POWER.description",
+        "cards:V_YGO_CARD_CYBERDARK_INFERNO.description",
+        "cards:V_YGO_CARD_CYBER_JORMUNGARDR.description",
+        "cards:V_YGO_CARD_HEOSVAROGTHE_MECHANICAL_DAWN.description"
+      ]
+    },
+    {
+      "card_id": 1546123,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_END_DRAGON.title",
+        "monsters:CYBER_END_DRAGON_MINION.name"
+      ],
+      "eng": "Cyber End Dragon",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・エンド・ドラゴン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberEndDragon.cs",
+        "Scripts/Monsters/YGO/CyberEndDragonMinion.cs"
+      ],
+      "cid": 6397,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "1546123.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=6397&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "monsters:FINAL_STRIKE_CYBER_END_DRAGON_MINION.name",
+        "cards:V_YGO_CARD_FINAL_STRIKE_CYBER_END_DRAGON.title",
+        "cards:V_YGO_CARD_CYBERDARK_END_DRAGON.description"
+      ]
+    },
+    {
+      "card_id": 83764718,
+      "localization_keys": [
+        "cards:V_YGO_CARD_MONSTER_REBORN.title",
+        "monsters:MONSTER_REBORN_MINION.name"
+      ],
+      "eng": "Monster Reborn",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "死者蘇生",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/MonsterReborn.cs",
+        "db.json cn_name 精确唯一匹配: 死者苏生"
+      ],
+      "cid": 4842,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "83764718.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=4842&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 5373478,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_DRAGON_ZWEI.title",
+        "monsters:CYBER_DRAGON_ZWEI_MINION.name"
+      ],
+      "eng": "Cyber Dragon Zwei",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ドラゴン・ツヴァイ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberDragonZwei.cs",
+        "Scripts/Monsters/YGO/CyberDragonZweiMinion.cs"
+      ],
+      "cid": 8646,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "5373478.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=8646&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 29301450,
+      "localization_keys": [
+        "cards:V_YGO_CARD_SP_LITTLE_KNIGHT.title",
+        "monsters:S_P_LITTLE_KNIGHT_MINION.name"
+      ],
+      "eng": "SP Little Knight",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "S：Pリトルナイト",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Link/SPLittleKnight.cs",
+        "Scripts/Monsters/YGO/SPLittleKnightMinion.cs"
+      ],
+      "cid": 19188,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "29301450.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=19188&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 23893227,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_DRAGON_CORE.title",
+        "monsters:CYBER_DRAGON_CORE_MINION.name"
+      ],
+      "eng": "Cyber Dragon Core",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ドラゴン・コア",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberDragonCore.cs",
+        "Scripts/Monsters/YGO/CyberDragonCoreMinion.cs"
+      ],
+      "cid": 10866,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "23893227.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=10866&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 10443957,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_DRAGON_INFINITY.title",
+        "monsters:CYBER_DRAGON_INFINITY_MINION.name"
+      ],
+      "eng": "Cyber Dragon Infinity",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ドラゴン・インフィニティ",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberDragonInfinity.cs",
+        "Scripts/Monsters/YGO/CyberDragonInfinityMinion.cs"
+      ],
+      "cid": 11765,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "10443957.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=11765&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 46724542,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_DRAGON_SIEGER.title",
+        "monsters:CYBER_DRAGON_SIEGER_MINION.name"
+      ],
+      "eng": "Cyber Dragon Sieger",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ドラゴン・ズィーガー",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberDragonSieger.cs",
+        "Scripts/Monsters/YGO/CyberDragonSiegerMinion.cs"
+      ],
+      "cid": 13758,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "46724542.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13758&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 26439287,
+      "localization_keys": [
+        "cards:V_YGO_CARD_PROTO_CYBER_DRAGON.title",
+        "monsters:PROTO_CYBER_DRAGON_MINION.name"
+      ],
+      "eng": "Proto Cyber Dragon",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "プロト・サイバー・ドラゴン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/ProtoCyberDragon.cs",
+        "Scripts/Monsters/YGO/ProtoCyberDragonMinion.cs"
+      ],
+      "cid": 6588,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "26439287.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=6588&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 70095154,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBER_DRAGON.title",
+        "monsters:CYBER_DRAGON_MINION.name"
+      ],
+      "eng": "Cyber Dragon",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "サイバー・ドラゴン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/ZaneTruesdale/CyberDragon.cs",
+        "Scripts/Monsters/YGO/CyberDragonMinion.cs"
+      ],
+      "cid": 6390,
+      "source_url": "https://ygocdb.com/api/v0/cardset",
+      "source_field": "70095154.text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=6390&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "monsters:CYBER_DRAGON_INFINITY_MINION.name",
+        "monsters:PROTO_CYBER_DRAGON_MINION.name",
+        "monsters:CYBER_DRAGON_SIEGER_MINION.name",
+        "monsters:CYBER_DRAGON_CORE_MINION.name",
+        "monsters:CYBER_DRAGON_ZWEI_MINION.name",
+        "monsters:CYBER_DRAGON_HERZ_MINION.name",
+        "monsters:CYBER_DRAGON_DREI_MINION.name",
+        "monsters:CYBER_DRAGON_VIER_MINION.name",
+        "monsters:CYBER_DRAGON_NACHSTER_MINION.name",
+        "monsters:REVOLUTION_CYBER_DRAGON_MINION.name",
+        "monsters:CYBER_DRAGON_NOVA_MINION.name",
+        "powers:V_YGO_POWER_CYBER_DRAGON_SUMMONED_THIS_TURN_POWER.title",
+        "powers:V_YGO_POWER_CYBER_DRAGON_SUMMONED_THIS_TURN_POWER.description",
+        "powers:V_YGO_POWER_CYBER_DRAGON_SUMMONED_THIS_TURN_POWER.smartDescription",
+        "powers:CYBER_DRAGON_NOVA_ACTION.description",
+        "powers:ARMORED_CYBERN_ACTION.title",
+        "powers:ARMORED_CYBERN_ACTION.description",
+        "powers:ARMORED_CYBERN_ACTION.targetError",
+        "characters:V_YGO_CHARACTER_ZANE_TRUESDALE_CHARACTER.cardsModifierDescription",
+        "characters:V_YGO_CHARACTER_ZANE_TRUESDALE_CHARACTER.cardsModifierTitle",
+        "characters:V_YGO_CHARACTER_ZANE_TRUESDALE_CHARACTER.description",
+        "cards:V_YGO_CARD_PROTO_CYBER_DRAGON.title",
+        "cards:V_YGO_CARD_CYBER_DRAGON_SIEGER.title",
+        "cards:V_YGO_CARD_CYBER_DRAGON_SIEGER.description",
+        "cards:V_YGO_CARD_CYBER_DRAGON_CORE.title",
+        "cards:V_YGO_CARD_CYBER_DRAGON_CORE.description",
+        "cards:V_YGO_CARD_CYBER_DRAGON_CORE.selectionScreenPrompt",
+        "cards:V_YGO_CARD_CYBER_DRAGON_ZWEI.title",
+        "cards:V_YGO_CARD_CYBER_END_DRAGON.description",
+        "cards:V_YGO_CARD_CYBER_DRAGON_HERZ.title",
+        "cards:V_YGO_CARD_CYBER_DRAGON_HERZ.description",
+        "cards:V_YGO_CARD_EVOLUTION_BURST.description",
+        "cards:V_YGO_CARD_CYBER_TWIN_DRAGON.description",
+        "cards:V_YGO_CARD_CYBER_DRAGON_DREI.title",
+        "cards:V_YGO_CARD_CYBER_DRAGON_DREI.description",
+        "cards:V_YGO_CARD_CYBER_DRAGON_VIER.title",
+        "cards:V_YGO_CARD_CYBER_DRAGON_VIER.description",
+        "cards:V_YGO_CARD_CYBER_DRAGON_NACHSTER.title",
+        "cards:V_YGO_CARD_CYBER_DRAGON_NACHSTER.description",
+        "cards:V_YGO_CARD_REVOLUTION_CYBER_DRAGON.title",
+        "cards:V_YGO_CARD_CYBER_EMERGENCY.description",
+        "cards:V_YGO_CARD_PHOTON_GENERATOR_UNIT.description",
+        "cards:V_YGO_CARD_CYBER_DRAGON_NOVA.title",
+        "cards:V_YGO_CARD_CYBER_DRAGON_NOVA.description",
+        "cards:V_YGO_CARD_CYBER_DRAGON_INFINITY.title",
+        "cards:V_YGO_CARD_CYBER_DRAGON_INFINITY.description",
+        "cards:V_YGO_CARD_ARMORED_CYBERN.description",
+        "cards:V_YGO_CARD_CYBERDARK_WURM.description",
+        "cards:V_YGO_CARD_CYBER_JORMUNGARDR.description",
+        "cards:V_YGO_CARD_CYBER_JORMUNGARDR.selectionScreenPrompt",
+        "cards:V_YGO_CARD_CHIMERATECH_OVERDRAGON.description",
+        "cards:V_YGO_CARD_CHIMERATECH_MEGAFLEET_DRAGON.description",
+        "cards:V_YGO_CARD_CHIMERATECH_FORTRESS_DRAGON.description",
+        "cards:V_YGO_CARD_CYBER_REVSYSTEM.description",
+        "cards:V_YGO_CARD_CYBER_REVSYSTEM.selectionScreenPrompt",
+        "cards:V_YGO_CARD_CYBER_ETERNITY_DRAGON.description",
+        "main_menu:NEWS_CAROUSEL_1_DETAIL",
+        "main_menu:NEWS_CAROUSEL_2_DETAIL",
+        "relics:V_YGO_RELIC_CYBER_CORE_RELIC.description"
+      ]
+    },
+    {
+      "card_id": 70950699,
+      "localization_keys": [
+        "cards:V_YGO_CARD_BOOT_STAGGERED_TOKEN.title",
+        "monsters:BOOT_STAGGERED_TOKEN_MINION.name"
+      ],
+      "eng": "Boot Staggered Token",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "スタッグトークン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/BootStaggeredToken.cs",
+        "Scripts/Monsters/YGO/BootStaggeredTokenMinion.cs"
+      ],
+      "source_card_id": 70950698,
+      "cid": 13198,
+      "source_url": "https://db.ygoresources.com/data/card/13198",
+      "source_field": "cardData.ja.effectText",
+      "evidence": "「スタッグトークン」",
+      "cache_revision": "32335",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13198&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": []
+    },
+    {
+      "card_id": 21830680,
+      "localization_keys": [
+        "cards:V_YGO_CARD_CLOCK_WYVERN_TOKEN.title",
+        "monsters:CLOCK_WYVERN_TOKEN_MINION.name"
+      ],
+      "eng": "Clock Wyvern Token",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "クロックトークン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/ClockWyvernToken.cs",
+        "Scripts/Monsters/YGO/ClockWyvernTokenMinion.cs"
+      ],
+      "source_card_id": 21830679,
+      "cid": 13888,
+      "source_url": "https://db.ygoresources.com/data/card/13888",
+      "source_field": "cardData.ja.effectText",
+      "evidence": "「クロックトークン」",
+      "cache_revision": "32335",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13888&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "cards:V_YGO_CARD_CLOCK_WYVERN.description"
+      ]
+    },
+    {
+      "card_id": 35552986,
+      "localization_keys": [
+        "cards:V_YGO_CARD_FIENDSMITHS_SANCT_TOKEN.title",
+        "monsters:FIENDSMITHS_SANCT_TOKEN_MINION.name"
+      ],
+      "eng": "Fiendsmiths Sanct Token",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "デモンスミストークン",
+      "mapping_basis": [
+        "Scripts/Cards/Category/Common/FiendsmithsSanctToken.cs",
+        "Scripts/Monsters/YGO/FiendsmithsSanctTokenMinion.cs"
+      ],
+      "source_card_id": 35552985,
+      "cid": 20241,
+      "source_url": "https://db.ygoresources.com/data/card/20241",
+      "source_field": "cardData.ja.effectText",
+      "evidence": "「デモンスミストークン」",
+      "cache_revision": "32335",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=20241&request_locale=ja",
+      "queried_on": "2026-09-04",
+      "referencing_keys": [
+        "cards:V_YGO_CARD_FIENDSMITHS_SANCT.description"
+      ]
+    }
+  ]
+}
