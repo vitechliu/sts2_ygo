@@ -1,4 +1,6 @@
 {
+  "NEOWS_TALISMAN.description": "拾起时，[gold]升级[/gold]你的[blue]1[/blue]张[gold]{AttackCard.StringValue:cond:{AttackCard}|打击}[/gold]和[blue]1[/blue]张[gold]{DefenseCard.StringValue:cond:{DefenseCard}|防御}[/gold]。",
+  "NEOWS_TALISMAN.eventDescription": "[gold]升级[/gold]你的[blue]1[/blue]张[gold]{AttackCard.StringValue:cond:{AttackCard}|打击}[/gold]和[blue]1[/blue]张[gold]{DefenseCard.StringValue:cond:{DefenseCard}|防御}[/gold]。",
   "V_YGO_RELIC_CYBER_CORE_RELIC.title": "电子核心",
   "V_YGO_RELIC_CYBER_CORE_RELIC.description": "每场战斗中你首次[gold]召唤[/gold][blue]「电子龙」[/blue]怪兽时，获得{Energy:energyIcons()}。",
   "V_YGO_RELIC_CYBER_CORE_RELIC.flavor": "核心开始运转，钢铁巨龙回应了召唤。",

@@ -1,4 +1,6 @@
 {
+  "NEOWS_TALISMAN.description": "Upon pickup, [gold]Upgrade[/gold] [blue]1[/blue] of your [gold]{AttackCard.StringValue:cond:{AttackCard}|Strikes}[/gold] and [blue]1[/blue] of your [gold]{DefenseCard.StringValue:cond:{DefenseCard}|Defends}[/gold].",
+  "NEOWS_TALISMAN.eventDescription": "[gold]Upgrade[/gold] [blue]1[/blue] of your [gold]{AttackCard.StringValue:cond:{AttackCard}|Strikes}[/gold] and [blue]1[/blue] of your [gold]{DefenseCard.StringValue:cond:{DefenseCard}|Defends}[/gold].",
   "LARGE_CAPSULE.description": "Upon pickup, obtain [blue]{Relics}[/blue] random [gold]{Relics:plural:Relic|Relics}[/gold]. Add {AttackCard.StringValue:cond:[gold]{AttackCard}[/gold] and [gold]{DefenseCard}[/gold]|an additional [gold]Strike[/gold] and [gold]Defend[/gold]} to your [gold]Deck[/gold].",
   "LARGE_CAPSULE.eventDescription": "Obtain [blue]{Relics}[/blue] random [gold]{Relics:plural:Relic|Relics}[/gold]. Add {AttackCard.StringValue:cond:[gold]{AttackCard}[/gold] and [gold]{DefenseCard}[/gold]|an additional [gold]Strike[/gold] and [gold]Defend[/gold]} to your [gold]Deck[/gold]."
 }

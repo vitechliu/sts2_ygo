@@ -31,13 +31,13 @@ public abstract class BaseYgoCharacter<TCardPool, TRelicPool, TPotionPool>
     public override bool RequiresEpochAndTimeline => false;
 
     /// <summary>
-    /// 巨大扭蛋为 YGO 角色加入的第一张牌。
+    /// 巨大扭蛋加入、涅奥的护符升级的 YGO 起始攻击牌。
     /// 具体角色可以覆写此属性，改为自己的起始攻击牌。
     /// </summary>
     public virtual CardModel LargeCapsuleAttackCard => ModelDb.Card<AttackBasic>();
 
     /// <summary>
-    /// 巨大扭蛋为 YGO 角色加入的第二张牌。
+    /// 巨大扭蛋加入、涅奥的护符升级的 YGO 起始防御牌。
     /// 具体角色可以覆写此属性，改为自己的起始防御牌。
     /// </summary>
     public virtual CardModel LargeCapsuleDefenseCard => ModelDb.Card<DefenseBasic>();
@@ -64,7 +64,7 @@ public abstract class BaseYgoCharacter<TCardPool, TRelicPool, TPotionPool>
 }
 
 /// <summary>
-/// 为巨大扭蛋提供不依赖 Strike/Defend 标签的替代牌。
+/// 为巨大扭蛋和涅奥的护符提供不依赖 Strike/Defend 标签的替代牌。
 /// </summary>
 public interface ILargeCapsuleCardProvider {
     CardModel LargeCapsuleAttackCard { get; }
