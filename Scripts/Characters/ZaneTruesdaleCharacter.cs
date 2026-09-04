@@ -37,6 +37,17 @@ public class ZaneTruesdaleCharacter
     public override CharacterGender Gender => CharacterGender.Masculine;
     public override int StartingHp => 80;
     public override int StartingGold => 99;
+    
+    protected override ModAnimStateMachine? SetupCustomCombatAnimationStateMachine(
+        Node visualsRoot,
+        CharacterModel character)
+    {
+        return ModAnimStateMachines.StandardCue(
+            visualsRoot,
+            character,
+            idleName: "idle",
+            hitName: "hit");
+    }
 
     public override CharacterAssetProfile AssetProfile => CharacterAssetProfiles.Merge(
         CharacterAssetProfiles.Ironclad(),
@@ -60,8 +71,8 @@ public class ZaneTruesdaleCharacter
                 .Sequence("idle", 
                     seq => BuildFrames(seq, AnimationRoot + "/idle/", 0.06f, 0, 27)
                 )
-                .Sequence("relaxed", 
-                    seq => BuildFrames(seq, AnimationRoot + "/idle/", 0.06f, 0, 27)
+                .Sequence("hit", 
+                    seq => BuildFrames(seq, AnimationRoot + "/hit/", 0.04f, 0, 21)
                 )
                 .Build()
         }
