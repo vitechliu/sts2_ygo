@@ -24,7 +24,7 @@ public class BackupSecretary() : BaseMonsterCard(1, CardType.Attack, CardRarity.
     protected override bool ShouldGlowGoldInternal => CanSpecialSummon;
 
     private bool CanSpecialSummon => Owner.Creature.Pets.Any(
-        pet => pet.Monster is BaseMonster monster && monster.YgoGetCore().IsRace(YgoRace.Cyberse)
+        pet => pet.Monster is BaseMonster monster && monster.IsRace(YgoRace.Cyberse)
     );
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [

@@ -27,8 +27,8 @@ public class CapacitorStalkerMinion: BaseMonster {
 
         Dictionary<CardModel, Creature> targets = owner.Creature.Pets
             .Where(pet => pet != Creature
-                && pet.Monster is BaseMonster { SourceCard: BaseMonsterCard card }
-                && card.YgoGetCore().IsRace(YgoRace.Cyberse))
+                && pet.Monster is BaseMonster { SourceCard: BaseMonsterCard } monster
+                && monster.IsRace(YgoRace.Cyberse))
             .ToUniqueSourceCardTargets(nameof(CapacitorStalkerMinion));
         if (targets.Count == 0) return;
 

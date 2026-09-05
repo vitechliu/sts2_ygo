@@ -20,7 +20,7 @@ public class LimiterRemoval() : BaseSpellCard(0, CardType.Skill, CardRarity.Rare
         List<Creature> machineMonsters = Owner.Creature.Pets
             .Where(pet => pet.IsAlive
                 && pet.Monster is BaseMonster monster
-                && monster.YgoGetCore().IsRace(YgoRace.Machine))
+                && monster.IsRace(YgoRace.Machine))
             .ToList();
 
         foreach (var machineMonster in machineMonsters) {

@@ -63,7 +63,15 @@ public sealed record SummonMaterial {
     public string? CardName => CoreCard is { } coreCard
         ? new[] { coreCard.CnName, coreCard.Name, coreCard.EnName }.FirstOrDefault(name => !string.IsNullOrEmpty(name))
         : null;
-    public string? Race => CoreCard?.Race;
+    public string? Race => Creature?.Monster is BaseMonster monster
+        ? monster.Race
+        : CoreCard?.Race;
+
+    public bool IsRace(YgoRace race) {
+        return Creature?.Monster is BaseMonster monster
+            ? monster.IsRace(race)
+            : CoreCard.IsRace(race);
+    }
     public bool IsEffectMonster => CoreCard?.IsEffectMonster == true;
     public int? Level => Creature?.Monster is BaseMonster monster
         ? monster.Level

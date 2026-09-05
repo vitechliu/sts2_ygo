@@ -17,6 +17,6 @@ public class PowercodeTalker() : BaseExtraLinkCard(-1, CardType.Attack, CardRari
     public override int GetLinkMaterialCount(CoreCard coreCard) => 2;
 
     public override bool CanUseLinkMaterial(SummonMaterial material) {
-        return material.CoreCard.IsRace(YgoRace.Cyberse);
+        return material.IsRace(YgoRace.Cyberse);
     }
 }

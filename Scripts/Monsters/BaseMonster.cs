@@ -39,6 +39,15 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
         }
     }
 
+    /// <summary>
+    /// 返回怪兽在场上的当前种族。机械驱动之夜存在时，持有者场上的怪兽均视为机械族。
+    /// </summary>
+    public string? Race => Creature?.PetOwner?.Creature.HasPower<ClockworkNightPower>() == true
+        ? YgoRace.Machine.ToCoreValue()
+        : this.YgoGetCore()?.Race;
+
+    public bool IsRace(YgoRace race) => Race == race.ToCoreValue();
+
     protected NMonsterVisuals? Visuals => Creature?.GetCreatureNode()?.Visuals as NMonsterVisuals;
     
     //防止多次死亡结算
