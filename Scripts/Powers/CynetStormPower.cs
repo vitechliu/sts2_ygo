@@ -24,8 +24,8 @@ public class CynetStormPower : ModPowerTemplate, IMonsterSummonHookListener {
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://VYgo/images/cards/42461852.png",
-        BigIconPath: "res://VYgo/images/cards/42461852.png");
+        IconPath: "res://VYgo/images/powers/cynet_storm_power.png",
+        BigIconPath: "res://VYgo/images/powers/cynet_storm_power.png");
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromCard<CynetStorm>(),

@@ -28,8 +28,8 @@ public sealed class ClockworkNightPower : BaseActionPower {
     public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://VYgo/images/cards/84797028.png",
-        BigIconPath: "res://VYgo/images/cards/84797028.png"
+        IconPath: "res://VYgo/images/powers/clockwork_night_power.png",
+        BigIconPath: "res://VYgo/images/powers/clockwork_night_power.png"
     );
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [

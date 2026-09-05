@@ -30,8 +30,8 @@ public class CynetRegressionPower : ModPowerTemplate, IMonsterSummonHookListener
     public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://VYgo/images/cards/19943114.png",
-        BigIconPath: "res://VYgo/images/cards/19943114.png");
+        IconPath: "res://VYgo/images/powers/cynet_regression_power.png",
+        BigIconPath: "res://VYgo/images/powers/cynet_regression_power.png");
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromCard<CynetRegression>(),

@@ -30,8 +30,8 @@ public class BornfromDraconisPower : BaseActionPower {
     public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://VYgo/images/cards/96699830.png",
-        BigIconPath: "res://VYgo/images/cards/96699830.png"
+        IconPath: "res://VYgo/images/powers/bornfrom_draconis_power.png",
+        BigIconPath: "res://VYgo/images/powers/bornfrom_draconis_power.png"
     );
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [

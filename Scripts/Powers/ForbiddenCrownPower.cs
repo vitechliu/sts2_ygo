@@ -19,8 +19,8 @@ public sealed class ForbiddenCrownPower : ModPowerTemplate {
     public override PowerStackType StackType => PowerStackType.Single;
 
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://VYgo/images/cards/98829635.png",
-        BigIconPath: "res://VYgo/images/cards/98829635.png"
+        IconPath: "res://VYgo/images/powers/forbidden_crown_power.png",
+        BigIconPath: "res://VYgo/images/powers/forbidden_crown_power.png"
     );
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [

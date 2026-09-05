@@ -21,13 +21,13 @@ public sealed class FusionGatePower : BaseActionPower {
     public override PowerStackType StackType => PowerStackType.Single;
 
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://VYgo/images/cards/33550694.png",
-        BigIconPath: "res://VYgo/images/cards/33550694.png"
+        IconPath: "res://VYgo/images/powers/fusion_gate_power.png",
+        BigIconPath: "res://VYgo/images/powers/fusion_gate_power.png"
     );
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromCard<FusionGate>(),
-        YgoHoverTipConst.PowerAction(),
+        YgoHoverTipConst.InfinitePowerAction(),
         YgoHoverTipConst.FusionSummon()
     ];
 

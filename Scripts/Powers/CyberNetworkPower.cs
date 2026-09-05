@@ -35,8 +35,8 @@ public class CyberNetworkPower : ModPowerTemplate {
     public override int DisplayAmount => GetInternalData<Data>().RemainingTurns;
 
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://VYgo/images/cards/12670770.png",
-        BigIconPath: "res://VYgo/images/cards/12670770.png"
+        IconPath: "res://VYgo/images/powers/cyber_network_power.png",
+        BigIconPath: "res://VYgo/images/powers/cyber_network_power.png"
     );
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [

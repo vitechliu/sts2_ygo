@@ -24,8 +24,8 @@ public sealed class MirrorForcePower : ModPowerTemplate {
     public override PowerStackType StackType => PowerStackType.Single;
 
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://VYgo/images/cards/44095762.png",
-        BigIconPath: "res://VYgo/images/cards/44095762.png"
+        IconPath: "res://VYgo/images/powers/mirror_force_power.png",
+        BigIconPath: "res://VYgo/images/powers/mirror_force_power.png"
     );
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
