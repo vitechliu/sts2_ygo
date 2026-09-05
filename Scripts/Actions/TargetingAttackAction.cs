@@ -26,7 +26,10 @@ public class TargetingAttackAction : BasePerTurnMonsterAction {
     protected int StrengthPowerAmount {
         get {
             var power = Owner.Powers.OfType<AttackPower>().FirstOrDefault();
-            return power?.Amount ?? 0;
+            int attack = power?.Amount ?? 0;
+            return Owner.Monster is BaseMonster monster
+                ? monster.GetAttackDamage(attack)
+                : attack;
         }
     }
 

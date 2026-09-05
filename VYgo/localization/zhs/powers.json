@@ -137,13 +137,13 @@
   "V_YGO_POWER_INVOKED_CALIGA_BUFFER_POWER.description": "阻止下{Amount}次生命值损伤，并在友方回合开始时移除。",
   "V_YGO_POWER_INVOKED_CALIGA_BUFFER_POWER.smartDescription": "阻止下[blue]{Amount}[/blue]次生命值损伤，并在友方回合开始时移除。",
   "V_YGO_POWER_FUSION_GATE_POWER.title": "融合之门",
-  "V_YGO_POWER_FUSION_GATE_POWER.description": "[gold]无限启动[/gold]：将手牌与场上的怪兽作为素材送入弃牌堆，进行一次[gold]融合召唤[/gold]。",
+  "V_YGO_POWER_FUSION_GATE_POWER.description": "[gold]无限启动[/gold]：将手牌与场上的怪兽作为素材[gold]消耗[/gold]，进行一次[gold]融合召唤[/gold]。",
   "V_YGO_POWER_FUSION_GATE_POWER.selectionScreenPrompt": "请选择要融合召唤的怪兽与融合素材。",
   "V_YGO_POWER_MIRROR_FORCE_POWER.title": "神圣防护罩 -反射镜力-（盖伏）",
-  "V_YGO_POWER_MIRROR_FORCE_POWER.description": "免疫下一次受到的攻击伤害，并对攻击者造成{Amount}点伤害。",
+  "V_YGO_POWER_MIRROR_FORCE_POWER.description": "免疫下一次受到的伤害，并对攻击者造成{Amount}点伤害。",
   "V_YGO_POWER_CLOCKWORK_NIGHT_POWER.title": "机械驱动之夜",
   "V_YGO_POWER_CLOCKWORK_NIGHT_POWER.description": "场上的怪兽均视为机械族。机械族怪兽的攻击伤害增加{Amount}。\n[gold]启动[/gold]：将此牌[gold]消耗[/gold]，从抽牌堆选择1只机械族·地属性怪兽加入手牌。",
   "V_YGO_POWER_CLOCKWORK_NIGHT_POWER.selectionScreenPrompt": "请选择要加入手牌的机械族·地属性怪兽。",
   "V_YGO_POWER_FORBIDDEN_CROWN_POWER.title": "禁忌的圣冠",
-  "V_YGO_POWER_FORBIDDEN_CROWN_POWER.description": "在下个回合开始前，造成和受到的伤害翻倍。"
+  "V_YGO_POWER_FORBIDDEN_CROWN_POWER.description": "直到其回合结束前，造成和受到的伤害翻倍。"
 }

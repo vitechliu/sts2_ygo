@@ -42,8 +42,17 @@ public class YgoPower : ModPowerTemplate, IYgoId {
     public void InitInfo() {
         var coreCard = this.YgoGetCore();
         StringVar stringVar = (StringVar)base.DynamicVars["YgoInfo"];
-        int? level = Owner.Monster is BaseMonster monster ? monster.Level : coreCard?.Level;
+        BaseMonster? monster = Owner.Monster as BaseMonster;
+        int? level = monster?.Level ?? coreCard?.Level;
         string formattedInfo = coreCard?.GetFormatedInfo(level) ?? string.Empty;
+        if (coreCard?.Race is { Length: > 0 } originalRace
+            && monster?.Race is { Length: > 0 } currentRace
+            && originalRace != currentRace) {
+            formattedInfo = formattedInfo.Replace(
+                originalRace.TrimEnd('族'),
+                currentRace.TrimEnd('族'),
+                StringComparison.Ordinal);
+        }
         if (formattedInfo.Length > 0) {
             stringVar.StringValue = formattedInfo;
         }

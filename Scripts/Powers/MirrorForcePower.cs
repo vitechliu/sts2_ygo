@@ -14,6 +14,12 @@ namespace VYgo.Scripts.Powers;
 
 [RegisterPower]
 public sealed class MirrorForcePower : ModPowerTemplate {
+    private sealed class Data {
+        public PlayerChoiceContext? ChoiceContext { get; set; }
+        public Creature? Dealer { get; set; }
+        public bool PreventedDamage { get; set; }
+    }
+
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
 
@@ -26,20 +32,9 @@ public sealed class MirrorForcePower : ModPowerTemplate {
         HoverTipFactory.FromCard<MirrorForce>()
     ];
 
-    public override decimal ModifyDamageMultiplicative(
-        Creature? target,
-        decimal amount,
-        ValueProp props,
-        Creature? dealer,
-        CardModel? cardSource,
-        CardPlay? cardPlay
-    ) {
-        return target == Owner && amount > 0m
-            ? 0m
-            : 1m;
-    }
+    protected override object InitInternalData() => new Data();
 
-    public override async Task BeforeDamageReceived(
+    public override Task BeforeDamageReceived(
         PlayerChoiceContext choiceContext,
         Creature target,
         decimal amount,
@@ -47,9 +42,40 @@ public sealed class MirrorForcePower : ModPowerTemplate {
         Creature? dealer,
         CardModel? cardSource
     ) {
-        if (target != Owner || amount <= 0m) return;
+        Data data = GetInternalData<Data>();
+        data.ChoiceContext = target == Owner && amount > 0m ? choiceContext : null;
+        data.Dealer = target == Owner && amount > 0m ? dealer : null;
+        data.PreventedDamage = false;
+        return Task.CompletedTask;
+    }
 
+    public override decimal ModifyHpLostAfterOstyLate(
+        Creature target,
+        decimal amount,
+        ValueProp props,
+        Creature? dealer,
+        CardModel? cardSource
+    ) {
+        Data data = GetInternalData<Data>();
+        if (target != Owner || amount <= 0m || data.ChoiceContext == null) {
+            return amount;
+        }
+
+        data.PreventedDamage = true;
+        return 0m;
+    }
+
+    public override async Task AfterModifyingHpLostAfterOsty() {
+        Data data = GetInternalData<Data>();
+        if (!data.PreventedDamage || data.ChoiceContext == null) return;
+
+        PlayerChoiceContext choiceContext = data.ChoiceContext;
+        Creature? dealer = data.Dealer;
         int reflectedDamage = Amount;
+        data.ChoiceContext = null;
+        data.Dealer = null;
+        data.PreventedDamage = false;
+
         Flash();
         await PowerCmd.Remove(this);
         if (dealer == null) return;

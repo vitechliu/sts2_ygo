@@ -38,13 +38,12 @@ public sealed class ForbiddenCrownPower : ModPowerTemplate {
         return target == Owner || dealer == Owner ? 2m : 1m;
     }
 
-    public override async Task BeforeSideTurnStart(
+    public override async Task AfterSideTurnEnd(
         PlayerChoiceContext choiceContext,
         CombatSide side,
-        IReadOnlyList<Creature> participants,
-        ICombatState combatState
+        IEnumerable<Creature> participants
     ) {
-        if (side == CombatSide.Enemy) {
+        if (participants.Contains(Owner)) {
             await PowerCmd.Remove(this);
         }
     }

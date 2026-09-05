@@ -44,7 +44,7 @@ public sealed class FusionGatePower : BaseActionPower {
             && SummonUtil.HasFusionSummonTarget(
                 context.Player,
                 _ => SummonUtil.GetFieldAndHandMonsterMaterials(context.Player),
-                _ => PileType.Discard);
+                _ => PileType.Exhaust);
     }
 
     protected override async Task<bool> OnAction(ModRightClickExecutionContext context) {
@@ -61,7 +61,7 @@ public sealed class FusionGatePower : BaseActionPower {
                 SelectionPrompt: SelectionScreenPrompt,
                 GetAvailableMaterials: _ =>
                     SummonUtil.GetFieldAndHandMonsterMaterials(context.Player),
-                GetMaterialDestination: _ => PileType.Discard));
+                GetMaterialDestination: _ => PileType.Exhaust));
         if (result.Success) Flash();
 
         // 无限启动：成功后也不消耗每回合一次的行动次数。
