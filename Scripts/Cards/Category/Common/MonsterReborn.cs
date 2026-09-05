@@ -11,7 +11,7 @@ namespace VYgo.Scripts.Cards.Category.Common;
 
 [RegisterCard(typeof(CommonCardPool))]
 public class MonsterReborn()
-    : BaseSpellCard(0, CardType.Skill, CardRarity.Common, TargetType.None) {
+    : BaseSpellCard(1, CardType.Skill, CardRarity.Common, TargetType.None) {
     
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         YgoHoverTipConst.SpecialSummon()
