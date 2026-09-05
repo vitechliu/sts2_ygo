@@ -41,7 +41,7 @@ public class FinalStrikeCyberEndDragon() : BaseExtraFusionCard(-1, CardType.Atta
     ];
 
     public override bool CanUseFusionMaterial(SummonMaterial material) {
-        return material.CoreCard?.IsRace(YgoRace.Machine) == true;
+        return material.IsRace(YgoRace.Machine);
     }
 
     protected override async Task AfterFusionSummoned(SummonPostPlayContext context) {

@@ -33,7 +33,7 @@ public class ChimeratechFortressDragon()
     ];
 
     public override bool CanUseFusionMaterial(SummonMaterial material) {
-        return material.CoreCard?.IsRace(YgoRace.Machine) == true;
+        return material.IsRace(YgoRace.Machine);
     }
 
     public override bool HasValidFusionMaterials(IReadOnlyList<SummonMaterial> materials) {

@@ -37,7 +37,7 @@ public class CyberEternityDragon() : BaseExtraFusionCard(-1, CardType.Skill, Car
 
     public override bool CanUseFusionMaterial(SummonMaterial material) {
         return material.NameEquals(YgoMaterialNames.电子龙)
-            || material.CoreCard?.IsRace(YgoRace.Machine) == true;
+            || material.IsRace(YgoRace.Machine);
     }
 
     public override bool HasValidFusionMaterials(IReadOnlyList<SummonMaterial> materials) {

@@ -44,7 +44,7 @@ public class CyberDragonSieger() : BaseExtraLinkCard(energyCost, CardType.Attack
     public override int UpgradeLifeVar => 0;
 
     public override bool CanUseLinkMaterial(SummonMaterial material) {
-        return material.CoreCard.IsRace(YgoRace.Machine);
+        return material.IsRace(YgoRace.Machine);
     }
 
     public override bool HasValidLinkMaterials(

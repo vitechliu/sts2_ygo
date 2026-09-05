@@ -25,7 +25,7 @@ public class CyberDragonNova() : BaseExtraXyzCard(1, CardType.Skill, CardRarity.
     ];
     
     public override bool CanUseXyzMaterial(CoreCard coreCard, SummonMaterial material) {
-        return material.CoreCard.IsRace(YgoRace.Machine)
+        return material.IsRace(YgoRace.Machine)
             && material.IsField
             && material.Creature is { IsAlive: true }
             && material.Level == 5;

@@ -17,6 +17,6 @@ public class ExcodeTalker() : BaseExtraLinkCard(-1, CardType.Attack, CardRarity.
     public override int GetLinkMaterialCount(CoreCard coreCard) => 2;
 
     public override bool CanUseLinkMaterial(SummonMaterial material) {
-        return material.CoreCard.IsRace(YgoRace.Cyberse);
+        return material.IsRace(YgoRace.Cyberse);
     }
 }

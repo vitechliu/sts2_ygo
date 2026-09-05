@@ -39,7 +39,7 @@ public class HeosvarogtheMechanicalDawn()
     public int WeakAmount => DynamicVars["WeakPower"].IntValue;
 
     public override bool CanUseFusionMaterial(SummonMaterial material) {
-        return material.CoreCard.IsRace(YgoRace.Machine)
+        return material.IsRace(YgoRace.Machine)
             && material.CoreCard?.Attribute == "光";
     }
 

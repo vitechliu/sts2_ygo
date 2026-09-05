@@ -35,8 +35,8 @@ public class CynetRecoveryPower : ModPowerTemplate, IMonsterBattleDestroyedHookL
         Creature source) {
         if (Owner.Player is not { } player
             || destroyedCreature.PetOwner != player
-            || destroyedCreature.Monster is not BaseMonster { SourceCard: BaseMonsterCard card }
-            || !card.YgoGetCore().IsRace(YgoRace.Cyberse)) {
+            || destroyedCreature.Monster is not BaseMonster { SourceCard: BaseMonsterCard card } monster
+            || !monster.IsRace(YgoRace.Cyberse)) {
             return;
         }
 

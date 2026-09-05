@@ -33,7 +33,7 @@ public class CyberseWhiteHat() : BaseMonsterCard(2, CardType.Skill, CardRarity.U
     private bool CanSpecialSummon => Owner.Creature.Pets
         .Select(pet => pet.Monster as BaseMonster)
         .Where(monster => monster?.SourceCard is BaseMonsterCard)
-        .Select(monster => monster!.YgoGetCore().Race)
+        .Select(monster => monster!.Race)
         .Where(race => !string.IsNullOrWhiteSpace(race))
         .GroupBy(race => race)
         .Any(group => group.Count() >= 2);

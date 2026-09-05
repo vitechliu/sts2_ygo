@@ -23,12 +23,14 @@ internal static class FiendsmithUtil {
     }
 
     public static bool IsLightFiendMonster(SummonMaterial material) {
-        return IsLightFiend(material.CoreCard);
+        return material.IsRace(YgoRace.Fiend)
+            && material.CoreCard?.Attribute == "光";
     }
 
     public static bool IsLightFiendMonster(Creature creature) {
         return creature.Monster is BaseMonster monster
-            && IsLightFiend(monster.YgoGetCore());
+            && monster.IsRace(YgoRace.Fiend)
+            && monster.YgoGetCore()?.Attribute == "光";
     }
 
     private static bool IsLightFiend(Core.Cards.CoreCard? coreCard) {

@@ -19,7 +19,7 @@ public class CynetCrosswipe() : BaseSpellCard(1, CardType.Attack, CardRarity.Com
     ];
 
     private bool HasCyberseMonsterOnField => Owner.Creature.Pets.Any(
-        pet => pet.Monster is BaseMonster monster && monster.YgoGetCore().IsRace(YgoRace.Cyberse)
+        pet => pet.Monster is BaseMonster monster && monster.IsRace(YgoRace.Cyberse)
     );
 
     protected override bool IsPlayable => base.IsPlayable && HasCyberseMonsterOnField;
