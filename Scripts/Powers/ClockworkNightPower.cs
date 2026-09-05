@@ -10,6 +10,7 @@ using STS2RitsuLib.Interactions.RightClick;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using VYgo.Core;
+using VYgo.Scripts.Actions;
 using VYgo.Scripts.Cards;
 using VYgo.Scripts.Cards.Category.Machine;
 using VYgo.Scripts.Monsters;
@@ -40,23 +41,13 @@ public sealed class ClockworkNightPower : BaseActionPower {
 
     public override Task AfterApplied(Creature? applier, CardModel? cardSource) {
         GetInternalData<Data>().SourceCard = cardSource;
+        RefreshMonsterInfo(Owner);
         return Task.CompletedTask;
     }
 
-    public override decimal ModifyDamageAdditive(
-        Creature? target,
-        decimal amount,
-        ValueProp props,
-        Creature? dealer,
-        CardModel? cardSource,
-        CardPlay? cardPlay
-    ) {
-        return dealer?.PetOwner?.Creature == Owner
-            && dealer.Monster is BaseMonster monster
-            && monster.IsRace(YgoRace.Machine)
-            && props.IsPoweredAttack()
-                ? Amount
-                : 0m;
+    public override Task AfterRemoved(Creature oldOwner) {
+        RefreshMonsterInfo(oldOwner);
+        return Task.CompletedTask;
     }
 
     public override bool CanExecuteRightClick(ModRightClickExecutionContext context) {
@@ -91,5 +82,12 @@ public sealed class ClockworkNightPower : BaseActionPower {
         return card is BaseMonsterCard monsterCard
             && monsterCard.YgoGetCore().IsRace(YgoRace.Machine)
             && monsterCard.YgoGetCore()?.Attribute == "地";
+    }
+
+    private static void RefreshMonsterInfo(Creature playerCreature) {
+        foreach (Creature pet in playerCreature.Pets) {
+            pet.GetPower<YgoPower>()?.InitInfo();
+            BasePerTurnMonsterAction.RefreshActionIntent(pet);
+        }
     }
 }
