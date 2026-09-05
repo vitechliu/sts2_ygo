@@ -80,7 +80,10 @@ public static class YgoHoverTipConst {
     public static IHoverTip PowerAction() {
         return Base("POWER_ACTION");
     }
-    
+    //能力无限启动
+    public static IHoverTip InfinitePowerAction() {
+        return Base("INFINITE_POWER_ACTION");
+    }
     //手发启动
     public static IHoverTip HandAction() {
         return Base("HAND_ACTION");

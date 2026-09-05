@@ -21,8 +21,8 @@ public class CynetRecoveryPower : ModPowerTemplate, IMonsterBattleDestroyedHookL
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://VYgo/images/cards/73558460.png",
-        BigIconPath: "res://VYgo/images/cards/73558460.png");
+        IconPath: "res://VYgo/images/powers/cynet_recovery_power.png",
+        BigIconPath: "res://VYgo/images/powers/cynet_recovery_power.png");
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromCard<CynetRecovery>(),

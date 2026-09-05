@@ -20,8 +20,8 @@ public class CynetUniversePower : BaseActionPower {
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://VYgo/images/cards/61583217.png",
-        BigIconPath: "res://VYgo/images/cards/61583217.png"
+        IconPath: "res://VYgo/images/powers/cynet_universe_power.png",
+        BigIconPath: "res://VYgo/images/powers/cynet_universe_power.png"
     );
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [

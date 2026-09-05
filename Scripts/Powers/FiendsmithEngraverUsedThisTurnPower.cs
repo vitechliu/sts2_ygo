@@ -15,8 +15,8 @@ public sealed class FiendsmithEngraverUsedThisTurnPower : ModPowerTemplate {
     protected override bool IsVisibleInternal => false;
 
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://VYgo/images/cards/60764609.png",
-        BigIconPath: "res://VYgo/images/cards/60764609.png"
+        IconPath: "res://VYgo/images/powers/fiendsmith_engraver_used_this_turn_power.png",
+        BigIconPath: "res://VYgo/images/powers/fiendsmith_engraver_used_this_turn_power.png"
     );
 
     public override async Task AfterSideTurnEnd(
