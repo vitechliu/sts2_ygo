@@ -177,7 +177,7 @@
     "V_YGO_CARD_BACKUP_SECRETARY.title": "备份秘书",
     "V_YGO_CARD_BACKUP_SECRETARY.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n场上有电子界族怪兽时可以[gold]特召[/gold]。",
     "V_YGO_CARD_BALANCER_LORD.title": "均衡负载王",
-    "V_YGO_CARD_BALANCER_LORD.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]启动[/gold]：选择手牌一只电子界族怪兽，使其费用-1。\n这张卡被[gold]消耗[/gold]时：选择手牌一只电子界族怪兽[gold]特召[/gold]。",
+    "V_YGO_CARD_BALANCER_LORD.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]启动[/gold]：选择手牌一只电子界族怪兽，使其费用减少1。\n这张卡被[gold]消耗[/gold]时：选择手牌一只电子界族怪兽[gold]特召[/gold]。",
     "V_YGO_CARD_BALANCER_LORD.exhaustSelectionScreenPrompt": "请选择要特召的电子界族怪兽。",
     "V_YGO_CARD_DUAL_ASSEMBWURM.title": "双汇编亚龙",
     "V_YGO_CARD_DUAL_ASSEMBWURM.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])\n[gold]启动[/gold]：选择手牌一只电子界族怪兽[gold]消耗[/gold]，对目标造成{Damage:diff()}点伤害，并赋予{VulnerablePower:diff()}层[gold]易伤[/gold]。",

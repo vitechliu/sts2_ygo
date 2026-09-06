@@ -38,6 +38,7 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 		""";
 
 	public virtual void OnSummon() {
+		Entry.Logger.Info("PlaySummonVfx");
 		PlaySummonVfx();
 		//下一帧
 		// ExecuteOnNextFrame();

@@ -55,10 +55,12 @@ public class CapacitorStalkerMinion: BaseMonster {
         Player owner
     ) {
         if (SourceCard is not CapacitorStalker sourceCard) return;
+        //素材送墓时本怪兽已离场，CombatState 可能为 null，改用持有者所在战斗状态
+        if (owner.Creature.CombatState is not { } combatState) return;
 
         await CreatureCmd.Damage(
             choiceContext,
-            creature.CombatState.Creatures.Where(target => !target.IsPet).ToList(),
+            combatState.Creatures.Where(target => !target.IsPet).ToList(),
             sourceCard.GraveyardDamage,
             ValueProp.Unpowered,
             creature,
