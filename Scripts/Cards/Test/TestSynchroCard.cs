@@ -12,12 +12,12 @@ namespace VYgo.Scripts.Cards.Test;
 /// TreatedAsTuners，覆盖目标等级、素材等级与“视为调整”规则。
 /// CardId 借用已有核心数据只用于构造 CardModel，不代表正式同调怪兽。
 /// </summary>
-[RegisterCard(typeof(SynchroCardPool))]
-[RegisterCharacterStarterCard(typeof(RedhatCharacter), 3)]
+// [RegisterCard(typeof(SynchroCardPool))]
+// [RegisterCharacterStarterCard(typeof(RedhatCharacter), 3)]
 public sealed class TestSynchroCard()
     : BaseExtraSynchroCard(-1, CardRarity.Basic, TargetType.None, false) {
 
-    public override int CardId => 1861629;
+    public override int CardId => -1;
     public int TargetLevel { get; set; } = 8;
     public Dictionary<int, int> EffectiveLevels { get; } = [];
     public HashSet<int> TreatedAsTuners { get; } = [];

@@ -42,6 +42,9 @@ public sealed class BalancerLordAction : BasePerTurnMonsterAction {
             IsCyberseMonster,
             this
         )).FirstOrDefault();
+        // 本 action 作为选择 source 不会自动触发 ExecutionFinished，
+        // 需要手动触发让 NPlayerHand 把已选中的卡放回手牌。
+        InvokeExecutionFinished();
         if (selected == null) return;
 
         SpendUses();
