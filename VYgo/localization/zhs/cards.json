@@ -197,7 +197,7 @@
     "V_YGO_CARD_CLOCK_WYVERN_TOKEN.title": "时钟衍生物",
     "V_YGO_CARD_CLOCK_WYVERN_TOKEN.description": "[gold]召唤[/gold]([gold]{Attack:diff()}[/gold]/[blue]{Life:diff()}[/blue])",
     "V_YGO_CARD_LADY_DEBUG.title": "调试瓢虫女郎",
-    "V_YGO_CARD_LADY_DEBUG.description": "[gold]召唤[/gold]([gold]{Attack}[/gold]/[blue]{Life}[/blue])\n[gold]登场[/gold]：从{Cards}只随机电子界族怪兽中选择1只加入手牌；若此牌已升级，选项也会升级。\n[gold]送墓[/gold]：消耗此牌。",
+    "V_YGO_CARD_LADY_DEBUG.description": "[gold]召唤[/gold]([gold]{Attack}[/gold]/[blue]{Life}[/blue])\n[gold]登场[/gold]：从{Cards}只随机{IfUpgraded:show:升级后的|}电子界族怪兽中选择1只加入手牌；\n[gold]送墓[/gold]：消耗。",
     "V_YGO_CARD_DRACONNET.title": "网络小龙",
     "V_YGO_CARD_DRACONNET.description": "[gold]召唤[/gold]([gold]{Attack}[/gold]/[blue]{Life}[/blue])\n[gold]登场[/gold]：从抽牌堆选择1只2星以下的通常怪兽，将其{IfUpgraded:show:[gold]升级[/gold]并|}[gold]特召[/gold]。以此法特召的怪兽本回合无法行动。",
     "V_YGO_CARD_DRACONNET.selectionScreenPrompt": "请选择要特召的2星以下通常怪兽。",

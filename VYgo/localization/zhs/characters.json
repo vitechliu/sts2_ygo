@@ -11,8 +11,8 @@
   "V_YGO_CHARACTER_REDHAT_CHARACTER.pronounObject": "他",
   "V_YGO_CHARACTER_REDHAT_CHARACTER.pronounPossessive": "他的",
   "V_YGO_CHARACTER_REDHAT_CHARACTER.pronounSubject": "他",
-  "V_YGO_CHARACTER_REDHAT_CHARACTER.title": "小红帽",
-  "V_YGO_CHARACTER_REDHAT_CHARACTER.titleObject": "小红帽",
+  "V_YGO_CHARACTER_REDHAT_CHARACTER.title": "小红帽(测试用)",
+  "V_YGO_CHARACTER_REDHAT_CHARACTER.titleObject": "小红帽(测试用)",
   "V_YGO_CHARACTER_REDHAT_CHARACTER.unlockText": "用[pink]{Prerequisite}[/pink]进行一局游戏来解锁这个角色。",
   "V_YGO_CHARACTER_ZANE_TRUESDALE_CHARACTER.aromaPrinciple": "[sine][blue]胜利，只属于真正的强者。[/blue][/sine]",
   "V_YGO_CHARACTER_ZANE_TRUESDALE_CHARACTER.banter.alive.endTurnPing": "回合结束。",
@@ -41,7 +41,7 @@
   "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.pronounObject": "他",
   "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.pronounPossessive": "他的",
   "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.pronounSubject": "他",
-  "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.title": "Playmaker",
-  "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.titleObject": "Playmaker",
+  "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.title": "Playmaker(开发中)",
+  "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.titleObject": "Playmaker(开发中)",
   "V_YGO_CHARACTER_PLAYMAKER_CHARACTER.unlockText": "用[pink]{Prerequisite}[/pink]进行一局游戏来解锁Playmaker。"
 }

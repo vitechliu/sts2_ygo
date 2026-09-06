@@ -1098,7 +1098,7 @@
       "jpn": "ROMクラウディア",
       "mapping_basis": [
         "Scripts/Cards/Category/Playmaker/ROMCloudia.cs",
-        "Scripts/Monsters/YGO/ROMCloudiaMinion.cs"
+        "Scripts/Monsters/YGO/RomCloudiaMinion.cs"
       ],
       "cid": 13197,
       "source_url": "https://ygocdb.com/api/v0/cardset",
@@ -1318,7 +1318,7 @@
       "jpn": "RAMクラウダー",
       "mapping_basis": [
         "Scripts/Cards/Category/Playmaker/RAMClouder.cs",
-        "Scripts/Monsters/YGO/RAMClouderMinion.cs"
+        "Scripts/Monsters/YGO/RamClouderMinion.cs"
       ],
       "cid": 13031,
       "source_url": "https://ygocdb.com/api/v0/cardset",
@@ -2875,14 +2875,14 @@
       "card_id": 29301450,
       "localization_keys": [
         "cards:V_YGO_CARD_SP_LITTLE_KNIGHT.title",
-        "monsters:S_P_LITTLE_KNIGHT_MINION.name"
+        "monsters:SP_LITTLE_KNIGHT_MINION.name"
       ],
       "eng": "SP Little Knight",
       "english_source": "VYgo/db.json en_name 分词",
       "jpn": "S：Pリトルナイト",
       "mapping_basis": [
         "Scripts/Cards/Category/Link/SPLittleKnight.cs",
-        "Scripts/Monsters/YGO/SPLittleKnightMinion.cs"
+        "Scripts/Monsters/YGO/SpLittleKnightMinion.cs"
       ],
       "cid": 19188,
       "source_url": "https://ygocdb.com/api/v0/cardset",

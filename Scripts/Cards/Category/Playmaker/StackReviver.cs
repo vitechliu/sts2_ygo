@@ -7,9 +7,11 @@ using VYgo.Scripts.Pools;
 namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
-public class StackReviver() : BaseMonsterCard(0, CardType.Skill, CardRarity.Common, TargetType.None) {
+public class StackReviver() : BaseMonsterCard(1, CardType.Skill, CardRarity.Common, TargetType.None) {
     public override int CardId => 9523599;
 
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override int BaseAttackVar => 0;
     public override int BaseLifeVar => 3;
 
