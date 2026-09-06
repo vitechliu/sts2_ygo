@@ -50,6 +50,24 @@ public sealed class ClockworkNightPower : BaseActionPower {
         return Task.CompletedTask;
     }
 
+    public override decimal ModifyDamageAdditive(
+        Creature? target,
+        decimal amount,
+        ValueProp props,
+        Creature? dealer,
+        CardModel? cardSource,
+        CardPlay? cardPlay
+    ) {
+        if (!props.IsPoweredAttack()
+            || dealer?.PetOwner?.Creature != Owner
+            || dealer.Monster is not BaseMonster monster
+            || !monster.IsRace(YgoRace.Machine)) {
+            return 0m;
+        }
+
+        return Amount;
+    }
+
     public override bool CanExecuteRightClick(ModRightClickExecutionContext context) {
         return base.CanExecuteRightClick(context)
             && GetInternalData<Data>().SourceCard is { }
