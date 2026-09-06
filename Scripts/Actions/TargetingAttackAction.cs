@@ -3,10 +3,10 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.ValueProps;
 using MinionLib.Commands;
 using VYgo.Scripts.Monsters;
-using VYgo.Scripts.Powers;
 
 namespace VYgo.Scripts.Actions;
 
@@ -15,33 +15,53 @@ public class TargetingAttackAction : BasePerTurnMonsterAction {
 
     public override TargetType TargetType => TargetType.AnyEnemy;
 
-    protected override string? IntentIconPath => StrengthPowerAmount > 0
-        ? $"{AttackIntentIconDirectory}/intent_attack_{GetAttackIntentTier(StrengthPowerAmount)}.png"
+    protected override string? IntentIconPath => AttackDamage > 0
+        ? $"{AttackIntentIconDirectory}/intent_attack_{GetAttackIntentTier(AttackDamage)}.png"
         : null;
 
-    protected override int? IntentDamage => StrengthPowerAmount;
+    protected override int? IntentDamage => AttackDamage;
 
     protected override bool IntentIsAreaAttack => TargetType == TargetType.AllEnemies;
 
-    protected int StrengthPowerAmount {
+    protected virtual ValueProp DamageProps => ValueProp.Move;
+
+    private int AttackDamage {
         get {
-            var power = Owner.Powers.OfType<AttackPower>().FirstOrDefault();
-            int attack = power?.Amount ?? 0;
-            return Owner.Monster is BaseMonster monster
-                ? monster.GetAttackDamage(attack)
-                : attack;
+            var player = Owner.PetOwner ?? Owner.Player;
+            if (player == null) return 0;
+
+            decimal damage = Hook.ModifyDamage(
+                player.RunState,
+                Owner.CombatState,
+                null,
+                Owner,
+                0m,
+                DamageProps,
+                null,
+                null,
+                ModifyDamageHookType.All,
+                CardPreviewMode.None,
+                out _);
+            return (int)damage;
         }
     }
 
     public override bool CanAct(ICombatState combatState) {
-        return base.CanAct(combatState) && StrengthPowerAmount > 0;
+        return base.CanAct(combatState) && AttackDamage > 0;
     }
     
     protected override async Task OnAct(PlayerChoiceContext choiceContext, Creature? target) {
         if (target == null) return;
         SpendUses();
         await MinionAnimCmd.PlayBumpAttackAsync(Owner, target);
-        await CreatureCmd.Damage(choiceContext, target, StrengthPowerAmount, ValueProp.Move, null, null);
+        await CreatureCmd.Damage(
+            choiceContext,
+            target,
+            0m,
+            DamageProps,
+            Owner,
+            null,
+            null);
         if (Owner.Monster is BaseMonster monster) {
             await monster.AfterAttack(choiceContext);
         }

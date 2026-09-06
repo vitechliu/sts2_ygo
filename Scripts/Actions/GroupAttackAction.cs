@@ -18,16 +18,16 @@ public sealed class GroupAttackAction : TargetingAttackAction {
 
         var animationTarget = GetValidTargets(combatState).FirstOrDefault();
         if (animationTarget == null
-            || Owner.Monster is not BaseMonster { SourceCard: { } sourceCard }) {
+            || Owner.Monster is not BaseMonster monster) {
             return;
         }
 
         SpendUses();
         await MinionAnimCmd.PlayBumpAttackAsync(Owner, animationTarget);
-        await DamageCmd.Attack(StrengthPowerAmount)
-            .FromCard(sourceCard, null)
-            .TargetingAllOpponents(combatState)
+        await DamageCmd.Attack(0m)
+            .FromMonster(monster)
             .WithNoAttackerAnim()
             .Execute(choiceContext);
+        await monster.AfterAttack(choiceContext);
     }
 }

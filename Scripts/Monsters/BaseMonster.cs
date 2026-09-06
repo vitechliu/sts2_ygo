@@ -49,19 +49,23 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
     public bool IsRace(YgoRace race) => Race == race.ToCoreValue();
 
     /// <summary>
-    /// 计算怪兽攻击造成的伤害。机械驱动之夜的加成属于怪兽攻击本身，
-    /// 不能依赖伤害命令的 dealer 参数，因为普通怪兽攻击不会传入 dealer。
+    /// 计算尚未迁移到怪兽 dealer 伤害链的固定数值怪兽行动伤害。
+    /// 普通攻击应以怪兽 Creature 作为 dealer，让 Power 伤害钩子统一结算。
     /// </summary>
     public int GetAttackDamage(int baseDamage) {
-        if (Creature?.PetOwner?.Creature is not { } playerCreature
-            || !IsRace(YgoRace.Machine)) {
-            return baseDamage;
+        int damage = baseDamage;
+        if (Creature?.PetOwner?.Creature is { } playerCreature
+            && IsRace(YgoRace.Machine)) {
+            damage += playerCreature.Powers
+                .OfType<ClockworkNightPower>()
+                .Sum(power => power.Amount);
         }
 
-        int bonus = playerCreature.Powers
-            .OfType<ClockworkNightPower>()
-            .Sum(power => power.Amount);
-        return baseDamage + bonus;
+        if (Creature?.HasPower<ForbiddenCrownPower>() == true) {
+            damage *= 2;
+        }
+
+        return damage;
     }
 
     protected NMonsterVisuals? Visuals => Creature?.GetCreatureNode()?.Visuals as NMonsterVisuals;

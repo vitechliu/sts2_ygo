@@ -29,7 +29,7 @@ public sealed class DualAssembwurmAction : BasePerTurnMonsterAction {
 
     public override TargetType TargetType => TargetType.AnyEnemy;
 
-    private int AttackDamage => Owner.Monster is BaseMonster monster
+    private int AttackDamage => !IsCanonical && Owner.Monster is BaseMonster monster
         ? monster.GetAttackDamage(Amount)
         : Amount;
 
