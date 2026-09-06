@@ -11,7 +11,9 @@ public class StackReviver() : BaseMonsterCard(1, CardType.Skill, CardRarity.Comm
     public override int CardId => 9523599;
 
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [
+        CardKeyword.Ethereal
+    ];
     public override int BaseAttackVar => 0;
     public override int BaseLifeVar => 3;
 
@@ -20,4 +22,8 @@ public class StackReviver() : BaseMonsterCard(1, CardType.Skill, CardRarity.Comm
         YgoHoverTipConst.LinkSummon(),
         YgoHoverTipConst.SpecialSummon(),
     ];
+
+    protected override void OnUpgrade() {
+        RemoveKeyword(CardKeyword.Ethereal);
+    }
 }

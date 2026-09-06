@@ -49,6 +49,7 @@ public sealed class BalancerLordAction : BasePerTurnMonsterAction {
 
         SpendUses();
         selected.EnergyCost.AddThisCombat(-1);
+        selected.InvokeEnergyCostChanged();
     }
 
     private static bool IsCyberseMonster(CardModel model) {
