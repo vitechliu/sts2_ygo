@@ -1,10 +1,12 @@
 using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 using MinionLib.Minion;
 using VYgo.Core;
@@ -55,15 +57,26 @@ public class CapacitorStalkerMinion: BaseMonster {
         Player owner
     ) {
         if (SourceCard is not CapacitorStalker sourceCard) return;
-        //素材送墓时本怪兽已离场，CombatState 可能为 null，改用持有者所在战斗状态
-        if (owner.Creature.CombatState is not { } combatState) return;
 
+        //素材送墓时本怪兽已被 MinionLib 移出战斗，creature.CombatState 为 null。
+        //战斗状态按可用性逐级回退，保证伤害在战斗中必定执行。
+        ICombatState? combatState = creature.CombatState
+            ?? owner.Creature.CombatState
+            ?? (owner.RunState?.CurrentRoom as CombatRoom)?.CombatState;
+        if (combatState == null) {
+            Entry.Logger.Warn(
+                "CapacitorStalkerMinion: 送墓时找不到可用战斗状态，跳过送墓伤害。"
+            );
+            return;
+        }
+
+        //本怪兽已死亡，不能作为伤害来源（CreatureCmd.Damage 会跳过死亡来源），改为无来源伤害。
         await CreatureCmd.Damage(
             choiceContext,
             combatState.Creatures.Where(target => !target.IsPet).ToList(),
             sourceCard.GraveyardDamage,
             ValueProp.Unpowered,
-            creature,
+            null,
             sourceCard,
             null);
     }
