@@ -2,7 +2,6 @@ using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.PotionPools;
-using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Characters;
@@ -15,8 +14,7 @@ using VYgo.Scripts.Pools;
 namespace VYgo.Scripts.Characters;
 
 /// <summary>
-/// Playmaker 的可游玩角色外壳。
-/// 专属卡牌与初始遗物会在后续内容设计阶段补充。
+/// Playmaker：以电子界族怪兽与风暴访问为核心的决斗者。
 /// </summary>
 [RegisterCharacter]
 public class PlaymakerCharacter
@@ -64,9 +62,4 @@ public class PlaymakerCharacter
     public override float CastAnimDelay => 0f;
     public override bool RequiresEpochAndTimeline => false;
     
-#pragma warning disable CS0672 // Member overrides obsolete member
-    protected override IEnumerable<Type> StartingRelicTypes => [
-#pragma warning restore CS0672 // Member overrides obsolete member
-        typeof(BagOfPreparation),
-    ];
 }
