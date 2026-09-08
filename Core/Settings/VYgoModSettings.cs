@@ -11,6 +11,8 @@ namespace VYgo.Core.Settings;
 /// VYgo 的全局设置数据。后续增加真实设置时，可继续在此模型中添加字段。
 /// </summary>
 public sealed class VYgoSettingsData {
+    public bool ReplaceMainMenu { get; set; } = true;
+
     public bool PlaceholderToggle { get; set; }
     public int PlaceholderValue { get; set; } = 50;
 
@@ -32,6 +34,11 @@ public enum EffectMode {
 public static class VYgoModSettings {
     private const string DataKey = "settings";
     private const string FileName = "settings.json";
+
+    /// <summary>
+    /// 启动时固定的主菜单设置；设置页修改仅在下次启动时生效。
+    /// </summary>
+    public static bool ReplaceMainMenuOnStartup { get; private set; } = true;
 
     /// <summary>
     /// 获取指定玩家在本机应使用的召唤动画模式。
@@ -65,13 +72,23 @@ public static class VYgoModSettings {
     /// 在设置数据注册完成后注册设置页面。
     /// </summary>
     public static void RegisterPage() {
+        ReplaceMainMenuOnStartup = RitsuLibFramework.GetDataStore(Entry.ModId)
+            .Get<VYgoSettingsData>(DataKey).ReplaceMainMenu;
+
+        var replaceMainMenuBinding = new ModSettingsValueBinding<VYgoSettingsData, bool>(
+            Entry.ModId,
+            DataKey,
+            SaveScope.Global,
+            settings => settings.ReplaceMainMenu,
+            (settings, value) => settings.ReplaceMainMenu = value);
+
         var effectAnimationModeBinding = new ModSettingsValueBinding<VYgoSettingsData, EffectMode>(
             Entry.ModId,
             DataKey,
             SaveScope.Global,
             settings => settings.EffectAnimationMode,
             (settings, value) => settings.EffectAnimationMode = value);
-        
+
         var placeholderToggleBinding = new ModSettingsValueBinding<VYgoSettingsData, bool>(
             Entry.ModId,
             DataKey,
@@ -87,46 +104,56 @@ public static class VYgoModSettings {
             (settings, value) => settings.PlaceholderValue = value);
 
         RitsuLibFramework.RegisterModSettings(Entry.ModId, page => page
-            .WithTitle(ModSettingsText.Literal("VYgo 设置"))
-            .WithModDisplayName(ModSettingsText.Literal("VYgo"))
-            .WithDescription(ModSettingsText.Literal("杀戮尖塔 2 YGO Mod 的基础设置页面。"))
+            .WithTitle(ModSettingsText.LocString("settings_ui", "VYGO_SETTINGS_TITLE", "VYgo 设置"))
+            .WithModDisplayName(ModSettingsText.LocString("settings_ui", "VYGO_SETTINGS_MOD_NAME", "VYgo"))
+            .WithDescription(ModSettingsText.LocString("settings_ui", "VYGO_SETTINGS_DESCRIPTION", "杀戮尖塔 2 YGO Mod 的基础设置页面。"))
             .AddSection("general", section => section
-                .WithTitle(ModSettingsText.Literal("通用"))
+                .WithTitle(ModSettingsText.LocString("settings_ui", "VYGO_SETTINGS_GENERAL", "通用"))
+                .AddToggle(
+                    "replace_main_menu",
+                    ModSettingsText.LocString("settings_ui", "VYGO_SETTINGS_REPLACE_MAIN_MENU", "替换主菜单"),
+                    replaceMainMenuBinding,
+                    ModSettingsText.LocString("settings_ui", "VYGO_SETTINGS_REPLACE_MAIN_MENU_DESCRIPTION", "使用 VYgo 主菜单外观与背景音乐。需重启游戏才能生效。"))
                 .AddChoice(
                     "effect_animation_mode",
-                    ModSettingsText.Literal("召唤动画复杂度"),
+                    ModSettingsText.LocString("settings_ui", "VYGO_SETTINGS_EFFECT_ANIMATION_MODE", "召唤动画复杂度"),
                     effectAnimationModeBinding,
                     [
                         new ModSettingsChoiceOption<EffectMode>(
                             EffectMode.full,
-                            ModSettingsText.Literal("完整动画")
+                            ModSettingsText.LocString("settings_ui", "VYGO_SETTINGS_EFFECT_ANIMATION_FULL", "完整动画")
                         ),
                         new ModSettingsChoiceOption<EffectMode>(
                             EffectMode.minimal,
-                            ModSettingsText.Literal("快速动画")
+                            ModSettingsText.LocString("settings_ui", "VYGO_SETTINGS_EFFECT_ANIMATION_MINIMAL", "快速动画")
                         ),
                         new ModSettingsChoiceOption<EffectMode>(
                             EffectMode.none,
-                            ModSettingsText.Literal("无动画")
+                            ModSettingsText.LocString("settings_ui", "VYGO_SETTINGS_EFFECT_ANIMATION_NONE", "无动画")
                         )
                     ],
-                    ModSettingsText.Literal("完整动画保留全部召唤演出；快速动画只保留素材闪光与结果卡飞出；无动画会跳过所有召唤演出。"),
-                    ModSettingsChoicePresentation.Dropdown)
-                // .AddInfoCard(
-                //     "placeholder_notice",
-                //     ModSettingsText.Literal("设置占位区"),
-                //     ModSettingsText.Literal("以下选项用于预留设置结构，当前不会影响游戏玩法。"))
-                .AddToggle(
-                    "placeholder_toggle",
-                    ModSettingsText.Literal("占位开关"),
-                    placeholderToggleBinding,
-                    ModSettingsText.Literal("预留的布尔设置项，当前没有实际效果。"))
-                .AddIntSlider(
-                    "placeholder_value",
-                    ModSettingsText.Literal("占位数值"),
-                    placeholderValueBinding,
-                    minValue: 0,
-                    maxValue: 100,
-                    description: ModSettingsText.Literal("预留的整数设置项，当前没有实际效果。"))));
+                    ModSettingsText.LocString("settings_ui", "VYGO_SETTINGS_EFFECT_ANIMATION_DESCRIPTION", "完整动画保留全部召唤演出；快速动画只保留素材闪光与结果卡飞出；无动画会跳过所有召唤演出。"),
+                    ModSettingsChoicePresentation.Dropdown))
+
+
+        );
+
+
+        // .AddInfoCard(
+        //     "placeholder_notice",
+        //     ModSettingsText.LocString("settings_ui", "VYGO_SETTINGS_PLACEHOLDER_NOTICE_TITLE", "设置占位区"),
+        //     ModSettingsText.LocString("settings_ui", "VYGO_SETTINGS_PLACEHOLDER_NOTICE_DESCRIPTION", "以下选项用于预留设置结构，当前不会影响游戏玩法。"))
+        // .AddToggle(
+        //     "placeholder_toggle",
+        //     ModSettingsText.LocString("settings_ui", "VYGO_SETTINGS_PLACEHOLDER_TOGGLE_TITLE", "占位开关"),
+        //     placeholderToggleBinding,
+        //     ModSettingsText.LocString("settings_ui", "VYGO_SETTINGS_PLACEHOLDER_TOGGLE_DESCRIPTION", "预留的布尔设置项，当前没有实际效果。"))
+        // .AddIntSlider(
+        //     "placeholder_value",
+        //     ModSettingsText.LocString("settings_ui", "VYGO_SETTINGS_PLACEHOLDER_VALUE_TITLE", "占位数值"),
+        //     placeholderValueBinding,
+        //     minValue: 0,
+        //     maxValue: 100,
+        //     description: ModSettingsText.LocString("settings_ui", "VYGO_SETTINGS_PLACEHOLDER_VALUE_DESCRIPTION", "预留的整数设置项，当前没有实际效果。"))));
     }
 }

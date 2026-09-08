@@ -56,10 +56,12 @@ public static class Entry {
     public static void Initialize() {
         var assembly = Assembly.GetExecutingAssembly();
         Logger = RitsuLibFramework.CreateLogger(ModId);
-        RitsuLibCompatibility.DisableMainMenuScrollingPatches();
-        RitsuLibCompatibility.DisableMainMenuSettingsButtonPatch();
         RegisterSaveData();
         VYgoModSettings.RegisterPage();
+        if (VYgoModSettings.ReplaceMainMenuOnStartup) {
+            RitsuLibCompatibility.DisableMainMenuScrollingPatches();
+            RitsuLibCompatibility.DisableMainMenuSettingsButtonPatch();
+        }
         RegisterCharacterCardPoolLinks();
         var harmony = new Harmony("sts2.vitech." + ModId.ToLowerInvariant());
         harmony.PatchAll();

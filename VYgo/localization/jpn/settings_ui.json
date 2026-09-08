@@ -1,0 +1,19 @@
+{
+  "VYGO_SETTINGS_TITLE": "遊戯王 マスターデュエル 設定",
+  "VYGO_SETTINGS_MOD_NAME": "遊戯王 マスターデュエル",
+  "VYGO_SETTINGS_DESCRIPTION": "Slay the Spire 2 遊戯王 マスターデュエル Mod の基本設定。",
+  "VYGO_SETTINGS_GENERAL": "一般",
+  "VYGO_SETTINGS_EFFECT_ANIMATION_MODE": "召喚アニメーションの詳細度",
+  "VYGO_SETTINGS_EFFECT_ANIMATION_FULL": "フルアニメーション",
+  "VYGO_SETTINGS_EFFECT_ANIMATION_MINIMAL": "簡易アニメーション",
+  "VYGO_SETTINGS_EFFECT_ANIMATION_NONE": "アニメーションなし",
+  "VYGO_SETTINGS_EFFECT_ANIMATION_DESCRIPTION": "フルアニメーションでは召喚演出をすべて再生します。簡易アニメーションでは素材の閃光と召喚されるカードが飛び出す演出のみを再生します。アニメーションなしでは召喚演出をすべてスキップします。",
+  "VYGO_SETTINGS_PLACEHOLDER_NOTICE_TITLE": "仮の設定",
+  "VYGO_SETTINGS_PLACEHOLDER_NOTICE_DESCRIPTION": "以下の項目は今後の設定用に用意されたもので、現在はゲームプレイに影響しません。",
+  "VYGO_SETTINGS_PLACEHOLDER_TOGGLE_TITLE": "仮の切り替え設定",
+  "VYGO_SETTINGS_PLACEHOLDER_TOGGLE_DESCRIPTION": "今後のために用意された切り替え項目です。現在は効果がありません。",
+  "VYGO_SETTINGS_PLACEHOLDER_VALUE_TITLE": "仮の数値設定",
+  "VYGO_SETTINGS_PLACEHOLDER_VALUE_DESCRIPTION": "今後のために用意された整数の設定項目です。現在は効果がありません。",
+  "VYGO_SETTINGS_REPLACE_MAIN_MENU": "メインメニューを変更",
+  "VYGO_SETTINGS_REPLACE_MAIN_MENU_DESCRIPTION": "VYgo のメインメニュー外観と BGM を使用します。反映にはゲームの再起動が必要です。"
+}

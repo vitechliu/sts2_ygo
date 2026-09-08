@@ -3,6 +3,7 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Nodes.Audio;
 using MegaCrit.Sts2.Core.Nodes.Screens.MainMenu;
 using STS2RitsuLib.Audio;
+using VYgo.Core.Settings;
 using VYgo.Scripts;
 using VYgo.Scripts.UI;
 
@@ -19,6 +20,8 @@ public static class MainMenuPatches {
     [HarmonyPriority(Priority.Last)]
     [HarmonyPatch(typeof(NMainMenu), nameof(NMainMenu._Ready))]
     private static void AfterMainMenuReady(NMainMenu __instance) {
+        if (!VYgoModSettings.ReplaceMainMenuOnStartup) return;
+
         _activeMainMenu = new WeakReference<NMainMenu>(__instance);
 
         //等待其他帧
@@ -42,6 +45,8 @@ public static class MainMenuPatches {
     }
 
     internal static void NotifyDeferredAudioReady() {
+        if (!VYgoModSettings.ReplaceMainMenuOnStartup) return;
+
         _deferredAudioReady = true;
         Entry.Logger.Info("RitsuLib deferred initialization completed; main-menu music is ready.");
 
@@ -99,6 +104,8 @@ public static class MainMenuPatches {
     [HarmonyPrefix]
     [HarmonyPatch(typeof(NMainMenu), "MainMenuButtonFocused")]
     private static bool BeforeMainMenuButtonFocused(NMainMenuTextButton button) {
+        if (!VYgoModSettings.ReplaceMainMenuOnStartup) return true;
+
         return button.GetParent()?.Name != MainMenuSkinController.ToolbarName
             && !MainMenuLeftMenuController.IsCustomizedButton(button);
     }
