@@ -56,6 +56,7 @@ public static class Entry {
     public static void Initialize() {
         var assembly = Assembly.GetExecutingAssembly();
         Logger = RitsuLibFramework.CreateLogger(ModId);
+        RitsuLibCompatibility.DisableMainMenuScrollingPatches();
         RitsuLibCompatibility.DisableMainMenuSettingsButtonPatch();
         RegisterSaveData();
         VYgoModSettings.RegisterPage();
