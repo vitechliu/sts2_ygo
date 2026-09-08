@@ -144,5 +144,9 @@
     "INVOKED_MAGELLANICA_MINION.name": "召唤兽 墨瓦腊泥加",
     "INVOKED_PURGATRIO_MINION.name": "召唤兽 普尔加托里奥",
     "INVOKED_COCYTUS_MINION.name": "召唤兽 科库托斯",
-    "INVOKED_RAIDJIN_MINION.name": "召唤兽 雷电"
+    "INVOKED_RAIDJIN_MINION.name": "召唤兽 雷电",
+    "CYBER_ELTANIN_MINION.name": "电子天龙头",
+    "CYBERNETIC_OVERFLOW_MINION.name": "电子溢出",
+    "CYBERNETIC_REVOLUTION_MINION.name": "电子革命",
+    "CHIMERATECH_RAMPAGE_DRAGON_MINION.name": "嵌合狂暴龙"
 }
