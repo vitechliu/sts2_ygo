@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "language": "eng",
+  "items": [
+    {
+      "id": "welcome",
+      "title": "Welcome to VYgo",
+      "content": "Open the news page to learn about main menu announcements.",
+      "image": {
+        "type": "res",
+        "value": "res://VYgo/images/cards/70095154.png"
+      },
+      "target": {
+        "type": "scene",
+        "value": "news_sample"
+      }
+    },
+    {
+      "id": "workshop",
+      "title": "Visit the Workshop",
+      "content": "Browse the Slay the Spire 2 Workshop.",
+      "image": {
+        "type": "res",
+        "value": "res://VYgo/images/cards/59281922.png"
+      },
+      "target": {
+        "type": "url",
+        "value": "https://steamcommunity.com/app/2868840/workshop/"
+      }
+    }
+  ]
+}

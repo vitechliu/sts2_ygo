@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "language": "zhs",
+  "items": [
+    {
+      "id": "welcome",
+      "title": "欢迎来到 VYgo",
+      "content": "查看新闻页面，了解主菜单公告的新功能。",
+      "image": {
+        "type": "res",
+        "value": "res://VYgo/images/cards/70095154.png"
+      },
+      "target": {
+        "type": "scene",
+        "value": "news_sample"
+      }
+    },
+    {
+      "id": "workshop",
+      "title": "前往创意工坊",
+      "content": "浏览杀戮尖塔 2 创意工坊。",
+      "image": {
+        "type": "res",
+        "value": "res://VYgo/images/cards/59281922.png"
+      },
+      "target": {
+        "type": "url",
+        "value": "https://steamcommunity.com/app/2868840/workshop/"
+      }
+    }
+  ]
+}

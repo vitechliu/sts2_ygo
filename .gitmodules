@@ -2,3 +2,6 @@
 	path = External/ygopro
 	url = https://github.com/mycard/ygopro.git
 	branch = server
+[submodule "External/vygo-news"]
+	path = External/vygo-news
+	url = git@github.com:vitechliu/vygo-news.git

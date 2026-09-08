@@ -5,5 +5,7 @@
   "NEWS_CAROUSEL_2_TITLE": "Card Spotlight",
   "NEWS_CAROUSEL_2_DETAIL": "Cyber Dragon Drei is ready to reinforce your Machine strategy.",
   "NEWS_CAROUSEL_3_TITLE": "Featured This Week",
-  "NEWS_CAROUSEL_3_DETAIL": "Special Summon Cyber Dinosaur and turn the duel around."
+  "NEWS_CAROUSEL_3_DETAIL": "Special Summon Cyber Dinosaur and turn the duel around.",
+  "NEWS_SAMPLE_TITLE": "VYgo · Sample Announcement",
+  "NEWS_SAMPLE_BODY": "[b]Welcome to VYgo[/b]\n\nThis in-game announcement uses the scrolling content layout of the original patch notes and the main menu back navigation.\n\n[b]Main Menu News[/b]\n\nEach time you launch the game, the main menu tries to fetch news in your current language. Local content remains available if the connection fails, so you can start playing right away.\n\n[b]Read and Explore[/b]\n\nClick a news item to open an in-game page or a related link in the Steam browser. Use the back button to return to the main menu.\n\n[b]Language Support[/b]\n\nNews and this page support Chinese, English, and Japanese. Changing the game language updates the main menu content.\n\nThank you for playing and sharing your feedback!"
 }

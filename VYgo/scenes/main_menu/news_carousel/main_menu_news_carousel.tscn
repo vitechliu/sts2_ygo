@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ch66can81r4m4"]
+[gd_scene load_steps=13 format=3 uid="uid://ch66can81r4m4"]
 
 [ext_resource type="Texture2D" uid="uid://c6asw68h5ppck" path="res://VYgo/ui/images/select_btn.png" id="1_nel7x"]
 
@@ -76,6 +76,8 @@ expand_margin_left = 3.0
 expand_margin_top = 3.0
 expand_margin_right = 3.0
 expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBox_open_empty"]
 
 [node name="MainMenuNewsCarousel" type="Control"]
 custom_minimum_size = Vector2(700, 390)
@@ -206,6 +208,21 @@ vertical_alignment = 1
 autowrap_mode = 3
 text_overrun_behavior = 3
 max_lines_visible = 3
+
+[node name="OpenButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 697.0
+offset_bottom = 347.0
+flat = true
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBox_open_empty")
+theme_override_styles/hover = SubResource("StyleBox_open_empty")
+theme_override_styles/pressed = SubResource("StyleBox_open_empty")
+theme_override_styles/disabled = SubResource("StyleBox_open_empty")
+theme_override_styles/focus = SubResource("StyleBox_arrow_focus")
 
 [node name="PreviousButton" type="Button" parent="."]
 unique_name_in_owner = true
