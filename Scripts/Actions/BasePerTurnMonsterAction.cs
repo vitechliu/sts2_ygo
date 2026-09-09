@@ -1,4 +1,7 @@
 using Godot;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Hooks;
+using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -39,6 +42,33 @@ public abstract class BasePerTurnMonsterAction : ModActionTemplate {
     private bool _isSelectingTarget;
     private bool _subscribedToOwnerEvents;
     private bool _targetCancelQueued;
+
+    // 固定伤害替代怪兽自身攻击力；普通攻击传 null，交由 AttackPower 提供基础数值。
+    private decimal GetActionDamageBase(decimal? fixedDamage, ValueProp props) =>
+        fixedDamage.HasValue && props.IsPoweredAttack()
+            ? fixedDamage.Value - Owner.Powers.OfType<AttackPower>().Sum(power => power.Amount)
+            : fixedDamage ?? 0m;
+
+    protected int PreviewMonsterDamage(decimal? fixedDamage = null, ValueProp props = ValueProp.Move) {
+        if (IsCanonical) return (int)(fixedDamage ?? 0m);
+        var player = Owner.PetOwner ?? Owner.Player;
+        if (player == null) return 0;
+        return (int)Hook.ModifyDamage(player.RunState, Owner.CombatState, null, Owner,
+            GetActionDamageBase(fixedDamage, props), props, null, null,
+            ModifyDamageHookType.All, CardPreviewMode.None, out _);
+    }
+
+    // 行动伤害必须以怪兽为来源，不能由来源卡推导为玩家攻击。
+    protected async Task DealMonsterDamage(PlayerChoiceContext choiceContext, Creature target,
+        decimal? fixedDamage = null, ValueProp props = ValueProp.Move,
+        int hitCount = 1, string? hitFx = null) {
+        for (int hit = 0; hit < hitCount; hit++) {
+            if (!Owner.IsAlive || !target.IsAlive || Owner.CombatState == null) break;
+            if (hitFx != null) VfxCmd.PlayOnCreature(target, hitFx);
+            await CreatureCmd.Damage(choiceContext, target, GetActionDamageBase(fixedDamage, props),
+                props, Owner, null, null);
+        }
+    }
 
     protected void SpendUses() {
         (Owner.GetCreatureNode()?.Visuals as NMonsterVisuals)?

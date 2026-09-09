@@ -29,9 +29,7 @@ public sealed class LinkslayerAction : BasePerTurnMonsterAction {
 
     public override TargetType TargetType => TargetType.AnyEnemy;
 
-    private int AttackDamage => !IsCanonical && Owner.Monster is BaseMonster monster
-        ? monster.GetAttackDamage(Amount)
-        : Amount;
+    private int AttackDamage => PreviewMonsterDamage(Amount);
 
     protected override string? IntentIconPath => AttackDamage > 0
         ? $"{AttackIntentIconDirectory}/intent_attack_{GetAttackIntentTier(AttackDamage)}.png"
@@ -73,13 +71,9 @@ public sealed class LinkslayerAction : BasePerTurnMonsterAction {
         SpendUses();
         await CardCmd.Discard(choiceContext, cardsToDiscard);
         await MinionAnimCmd.PlayBumpAttackAsync(Owner, target);
-        await DamageCmd.Attack(AttackDamage)
-            .FromCard(sourceCard, null)
-            .Targeting(target)
-            .WithHitCount(HitCount)
-            .WithNoAttackerAnim()
-            .WithHitFx("vfx/vfx_attack_slash")
-            .Execute(choiceContext);
+        await DealMonsterDamage(choiceContext, target, Amount,
+            hitCount: HitCount,
+            hitFx: "vfx/vfx_attack_slash");
         if (target.IsAlive) {
             await PowerCmd.Apply<WeakPower>(
                 choiceContext,

@@ -41,7 +41,7 @@ public sealed class ChimeratechRampageDragonAction : BasePerTurnMonsterAction {
                 if (enemies.Count == 0) break;
                 var enemy = player.RunState.Rng.CombatTargets.NextItem(enemies);
                 await CreatureCmd.Damage(choiceContext, enemy, DynamicVars.Damage.BaseValue,
-                    ValueProp.Unpowered, player.Creature, source, null);
+                    ValueProp.Unpowered, Owner, null, null);
             }
         }
         finally { InvokeExecutionFinished(); }

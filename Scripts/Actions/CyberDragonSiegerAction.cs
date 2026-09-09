@@ -37,14 +37,7 @@ public sealed class CyberDragonSiegerAction : BasePerTurnMonsterAction {
         SpendUses();
         if (target.Side == CombatSide.Enemy) {
             await MinionAnimCmd.PlayBumpAttackAsync(Owner, target);
-            await CreatureCmd.Damage(
-                choiceContext,
-                target,
-                0m,
-                ValueProp.Move,
-                Owner,
-                null,
-                null);
+            await DealMonsterDamage(choiceContext, target);
             if (Owner.Monster is BaseMonster monster) {
                 await monster.AfterAttack(choiceContext);
             }
