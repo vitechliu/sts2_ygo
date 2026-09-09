@@ -4,7 +4,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interactions.RightClick;
@@ -26,7 +25,6 @@ public class CyberneticOverflowPower : BaseActionPower {
     public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
     public override PowerAssetProfile AssetProfile => new(
         IconPath: "res://images/powers/covered_power.png", BigIconPath: "res://images/powers/covered_power.png");
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(10, ValueProp.Unpowered)];
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         YgoHoverTipConst.SetCard(), YgoHoverTipConst.PowerAction(), HoverTipFactory.FromKeyword(CardKeyword.Exhaust)
     ];
@@ -48,7 +46,7 @@ public class CyberneticOverflowPower : BaseActionPower {
         if (context.PlayerChoiceContext is not { } choice || GetInternalData<Data>().Source is not { } source) return false;
         var player = context.Player;
         var combat = player.Creature.CombatState;
-        var damage = DynamicVars.Damage.BaseValue;
+        var damage = Amount;
         try {
             Flash();
             await PowerCmd.Remove(this);

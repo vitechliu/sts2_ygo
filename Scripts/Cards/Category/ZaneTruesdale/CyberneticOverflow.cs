@@ -20,8 +20,8 @@ public class CyberneticOverflow() : BaseTrapCard(0, CardType.Power, CardRarity.C
         YgoHoverTipConst.PowerAction(), HoverTipFactory.FromKeyword(CardKeyword.Exhaust)
     ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
-        var power = await PowerCmd.Apply<CyberneticOverflowPower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
-        if (power != null) power.DynamicVars.Damage.BaseValue = DynamicVars.Damage.BaseValue;
+        await PowerCmd.Apply<CyberneticOverflowPower>(choiceContext, Owner.Creature,
+            DynamicVars.Damage.BaseValue, Owner.Creature, this);
     }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3);
 }
