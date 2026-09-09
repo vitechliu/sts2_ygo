@@ -10,6 +10,6 @@ public sealed class MinionCapacityReductionPower : ModPowerTemplate {
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://VYgo/images/powers/ygo.png",
-        BigIconPath: "res://VYgo/images/powers/ygo.png");
+        IconPath: "res://VYgo/images/powers/minion_capacity_reduction_power.png",
+        BigIconPath: "res://VYgo/images/powers/minion_capacity_reduction_power.png");
 }

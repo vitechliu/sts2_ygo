@@ -21,7 +21,7 @@ public class CynetCodecPower : ModPowerTemplate, IMonsterSummonHookListener {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
     public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
-    public override PowerAssetProfile AssetProfile => new(IconPath: "res://VYgo/images/powers/ygo.png", BigIconPath: "res://VYgo/images/powers/ygo.png");
+    public override PowerAssetProfile AssetProfile => new(IconPath: "res://VYgo/images/powers/cynet_codec_power.png", BigIconPath: "res://VYgo/images/powers/cynet_codec_power.png");
     public async Task AfterMonsterSummon(PlayerChoiceContext choiceContext, BaseMonsterCard card, CardPlay cardPlay,
         Creature summonedCreature, SummonContext summonContext) {
         if (!summonContext.IsSpecialSummon || card.Owner != Owner.Player || !card.ContainArchetype(YgoArchetypes.CodeTalker)

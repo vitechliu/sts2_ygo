@@ -14,8 +14,8 @@ public sealed class UntilNextTurnBattleDestructionProtectionPower : ModPowerTemp
     public override PowerStackType StackType => PowerStackType.Single;
 
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://VYgo/images/powers/ygo.png",
-        BigIconPath: "res://VYgo/images/powers/ygo.png");
+        IconPath: "res://images/powers/hard_to_kill_power.png",
+        BigIconPath: "res://images/powers/hard_to_kill_power.png");
 
     public override bool ShouldDie(Creature creature) => creature != Owner;
 

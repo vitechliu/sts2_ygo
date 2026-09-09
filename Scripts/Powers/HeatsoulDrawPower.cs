@@ -11,8 +11,8 @@ public sealed class HeatsoulDrawPower : ModPowerTemplate {
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://VYgo/images/powers/ygo.png",
-        BigIconPath: "res://VYgo/images/powers/ygo.png");
+        IconPath: "res://VYgo/images/powers/heatsoul_draw_power.png",
+        BigIconPath: "res://VYgo/images/powers/heatsoul_draw_power.png");
 
     public override async Task AfterPlayerTurnStart(
         MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext choiceContext, Player player) {
