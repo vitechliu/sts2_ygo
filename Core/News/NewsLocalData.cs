@@ -7,7 +7,7 @@ using FileAccess = Godot.FileAccess;
 namespace VYgo.Core.News;
 
 internal static class NewsLocalData {
-    public static string Language => NewsFeedCodec.NormalizeLanguage(LocManager.Instance.Language);
+    public static string Language => CommonUtil.NormalizeLanguage(LocManager.Instance.Language);
 
     public static IReadOnlyList<NewsItem> LoadFeed(string language) {
         try {

@@ -13,12 +13,6 @@ public static class NewsFeedCodec {
     private static readonly JsonSerializerOptions Options = new() { PropertyNameCaseInsensitive = true };
     private static readonly Regex Identifier = new("^[a-zA-Z0-9_-]{1,80}$", RegexOptions.CultureInvariant);
 
-    public static string NormalizeLanguage(string language) => language.ToLowerInvariant() switch {
-        "zhs" or "zht" or "zh" or "zh_cn" or "zh_tw" or "zh-cn" or "zh-tw" => "zhs",
-        "jpn" or "ja" or "ja_jp" or "ja-jp" => "jpn",
-        _ => "eng"
-    };
-
     public static NewsFeed Parse(string json, string language) {
         NewsFeed? feed = JsonSerializer.Deserialize<NewsFeed>(json.TrimStart('\uFEFF'), Options);
         if (feed == null || feed.Version != 1 || feed.Language != language || feed.Items == null || feed.Items.Count > 50)

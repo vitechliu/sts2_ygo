@@ -20,7 +20,7 @@ public sealed class NewsDownloadCache {
     public const int MaxImageEntries = 32;
 
     public Task<NewsDownload<NewsFeed>> GetFeed(string language) {
-        language = NewsFeedCodec.NormalizeLanguage(language);
+        language = CommonUtil.NormalizeLanguage(language);
         lock (Gate) {
             if (Feeds.TryGetValue(language, out var cached)) return cached;
             return Feeds[language] = Task.Run(async () => {

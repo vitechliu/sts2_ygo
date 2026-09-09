@@ -19,6 +19,8 @@ public class LockoutGardna() : BaseMonsterCard(1, CardType.Skill, CardRarity.Com
     public override int BaseAttackVar => 3;
     public override int BaseLifeVar => 3;
 
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
+    
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         BaseSummonHoverTip,
         YgoHoverTipConst.SpecialSummon()
