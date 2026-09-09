@@ -1,10 +1,8 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Core;
 using VYgo.Scripts.Characters;
 using VYgo.Scripts.Pools;
-using VYgo.Scripts.Var;
 
 namespace VYgo.Scripts.Cards.Category.ZaneTruesdale;
 
