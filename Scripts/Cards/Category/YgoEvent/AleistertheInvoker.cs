@@ -46,14 +46,10 @@ public class AleistertheInvoker()
         YgoHoverTipConst.Enhance()
     ];
 
-    public override bool CanExecuteRightClick(
-        ModRightClickExecutionContext context,
-        bool toast
-    ) {
-        return context.Player == Owner
-            && base.CanExecuteRightClick(context, toast)
-            && Owner.Creature.Pets.Any(IsFusionMonster);
-    }
+    protected override LocString? ValidateRightClick(ModRightClickExecutionContext context) =>
+        base.ValidateRightClick(context)
+        ?? (!Owner.Creature.Pets.Any(IsFusionMonster) ? RightClickError("FUSION_TARGET") : null);
+
 
     protected override async Task OnYgoRightClick(ModRightClickExecutionContext context) {
         if (context.PlayerChoiceContext is not { } choiceContext) return;

@@ -144,5 +144,11 @@
     "INVOKED_MAGELLANICA_MINION.name": "Invoked Magellanica",
     "INVOKED_PURGATRIO_MINION.name": "Invoked Purgatrio",
     "INVOKED_COCYTUS_MINION.name": "Invoked Cocytus",
-    "INVOKED_RAIDJIN_MINION.name": "Invoked Raidjin"
+    "INVOKED_RAIDJIN_MINION.name": "Invoked Raidjin",
+    "CYBERSE_GADGET_MINION.name": "Cyberse Gadget",
+    "CYBERSE_GADGET_TOKEN_MINION.name": "Cyberse Gadget Token",
+    "CODE_GENERATOR_MINION.name": "Code Generator",
+    "DEGRADE_BUSTER_MINION.name": "Degrade Buster",
+    "PROTECTCODE_TALKER_MINION.name": "Protectcode Talker",
+    "ACCESSCODE_TALKER_MINION.name": "Accesscode Talker"
 }

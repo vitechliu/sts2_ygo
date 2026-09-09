@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Localization;
 using STS2RitsuLib.Interop.AutoRegistration;
 using VYgo.Scripts.Pools;
 using MegaCrit.Sts2.Core.CardSelection;
@@ -30,12 +31,12 @@ public class CatcheEveL2() : BaseRightClickableMonsterCard(1, CardType.Attack, C
         YgoHoverTipConst.SpecialSummon()
     ];
 
-    public override bool CanExecuteRightClick(ModRightClickExecutionContext context) {
-        return base.CanExecuteRightClick(context)
-            && Pile?.Type == PileType.Hand
-            && Owner.MinionCount() < Owner.GetMaxMinionCount()
-            && GetTargets().Count > 0;
+    protected override LocString? ValidateRightClick(ModRightClickExecutionContext context) {
+        return base.ValidateRightClick(context)
+            ?? (Owner.MinionCount() >= Owner.GetMaxMinionCount() ? RightClickError("CAPACITY") : null)
+            ?? (GetTargets().Count == 0 ? RightClickError("LEVEL_TARGET") : null);
     }
+
 
     protected override async Task OnYgoRightClick(
         ModRightClickExecutionContext context
@@ -50,7 +51,7 @@ public class CatcheEveL2() : BaseRightClickableMonsterCard(1, CardType.Attack, C
                 new CardSelectorPrefs(SelectionScreenPrompt, 1),
                 targets.ContainsKey))
             .FirstOrDefault();
-        if (selected == null || !targets.TryGetValue(selected, out Creature? target)) return;
+        if (selected == null || !GetTargets().TryGetValue(selected, out Creature? target)) return;
 
         int level = ((BaseMonster)target.Monster!).Level ?? 0;
         await MonsterLevelPower.SetLevel(
@@ -64,7 +65,7 @@ public class CatcheEveL2() : BaseRightClickableMonsterCard(1, CardType.Attack, C
 
     private Dictionary<CardModel, Creature> GetTargets() {
         return Owner.Creature.Pets
-            .Where(pet => pet.Monster is BaseMonster {
+            .Where(pet => pet.IsAlive && pet.Monster is BaseMonster {
                 SourceCard: BaseMonsterCard,
                 Level: >= 3
             })

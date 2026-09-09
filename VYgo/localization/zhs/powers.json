@@ -154,5 +154,14 @@
   "V_YGO_POWER_CYBERNETIC_OVERFLOW_POWER.selectionScreenPrompt": "选择任意数量的机械族·光属性怪兽消耗。",
   "V_YGO_POWER_CYBERNETIC_REVOLUTION_POWER.title": "电子革命",
   "V_YGO_POWER_CYBERNETIC_REVOLUTION_POWER.description": "盖伏的回合不能启动。\n[gold]启动[/gold]：选择场上1只「电子龙」解放，移除此能力，从额外卡组选择1只机械族融合怪兽[gold]特召[/gold]。",
-  "V_YGO_POWER_CYBERNETIC_REVOLUTION_POWER.selectionScreenPrompt": "选择1只机械族融合怪兽特召。"
+  "V_YGO_POWER_CYBERNETIC_REVOLUTION_POWER.selectionScreenPrompt": "选择1只机械族融合怪兽特召。",
+  "V_YGO_POWER_CYNET_CODEC_POWER.title": "电脑网编解码",
+  "V_YGO_POWER_CYNET_CODEC_POWER.description": "特召「码语者」怪兽后，随机将1张相同属性的电子界族怪兽加入手牌。升级来源生成升级卡牌。",
+  "V_YGO_POWER_CYNET_CONFLICT_POWER.title": "电脑网冲突",
+  "V_YGO_POWER_CYNET_CONFLICT_POWER.description": "盖伏回合不能启动。启动后送去弃牌堆：场上每有1只「码语者」怪兽，获得1层无效，并对随机敌人除外{Banish}。",
+  "DEGRADE_BUSTER_ACTION.title": "退行手雷破坏者·启动",
+  "DEGRADE_BUSTER_ACTION.description": "每回合可启动1次：对目标[gold]除外[/gold]{Amount}。",
+  "ACCESSCODE_TALKER_ACTION.title": "访问码语者·无限启动",
+  "ACCESSCODE_TALKER_ACTION.description": "选择弃牌堆1只连接怪兽消耗，攻击。不限次数。",
+  "ACCESSCODE_TALKER_ACTION.selectionScreenPrompt": "选择1只连接怪兽消耗。"
 }

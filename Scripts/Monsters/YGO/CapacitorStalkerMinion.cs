@@ -73,7 +73,7 @@ public class CapacitorStalkerMinion: BaseMonster {
         //本怪兽已死亡，不能作为伤害来源（CreatureCmd.Damage 会跳过死亡来源），改为无来源伤害。
         await CreatureCmd.Damage(
             choiceContext,
-            combatState.Creatures.Where(target => !target.IsPet).ToList(),
+            combatState.Creatures.ToList(),
             sourceCard.GraveyardDamage,
             ValueProp.Unpowered,
             null,

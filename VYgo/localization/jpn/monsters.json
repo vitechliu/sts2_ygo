@@ -144,5 +144,11 @@
     "INVOKED_MAGELLANICA_MINION.name": "召喚獣メガラニカ",
     "INVOKED_PURGATRIO_MINION.name": "召喚獣プルガトリオ",
     "INVOKED_COCYTUS_MINION.name": "召喚獣コキュートス",
-    "INVOKED_RAIDJIN_MINION.name": "召喚獣ライディーン"
+    "INVOKED_RAIDJIN_MINION.name": "召喚獣ライディーン",
+    "CYBERSE_GADGET_MINION.name": "サイバース・ガジェット",
+    "CYBERSE_GADGET_TOKEN_MINION.name": "ガジェット・トークン",
+    "CODE_GENERATOR_MINION.name": "コード・ジェネレーター",
+    "DEGRADE_BUSTER_MINION.name": "デグレネード・バスター",
+    "PROTECTCODE_TALKER_MINION.name": "プロテクトコード・トーカー",
+    "ACCESSCODE_TALKER_MINION.name": "アクセスコード・トーカー"
 }

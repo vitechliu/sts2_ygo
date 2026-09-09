@@ -33,19 +33,19 @@ public class CyberEltanin() : BaseRightClickableMonsterCard(1, CardType.Attack, 
     private static bool IsMaterial(CardModel card) => card is BaseMonsterCard monster
         && monster.YgoGetCore() is { Attribute: "光" } core && core.IsRace(YgoRace.Machine);
 
-    public override bool CanExecuteRightClick(ModRightClickExecutionContext context, bool toast) =>
-        base.CanExecuteRightClick(context, toast)
-        && Owner.MinionCount() < Owner.GetMaxMinionCount()
-        && PileType.Discard.GetPile(Owner).Cards.Any(IsMaterial);
+    protected override MegaCrit.Sts2.Core.Localization.LocString? ValidateRightClick(ModRightClickExecutionContext context) =>
+        base.ValidateRightClick(context)
+        ?? (Owner.MinionCount() >= Owner.GetMaxMinionCount() ? RightClickError("CAPACITY") : null)
+        ?? (!PileType.Discard.GetPile(Owner).Cards.Any(IsMaterial) ? RightClickError("LIGHT_MACHINE_MATERIAL") : null);
 
     public override async Task OnRightClick(ModRightClickExecutionContext context) {
-        if (!CanExecuteRightClick(context, true) || context.PlayerChoiceContext is not { } choice) return;
+        if (!TryValidateRightClick(context) || context.PlayerChoiceContext is not { } choice) return;
         try {
             var selected = (await CardSelectCmd.FromCombatPile(choice,
                 PileType.Discard.GetPile(Owner), Owner,
                 new CardSelectorPrefs(SelectionScreenPrompt, 1, PileType.Discard.GetPile(Owner).Cards.Count),
                 IsMaterial)).ToList();
-            if (selected.Count == 0 || !CanExecuteRightClick(context, true)) return;
+            if (selected.Count == 0 || !TryValidateRightClick(context)) return;
             await SpendResources();
             int count = 0;
             foreach (var card in selected) {

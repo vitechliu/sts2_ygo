@@ -26,7 +26,7 @@ public class DecodeTalkerHeatsoulMinion: BaseMonster {
 
     public override async Task AfterAttack(PlayerChoiceContext choiceContext) {
         if (Creature.PetOwner is { } owner) {
-            await CardPileCmd.Draw(choiceContext, 1, owner);
+            await CardPileCmd.Draw(choiceContext, SourceCard is DecodeTalkerHeatsoul card ? card.DynamicVars.Cards.IntValue : 1, owner);
         }
     }
 }

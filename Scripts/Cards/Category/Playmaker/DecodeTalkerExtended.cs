@@ -12,19 +12,21 @@ namespace VYgo.Scripts.Cards.Category.Playmaker;
 public class DecodeTalkerExtended() : BaseExtraLinkCard(-1, CardType.Attack, CardRarity.Event, TargetType.None) {
     public override int CardId => 30822527;
 
-    public override int BaseAttackVar => 7;
-    public override int BaseLifeVar => 5;
-    public override int UpgradeAttackVar => 3;
+    public override int BaseAttackVar => 15;
+    public override int BaseLifeVar => 10;
+    public override int UpgradeAttackVar => 5;
 
     public int BoostAttack => DynamicVars["BoostAttack"].IntValue;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new AttackVar(BaseAttackVar),
         new LifeVar(BaseLifeVar),
-        new AttackVar("BoostAttack", 5)
+        new AttackVar("BoostAttack", 10)
     ];
 
     public override int GetLinkMaterialCount(CoreCard coreCard) => 2;
+
+    public override int? GetMaxLinkMaterialCount(CoreCard coreCard) => 2;
 
     public override bool CanUseLinkMaterial(SummonMaterial material) {
         return material.CoreCard.IsEffectMonster;

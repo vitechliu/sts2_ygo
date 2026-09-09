@@ -135,5 +135,14 @@
   "V_YGO_POWER_INVOKED_CALIGA_POWER.description": "After an enemy attacks the allied side, all living friendly characters gain {Amount} [gold]Buffer[/gold] until the start of the allied turn.",
   "V_YGO_POWER_INVOKED_CALIGA_BUFFER_POWER.title": "Caliga's Buffer",
   "V_YGO_POWER_INVOKED_CALIGA_BUFFER_POWER.description": "Prevent the next {Amount} instances of HP loss. Removed at the start of the allied turn.",
-  "V_YGO_POWER_INVOKED_CALIGA_BUFFER_POWER.smartDescription": "Prevent the next [blue]{Amount}[/blue] instances of HP loss. Removed at the start of the allied turn."
+  "V_YGO_POWER_INVOKED_CALIGA_BUFFER_POWER.smartDescription": "Prevent the next [blue]{Amount}[/blue] instances of HP loss. Removed at the start of the allied turn.",
+  "DEGRADE_BUSTER_ACTION.title": "Degrade Buster: Activate",
+  "DEGRADE_BUSTER_ACTION.description": "Once per turn: [gold]Banish[/gold] {Amount} against the target.",
+  "ACCESSCODE_TALKER_ACTION.title": "Accesscode Talker: Activate",
+  "ACCESSCODE_TALKER_ACTION.description": "Exhaust 1 Link Monster from your Discard Pile, then attack. Unlimited uses.",
+  "ACCESSCODE_TALKER_ACTION.selectionScreenPrompt": "Choose 1 Link Monster to Exhaust.",
+  "V_YGO_POWER_CYNET_CODEC_POWER.title": "Cynet Codec",
+  "V_YGO_POWER_CYNET_CODEC_POWER.description": "After you Special Summon a \"Code Talker\", add 1 random Cyberse monster with the same Attribute to your hand. An upgraded source generates upgraded cards.",
+  "V_YGO_POWER_CYNET_CONFLICT_POWER.title": "Cynet Conflict",
+  "V_YGO_POWER_CYNET_CONFLICT_POWER.description": "Cannot activate on the turn it is Set. Activate and send this card to your Discard Pile: For each \"Code Talker\" you control, gain 1 Negate and Banish {Banish} against a random enemy."
 }

@@ -75,7 +75,11 @@ public class YgoPower : ModPowerTemplate, IYgoId {
     protected override IEnumerable<IHoverTip> AdditionalHoverTips {
         get {
             var list = new List<IHoverTip>();
-            var card = this.YgoGetCard();
+            // 使用实际来源卡保留升级效果；其他卡生成的怪兽仍展示自身模板。
+            var card = Owner.Monster is BaseMonster { SourceCard: BaseVYgoCard sourceCard }
+                && sourceCard.CardId == CardId
+                    ? sourceCard
+                    : this.YgoGetCard();
             if (card != null) list.Add(HoverTipFactory.FromCard(card));
             return list;
         }

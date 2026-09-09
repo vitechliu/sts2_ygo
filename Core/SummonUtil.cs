@@ -199,7 +199,13 @@ public static class SummonUtil {
     }
 
     internal static async Task<bool> TriggerLinkMaterialEffects(SummonPostPlayContext context) {
+        if (context.FinalCard is BaseExtraLinkCard summonedLink) {
+            await summonedLink.AfterLinkSummoned(context);
+        }
         foreach (SummonMaterial material in context.Materials) {
+            if (material.Card is ILinkMaterialCard effect && context.FinalCard is BaseExtraLinkCard target) {
+                await effect.AfterUsedAsLinkMaterial(context.ChoiceContext, context.Owner, target);
+            }
             if (material.Creature?.Monster is BaseMonster monster) {
                 await monster.OnUsedAsLinkMaterial(
                     context.ChoiceContext,
@@ -742,6 +748,10 @@ public static class SummonUtil {
         }
 
         IReadOnlyList<SummonMaterial> candidates = getAvailableMaterials(linkCard, coreCard)
+            .Concat(PileType.Hand.GetPile(owner).Cards
+                .Where(card => card is ILinkMaterialCard effect && effect.CanUseFromHand(linkCard))
+                .Select(SummonMaterial.FromHandMonsterCard))
+            .Distinct()
             .Where(material => material.Card != null)
             .Where(linkCard.CanUseLinkMaterial)
             .ToList();

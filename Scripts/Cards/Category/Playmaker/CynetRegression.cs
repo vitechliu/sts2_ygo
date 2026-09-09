@@ -12,7 +12,7 @@ using VYgo.Scripts.Powers;
 namespace VYgo.Scripts.Cards.Category.Playmaker;
 
 [RegisterCard(typeof(PlaymakerCardPool))]
-public class CynetRegression() : BaseTrapCard(0, CardType.Power, CardRarity.Common, TargetType.None) {
+public class CynetRegression() : BaseTrapCard(0, CardType.Skill, CardRarity.Common, TargetType.None) {
     public override int CardId => 19943114;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
@@ -26,6 +26,8 @@ public class CynetRegression() : BaseTrapCard(0, CardType.Power, CardRarity.Comm
         YgoHoverTipConst.SetCard(),
         YgoHoverTipConst.SpecialSummon()
     ];
+
+    protected override CardLocation GetResultLocationForCardPlay() => new(Owner, PileType.None, CardPilePosition.Bottom);
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         CynetRegressionPower? power = await PowerCmd.Apply<CynetRegressionPower>(

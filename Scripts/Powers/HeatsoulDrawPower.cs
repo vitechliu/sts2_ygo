@@ -14,7 +14,10 @@ public sealed class HeatsoulDrawPower : ModPowerTemplate {
         IconPath: "res://VYgo/images/powers/ygo.png",
         BigIconPath: "res://VYgo/images/powers/ygo.png");
 
-    public override decimal ModifyHandDraw(Player player, decimal count) {
-        return player == Owner.PetOwner ? count + Amount : count;
+    public override async Task AfterPlayerTurnStart(
+        MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext choiceContext, Player player) {
+        if (player == Owner.PetOwner && Owner.IsAlive) {
+            await MegaCrit.Sts2.Core.Commands.CardPileCmd.Draw(choiceContext, Amount, player);
+        }
     }
 }

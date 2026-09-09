@@ -135,5 +135,14 @@
   "V_YGO_POWER_INVOKED_CALIGA_POWER.description": "敵が味方陣営を攻撃した後、生存している全ての味方キャラクターは、味方ターン開始時まで[gold]バッファー[/gold]を{Amount}得る。",
   "V_YGO_POWER_INVOKED_CALIGA_BUFFER_POWER.title": "カリギュラのバッファー",
   "V_YGO_POWER_INVOKED_CALIGA_BUFFER_POWER.description": "次の{Amount}回のHP減少を防ぐ。味方ターン開始時に取り除かれる。",
-  "V_YGO_POWER_INVOKED_CALIGA_BUFFER_POWER.smartDescription": "次の[blue]{Amount}[/blue]回のHP減少を防ぐ。味方ターン開始時に取り除かれる。"
+  "V_YGO_POWER_INVOKED_CALIGA_BUFFER_POWER.smartDescription": "次の[blue]{Amount}[/blue]回のHP減少を防ぐ。味方ターン開始時に取り除かれる。",
+  "DEGRADE_BUSTER_ACTION.title": "デグレネード・バスター：発動",
+  "DEGRADE_BUSTER_ACTION.description": "毎ターン1回：対象に[gold]除外[/gold]{Amount}。",
+  "ACCESSCODE_TALKER_ACTION.title": "アクセスコード・トーカー：発動",
+  "ACCESSCODE_TALKER_ACTION.description": "捨て札のリンクモンスター1体を廃棄し、攻撃する。回数制限なし。",
+  "ACCESSCODE_TALKER_ACTION.selectionScreenPrompt": "廃棄するリンクモンスター1体を選択。",
+  "V_YGO_POWER_CYNET_CODEC_POWER.title": "サイバネット・コーデック",
+  "V_YGO_POWER_CYNET_CODEC_POWER.description": "「コード・トーカー」を特殊召喚した後、同じ属性のサイバース族モンスター1枚をランダムに手札に加える。発生元がアップグレード済みなら、加えるカードもアップグレード済みになる。",
+  "V_YGO_POWER_CYNET_CONFLICT_POWER.title": "サイバネット・コンフリクト",
+  "V_YGO_POWER_CYNET_CONFLICT_POWER.description": "セットしたターンには発動できない。発動して捨て札に送る：自分の「コード・トーカー」1体につき、無効を1得て、ランダムな敵に除外{Banish}。"
 }

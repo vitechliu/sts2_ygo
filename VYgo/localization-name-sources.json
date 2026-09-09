@@ -3123,6 +3123,144 @@
       "referencing_keys": [
         "cards:V_YGO_CARD_FIENDSMITHS_SANCT.description"
       ]
+    },
+    {
+      "card_id": 645087,
+      "cid": 13039,
+      "jpn": "サイバース・ガジェット",
+      "source_url": "https://ygocdb.com/api/v0/card/645087",
+      "source_field": "text.jp_name",
+      "queried_at": "2026-09-09T01:53:01.737336+00:00",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13039&request_locale=ja",
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBERSE_GADGET.title",
+        "monsters:CYBERSE_GADGET_MINION.name"
+      ],
+      "mapping_basis": [
+        "CardId from imported C# and VYgo/db.json"
+      ]
+    },
+    {
+      "card_id": 30114823,
+      "cid": 14162,
+      "jpn": "コード・ジェネレーター",
+      "source_url": "https://ygocdb.com/api/v0/card/30114823",
+      "source_field": "text.jp_name",
+      "queried_at": "2026-09-09T01:53:06.791665+00:00",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=14162&request_locale=ja",
+      "localization_keys": [
+        "cards:V_YGO_CARD_CODE_GENERATOR.title",
+        "monsters:CODE_GENERATOR_MINION.name"
+      ],
+      "mapping_basis": [
+        "CardId from imported C# and VYgo/db.json"
+      ]
+    },
+    {
+      "card_id": 50426119,
+      "cid": 13560,
+      "jpn": "デグレネード・バスター",
+      "source_url": "https://ygocdb.com/api/v0/card/50426119",
+      "source_field": "text.jp_name",
+      "queried_at": "2026-09-09T01:53:09.072266+00:00",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13560&request_locale=ja",
+      "localization_keys": [
+        "cards:V_YGO_CARD_DEGRADE_BUSTER.title",
+        "monsters:DEGRADE_BUSTER_MINION.name"
+      ],
+      "mapping_basis": [
+        "CardId from imported C# and VYgo/db.json"
+      ]
+    },
+    {
+      "card_id": 58036229,
+      "cid": 18511,
+      "jpn": "プロテクトコード・トーカー",
+      "source_url": "https://ygocdb.com/api/v0/card/58036229",
+      "source_field": "text.jp_name",
+      "queried_at": "2026-09-09T01:53:11.388956+00:00",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=18511&request_locale=ja",
+      "localization_keys": [
+        "cards:V_YGO_CARD_PROTECTCODE_TALKER.title",
+        "monsters:PROTECTCODE_TALKER_MINION.name"
+      ],
+      "mapping_basis": [
+        "CardId from imported C# and VYgo/db.json"
+      ]
+    },
+    {
+      "card_id": 86066372,
+      "cid": 15032,
+      "jpn": "アクセスコード・トーカー",
+      "source_url": "https://ygocdb.com/api/v0/card/86066372",
+      "source_field": "text.jp_name",
+      "queried_at": "2026-09-09T01:53:13.789318+00:00",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=15032&request_locale=ja",
+      "localization_keys": [
+        "cards:V_YGO_CARD_ACCESSCODE_TALKER.title",
+        "monsters:ACCESSCODE_TALKER_MINION.name"
+      ],
+      "mapping_basis": [
+        "CardId from imported C# and VYgo/db.json"
+      ]
+    },
+    {
+      "card_id": 60018643,
+      "cid": 13877,
+      "jpn": "サイバネット・コーデック",
+      "source_url": "https://ygocdb.com/api/v0/card/60018643",
+      "source_field": "text.jp_name",
+      "queried_at": "2026-09-09T01:53:16.093231+00:00",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13877&request_locale=ja",
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYNET_CODEC.title"
+      ],
+      "mapping_basis": [
+        "CardId from imported C# and VYgo/db.json"
+      ]
+    },
+    {
+      "card_id": 57160136,
+      "cid": 14301,
+      "jpn": "サイバネット・マイニング",
+      "source_url": "https://ygocdb.com/api/v0/card/57160136",
+      "source_field": "text.jp_name",
+      "queried_at": "2026-09-09T01:53:18.664636+00:00",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=14301&request_locale=ja",
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYNET_MINING.title"
+      ],
+      "mapping_basis": [
+        "CardId from imported C# and VYgo/db.json"
+      ]
+    },
+    {
+      "card_id": 7403341,
+      "cid": 13878,
+      "jpn": "サイバネット・コンフリクト",
+      "source_url": "https://ygocdb.com/api/v0/card/7403341",
+      "source_field": "text.jp_name",
+      "queried_at": "2026-09-09T01:53:22.222582+00:00",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13878&request_locale=ja",
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYNET_CONFLICT.title"
+      ],
+      "mapping_basis": [
+        "CardId from imported C# and VYgo/db.json"
+      ]
+    },
+    {
+      "card_id": 645088,
+      "source_card_id": 645087,
+      "jpn": "ガジェット・トークン",
+      "localization_keys": [
+        "cards:V_YGO_CARD_CYBERSE_GADGET_TOKEN.title",
+        "monsters:CYBERSE_GADGET_TOKEN_MINION.name"
+      ],
+      "source_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13039&request_locale=ja",
+      "source_field": "official source card effect",
+      "evidence": "「ガジェット・トークン」（サイバース族・光・星２・攻／守０）",
+      "queried_on": "2026-09-09"
     }
   ]
 }

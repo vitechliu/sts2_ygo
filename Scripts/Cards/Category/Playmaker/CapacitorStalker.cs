@@ -12,7 +12,7 @@ namespace VYgo.Scripts.Cards.Category.Playmaker;
 public class CapacitorStalker() : BaseMonsterCard(2, CardType.Attack, CardRarity.Common, TargetType.None) {
     public override int CardId => 29716911;
 
-    public override int BaseAttackVar => 10;
+    public override int BaseAttackVar => 18;
     public override int BaseLifeVar => 5;
 
     public int BoostAttack => DynamicVars["BoostAttack"].IntValue;
