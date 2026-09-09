@@ -230,6 +230,12 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
         await Task.CompletedTask;
     }
 
+    public override bool ShouldCreatureBeRemovedFromCombatAfterDeath(Creature creature) {
+        // MinionLib 0.6.2 在死亡任务结束后仍会清理被救活的随从；存活的自身必须留在战斗中。
+        if (creature == Creature && creature.IsAlive) return false;
+        return base.ShouldCreatureBeRemovedFromCombatAfterDeath(creature);
+    }
+
     public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength) {
         //怪兽死亡后，对应的怪兽卡置入弃牌堆
         if (creature == Creature) {

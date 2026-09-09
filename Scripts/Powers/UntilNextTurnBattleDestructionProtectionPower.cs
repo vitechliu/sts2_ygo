@@ -27,7 +27,9 @@ public sealed class UntilNextTurnBattleDestructionProtectionPower : ModPowerTemp
         CombatSide side,
         IReadOnlyList<Creature> participants,
         ICombatState combatState) {
-        if (participants.Contains(Owner)) {
+        // 额外玩家回合的参与者只包含玩家本体，随从仍应随其持有者回合到期。
+        if (side == Owner.Side && (participants.Contains(Owner)
+            || Owner.PetOwner is { } player && participants.Contains(player.Creature))) {
             await PowerCmd.Remove(this);
         }
     }
