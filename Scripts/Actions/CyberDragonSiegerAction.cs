@@ -25,9 +25,15 @@ public sealed class CyberDragonSiegerAction : BasePerTurnMonsterAction {
 
     public override TargetType TargetType => VYgoMinionTargetTypes.AnyEnemyOrOtherMinion;
 
-    protected override string? IntentIconPath => "res://images/packed/intents/intent_buff.png";
+    protected override string? IntentIconPath => "res://VYgo/images/intents/attack_or_buff.png";
     public override string? CustomIconPath => IntentIconPath;
+    
+    protected ValueProp DamageProps => ValueProp.Move;
 
+    protected override int? IntentDamage => AttackDamage;
+    
+    private int AttackDamage => PreviewMonsterDamage(props: DamageProps);
+    
     protected override async Task OnAct(
         PlayerChoiceContext choiceContext,
         Creature? target
@@ -37,7 +43,7 @@ public sealed class CyberDragonSiegerAction : BasePerTurnMonsterAction {
         SpendUses();
         if (target.Side == CombatSide.Enemy) {
             await MinionAnimCmd.PlayBumpAttackAsync(Owner, target);
-            await DealMonsterDamage(choiceContext, target);
+            await DealMonsterDamage(choiceContext, target, null, DamageProps);
             if (Owner.Monster is BaseMonster monster) {
                 await monster.AfterAttack(choiceContext);
             }
