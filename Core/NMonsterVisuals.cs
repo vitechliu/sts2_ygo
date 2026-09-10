@@ -3,6 +3,8 @@ using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using VYgo.Scripts;
 using VYgo.Scripts.Actions;
+using VYgo.Core.Effects;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using VYgo.Utils;
 
 namespace VYgo.Core;
@@ -60,6 +62,9 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 	}
 	
 	private Sprite2D _mainSprite = null!;
+	private NMonsterAura? monsterAura;
+	private Creature? auraOwner;
+	private NMonsterAura? departingAura;
 	private Control? actionIntentOverlay;
 	private Control? actionIntentRoot;
 	private TextureRect? actionIntentIcon;
@@ -75,9 +80,13 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 	public override void _Ready() {
 		base._Ready();
 		_mainSprite = GetNode<Sprite2D>("./Visuals/Image");
+		CreateMonsterAura();
 		actionIntentBobPhase = (float)(GetInstanceId() % 6283UL) * 0.001f;
 		CreateActionIntentOverlay();
 		if (GetParent() is NCreature creatureNode) {
+			auraOwner = creatureNode.Entity;
+			auraOwner.Died += OnAuraOwnerDied;
+			auraOwner.Revived += OnAuraOwnerRevived;
 			BasePerTurnMonsterAction.RefreshActionIntent(creatureNode.Entity);
 		}
 	}
@@ -85,6 +94,10 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 	public override void _Process(double delta) {
 		base._Process(delta);
 		SyncActionIntentPosition();
+		if (GetParent() is NCreature hoverCreature) {
+			// MinionLib 的 ActionClickPatch 复用同一个 Hitbox；它的进入/退出由 NCreature 维护 IsFocused。
+			monsterAura?.SetHovered(hoverCreature.IsFocused);
+		}
 		actionIntentRefreshElapsed += delta;
 		if (actionIntentRefreshElapsed < ActionIntentRefreshInterval) return;
 
@@ -95,6 +108,12 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 	}
 
 	public override void _ExitTree() {
+		if (auraOwner != null) {
+			auraOwner.Died -= OnAuraOwnerDied;
+			auraOwner.Revived -= OnAuraOwnerRevived;
+			auraOwner = null;
+		}
+		monsterAura = null;
 		actionIntentTween?.Kill();
 		actionIntentTween = null;
 		if (GodotObject.IsInstanceValid(actionIntentOverlay)) {
@@ -103,6 +122,43 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 		actionIntentOverlay = null;
 		actionIntentRoot = null;
 		base._ExitTree();
+	}
+
+	private void CreateMonsterAura() {
+		if (GodotObject.IsInstanceValid(monsterAura)) return;
+		monsterAura = ResourceLoader.Load<PackedScene>(NMonsterAura.ScenePath).Instantiate<NMonsterAura>();
+		monsterAura.AuraWidth = Bounds.Size.X;
+		Body.AddChild(monsterAura);
+		Body.MoveChild(monsterAura, 0);
+		Vector2 feet = Bounds.Position + new Vector2(Bounds.Size.X * 0.5f, Bounds.Size.Y);
+		monsterAura.Position = Body.ToLocal(ToGlobal(feet));
+	}
+
+	public void SetMonsterAuraState(MonsterAuraState state) => monsterAura?.SetState(state);
+
+	public void PlayMonsterAuraSummonFeedback() => monsterAura?.PlaySummonFeedback();
+
+	private void OnAuraOwnerDied(Creature creature) {
+		if (!GodotObject.IsInstanceValid(monsterAura)) return;
+		NMonsterAura aura = monsterAura!;
+		monsterAura = null;
+		// 死亡节点可能当帧被释放。只把视觉光环留在战斗场景中播放，不延迟玩法结算。
+		if (NCombatRoom.Instance is not { } room) {
+			aura.QueueFree();
+			return;
+		}
+		aura.Reparent(room.SceneContainer, true);
+		aura.Visible = true;
+		aura.PlayDeathFeedback(freeWhenFinished: true);
+		departingAura = aura;
+	}
+
+	private void OnAuraOwnerRevived(Creature creature) {
+		if (GodotObject.IsInstanceValid(departingAura)) departingAura!.QueueFree();
+		departingAura = null;
+		CreateMonsterAura();
+		monsterAura!.PlaySummonFeedback();
+		BasePerTurnMonsterAction.RefreshActionIntent(creature);
 	}
 
 	public void SetActionIntentState(MonsterActionIntentState state) {
@@ -160,6 +216,7 @@ public partial class NMonsterVisuals: NCreatureVisuals {
 	}
 
 	public void PlayActionIntentConfirmFeedback() {
+		monsterAura?.PlayActionFeedback();
 		if (actionIntentOverlay == null || actionIntentRoot == null
 			|| actionIntentIcon?.Texture == null || !actionIntentRoot.Visible) return;
 

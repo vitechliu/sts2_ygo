@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://Core/Effects/NMonsterAura.cs" id="1_script"]
+[ext_resource type="Shader" path="res://VYgo/shaders/monster_aura.gdshader" id="2_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aura"]
+resource_local_to_scene = true
+shader = ExtResource("2_shader")
+
+[node name="MonsterAura" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Ring" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_aura")
+offset_left = -128.0
+offset_top = -32.0
+offset_right = 128.0
+offset_bottom = 32.0
+mouse_filter = 2

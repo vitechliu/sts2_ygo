@@ -14,6 +14,7 @@ using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
 using VYgo.Core;
+using VYgo.Core.Effects;
 using VYgo.RitsuAdapters;
 using VYgo.Scripts.Monsters;
 using VYgo.Scripts.Powers;
@@ -152,7 +153,17 @@ public abstract class BasePerTurnMonsterAction : ModActionTemplate {
 
     public override Task AfterCombatEnd(CombatRoom room) {
         SetIntentState(MonsterActionIntentState.Hidden);
+        (Owner.GetCreatureNode()?.Visuals as NMonsterVisuals)?.SetMonsterAuraState(MonsterAuraState.Inactive);
         return Task.CompletedTask;
+    }
+
+    internal MonsterAuraState CreateAuraState(ICombatState combatState) {
+        if (RemainingUses <= 0) return MonsterAuraState.Exhausted;
+        bool canAct = CanAct(combatState)
+            && !MinionLib.Action.CreatureActionQueueThreshold.IsExhausted(this)
+            && (TargetType == TargetType.None || GetValidTargets(combatState).Count > 0);
+        if (!canAct) return MonsterAuraState.Unavailable;
+        return _isSelectingTarget ? MonsterAuraState.SelectingTarget : MonsterAuraState.Available;
     }
 
     internal MonsterActionIntentState CreateIntentState(ICombatState combatState) {
@@ -201,7 +212,14 @@ public abstract class BasePerTurnMonsterAction : ModActionTemplate {
             action.QueueTargetingCancelIfStillInvalid();
         }
 
-        (owner.GetCreatureNode()?.Visuals as NMonsterVisuals)?.SetActionIntentState(state);
+        if (owner.GetCreatureNode()?.Visuals is NMonsterVisuals visuals) {
+            visuals.SetActionIntentState(state);
+            MonsterAuraState auraState = combatState == null || !CombatManager.Instance.IsInProgress
+                ? MonsterAuraState.Inactive
+                : !owner.IsAlive ? MonsterAuraState.Unavailable
+                : action?.CreateAuraState(combatState) ?? MonsterAuraState.NoAction;
+            visuals.SetMonsterAuraState(auraState);
+        }
     }
 
     protected void RefreshActionIntent() {

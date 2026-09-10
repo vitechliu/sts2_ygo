@@ -119,6 +119,8 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
     {
         SourceCard = options.Source;
         PileSent = false;
+        // 常驻光环不受召唤演出档位影响，无动画模式也保留状态提示。
+        Visuals?.PlayMonsterAuraSummonFeedback();
         if (options.MaxHp is { } maxHp)
             await CreatureCmd.SetMaxAndCurrentHp(Creature, maxHp); // 设置血量
         if (options.Source is not BaseMonsterCard sourceCard
