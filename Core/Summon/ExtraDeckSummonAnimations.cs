@@ -282,7 +282,10 @@ internal static class ExtraDeckSummonAnimations {
         await VFXUtil.Wait(0.18f);
     }
 
-    internal static async Task PlayXyzSummonAnimation(SummonAnimationContext context) {
+    internal static Task PlayXyzSummonAnimation(SummonAnimationContext context) =>
+        PlayXyzSummonAnimation(context, false);
+
+    internal static async Task PlayXyzSummonAnimation(SummonAnimationContext context, bool reportFailure) {
         IReadOnlyList<CardModel> visibleMaterials = context.MaterialCards.Take(6).ToList();
         if (visibleMaterials.Count == 0) return;
 
@@ -316,6 +319,7 @@ internal static class ExtraDeckSummonAnimations {
         }
         catch (Exception ex) {
             Entry.Logger.Warn("PlayXyzSummonAnimation exception: " + ex);
+            if (reportFailure) throw;
         }
         finally {
             if (GodotObject.IsInstanceValid(xyzAnim2D)) {

@@ -1,5 +1,6 @@
 using Godot;
 using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -527,25 +528,37 @@ public static class SummonUtil {
         ));
     }
 
-    public static async Task<ExtraDeckSummonResult> ExecuteSelectedExtraDeckSummon(
+    public static Task<ExtraDeckSummonResult> ExecuteSelectedExtraDeckSummon(
         SelectedExtraDeckSummonRequest request
+    ) => ExecuteSelectedExtraDeckSummon(request, null);
+
+    // 本机调试可提供已确定的来源战斗卡；仍按最新正式规则校验，不能回退选择其他素材。
+    internal static async Task<ExtraDeckSummonResult> ExecuteSelectedExtraDeckSummon(
+        SelectedExtraDeckSummonRequest request,
+        IReadOnlyList<CardModel>? preselectedMaterialCards
     ) {
         CardPile extraPile = Entry.ExtraPile.GetPile(request.Owner);
         CardModel selectedExtraCard = request.SelectedExtraCard;
-        if (selectedExtraCard.Owner != request.Owner
+        if ((preselectedMaterialCards != null && CombatManager.Instance.IsOverOrEnding)
+            || selectedExtraCard.Owner != request.Owner
             || selectedExtraCard.Pile != extraPile
             || !extraPile.Cards.Contains(selectedExtraCard)
             || selectedExtraCard is not BaseMonsterCard summonCard) {
             return ExtraDeckSummonResult.Failed(selectedExtraCard);
         }
 
-        IReadOnlyList<SummonMaterial> selectedMaterials = await SummonMaterialSelectCmd.Select(
+        IReadOnlyList<SummonMaterial> selectedMaterials = preselectedMaterialCards != null
+            ? request.BuildMaterialSelection()?.ResolveMaterials(preselectedMaterialCards)
+                ?? Array.Empty<SummonMaterial>()
+            : await SummonMaterialSelectCmd.Select(
             request.ChoiceContext,
             request.Owner,
             selectedExtraCard,
             request.BuildMaterialSelection
         );
-        if (selectedMaterials.Count <= 0) {
+        if (selectedMaterials.Count <= 0
+            || (preselectedMaterialCards != null
+                && selectedMaterials.Count != preselectedMaterialCards.Count)) {
             return ExtraDeckSummonResult.Failed(selectedExtraCard);
         }
 
@@ -557,7 +570,8 @@ public static class SummonUtil {
         IReadOnlyList<SummonMaterial> materials = latestSpec.ResolveMaterials(
             selectedMaterials.Select(material => material.Card).OfType<CardModel>()
         );
-        if (!latestSpec.IsValidSelection(materials)) {
+        if ((preselectedMaterialCards != null && materials.Count != preselectedMaterialCards.Count)
+            || !latestSpec.IsValidSelection(materials)) {
             return ExtraDeckSummonResult.Failed(selectedExtraCard, materials: materials);
         }
 
