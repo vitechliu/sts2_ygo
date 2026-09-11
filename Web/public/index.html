@@ -27,12 +27,10 @@
                 <details class="audio-setup">
                     <summary>试听环境</summary>
                     <form id="audio-settings-form" class="audio-form">
-                        <label>游戏目录（含 fmod.dll、fmodstudio.dll）<input name="dllDir" required></label>
                         <label>原版 bank 目录（含 Master、Master.strings、sfx）<input name="originalBankDir" required></label>
-                        <label>64 位 Python 3 程序<input name="python" value="python" required></label>
                         <button type="submit">保存试听环境</button>
                     </form>
-                    <p>本机 FMOD 将事件渲染为短音频，由网页播放器播放；试听使用事件默认参数，最长约八秒。</p>
+                    <p>由浏览器直接播放 FMOD 事件；首次按需加载 bank，后续试听复用。使用事件默认参数，最长约八秒。</p>
                 </details>
                 <details class="audio-setup">
                     <summary>新建 / 更新替换工程</summary>
@@ -50,7 +48,7 @@
                     <label><input id="audio-configured-only" type="checkbox"> 仅看已配置</label>
                     <button id="audio-refresh" type="button" class="btn-secondary">刷新</button>
                     <button id="audio-stop" type="button" class="btn-secondary">停止试听</button>
-                    <audio id="audio-player" controls preload="none"></audio>
+                    <label>试听音量 <input id="audio-volume" type="range" min="0" max="1" step="0.05" value="1"></label>
                 </div>
                 <p id="audio-message" role="status" aria-live="polite"></p>
                 <div id="audio-event-groups"></div>
@@ -271,6 +269,7 @@
     </dialog>
 
     <script src="/js/app.js"></script>
+    <script src="/js/fmod-preview.js"></script>
     <script src="/js/ui-audio.js"></script>
 </body>
 </html>

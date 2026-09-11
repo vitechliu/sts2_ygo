@@ -5,7 +5,6 @@
 .audio-form label { display: grid; gap: 6px; }
 .audio-form input, .audio-form select, .audio-event select { padding: 9px; width: 100%; min-width: 0; }
 .audio-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 18px; }
-.audio-toolbar audio { max-width: 100%; height: 36px; }
 .audio-event { display: grid; grid-template-columns: minmax(230px, 1fr) minmax(260px, 1fr); gap: 12px 20px; border-top: 1px solid var(--border-color, #454555); padding: 16px 0; margin-top: 12px; }
 .audio-event code { display: block; overflow-wrap: anywhere; font-size: 12px; opacity: .75; margin-top: 6px; }
 .audio-event-actions { display: flex; flex-wrap: wrap; gap: 8px; grid-column: 1 / -1; }

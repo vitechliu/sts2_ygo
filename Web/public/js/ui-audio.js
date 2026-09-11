@@ -1,8 +1,13 @@
 (() => {
-    let data, requestController, audioUrl, generation = 0;
+    let data, generation = 0;
     const drafts = new Map();
     const $ = id => document.getElementById(id);
-    const player = $('audio-player');
+    const player = new FmodPreview(status => {
+        if (status.state === 'loading') message(status.message);
+        if (status.state === 'playing') message(`正在试听：${status.event}`);
+        if (status.state === 'ended') message('试听结束。');
+        if (status.state === 'limited') message('已达到八秒试听上限。');
+    });
     function message(text, error = false) {
         $('audio-message').textContent = text;
         $('audio-message').dataset.error = String(error);
@@ -17,31 +22,14 @@
     }
     function stop() {
         generation++;
-        requestController?.abort();
-        requestController = null;
-        player.pause();
-        player.removeAttribute('src');
-        player.load();
-        if (audioUrl) URL.revokeObjectURL(audioUrl);
-        audioUrl = null;
+        player.stop();
     }
     async function preview(event, profileId) {
         stop();
         const current = generation;
-        requestController = new AbortController();
-        message('正在渲染试听…');
+        message('正在准备试听…');
         try {
-            const response = await fetch('/api/ui-audio/preview', {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ event, profileId }), signal: requestController.signal
-            });
-            if (!response.ok) throw new Error((await response.json()).error);
-            const blob = await response.blob();
-            if (current !== generation) return;
-            audioUrl = URL.createObjectURL(blob);
-            player.src = audioUrl;
-            await player.play();
-            if (current === generation) message(`正在试听：${event}`);
+            await player.play(event, profileId);
         } catch (error) {
             if (current === generation && error.name !== 'AbortError') message(error.message, true);
         }
@@ -132,7 +120,7 @@
             data.profiles.forEach(profile => choice.add(new Option(profile.name, profile.id)));
             choice.value = selectedProfile;
             for (const [key, value] of Object.entries(data.settings)) $('audio-settings-form').elements[key].value = value;
-            if (!data.settings.dllDir || !data.settings.originalBankDir) $('audio-settings-form').closest('details').open = true;
+            if (!data.settings.originalBankDir) $('audio-settings-form').closest('details').open = true;
             render();
         } catch (error) { message(error.message, true); }
     }
@@ -140,6 +128,7 @@
         event.preventDefault();
         try {
             await api('/settings', 'PUT', Object.fromEntries(new FormData(event.target)));
+            stop(); await player.dispose();
             message('试听环境已保存。');
         } catch (error) { message(error.message, true); }
     });
@@ -150,13 +139,15 @@
         try {
             const input = Object.fromEntries(new FormData(event.target));
             input.bankFiles = input.bankFiles.split(/[,，]/).map(name => name.trim()).filter(Boolean);
-            message('正在检查并导入 bank…');
+            stop(); await player.dispose();
+            message('正在使用 WASM 检查并导入 bank…');
             const profile = await api(input.profileId ? `/profiles/${input.profileId}` : '/profiles', input.profileId ? 'PUT' : 'POST', input);
             await load(); message(`已保存工程「${profile.name}」，包含 ${profile.events.length} 个事件。`);
         } catch (error) { message(error.message, true); }
         finally { submit.disabled = false; }
     });
     $('audio-stop').addEventListener('click', () => { stop(); message('已停止试听。'); });
+    $('audio-volume').addEventListener('input', event => player.setVolume(event.target.value));
     $('audio-profile-choice').addEventListener('change', event => {
         const profile = data.profiles.find(profile => profile.id === event.target.value);
         $('audio-profile-form').elements.name.value = profile?.name || '';
@@ -169,11 +160,12 @@
             if (!data) load();
         } else {
             stop();
+            player.dispose();
             if (location.hash === '#audio') history.replaceState(null, '', location.pathname + location.search);
         }
     }));
     document.addEventListener('DOMContentLoaded', () => {
         if (location.hash === '#audio') document.querySelector('[data-tab="audio"]').click();
     });
-    window.addEventListener('pagehide', stop);
+    window.addEventListener('pagehide', () => { stop(); player.dispose(); });
 })();

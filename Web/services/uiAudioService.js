@@ -2,15 +2,16 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const { spawn } = require('child_process');
+const { runtimeInfo } = require('./fmodRuntime');
 
 const ROOT = process.env.VYGO_UI_AUDIO_ROOT || path.resolve(__dirname, '../..');
 const catalog = require('../../VYgo/audio/ui-events.json');
 const allowed = new Set(catalog.map(item => item.path));
 const manifestPath = path.join(ROOT, 'VYgo/audio/ui-replacements.json');
 const settingsPath = path.join(ROOT, 'Web/audio-settings.local.json');
-const cacheDir = path.join(ROOT, 'Web/.audio-cache');
 const originalFiles = ['Master.bank', 'Master.strings.bank', 'sfx.bank'];
-let activeProcesses = 0;
+const hashes = new Map();
+let inspections = 0;
 
 function readJson(file, fallback) {
     return fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8').replace(/^\uFEFF/, '')) : fallback;
@@ -22,57 +23,24 @@ function writeJson(file, value) {
     fs.renameSync(temp, file);
 }
 function settings() {
-    return readJson(settingsPath, {
-        dllDir: process.env.FMOD_DLL_DIR || '',
-        originalBankDir: process.env.FMOD_ORIGINAL_BANK_DIR || '',
-        python: process.env.FMOD_PYTHON || 'python'
-    });
+    const saved = readJson(settingsPath, {});
+    return { originalBankDir: saved.originalBankDir || process.env.FMOD_ORIGINAL_BANK_DIR || '' };
 }
-function originalBanks(config) {
-    if (!config.dllDir || !config.originalBankDir) throw new Error('请先保存游戏目录和原版 bank 目录。');
-    return originalFiles.map(name => path.join(config.originalBankDir, name));
-}
-function native(request, signal) {
-    const config = settings();
-    if (activeProcesses >= 2) return Promise.reject(new Error('试听服务正忙，请稍后再试。'));
-    activeProcesses++;
-    return new Promise((resolve, reject) => {
-        const child = spawn(config.python, ['-X', 'utf8', path.join(ROOT, 'Web/scripts/fmod-preview.py')], {
-            windowsHide: true, signal, env: { ...process.env, PYTHONIOENCODING: 'utf-8' }, stdio: ['pipe', 'pipe', 'pipe']
-        });
-        let stdout = '', stderr = '';
-        const timer = setTimeout(() => child.kill(), 25000);
-        child.stdout.on('data', data => { stdout += data; });
-        child.stderr.on('data', data => { stderr += data; });
-        child.on('error', error => { clearTimeout(timer); reject(new Error(`无法启动试听服务：${error.message}`)); });
-        child.on('close', code => {
-            activeProcesses--;
-            clearTimeout(timer);
-            try {
-                const result = JSON.parse(stdout);
-                if (code !== 0 || result.error) throw new Error(result.error || 'FMOD 处理失败。');
-                resolve(result);
-            } catch (error) {
-                reject(new Error(stdout ? error.message : `FMOD 处理失败或超时：${stderr.slice(-600) || code}`));
-            }
-        });
-        child.stdin.on('error', () => {});
-        child.stdin.end(JSON.stringify({ dllDir: config.dllDir, ...request }));
-    });
+function originalBanks() {
+    const { originalBankDir } = settings();
+    if (!originalBankDir) throw new Error('请先保存原版 bank 目录。');
+    return originalFiles.map(name => path.join(originalBankDir, name));
 }
 function state() {
     return { catalog, settings: settings(), ...readJson(manifestPath, { version: 1, profiles: [], mappings: {} }) };
 }
 function saveSettings(input) {
-    const config = {};
-    for (const key of ['dllDir', 'originalBankDir', 'python']) {
-        if (typeof input[key] !== 'string' || !input[key].trim()) throw new Error('请填写完整试听环境。');
-        config[key] = input[key].trim();
+    if (typeof input.originalBankDir !== 'string' || !input.originalBankDir.trim()) throw new Error('请填写原版 bank 目录。');
+    const config = { originalBankDir: path.resolve(input.originalBankDir.trim()) };
+    for (const name of originalFiles) {
+        const file = path.join(config.originalBankDir, name);
+        if (!fs.existsSync(file) || !fs.statSync(file).isFile()) throw new Error(`缺少原版 bank：${name}`);
     }
-    for (const file of ['fmod.dll', 'fmodstudio.dll']) {
-        if (!fs.statSync(path.join(config.dllDir, file)).isFile()) throw new Error(`缺少 ${file}`);
-    }
-    originalBanks(config).forEach(file => { if (!fs.statSync(file).isFile()) throw new Error(`缺少原版 bank：${file}`); });
     writeJson(settingsPath, config);
     return config;
 }
@@ -86,21 +54,55 @@ function guidNames(file) {
     return names;
 }
 function bundleBanks(profile) {
-    return profile.banks.map(bank => path.join(ROOT, 'VYgo', bank));
+    return profile.banks.map(bank => {
+        if (!bank.startsWith('banks/') || bank.includes('..') || bank.includes('\\') || bank.includes(':')) throw new Error('工程资源路径无效。');
+        return path.join(ROOT, 'VYgo', bank);
+    });
 }
 function digest(file) {
-    return crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+    const stat = fs.statSync(file);
+    if (!stat.isFile() || stat.size > 128 * 1024 * 1024) throw new Error('bank 不存在或超过 128 MiB 试听限制。');
+    const signature = `${stat.size}:${stat.mtimeMs}`;
+    if (hashes.get(file)?.signature !== signature) hashes.set(file, {
+        signature, hash: crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex')
+    });
+    return hashes.get(file).hash;
 }
 function runtimeBanks(extra, profiles) {
     const shipped = path.join(ROOT, 'VYgo/banks/VYgo.bank');
-    const candidates = [...originalBanks(settings()), ...extra,
+    const candidates = [...originalBanks(), ...extra,
         ...(fs.existsSync(shipped) ? [shipped] : []), ...profiles.flatMap(bundleBanks)];
-    const hashes = new Set();
-    return candidates.filter(file => {
+    const seen = new Set();
+    const unique = candidates.filter(file => {
         const hash = digest(file);
-        if (hashes.has(hash)) return false;
-        hashes.add(hash);
-        return true;
+        if (seen.has(hash)) return false;
+        seen.add(hash); return true;
+    });
+    if (unique.reduce((bytes, file) => bytes + fs.statSync(file).size, 0) > 192 * 1024 * 1024)
+        throw new Error('试听 bank 总大小超过 192 MiB，请拆分自定义工程。');
+    return unique;
+}
+function inspectBanks(request) {
+    runtimeInfo();
+    if (inspections >= 2) return Promise.reject(new Error('正在检查其他工程，请稍后再试。'));
+    inspections++;
+    return new Promise((resolve, reject) => {
+        const child = spawn(process.execPath, [path.resolve(__dirname, '../scripts/inspect-fmod-banks.js')], { windowsHide: true, stdio: ['pipe', 'pipe', 'pipe'] });
+        let stdout = '', stderr = '';
+        const timer = setTimeout(() => child.kill(), 30000);
+        child.stdout.on('data', data => { stdout += data; });
+        child.stderr.on('data', data => { stderr += data; });
+        child.on('error', reject);
+        child.on('close', code => {
+            inspections--; clearTimeout(timer);
+            try {
+                const result = JSON.parse(stdout);
+                if (code !== 0 || result.error) throw new Error(result.error || 'WASM 工程检查失败。');
+                resolve(result);
+            } catch (error) { reject(new Error(stdout ? error.message : `WASM 工程检查失败或超时：${stderr.slice(-400) || code}`)); }
+        });
+        child.stdin.on('error', () => {});
+        child.stdin.end(JSON.stringify(request));
     });
 }
 function findTarget(data, profileId, event) {
@@ -111,6 +113,7 @@ function findTarget(data, profileId, event) {
 }
 async function createProfile(input, updateId) {
     if (typeof input.name !== 'string' || !input.name.trim()) throw new Error('请填写工程名称。');
+    if (typeof input.bankDir !== 'string' || !input.bankDir.trim()) throw new Error('请填写已打包的 bank 目录。');
     if (!Array.isArray(input.bankFiles) || !input.bankFiles.length) throw new Error('请选择至少一个已打包的 bank。');
     const files = input.bankFiles.map(name => {
         if (typeof name !== 'string' || path.basename(name) !== name || !name.endsWith('.bank')) throw new Error('bank 文件名无效。');
@@ -119,9 +122,8 @@ async function createProfile(input, updateId) {
     if (new Set(files).size !== files.length) throw new Error('bank 文件重复。');
     const before = readJson(manifestPath);
     if (updateId && !before.profiles.some(profile => profile.id === updateId)) throw new Error('待更新工程不存在。');
-    const names = guidNames(input.guidFile);
-    // 与原版总线共同加载，导入时就检查版本和 bank 依赖。
-    const result = await native({ banks: runtimeBanks(files, before.profiles.filter(profile => profile.id !== updateId)), guidNames: names });
+    // Node 也使用同一份官方 WASM，只枚举事件，不生成音频或调用本机 DLL。
+    const result = await inspectBanks({ banks: runtimeBanks(files, before.profiles.filter(profile => profile.id !== updateId)), guidNames: guidNames(input.guidFile) });
     const events = result.events.filter(item => files.includes(item.bank));
     if (!events.length) throw new Error('未找到可命名事件。请提供导出的 GUIDs.txt，或将工程 strings bank 一并导入。');
     if (events.some(item => allowed.has(item.path))) throw new Error('自定义事件必须使用独立路径，不能覆盖原版事件名称。');
@@ -137,7 +139,6 @@ async function createProfile(input, updateId) {
     try {
         const shipped = path.join(ROOT, 'VYgo/banks/VYgo.bank');
         const copiedBanks = files.map(file => {
-            // 现有 VYgo 工程沿用入口注册的同一资源，避免重复加载同 GUID 的 bank。
             if (fs.existsSync(shipped) && digest(file) === digest(shipped)) return 'banks/VYgo.bank';
             fs.copyFileSync(file, path.join(destination, path.basename(file)));
             return `${relativeDir}/${path.basename(file)}`;
@@ -149,28 +150,28 @@ async function createProfile(input, updateId) {
         else data.profiles.push(profile);
         writeJson(manifestPath, data);
         return profile;
-    } catch (error) {
-        fs.rmSync(destination, { recursive: true, force: true });
-        throw error;
-    }
+    } catch (error) { fs.rmSync(destination, { recursive: true, force: true }); throw error; }
 }
-async function preview(input, signal) {
+function playback(input) {
     const data = readJson(manifestPath);
-    let banks = originalBanks(settings()), guid;
+    let files = originalBanks(), guid;
     if (input.profileId) {
         const found = findTarget(data, input.profileId, input.event);
-        banks = runtimeBanks(bundleBanks(found.profile), data.profiles);
+        if (/\/(music|bgm)\//i.test(found.target.path)) throw new Error('背景音乐不属于 UI 试听范围。');
+        files = runtimeBanks(bundleBanks(found.profile), data.profiles);
         guid = found.target.guid;
     } else if (!allowed.has(input.event)) throw new Error('只允许试听清单内的原版 UI 事件。');
-    fs.mkdirSync(cacheDir, { recursive: true });
-    const output = path.join(cacheDir, `${crypto.randomUUID()}.wav`);
-    try {
-        const result = await native({ banks, guid, event: input.event, output }, signal);
-        return { output, ...result };
-    } catch (error) {
-        fs.rmSync(output, { force: true });
-        throw error;
-    }
+    const registry = runtimeBanks([], data.profiles);
+    const revision = crypto.createHash('sha256').update(registry.map(digest).sort().join(':')).digest('hex');
+    return { runtime: runtimeInfo(), revision, event: input.event, guid,
+        banks: files.map(file => ({ id: digest(file), name: path.basename(file), bytes: fs.statSync(file).size, url: `/api/ui-audio/banks/${digest(file)}` })) };
+}
+function bankFile(id) {
+    if (!/^[a-f0-9]{64}$/.test(id)) throw new Error('bank 标识无效。');
+    const data = readJson(manifestPath);
+    const file = runtimeBanks([], data.profiles).find(file => digest(file) === id);
+    if (!file) throw new Error('bank 已变化或不存在，请刷新后重试。');
+    return file;
 }
 function saveMapping(input) {
     if (!allowed.has(input.source)) throw new Error('该事件不在 UI 替换清单内。');
@@ -184,4 +185,4 @@ function saveMapping(input) {
     writeJson(manifestPath, data);
     return data.mappings;
 }
-module.exports = { state, saveSettings, createProfile, preview, saveMapping, allowed };
+module.exports = { state, saveSettings, createProfile, playback, bankFile, inspectBanks, saveMapping, allowed };

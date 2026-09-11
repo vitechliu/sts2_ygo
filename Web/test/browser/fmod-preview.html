@@ -1,0 +1,121 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>正式 WASM 播放器验证</title>
+<button id="all">验证全部 19 项及自定义事件</button>
+<button id="lifecycle">验证停止、切换、取消和失败恢复</button>
+<button id="stop">停止</button><pre id="results"></pre><pre id="live"></pre>
+<script>
+// 分析器接在真实输出与扬声器之间，不生成替代声音。
+const meters = [], connect = AudioNode.prototype.connect;
+AudioNode.prototype.connect = function(destination, ...args) {
+    if (destination instanceof AudioDestinationNode) {
+        const meter = this.context.createAnalyser(); meter.fftSize = 2048;
+        connect.call(this, meter); connect.call(meter, destination); meters.push(meter);
+        return destination;
+    }
+    return connect.call(this, destination, ...args);
+};
+const nativeFetch = window.fetch.bind(window);
+let fault = '', bankRequested = false;
+window.fetch = async (url, options) => {
+    if (fault === 'dependency' && url === '/api/ui-audio/playback')
+        return new Response(JSON.stringify({ error: '缺少 FMOD WASM 依赖，请运行 npm run prepare:fmod。' }), { status: 503 });
+    if (String(url).includes('/banks/')) {
+        bankRequested = true;
+        if (fault === 'delay') await new Promise((resolve, reject) => {
+            const timer = setTimeout(resolve, 5000);
+            const abort = () => { clearTimeout(timer); reject(new DOMException('已取消', 'AbortError')); };
+            if (options.signal.aborted) abort(); else options.signal.addEventListener('abort', abort, { once: true });
+        });
+        if (fault === 'missing-bank') return new Response(JSON.stringify({ error: '缺少 bank 依赖。' }), { status: 404 });
+        if (fault === 'invalid-bank') return new Response('不兼容的 bank 内容');
+    }
+    return nativeFetch(url, options);
+};
+</script><script src="/js/fmod-preview.js"></script><script>
+let peak = 0, rms = 0, latest = {};
+const results = [], click = 'event:/sfx/ui/clicks/ui_click', long = 'event:/sfx/ui/wipe_map';
+const engine = new FmodPreview(status => { latest = status; });
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const assert = (condition, message) => { if (!condition) throw new Error(message); };
+async function until(predicate) {
+    const deadline = performance.now() + 15000;
+    while (!predicate()) { assert(performance.now() < deadline, '等待状态超时'); await sleep(10); }
+}
+function record(result) {
+    results.push(result);
+    document.querySelector('#results').textContent = JSON.stringify(results, null, 2);
+    return nativeFetch('/results', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(results) });
+}
+setInterval(() => {
+    for (const meter of meters) {
+        if (meter.context.state !== 'running') continue;
+        const samples = new Float32Array(meter.fftSize); meter.getFloatTimeDomainData(samples);
+        let sum = 0;
+        for (const sample of samples) { peak = Math.max(peak, Math.abs(sample)); sum += sample * sample; }
+        rms = Math.max(rms, Math.sqrt(sum / samples.length));
+    }
+    document.querySelector('#live').textContent = JSON.stringify({ latest, peak, rms, banks: engine.banks.size,
+        active: !!engine.active, contexts: meters.map(meter => meter.context.state) }, null, 2);
+}, 20);
+async function play(event, profileId) {
+    peak = rms = 0;
+    const before = performance.getEntriesByType('resource').filter(item => item.name.includes('/banks/')).length;
+    const result = await engine.play(event, profileId);
+    assert(result.state === 'ended' && peak > 0 && rms > 0, `${event} 未正常出声并结束`);
+    await record({ ...result, peak, rms, bankRequests: performance.getEntriesByType('resource').filter(item => item.name.includes('/banks/')).length - before });
+}
+async function scenario(name, action) {
+    try { await action(); await record({ scenario: name, passed: true }); }
+    catch (error) { await record({ scenario: name, passed: false, error: error.message }); }
+    finally { fault = ''; }
+}
+document.querySelector('#all').onclick = async () => {
+    await scenario('全部真实音频输出', async () => {
+        const data = await (await nativeFetch('/api/ui-audio')).json();
+        for (const event of data.catalog) await play(event.path);
+        const profile = data.profiles.find(profile => profile.events.some(event => event.path === 'event:/vygo/sfx/material_shine'));
+        assert(profile, '需要导入现有 VYgo 工程以验证自定义事件');
+        await play('event:/vygo/sfx/material_shine', profile.id);
+    });
+};
+document.querySelector('#lifecycle').onclick = async () => {
+    await scenario('立即停止并无残留输出', async () => {
+        const pending = engine.play(long); await until(() => engine.active); await sleep(100);
+        engine.stop(); assert((await pending).state === 'stopped' && !engine.active, '实例未停止');
+        await sleep(250); peak = rms = 0; await sleep(150);
+        assert(peak === 0, `停止后仍有输出 ${peak}`);
+    });
+    await scenario('连续切换仅保留最后一次', async () => {
+        const first = engine.play(long); await until(() => engine.active);
+        const skipped = engine.play(long); const last = engine.play(click);
+        const states = await Promise.all([first, skipped, last]);
+        assert(states.map(item => item.state).join() === 'stopped,cancelled,ended', JSON.stringify(states));
+        assert(!engine.active, '切换后实例未释放');
+    });
+    await scenario('离开页面释放且可以重新初始化', async () => {
+        await engine.dispose(); assert(!engine.system && !engine.fmod && !engine.banks.size, '引擎资源未释放');
+        assert(meters.every(meter => meter.context.state === 'closed'), '音频上下文未关闭');
+        await play(click);
+    });
+    await scenario('加载中取消并恢复', async () => {
+        await engine.dispose(); fault = 'delay'; bankRequested = false;
+        const pending = engine.play(click); await until(() => bankRequested); engine.stop();
+        assert((await pending).state === 'cancelled' && !engine.system, '取消未清理半成品');
+        fault = ''; await play(click);
+    });
+    for (const kind of ['dependency', 'missing-bank', 'invalid-bank', 'initialization']) {
+        await scenario(`${kind} 失败后恢复`, async () => {
+            await engine.dispose(); fault = kind;
+            const factory = window.FMODModule;
+            if (kind === 'initialization') window.FMODModule = async () => { throw new Error('模拟 WASM 初始化失败'); };
+            let error;
+            try { await engine.play(click); } catch (caught) { error = caught.message; }
+            finally { window.FMODModule = factory; fault = ''; }
+            assert(error, '故障未反馈'); assert(!engine.system && !engine.active, '故障未释放资源');
+            await record({ injected: kind, error }); await play(click);
+        });
+    }
+    await engine.dispose();
+};
+document.querySelector('#stop').onclick = () => engine.stop();
+window.addEventListener('pagehide', () => engine.dispose());
+</script></html>

@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Godot;
 using STS2RitsuLib;
 using STS2RitsuLib.Audio;
 using VYgo.Scripts;
@@ -44,14 +45,15 @@ public static class UiAudioReplacements {
             }
             foreach (var bank in banks) FmodStudioDeferredBankRegistration.RegisterBank(bank);
             foreach (var guid in guids) FmodStudioDeferredBankRegistration.RegisterStudioGuidMappings(guid);
-            _readySubscription ??= RitsuLibFramework.SubscribeLifecycleOnce<DeferredInitializationCompletedEvent>(_ => {
+            // 与主菜单音乐使用同一延迟加载服务；等本轮所有 bank 刷新回调完成再查 GUID。
+            _readySubscription ??= RitsuLibFramework.SubscribeLifecycleOnce<DeferredInitializationCompletedEvent>(_ => Callable.From(() => {
                 foreach (var (source, target) in pending) {
                     // 检查实际已加载的 GUID，不能只凭路径表存在就替换，以免丢失原版声音。
                     if (FmodStudioServer.TryCheckEventGuid(target.Guid) == true) Active[source] = target.Path;
                     else Entry.Logger.Warn($"UI 音效尚未加载，保留原版：{source} -> {target.Path}");
                 }
                 Entry.Logger.Info($"已启用 {Active.Count} 项 UI 音效替换。");
-            }, replayCurrentState: true);
+            }).CallDeferred(), replayCurrentState: true);
         } catch (Exception error) {
             Active.Clear();
             Entry.Logger.Warn($"UI 音效配置加载失败，保留原版：{error.Message}");

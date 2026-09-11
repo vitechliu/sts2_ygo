@@ -29,20 +29,15 @@ test('仅允许 19 个指定事件，保存、编辑、取消能跨读取持久�
     assert.deepEqual(service.state().mappings, {});
 });
 
-test('真实 FMOD：19 项原版、工程导入更新、自定义试听和缺依赖反馈', {
+test('WASM 管理链路：事件枚举、工程导入更新、播放清单和不兼容反馈', {
     skip: process.env.VYGO_AUDIO_INTEGRATION !== '1', timeout: 120000
 }, async () => {
     fs.writeFileSync(manifest, JSON.stringify({ version: 1, profiles: [], mappings: {} }));
-    fs.mkdirSync(path.join(root, 'Web/scripts'), { recursive: true });
-    fs.copyFileSync(path.join(__dirname, '../scripts/fmod-preview.py'), path.join(root, 'Web/scripts/fmod-preview.py'));
-    for (const item of service.state().catalog) {
-        const result = await service.preview({ event: item.path });
-        assert.ok(result.peak > 1, item.path);
-        assert.ok(result.duration > 0 && result.duration < 9, item.path);
-        assert.equal(fs.readFileSync(result.output).toString('ascii', 0, 4), 'RIFF');
-        fs.rmSync(result.output);
-        console.log(`${item.label}：${result.duration.toFixed(2)} 秒，峰值 ${result.peak}`);
-    }
+    const originalBanks = ['Master.bank', 'Master.strings.bank', 'sfx.bank'].map(name => path.join(process.env.FMOD_ORIGINAL_BANK_DIR, name));
+    const inspected = await service.inspectBanks({ banks: originalBanks });
+    assert.equal(inspected.version, '2.03.08');
+    for (const item of service.state().catalog) assert.ok(inspected.events.some(event => event.path === item.path), item.path);
+    assert.deepEqual(Object.keys(service.state().settings), ['originalBankDir']);
     const input = {
         name: '真实 VYgo bank 测试', bankDir: path.resolve(__dirname, '../../VYgo/banks'),
         bankFiles: ['VYgo.bank'], guidFile: path.resolve(__dirname, '../../VYgo/banks/VYgo.guids.txt')
@@ -50,16 +45,21 @@ test('真实 FMOD：19 项原版、工程导入更新、自定义试听和缺依
     const profile = await service.createProfile(input);
     const event = profile.events.find(item => item.path === 'event:/vygo/sfx/material_shine');
     assert.ok(event);
-    const result = await service.preview({ profileId: profile.id, event: event.path });
-    assert.ok(result.peak > 1);
-    console.log(`替换事件：${result.duration.toFixed(2)} 秒，峰值 ${result.peak}`);
+    const result = service.playback({ profileId: profile.id, event: event.path });
+    assert.equal(result.guid, event.guid);
+    assert.equal(result.runtime.version, '2.03.08');
+    for (const bank of result.banks) assert.ok(fs.existsSync(service.bankFile(bank.id)));
+    assert.throws(() => service.bankFile('../Master.bank'), /标识/);
     service.saveMapping({ source, profileId: profile.id, event: event.path });
     const updated = await service.createProfile({ ...input, name: '更新后的工程' }, profile.id);
     assert.equal(updated.id, profile.id);
     assert.equal(service.state().mappings[source].event, event.path);
     assert.equal(service.state().profiles.length, 1);
     await assert.rejects(service.createProfile({ ...input, bankFiles: ['missing.bank'] }), /ENOENT/);
-    await assert.rejects(service.preview({ event: 'event:/sfx/ui/relic_activate_general' }), /清单/);
+    assert.throws(() => service.playback({ event: 'event:/sfx/ui/relic_activate_general' }), /清单/);
+    const incompatible = path.join(root, 'invalid.bank');
+    fs.writeFileSync(incompatible, Buffer.from('不兼容的 bank 内容'));
+    await assert.rejects(service.inspectBanks({ banks: [incompatible] }), /bank 版本/);
     service.saveMapping({ source, profileId: null });
     assert.deepEqual(service.state().mappings, {});
 });
