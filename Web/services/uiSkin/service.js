@@ -19,6 +19,13 @@ function sourceFile(base, id) {
 // 素材裁剪和适配在服务端统一实现，预览与导出使用同一结果。
 async function render(base, spec, outputSize) {
     check(spec && typeof spec === 'object', '缺少素材配置');
+    if (spec.blank === true) {
+        check(!spec.source, '空白映射不能同时指定素材');
+        const [width, height] = ints(outputSize || spec.outputSize, 2, 1, 4096, '输出尺寸');
+        check(width * height <= 8 * 1024 * 1024, '输出图片过大');
+        const png = await sharp({ create: { width, height, channels: 4, background: '#00000000' } }).png().toBuffer();
+        return { png, width, height, mode: spec.mode || 'contain', border: spec.border || [0, 0, 0, 0] };
+    }
     const file = sourceFile(base, spec.source);
     const meta = await sharp(file, { limitInputPixels: 32 * 1024 * 1024 }).metadata();
     const crop = spec.crop || [0, 0, meta.width, meta.height];
@@ -153,6 +160,20 @@ class UiSkinService {
         check(!rule.neutralize || ['TextureRect', 'NinePatchRect', 'ColorRect'].includes(slot.type), '此图层不支持独立视觉层');
         return { component, slot, asset: catalog.assets.find(a => a.id === slot.assetId) };
     }
+    async renderStates(rule, asset) {
+        const rendered = {};
+        // 空白状态沿用同图层素材的逻辑尺寸和九宫格边界，避免状态切换改变布局。
+        for (const [state, spec] of Object.entries(rule.states)) {
+            check(spec && typeof spec === 'object' && (spec.blank === undefined || typeof spec.blank === 'boolean'), '状态素材配置无效');
+            if (!spec.blank) rendered[state] = await render(this.base, { ...spec, outputSize: [asset.width, asset.height] });
+        }
+        const template = Object.values(rendered)[0] || { width: asset.width, height: asset.height, mode: 'contain', border: [0, 0, 0, 0] };
+        for (const [state, spec] of Object.entries(rule.states)) if (spec.blank) {
+            check(!spec.source, '空白映射不能同时指定素材');
+            rendered[state] = await render(this.base, { blank: true, outputSize: [template.width, template.height], mode: template.mode, border: template.border });
+        }
+        return rendered;
+    }
     async validate(config) {
         check(config?.schemaVersion === 1 && Array.isArray(config.rules) && config.rules.length <= 512, '配置版本或规则数量无效');
         const conflicts = new Map(), ids = new Set(), layoutWrites = new Map();
@@ -175,8 +196,7 @@ class UiSkinService {
                 previous.push({ variant: Boolean(slot.textureVariant), asset: asset.id }); conflicts.set(key, previous);
             }
             let size, mode, border;
-            for (const spec of Object.values(rule.states)) {
-                const image = await render(this.base, { ...spec, outputSize: [asset.width, asset.height] });
+            for (const image of Object.values(await this.renderStates(rule, asset))) {
                 const actual = `${image.width},${image.height}`;
                 check(!size || size === actual, '同一图层的所有状态图必须具有一致输出尺寸');
                 check(!mode || mode === image.mode, '同一图层所有状态必须使用相同适配方式');
@@ -194,7 +214,12 @@ class UiSkinService {
     }
     async preview(rule, state, size) {
         const { asset } = this.resolveRule(rule);
-        const spec = rule.states[state] || (state.startsWith('selected') && rule.states.selected) || rule.states.normal;
+        const key = rule.states[state] ? state : state.startsWith('selected') && rule.states.selected ? 'selected' : 'normal';
+        const spec = rule.states[key];
+        if (spec.blank) {
+            const image = (await this.renderStates(rule, asset))[key];
+            return ['nine', 'tile'].includes(image.mode) && size ? render(this.base, { blank: true, mode: image.mode, border: image.border }, size) : image;
+        }
         return render(this.base, { ...spec, outputSize: [asset.width, asset.height] }, ['nine', 'tile'].includes(spec.mode) ? size || [asset.width, asset.height] : undefined);
     }
     async export() {
@@ -209,8 +234,8 @@ class UiSkinService {
             for (const rule of config.rules) {
                 const { component, slot, asset } = this.resolveRule(rule);
                 const states = {}; let result;
-                for (const [state, spec] of Object.entries(rule.states)) {
-                    result = await render(this.base, { ...spec, outputSize: [asset.width, asset.height] });
+                for (const [state, image] of Object.entries(await this.renderStates(rule, asset))) {
+                    result = image;
                     const name = `${hash(result.png)}.png`; images.set(name, result.png);
                     states[state] = `res://VYgo/ui_skin/generated/${name}`;
                 }

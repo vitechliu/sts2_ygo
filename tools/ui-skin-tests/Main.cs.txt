@@ -42,6 +42,7 @@ public partial class Main : Node {
             var colorRule = Rule("color", "res://test/color.tscn", mode: "nine"); colorRule.ExpectedType = "ColorRect"; colorRule.Property = "color"; colorRule.Texture = new() { Color = [0.2f, 0.4f, 0.6f, 0.5f] }; rules.Add(colorRule);
             var variantA = Rule("variant-a", "res://test/variant.tscn"); variantA.TextureVariant = true; rules.Add(variantA);
             var variantB = Rule("variant-b", "res://test/variant.tscn"); variantB.TextureVariant = true; variantB.Texture = UiSkinTextureIdentity.From(GD.Load<Texture2D>(Skin("pressed"))); variantB.States["normal"] = Skin("hover"); rules.Add(variantB);
+            var blankRule = Rule("blank", "res://test/blank.tscn"); blankRule.States = new() { ["normal"] = Skin("blank") }; rules.Add(blankRule);
             System.IO.File.WriteAllText(ProjectSettings.GlobalizePath(UiSkinService.ManifestPath), JsonSerializer.Serialize(new UiSkinManifest { SchemaVersion = 1, Rules = rules }, UiSkinManifest.JsonOptions));
             var before = Component("res://test/common.tscn");
             UiSkinService.Initialize(); await Frames();
@@ -96,6 +97,12 @@ public partial class Main : Node {
             Check(variantTwo.Item2.Texture.ResourcePath == Skin("hover"), "Second dynamic icon variant does not conflict at the same node path");
             var variantUnknown = Component("res://test/variant.tscn"); variantUnknown.Item2.Texture = GD.Load<Texture2D>(Skin("hover")); await Frames();
             Check(UiSkinService.MatchingRules(variantUnknown.Item2).Length == 0, "Unknown dynamic icon remains untouched");
+            var blank = Component("res://test/blank.tscn");
+            var childIcon = new TextureRect { Texture = _original }; blank.Item2.AddChild(childIcon); await Frames();
+            Check(blank.Item2.Texture.GetImage().GetPixel(0, 0).A == 0 && blank.Item2.Visible, "Blank mapping loads transparent pixels without hiding the node");
+            blank.Item1.EmitSignal(Control.SignalName.MouseEntered); blank.Item1.EmitSignal(BaseButton.SignalName.ButtonDown); await Frames();
+            Check(blank.Item2.Texture.ResourcePath == Skin("blank"), "Unconfigured hover and press states retain blank mapping");
+            Check(blank.Item2.Size == new Vector2(240, 90) && !blank.Item1.Disabled && childIcon.IsVisibleInTree() && childIcon.Texture == _original, "Blank mapping preserves layout, input and child icons");
             before.Item2.QueueFree(); await Frames();
             before.Item1.EmitSignal(Control.SignalName.MouseEntered); UiSkinService.Refresh(before.Item1);
             Check(true, "Removed visual node does not leave unsafe refresh references");

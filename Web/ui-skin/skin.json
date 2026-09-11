@@ -81,6 +81,19 @@
             },
             "layout": {},
             "neutralize": false
+        },
+        {
+            "id": "confirm-image-icon-3",
+            "componentId": "confirm",
+            "slotId": "Image/Icon|texture",
+            "scope": "component",
+            "states": {
+                "normal": {
+                    "blank": true
+                }
+            },
+            "layout": {},
+            "neutralize": false
         }
     ]
 }

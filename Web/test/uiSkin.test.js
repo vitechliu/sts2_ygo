@@ -252,3 +252,49 @@ texture = ExtResource("1")
     assert.equal(c.slots.find(s => s.nodePath.includes('RelicCollectionButton')).assetId, 'res://images/direct.png');
     assert(catalog.assets.find(a => a.id === id).refs.length > 0);
 });
+
+test('空白映射无需素材即可保存、预览和导出，缺失状态也回退透明图', async t => {
+    const { service, rule } = await fixture(t);
+    fs.rmSync(path.join(service.base, 'sources'), { recursive: true });
+    rule.states = { normal: { blank: true } };
+    await service.save({ schemaVersion: 1, rules: [rule] });
+    assert.deepEqual(service.config().rules[0].states.normal, { blank: true });
+    const preview = await service.preview(rule, 'hover');
+    assert.deepEqual([preview.width, preview.height], [13, 10]);
+    const raw = await sharp(preview.png).ensureAlpha().raw().toBuffer();
+    assert(raw.every((value, i) => i % 4 !== 3 || value === 0));
+    const result = await service.export();
+    assert.deepEqual([result.rules, result.images], [1, 1]);
+    const manifest = JSON.parse(fs.readFileSync(path.join(service.output, 'skin.json')));
+    const image = path.join(service.projectRoot, manifest.rules[0].states.normal.slice(6));
+    assert(fs.existsSync(image));
+    assert.deepEqual(fs.readFileSync(image), preview.png);
+    assert(!fs.existsSync(path.join(service.base, 'sources')));
+    const second = await service.export();
+    assert.equal(second.images, 1);
+    assert.equal(fs.readdirSync(path.join(service.output, 'generated')).length, 1);
+});
+
+test('空白状态兼容九宫格素材尺寸与边框，也允许正常为空白而悬停显示图片', async t => {
+    const { service, source, rule } = await fixture(t);
+    const art = { source: source.id, mode: 'nine', border: [2, 3, 2, 3] };
+    for (const states of [{ normal: art, hover: { blank: true } }, { normal: { blank: true }, hover: art }]) {
+        rule.states = states;
+        await service.save({ schemaVersion: 1, rules: [rule] });
+        const blankState = states.normal.blank ? 'normal' : 'hover';
+        const preview = await service.preview(rule, blankState, [300, 80]);
+        assert.deepEqual([preview.width, preview.height], [300, 80]);
+        await service.export();
+        const manifest = JSON.parse(fs.readFileSync(path.join(service.output, 'skin.json')));
+        assert.equal(manifest.rules[0].mode, 'nine');
+        assert.deepEqual(manifest.rules[0].border, [2, 3, 2, 3]);
+        for (const file of Object.values(manifest.rules[0].states)) {
+            const metadata = await sharp(path.join(service.projectRoot, file.slice(6))).metadata();
+            assert.deepEqual([metadata.width, metadata.height], [16, 12]);
+        }
+    }
+    rule.states = { normal: { blank: true, source: source.id } };
+    await assert.rejects(service.save({ schemaVersion: 1, rules: [rule] }), /不能同时指定素材/);
+    rule.states = { normal: { blank: 'true' } };
+    await assert.rejects(service.save({ schemaVersion: 1, rules: [rule] }), /状态素材配置无效/);
+});

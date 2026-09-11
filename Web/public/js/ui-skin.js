@@ -54,7 +54,8 @@
         const usage = state.slot.usages[Number($('target').value)];
         if (d.scope === 'scene' && usage) { d.scene = usage.scene; d.nodePath = usage.nodePath; }
         else { delete d.scene; delete d.nodePath; }
-        if ($('source').value) d.states[$('state').value] = {
+        if ($('source').value === '__blank__') d.states[$('state').value] = { blank: true };
+        else if ($('source').value) d.states[$('state').value] = {
             source: $('source').value, crop: readFour('crop'), padding: readFour('padding'), border: readFour('border'), mode: $('mode').value,
             align: [Number($('align-x').value), Number($('align-y').value)], offset: [Number($('offset-x').value), Number($('offset-y').value)]
         };
@@ -80,11 +81,12 @@
     }
     function fillSpec() {
         const spec = currentSpec();
-        $('source').value = spec?.source || ''; $('mode').value = spec?.mode || 'contain';
+        $('source').value = spec?.blank ? '__blank__' : spec?.source || ''; $('mode').value = spec?.mode || 'contain';
         setFour('crop', spec?.crop); setFour('padding', spec?.padding); setFour('border', spec?.border);
         $('align-x').value = spec?.align?.[0] ?? .5; $('align-y').value = spec?.align?.[1] ?? .5;
         $('offset-x').value = spec?.offset?.[0] || 0; $('offset-y').value = spec?.offset?.[1] || 0;
-        $('preview-state').textContent = spec ? '独立状态图' : '未提供：基础图 / 原版反馈';
+        $('preview-state').textContent = spec?.blank ? '空白映射：透明，不显示此图层' : spec ? '独立状态图' : '未提供：基础图 / 原版反馈';
+        updateBlankControls();
         loadImage();
     }
     function canLeave() { return !state.dirty || window.confirm('当前映射有未保存的修改，是否放弃这些修改？'); }
@@ -170,18 +172,22 @@
         $('warnings').textContent = state.catalog.warnings.join('\n') || '扫描无诊断信息';
         renderComponents(); renderAssets();
     }
-    function renderSources() { selectOptions('source', [['', '未提供：沿用基础图与原版反馈'], ...state.sources.map(s => [s.id, `${s.name} (${s.width}×${s.height})`])], currentSpec()?.source || ''); }
+    function renderSources() { selectOptions('source', [['', '未提供：沿用基础图与原版反馈'], ['__blank__', '空白映射：透明，不显示此图层'], ...state.sources.map(s => [s.id, `${s.name} (${s.width}×${s.height})`])], currentSpec()?.blank ? '__blank__' : currentSpec()?.source || ''); }
+    function updateBlankControls() {
+        const blank = $('source').value === '__blank__';
+        for (const id of ['mode', 'canvas-mode', 'reset-crop', 'align-x', 'align-y', 'offset-x', 'offset-y', ...['crop', 'padding', 'border'].flatMap(p => [0, 1, 2, 3].map(i => `${p}-${i}`))]) $(id).disabled = blank;
+    }
     async function loadImage() {
         state.image = null;
         const id = $('source').value;
-        if (!id) { drawCanvas(); return; }
+        if (!id || id === '__blank__') { drawCanvas(); return; }
         const img = new Image();
         img.onload = () => { if ($('source').value === id) { state.image = img; drawCanvas(); } };
         img.src = `/api/ui-skin/sources/${id}`;
     }
     function drawCanvas() {
         const canvas = $('source-canvas'), ctx = canvas.getContext('2d'), img = state.image;
-        if (!img) { canvas.width = 420; canvas.height = 150; ctx.fillStyle = '#9badbe'; ctx.font = '14px sans-serif'; ctx.fillText('导入素材后可直接拖动编辑', 25, 75); return; }
+        if (!img) { canvas.width = 420; canvas.height = 150; ctx.fillStyle = '#9badbe'; ctx.font = '14px sans-serif'; ctx.fillText($('source').value === '__blank__' ? '空白映射：无需上传素材，保留布局和点击范围' : '导入素材后可直接拖动编辑', 15, 75); return; }
         const crop = readFour('crop'), pad = readFour('padding'), border = readFour('border');
         const nine = $('canvas-mode').value === 'border';
         const width = nine ? crop[2] + pad[0] + pad[2] : img.width, height = nine ? crop[3] + pad[1] + pad[3] : img.height;
@@ -231,7 +237,8 @@
         if (request !== state.request) return;
         if (state.previewUrl) URL.revokeObjectURL(state.previewUrl);
         state.previewUrl = URL.createObjectURL(blob); $('replacement').src = state.previewUrl;
-        $('preview-state').textContent = state.draft.states[$('state').value] ? labelNames[$('state').value] : '基础图回退';
+        const effective = state.draft.states[$('state').value] || ($('state').value.startsWith('selected') && state.draft.states.selected) || state.draft.states.normal;
+        $('preview-state').textContent = effective?.blank ? '空白映射：透明，不显示此图层' : state.draft.states[$('state').value] ? labelNames[$('state').value] : '基础图回退';
         if ($('composition').open) await componentPreview();
     }
     const loadPreviewImage = url => new Promise((resolve, reject) => { const img = new Image(); img.onload = () => resolve(img); img.onerror = () => reject(new Error('组合预览图片加载失败')); img.src = url; });
@@ -307,14 +314,15 @@
     $('source').onchange = () => {
         const source = state.sources.find(s => s.id === $('source').value);
         if (source) setFour('crop', [0, 0, source.width, source.height]);
-        readForm(); loadImage();
+        readForm(); updateBlankControls(); loadImage();
+        if (state.draft?.states.normal) run(preview);
     };
     $('upload').onchange = () => run(async () => {
         const file = $('upload').files[0]; if (!file) return;
         const response = await fetch(`/api/ui-skin/sources?name=${encodeURIComponent(file.name)}`, { method: 'POST', headers: { 'Content-Type': 'image/png' }, body: file });
         const result = await response.json(); if (!response.ok) throw new Error(result.error);
         state.sources = await api('sources'); renderSources(); $('source').value = result.id;
-        setFour('crop', [0, 0, result.width, result.height]); readForm(); loadImage(); message('原始素材已保存。可以框选裁剪区域，再调整适配方式。');
+        setFour('crop', [0, 0, result.width, result.height]); readForm(); updateBlankControls(); loadImage(); message('原始素材已保存。可以框选裁剪区域，再调整适配方式。');
     });
     $('capture').onchange = () => run(async () => {
         const file = $('capture').files[0]; if (!file) return;

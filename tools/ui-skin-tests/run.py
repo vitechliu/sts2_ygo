@@ -31,7 +31,7 @@ def png(name, rgba):
     file.parent.mkdir(parents=True, exist_ok=True)
     file.write_bytes(image)
 png('original.png', [200, 20, 20, 255])
-for name, color in [('normal', [20, 200, 20, 255]), ('hover', [20, 20, 200, 255]), ('pressed', [200, 200, 20, 255])]:
+for name, color in [('normal', [20, 200, 20, 255]), ('hover', [20, 20, 200, 255]), ('pressed', [200, 200, 20, 255]), ('blank', [0, 0, 0, 0])]:
     png('VYgo/ui_skin/generated/' + name + '.png', color)
 (root / 'Main.cs').write_text((pathlib.Path(__file__).parent / 'Main.cs.txt').read_text())
 (root / 'project.godot').write_text('''config_version=5

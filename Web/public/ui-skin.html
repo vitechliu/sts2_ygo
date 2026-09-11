@@ -22,7 +22,7 @@
 <div class="section-title">替换素材与适配</div>
 <label>规则名称<input id="rule-id" placeholder="例如 confirm-background"></label>
 <label>替换范围<select id="scope"><option value="component">组件共用替换</option><option value="scene">指定场景替换</option></select></label><label id="target-label" hidden>使用位置<select id="target"></select></label>
-<label>当前状态的素材<select id="source"><option value="">未提供，沿用基础图与原版反馈</option></select></label><label class="file-button">＋ 导入 PNG / 素材图集<input id="upload" type="file" accept="image/png"></label><button id="clear-state" class="secondary">移除当前状态图</button>
+<label>当前状态的素材<select id="source"><option value="">未提供，沿用基础图与原版反馈</option><option value="__blank__">空白映射：透明，不显示此图层</option></select></label><p class="hint">选择“空白映射”即可隐藏当前图层的图像，无需上传图片。正常状态设为空白时，未单独配置的其他状态也会沿用空白。</p><label class="file-button">＋ 导入 PNG / 素材图集<input id="upload" type="file" accept="image/png"></label><button id="clear-state" class="secondary">移除当前状态图</button>
 <label>适配方式<select id="mode"><option value="contain">等比缩放 + 留白</option><option value="cover">等比覆盖 + 裁剪</option><option value="nine">九宫格</option><option value="tile">平铺</option><option value="stretch">自由拉伸</option></select></label>
 <div class="toolbar"><label>画布编辑<select id="canvas-mode"><option value="crop">框选素材裁剪区</option><option value="border">拖动九宫格边界</option></select></label><button id="reset-crop" class="secondary">使用整张图</button></div>
 <div class="source-canvas checker"><canvas id="source-canvas" width="420" height="220"></canvas></div>
