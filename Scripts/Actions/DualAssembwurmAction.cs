@@ -29,9 +29,7 @@ public sealed class DualAssembwurmAction : BasePerTurnMonsterAction {
 
     public override TargetType TargetType => TargetType.AnyEnemy;
 
-    private int AttackDamage => !IsCanonical && Owner.Monster is BaseMonster monster
-        ? monster.GetAttackDamage(Amount)
-        : Amount;
+    private int AttackDamage => PreviewMonsterDamage(Amount);
 
     protected override string? IntentIconPath => AttackDamage > 0
         ? $"{AttackIntentIconDirectory}/intent_attack_{GetAttackIntentTier(AttackDamage)}.png"
@@ -70,12 +68,8 @@ public sealed class DualAssembwurmAction : BasePerTurnMonsterAction {
         SpendUses();
         await CardCmd.Exhaust(choiceContext, selected);
         await MinionAnimCmd.PlayBumpAttackAsync(Owner, target);
-        await DamageCmd.Attack(AttackDamage)
-            .FromCard(sourceCard, null)
-            .Targeting(target)
-            .WithNoAttackerAnim()
-            .WithHitFx("vfx/vfx_attack_slash")
-            .Execute(choiceContext);
+        await DealMonsterDamage(choiceContext, target, Amount,
+            hitFx: "vfx/vfx_attack_slash");
         if (target is { IsAlive: true }) {
             await PowerCmd.Apply<VulnerablePower>(
                 choiceContext,

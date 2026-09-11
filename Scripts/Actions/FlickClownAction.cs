@@ -42,7 +42,8 @@ public sealed class FlickClownAction : BasePerTurnMonsterAction {
             player.Creature,
             1m,
             ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move,
-            sourceCard,
+            Owner,
+            null,
             null);
         await CardPileCmd.Draw(choiceContext, sourceCard.Draw, player);
     }

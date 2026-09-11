@@ -3,7 +3,18 @@
   "V_YGO_SUMMON_MESSAGE_NO_VALID_SYNCHRO": "No Synchro Monsters meet the Level and Tuner material requirements.",
   "USE_EFFECT_ERROR.title": "Activation Failed",
   "USE_EFFECT_ERROR_ONCE_PER_DUEL.body": "The effect of a card named [gold]{card}[/gold] has already been used this run.",
-  "USE_EFFECT_ERROR_ENERGY.body": "Not enough Energy to activate this Hand Effect.",
+  "USE_EFFECT_ERROR_ENERGY.body": "Not enough Energy to activate this effect.",
   "V_YGO_SUMMON_ERROR.title": "Summon Failed",
-  "V_YGO_SUMMON_ERROR_MINION_CAPACITY.body": "The monster zone is full. [gold]{card}[/gold] could not be Summoned this time."
+  "V_YGO_SUMMON_ERROR_MINION_CAPACITY.body": "The monster zone is full. [gold]{card}[/gold] could not be Summoned this time.",
+  "USE_EFFECT_ERROR_CAPACITY.body": "The monster zone is full. This effect cannot be activated.",
+  "USE_EFFECT_ERROR_LEVEL_TARGET.body": "There are no eligible Level 3 or higher monsters on the field whose Level can be reduced.",
+  "USE_EFFECT_ERROR_CYBERSE_MATERIALS.body": "You need at least 2 Cyberse monsters in your Discard Pile.",
+  "USE_EFFECT_ERROR_FUSION_TARGET.body": "There are no eligible Fusion Monsters on the field to Boost.",
+  "USE_EFFECT_ERROR_NO_CANDIDATES.body": "There are no cards available for this effect to generate.",
+  "USE_EFFECT_ERROR_LIGHT_MACHINE_MATERIAL.body": "There are no eligible LIGHT Machine monsters in your Discard Pile to use as material.",
+  "USE_EFFECT_ERROR_NO_SEARCH_TARGET.body": "There are no Spell/Trap Cards in your Draw Pile that meet this effect's requirements.",
+  "USE_EFFECT_ERROR_ONCE_PER_TURN.body": "This effect has already been activated this turn.",
+  "USE_EFFECT_ERROR_LIGHT_FIEND_MATERIAL.body": "There are no other eligible LIGHT Fiend monsters in your Discard Pile to use as material.",
+  "USE_EFFECT_ERROR_EMPTY_DRAW_PILE.body": "Your Draw Pile is empty. This effect cannot be activated.",
+  "USE_EFFECT_ERROR_ONCE_PER_COMBAT.body": "The effect of this card name has already been activated this combat."
 }

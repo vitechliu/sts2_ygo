@@ -6,7 +6,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Nodes.Screens.Capstones;
 using STS2RitsuLib.Interactions.RightClick;
-using STS2RitsuLib.Ui.Toast;
+using VYgo.Utils;
 using VYgo.Core;
 
 namespace VYgo.Scripts.Cards.Category.Synchro;
@@ -25,32 +25,23 @@ public class GlowUpBulb() : BaseRightClickableMonsterCard(1, CardType.Skill, Car
     public override int BaseLifeVar => 1;
     protected override RightClickType ClickType => RightClickType.Graveyard;
 
+    protected override LocString? ValidateRightClick(ModRightClickExecutionContext context) {
+        LocString? error = base.ValidateRightClick(context);
+        if (error != null) return error;
+        if (Owner.MinionCount() >= Owner.GetMaxMinionCount()) return RightClickError("CAPACITY");
+        if (PileType.Draw.GetPile(Owner).IsEmpty) return RightClickError("EMPTY_DRAW_PILE");
+        if (this.HasUsedEffectOncePerDuelByCard(Owner)) return RightClickError("ONCE_PER_COMBAT");
+        return null;
+    }
+
     protected override async Task OnYgoRightClick(ModRightClickExecutionContext context) {
-        Entry.Logger.Info("RightClick1");
-        
-        var drawPile = PileType.Draw.GetPile(Owner);
-        if (drawPile.IsEmpty) {
-            RitsuToastService.ShowWarning(
-                new LocString("cards", "V_YGO_CARD_GLOW_UP_BULB.hintNoCards").GetFormattedText()
-            );
-            return;
-        }
-        if (!this.CanUseEffectOncePerDuelByCard(CombatState, Owner)) {
-           EffectUtil.ToastOncePerDuel(this);
-           return;
-        }
-        Entry.Logger.Info("RightClick2");
+        if (!this.CanUseEffectOncePerDuelByCard(CombatState, Owner)) return;
         NCapstoneContainer.Instance?.Close();
         var addSuccess = await CommonUtil.SendToGraveyardFromDeck(Owner, 1);
         if (!addSuccess) {
-            RitsuToastService.ShowWarning(
-                new LocString("cards", "V_YGO_CARD_GLOW_UP_BULB.hintNoCards").GetFormattedText()
-            );
+            ShowRightClickError(context, RightClickError("EMPTY_DRAW_PILE"));
             return;
         }
-        Entry.Logger.Info("RightClick3");
-        
         await CardCmd.AutoPlay(context.PlayerChoiceContext, this, null);
-        Entry.Logger.Info("RightClick4");
     }
 }

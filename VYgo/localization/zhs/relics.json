@@ -8,5 +8,8 @@
   "LARGE_CAPSULE.eventDescription": "获得[blue]{Relics}[/blue]件随机[gold]遗物[/gold]。额外将{AttackCard.StringValue:cond:[gold]{AttackCard}[/gold]和[gold]{DefenseCard}[/gold]|一对[gold]打击[/gold]和[gold]防御[/gold]}，加入你的[gold]牌组[/gold]。",
   "V_YGO_RELIC_MAGIC_CIRCLE_CORE_RELIC.title": "魔法阵核心",
   "V_YGO_RELIC_MAGIC_CIRCLE_CORE_RELIC.description": "拾起时，将[blue]{Cards}[/blue]张牌——「暴走魔法阵」、「召唤师 阿莱斯特」和「召唤魔术」加入你的[gold]牌组[/gold]。",
-  "V_YGO_RELIC_MAGIC_CIRCLE_CORE_RELIC.flavor": "凝固在掌心的阵心，仍在等待下一次召唤。"
+  "V_YGO_RELIC_MAGIC_CIRCLE_CORE_RELIC.flavor": "凝固在掌心的阵心，仍在等待下一次召唤。",
+  "V_YGO_RELIC_STORM_ACCESS_RELIC.title": "风暴访问",
+  "V_YGO_RELIC_STORM_ACCESS_RELIC.description": "受到伤害后，若你的生命值等于或低于{HpThreshold}%，将{Cards}张[gold]风暴访问[/gold]加入手牌。每场战斗限一次。",
+  "V_YGO_RELIC_STORM_ACCESS_RELIC.flavor": "在风暴的中心，抓住逆转未来的可能。"
 }

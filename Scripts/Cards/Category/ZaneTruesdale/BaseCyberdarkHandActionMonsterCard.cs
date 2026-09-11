@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -41,10 +42,10 @@ public abstract class BaseCyberdarkHandActionMonsterCard(
         YgoHoverTipConst.Enhance(),
     ];
 
-    public override bool CanExecuteRightClick(ModRightClickExecutionContext context) {
-        return base.CanExecuteRightClick(context)
-            && GetHandActionCandidates().Any();
-    }
+    protected override LocString? ValidateRightClick(ModRightClickExecutionContext context) =>
+        base.ValidateRightClick(context)
+        ?? (!GetHandActionCandidates().Any() ? RightClickError("NO_CANDIDATES") : null);
+
 
     protected override async Task OnYgoRightClick(ModRightClickExecutionContext context) {
         PlayerChoiceContext? choiceContext = context.PlayerChoiceContext;

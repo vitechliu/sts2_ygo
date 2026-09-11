@@ -119,6 +119,8 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
     {
         SourceCard = options.Source;
         PileSent = false;
+        // 常驻光环不受召唤演出档位影响，无动画模式也保留状态提示。
+        Visuals?.PlayMonsterAuraSummonFeedback();
         if (options.MaxHp is { } maxHp)
             await CreatureCmd.SetMaxAndCurrentHp(Creature, maxHp); // 设置血量
         if (options.Source is not BaseMonsterCard sourceCard
@@ -228,6 +230,12 @@ public abstract class BaseMonster: ModMinionTemplate, IYgoId
         Player owner,
         IReadOnlyList<CardModel> materials) {
         await Task.CompletedTask;
+    }
+
+    public override bool ShouldCreatureBeRemovedFromCombatAfterDeath(Creature creature) {
+        // MinionLib 0.6.2 在死亡任务结束后仍会清理被救活的随从；存活的自身必须留在战斗中。
+        if (creature == Creature && creature.IsAlive) return false;
+        return base.ShouldCreatureBeRemovedFromCombatAfterDeath(creature);
     }
 
     public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength) {

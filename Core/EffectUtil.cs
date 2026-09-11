@@ -20,6 +20,17 @@ public static class EffectUtil {
         );
     }
 
+    // 只查询历史，不占用发动次数，供右键发动预检复用。
+    public static bool HasUsedEffectOncePerDuelByCard(
+        this IYgoId ygoIdContent,
+        Player player,
+        string effectSign = "default"
+    ) => CombatManager.Instance.History.Entries
+        .OfType<EffectEntry>()
+        .Any(entry => entry.CardId == ygoIdContent.CardId
+            && entry.Sign == effectSign
+            && entry.Player == player);
+
     /// <summary>
     /// 同一卡名的指定效果一场战斗只能发动一次。
     /// </summary>
@@ -29,11 +40,7 @@ public static class EffectUtil {
         Player player,
         string effectSign = "default"
     ) {
-        if (CombatManager.Instance.History.Entries
-            .OfType<EffectEntry>()
-            .Any(entry => entry.CardId == ygoIdContent.CardId
-                && entry.Sign == effectSign
-                && entry.Player == player)) {
+        if (ygoIdContent.HasUsedEffectOncePerDuelByCard(player, effectSign)) {
             return false;
         }
 

@@ -1,14 +1,14 @@
-using System.Text.Json;
+using VYgo.Core.News;
+using MegaCrit.Sts2.Core.Platform;
 using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Nodes.Screens.MainMenu;
-using FileAccess = Godot.FileAccess;
 
 namespace VYgo.Scripts.UI;
 
 /// <summary>
-/// 负责主菜单左下角新闻轮播的展示、输入、自动切换和临时数据绑定。
+/// 负责主菜单新闻展示、在线数据绑定、点击跳转及自动切换。
 /// </summary>
 internal sealed class MainMenuNewsCarouselController {
     private const string CarouselName = "VYgoMainMenuNewsCarousel";
@@ -20,24 +20,15 @@ internal sealed class MainMenuNewsCarouselController {
     private const double TransitionSeconds = 0.28;
 
     private static readonly Vector2 CarouselSize = new(700f, 390f);
-    private static readonly NewsCarouselItem[] PlaceholderItems = [
-        new(
-            "NEWS_CAROUSEL_1_TITLE",
-            "NEWS_CAROUSEL_1_DETAIL",
-            "res://VYgo/images/cards/70095154.png"),
-        new(
-            "NEWS_CAROUSEL_2_TITLE",
-            "NEWS_CAROUSEL_2_DETAIL",
-            "res://VYgo/images/cards/59281922.png"),
-        new(
-            "NEWS_CAROUSEL_3_TITLE",
-            "NEWS_CAROUSEL_3_DETAIL",
-            "res://VYgo/images/cards/39439590.png")
-    ];
-
     private readonly NMainMenu _mainMenu;
     private readonly MainMenuLeftMenuController _leftMenuController;
-    private readonly IReadOnlyList<NewsCarouselItem> _items;
+    private IReadOnlyList<NewsItem> _items = [];
+    private string _language = "";
+    private Task<NewsDownload<NewsFeed>>? _feedRequest;
+    private Task<NewsDownload<byte[]>>? _imageRequest;
+    private string? _imageKey;
+    private static readonly Dictionary<string, Texture2D?> ImageTextures = [];
+    private Button _openButton = null!;
     private readonly List<Button> _indicatorButtons = [];
 
     private Control? _root;
@@ -51,7 +42,6 @@ internal sealed class MainMenuNewsCarouselController {
     private Button _previousButton = null!;
     private Button _nextButton = null!;
     private HBoxContainer _indicatorHost = null!;
-    private Dictionary<string, string> _localizedValues = [];
     private Tween? _backgroundTween;
     private NButton? _linkedMenuButton;
     private int _currentIndex;
@@ -65,7 +55,6 @@ internal sealed class MainMenuNewsCarouselController {
     ) {
         _mainMenu = mainMenu;
         _leftMenuController = leftMenuController;
-        _items = PlaceholderItems;
     }
 
     public void Install() {
@@ -103,8 +92,10 @@ internal sealed class MainMenuNewsCarouselController {
 
         ConfigureArrowButton(_previousButton, () => SelectRelative(-1, manual: true));
         ConfigureArrowButton(_nextButton, () => SelectRelative(1, manual: true));
-        BuildIndicators();
-        LoadLocalizedValues();
+        _openButton.Pressed += OpenCurrentItem;
+        _openButton.FocusEntered += () => SfxCmd.Play(HoverSfx);
+        _openButton.MouseEntered += () => SfxCmd.Play(HoverSfx);
+        RefreshTexts();
 
         if (_items.Count == 0) {
             root.Visible = false;
@@ -115,7 +106,7 @@ internal sealed class MainMenuNewsCarouselController {
         ShowItem(0, animate: false);
         UpdateNavigationVisibility();
         UpdateFocusNavigation(force: true);
-        Entry.Logger.Info($"主菜单新闻轮播已加载，共 {_items.Count} 条占位新闻。");
+        Entry.Logger.Info($"主菜单新闻轮播已加载，共 {_items.Count} 条新闻。");
     }
 
     private bool TryBindSceneNodes(Control root) {
@@ -127,6 +118,7 @@ internal sealed class MainMenuNewsCarouselController {
         _previousButton = root.GetNodeOrNull<Button>("%PreviousButton")!;
         _nextButton = root.GetNodeOrNull<Button>("%NextButton")!;
         _indicatorHost = root.GetNodeOrNull<HBoxContainer>("%IndicatorHost")!;
+        _openButton = root.GetNodeOrNull<Button>("%OpenButton")!;
 
         if (_backgroundA == null
             || _backgroundB == null
@@ -135,7 +127,8 @@ internal sealed class MainMenuNewsCarouselController {
             || _detailLabel == null
             || _previousButton == null
             || _nextButton == null
-            || _indicatorHost == null) {
+            || _indicatorHost == null
+            || _openButton == null) {
             Entry.Logger.Warn("主菜单新闻轮播场景缺少必要节点，已跳过模块安装。");
             return false;
         }
@@ -164,6 +157,7 @@ internal sealed class MainMenuNewsCarouselController {
 
     private void BuildIndicators() {
         foreach (Node child in _indicatorHost.GetChildren()) {
+            _indicatorHost.RemoveChild(child);
             child.QueueFree();
         }
         _indicatorButtons.Clear();
@@ -259,6 +253,10 @@ internal sealed class MainMenuNewsCarouselController {
             return;
         }
 
+        // 只有帧回调触碰 Godot 对象；后台任务从不持有主菜单节点。
+        if (_language != NewsLocalData.Language) RefreshTexts();
+        PollDownloads();
+
         bool shouldShow = _items.Count > 0
             && !_mainMenu.SubmenuStack.SubmenusOpen
             && !_mainMenu.PatchNotesScreen.IsOpen;
@@ -335,10 +333,18 @@ internal sealed class MainMenuNewsCarouselController {
         StopBackgroundTransition();
         _currentIndex = index;
 
-        NewsCarouselItem item = _items[index];
-        Texture2D? texture = LoadOptionalTexture(item.BackgroundPath);
-        if (texture == null) {
-            Entry.Logger.Warn($"新闻轮播背景图缺失，使用颜色回退：{item.BackgroundPath}");
+        NewsItem item = _items[index];
+        _imageRequest = null;
+        _imageKey = null;
+        Texture2D? texture = null;
+        if (item.Image.Type == "res") texture = LoadOptionalTexture(item.Image.Value);
+        else if (NewsFeedCodec.TryImageUri(item.Image.Value, out Uri? uri)) {
+            _imageKey = uri!.AbsoluteUri;
+            if (!ImageTextures.TryGetValue(_imageKey, out texture))
+                _imageRequest = NewsDownloadCache.Shared.GetImage(uri);
+        }
+        if (texture == null && _imageRequest == null) {
+            Entry.Logger.Warn($"新闻轮播背景图缺失，使用颜色回退：{item.Image.Value}");
         }
 
         ApplyCurrentText();
@@ -400,45 +406,96 @@ internal sealed class MainMenuNewsCarouselController {
     }
 
     public void RefreshTexts() {
-        if (_root == null || _items.Count == 0) return;
-        LoadLocalizedValues();
-        ApplyCurrentText();
+        if (_root == null) return;
+        string language = NewsLocalData.Language;
+        if (_language == language) return;
+        _language = language;
+        _feedRequest = NewsDownloadCache.Shared.GetFeed(language);
+        ApplyItems(NewsLocalData.LoadFeed(language));
+        PollDownloads();
     }
 
-    private void LoadLocalizedValues() {
-        string locale = TranslationServer.GetLocale();
-        string language = locale.StartsWith("zh", StringComparison.OrdinalIgnoreCase) ? "zhs" : "eng";
-        string path = $"res://VYgo/localization/{language}/main_menu.json";
+    private void ApplyItems(IReadOnlyList<NewsItem> items) {
+        Control? focus = _root?.GetViewport().GuiGetFocusOwner();
+        bool hadFocus = focus != null && _root!.IsAncestorOf(focus);
+        string? previousId = _items.Count > 0 ? _items[_currentIndex].Id : null;
+        StopBackgroundTransition();
+        _imageRequest = null;
+        _imageKey = null;
+        _items = items;
+        _currentIndex = 0;
+        BuildIndicators();
+        UpdateNavigationVisibility();
+        _autoAdvanceElapsed = 0;
+        if (items.Count > 0) {
+            int retainedIndex = items.ToList().FindIndex(item => item.Id == previousId);
+            ShowItem(Math.Max(0, retainedIndex), animate: false);
+            if (hadFocus) {
+                if (!_openButton.Disabled) _openButton.GrabFocus();
+                else if (items.Count > 1) _previousButton.GrabFocus();
+                else _leftMenuController.GetVisibleButtons().LastOrDefault()?.GrabFocus();
+            }
+        }
+    }
+
+    private void PollDownloads() {
+        if (_feedRequest?.IsCompletedSuccessfully == true) {
+            NewsDownload<NewsFeed> result = _feedRequest.Result;
+            _feedRequest = null;
+            if (result.Value is { Items.Count: > 0 } feed) ApplyItems(feed.Items);
+            else if (result.Error != null) Entry.Logger.Warn($"在线新闻读取失败，保留本地内容：{result.Error}");
+        }
+        if (_imageRequest?.IsCompletedSuccessfully != true || _imageKey == null) return;
+        NewsDownload<byte[]> image = _imageRequest.Result;
+        _imageRequest = null;
+        Texture2D? texture = null;
         try {
-            string json = FileAccess.GetFileAsString(path);
-            _localizedValues = JsonSerializer.Deserialize<Dictionary<string, string>>(json) ?? [];
+            if (image.Value != null) {
+                using var decoded = new Image();
+                byte[] bytes = image.Value;
+                Error error = bytes.Length >= 12 && System.Text.Encoding.ASCII.GetString(bytes, 8, 4) == "WEBP"
+                    ? decoded.LoadWebpFromBuffer(bytes)
+                    : bytes.Length >= 8 && bytes[0] == 137 && bytes[1] == 80
+                        ? decoded.LoadPngFromBuffer(bytes) : decoded.LoadJpgFromBuffer(bytes);
+                if (error == Error.Ok && decoded.GetWidth() <= 4096 && decoded.GetHeight() <= 4096) {
+                    if (decoded.GetWidth() > 1600 || decoded.GetHeight() > 1200) {
+                        double ratio = Math.Min(1600.0 / decoded.GetWidth(), 1200.0 / decoded.GetHeight());
+                        decoded.Resize(Math.Max(1, (int)(decoded.GetWidth() * ratio)), Math.Max(1, (int)(decoded.GetHeight() * ratio)));
+                    }
+                    texture = ImageTexture.CreateFromImage(decoded);
+                }
+            }
         }
-        catch (Exception exception) {
-            _localizedValues = [];
-            Entry.Logger.Warn($"读取新闻轮播本地化失败（{path}）：{exception.Message}");
-        }
+        catch (Exception e) { Entry.Logger.Warn($"新闻图片解码失败：{e.Message}"); }
+        if (!ImageTextures.ContainsKey(_imageKey) && ImageTextures.Count >= NewsDownloadCache.MaxImageEntries)
+            ImageTextures.Remove(ImageTextures.Keys.First());
+        ImageTextures[_imageKey] = texture;
+        if (texture == null) Entry.Logger.Warn($"新闻图片加载失败，使用颜色回退：{image.Error ?? _imageKey}");
+        StopBackgroundTransition();
+        _activeBackground.Texture = texture;
+        _activeBackground.Visible = texture != null;
+        _fallbackBackground.Visible = texture == null;
     }
 
     private void ApplyCurrentText() {
-        NewsCarouselItem item = _items[_currentIndex];
-        _titleLabel.Text = ResolveLocalizedText(item.TitleKey);
-        _detailLabel.Text = ResolveLocalizedText(item.DetailKey);
+        NewsItem item = _items[_currentIndex];
+        _titleLabel.Text = item.Title;
+        _detailLabel.Text = item.Content;
+        _openButton.Disabled = item.Target.Type == "none" || (item.Target.Type == "scene" && !NewsSceneRouter.Contains(item.Target.Value));
+        _openButton.MouseDefaultCursorShape = _openButton.Disabled ? Control.CursorShape.Arrow : Control.CursorShape.PointingHand;
+        _openButton.TooltipText = _openButton.Disabled ? "" : item.Title;
     }
 
-    private string ResolveLocalizedText(string key) {
-        if (_localizedValues.TryGetValue(key, out string? value) && !string.IsNullOrWhiteSpace(value)) {
-            return value;
+    private void OpenCurrentItem() {
+        if (_items.Count == 0 || _mainMenu.SubmenuStack.SubmenusOpen || _mainMenu.PatchNotesScreen.IsOpen) return;
+        NewsAsset target = _items[_currentIndex].Target;
+        _autoAdvanceElapsed = 0;
+        SfxCmd.Play(ClickSfx);
+        try {
+            if (target.Type == "url" && NewsFeedCodec.IsHttps(target.Value)) PlatformUtil.OpenUrl(target.Value);
+            else if (target.Type == "scene") NewsSceneRouter.Open(_mainMenu, target.Value);
         }
-
-        return key switch {
-            "NEWS_CAROUSEL_1_TITLE" => "Don't miss out!",
-            "NEWS_CAROUSEL_1_DETAIL" => "The Cyber Dragon series is now available in VYgo.",
-            "NEWS_CAROUSEL_2_TITLE" => "Card Spotlight",
-            "NEWS_CAROUSEL_2_DETAIL" => "Cyber Dragon Drei is ready to reinforce your Machine strategy.",
-            "NEWS_CAROUSEL_3_TITLE" => "Featured This Week",
-            "NEWS_CAROUSEL_3_DETAIL" => "Special Summon Cyber Dinosaur and turn the duel around.",
-            _ => key
-        };
+        catch (Exception e) { Entry.Logger.Warn($"打开新闻目标失败：{e.Message}"); }
     }
 
     private void UpdateNavigationVisibility() {
@@ -475,7 +532,18 @@ internal sealed class MainMenuNewsCarouselController {
         }
         _linkedMenuButton = null;
 
-        if (!_root.Visible || _items.Count <= 1 || menuButtons.Length == 0) return;
+        if (!_root.Visible || _items.Count == 0 || menuButtons.Length == 0) return;
+        if (_items.Count == 1) {
+            if (!_openButton.Disabled) {
+                _linkedMenuButton = menuButtons[^1];
+                _linkedMenuButton.FocusNeighborBottom = _openButton.GetPath();
+                _openButton.FocusNeighborTop = _linkedMenuButton.GetPath();
+                _openButton.FocusNeighborBottom = _openButton.GetPath();
+                _openButton.FocusNeighborLeft = _openButton.GetPath();
+                _openButton.FocusNeighborRight = _openButton.GetPath();
+            }
+            return;
+        }
 
         NButton menuButton = menuButtons[^1];
         _linkedMenuButton = menuButton;
@@ -484,21 +552,26 @@ internal sealed class MainMenuNewsCarouselController {
         NodePath nextPath = _nextButton.GetPath();
         NodePath selectedIndicatorPath = _indicatorButtons[_currentIndex].GetPath();
 
-        menuButton.FocusNeighborBottom = previousPath;
+        NodePath openPath = _openButton.Disabled ? previousPath : _openButton.GetPath();
+        menuButton.FocusNeighborBottom = openPath;
+        _openButton.FocusNeighborTop = menuPath;
+        _openButton.FocusNeighborBottom = selectedIndicatorPath;
+        _openButton.FocusNeighborLeft = previousPath;
+        _openButton.FocusNeighborRight = nextPath;
 
-        _previousButton.FocusNeighborTop = menuPath;
+        _previousButton.FocusNeighborTop = openPath;
         _previousButton.FocusNeighborLeft = previousPath;
         _previousButton.FocusNeighborRight = nextPath;
         _previousButton.FocusNeighborBottom = selectedIndicatorPath;
 
-        _nextButton.FocusNeighborTop = menuPath;
+        _nextButton.FocusNeighborTop = openPath;
         _nextButton.FocusNeighborLeft = previousPath;
         _nextButton.FocusNeighborRight = nextPath;
         _nextButton.FocusNeighborBottom = selectedIndicatorPath;
 
         for (int index = 0; index < _indicatorButtons.Count; index++) {
             Button indicator = _indicatorButtons[index];
-            indicator.FocusNeighborTop = menuPath;
+            indicator.FocusNeighborTop = openPath;
             indicator.FocusNeighborLeft = index == 0
                 ? previousPath
                 : _indicatorButtons[index - 1].GetPath();
@@ -508,8 +581,4 @@ internal sealed class MainMenuNewsCarouselController {
         }
     }
 
-    private sealed record NewsCarouselItem(
-        string TitleKey,
-        string DetailKey,
-        string BackgroundPath);
 }

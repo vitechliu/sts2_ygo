@@ -25,26 +25,7 @@ public class TargetingAttackAction : BasePerTurnMonsterAction {
 
     protected virtual ValueProp DamageProps => ValueProp.Move;
 
-    private int AttackDamage {
-        get {
-            var player = Owner.PetOwner ?? Owner.Player;
-            if (player == null) return 0;
-
-            decimal damage = Hook.ModifyDamage(
-                player.RunState,
-                Owner.CombatState,
-                null,
-                Owner,
-                0m,
-                DamageProps,
-                null,
-                null,
-                ModifyDamageHookType.All,
-                CardPreviewMode.None,
-                out _);
-            return (int)damage;
-        }
-    }
+    private int AttackDamage => PreviewMonsterDamage(props: DamageProps);
 
     public override bool CanAct(ICombatState combatState) {
         return base.CanAct(combatState) && AttackDamage > 0;
@@ -54,14 +35,7 @@ public class TargetingAttackAction : BasePerTurnMonsterAction {
         if (target == null) return;
         SpendUses();
         await MinionAnimCmd.PlayBumpAttackAsync(Owner, target);
-        await CreatureCmd.Damage(
-            choiceContext,
-            target,
-            0m,
-            DamageProps,
-            Owner,
-            null,
-            null);
+        await DealMonsterDamage(choiceContext, target, props: DamageProps);
         if (Owner.Monster is BaseMonster monster) {
             await monster.AfterAttack(choiceContext);
         }

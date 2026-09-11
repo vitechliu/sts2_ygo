@@ -19,8 +19,10 @@ public class InterruptResistor() : BaseMonsterCard(2, CardType.Skill, CardRarity
     public override int CardId => 2414168;
 
     public override int BaseAttackVar => 0;
-    public override int BaseLifeVar => 15;
+    public override int BaseLifeVar => 10;
     public override int UpgradeLifeVar => 5;
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         BaseSummonHoverTip,

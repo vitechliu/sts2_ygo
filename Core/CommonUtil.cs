@@ -1,12 +1,7 @@
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Localization;
-using MegaCrit.Sts2.Core.Models;
-using STS2RitsuLib.Ui.Toast;
-using VYgo.Core.History;
-using VYgo.Scripts.Cards;
 
 namespace VYgo.Core;
 
@@ -23,4 +18,12 @@ public static class CommonUtil {
         await CardPileCmd.Add(cardModels, PileType.Discard);
         return true;
     }
+    
+    public static string Language => NormalizeLanguage(LocManager.Instance.Language);
+    
+    public static string NormalizeLanguage(string language) => language.ToLowerInvariant() switch {
+        "zhs" or "zht" or "zh" or "zh_cn" or "zh_tw" or "zh-cn" or "zh-tw" => "zhs",
+        "jpn" or "ja" or "ja_jp" or "ja-jp" => "jpn",
+        _ => "eng"
+    };
 }

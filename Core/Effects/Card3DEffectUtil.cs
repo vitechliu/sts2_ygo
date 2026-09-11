@@ -59,7 +59,8 @@ public static class Card3DEffectUtil {
         float scaleMultiplier = 1.4f,
         float horizontalSpacing = 360f,
         float initialOpacity = 1f,
-        bool hideSourceNodes = true
+        bool hideSourceNodes = true,
+        bool hideCardShadow = false
     ) {
         List<CardModel> modelList = models.Where(m => m != null).ToList();
         if (modelList.Count == 0) {
@@ -101,7 +102,7 @@ public static class Card3DEffectUtil {
                     hiddenSourceNodes[model] = sourceNode;
                 }
 
-                contexts.Add(await BuildContext(flipper, model, cardGlobalPos, scaleMultiplier, initialOpacity));
+                contexts.Add(await BuildContext(flipper, model, cardGlobalPos, scaleMultiplier, initialOpacity, hideCardShadow));
                 flippers.Add(flipper);
             }
 
@@ -143,7 +144,8 @@ public static class Card3DEffectUtil {
         CardModel model,
         Vector2 targetGlobalPos,
         float scaleMultiplier,
-        float initialOpacity
+        float initialOpacity,
+        bool hideCardShadow
     ) {
         SubViewport captureVp = flipper.CaptureViewport;
         SubViewport fxVp = flipper.FxViewport;
@@ -174,6 +176,9 @@ public static class Card3DEffectUtil {
 
         await WaitFrames(flipper, ReadyWaitFrames);
         clone.UpdateVisuals(PileType.Play, CardPreviewMode.Normal);
+
+        // 悬空卡牌的轮廓光不能把原版右下偏移的桌面投影当成卡体。
+        if (hideCardShadow) clone.GetNode<CanvasItem>("CardContainer/Shadow").Visible = false;
 
         captureVp.RenderTargetUpdateMode = SubViewport.UpdateMode.Once;
         await WaitFrames(flipper, 1);

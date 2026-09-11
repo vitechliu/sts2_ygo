@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "language": "jpn",
+  "items": [
+    {
+      "id": "welcome",
+      "title": "VYgo へようこそ",
+      "content": "ニュースページでメインメニューのお知らせ機能を確認できます。",
+      "image": {
+        "type": "res",
+        "value": "res://VYgo/images/cards/70095154.png"
+      },
+      "target": {
+        "type": "scene",
+        "value": "news_sample"
+      }
+    },
+    {
+      "id": "workshop",
+      "title": "ワークショップへ",
+      "content": "Slay the Spire 2 のワークショップを見る。",
+      "image": {
+        "type": "res",
+        "value": "res://VYgo/images/cards/59281922.png"
+      },
+      "target": {
+        "type": "url",
+        "value": "https://steamcommunity.com/app/2868840/workshop/"
+      }
+    }
+  ]
+}

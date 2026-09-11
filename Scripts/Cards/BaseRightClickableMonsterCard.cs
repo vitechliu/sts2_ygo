@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Localization;
 using STS2RitsuLib.Interactions.RightClick;
@@ -21,35 +22,43 @@ public abstract class BaseRightClickableMonsterCard(
     protected abstract RightClickType ClickType { get; }
     
     public virtual async Task OnRightClick(ModRightClickExecutionContext context) {
-        if (!CanExecuteRightClick(context, true)) return;
+        if (!TryValidateRightClick(context)) return;
         if (ShouldSpendResources) await SpendResources();
         await OnYgoRightClick(context);
     }
 
-    public virtual bool CanExecuteRightClick(ModRightClickExecutionContext context) {
-        return CanExecuteRightClick(context, false);
+    // 入口只判断是否接收这次尝试，玩法条件留到执行阶段反馈。
+    public bool CanExecuteRightClick(ModRightClickExecutionContext context) {
+        if (context.Player != Owner || context.PlayerChoiceContext == null) return false;
+        return ClickType switch {
+            RightClickType.Hand => Pile?.Type == PileType.Hand,
+            RightClickType.Graveyard => Pile?.Type == PileType.Discard,
+            _ => false
+        };
     }
-    public virtual bool CanExecuteRightClick(ModRightClickExecutionContext context, bool toast) {
-        switch (ClickType) {
-            case RightClickType.Hand:
-                if (Pile?.Type != PileType.Hand) return false;
-                break;
-            case RightClickType.Graveyard:
-                if (Pile?.Type != PileType.Discard) return false;  
-                break;
-        }
 
-        if (RightClickCost > Owner.GetEnergy()) {
-            if (toast) {
-                RitsuToastService.ShowWarning(
-                    new LocString("combat_messages", "USE_EFFECT_ERROR_ENERGY.body").GetFormattedText(),
-                    new LocString("combat_messages", "USE_EFFECT_ERROR.title").GetFormattedText()
-                );
-            }
-            return false;
-        }
-        return context.PlayerChoiceContext != null;
+    // 返回 null 表示允许发动；检查本身不得扣费、记录次数或显示提示。
+    protected virtual LocString? ValidateRightClick(ModRightClickExecutionContext context) {
+        return RightClickCost > Owner.GetEnergy() ? RightClickError("ENERGY") : null;
     }
+
+    protected bool TryValidateRightClick(ModRightClickExecutionContext context) {
+        if (!CanExecuteRightClick(context)) return false;
+        LocString? error = ValidateRightClick(context);
+        if (error == null) return true;
+        ShowRightClickError(context, error);
+        return false;
+    }
+
+    protected void ShowRightClickError(ModRightClickExecutionContext context, LocString error) {
+        // 同步行动在各端执行，失败提示只展示给操作拥有者。
+        if (!LocalContext.IsMe(context.Player)) return;
+        RitsuToastService.ShowWarning(error.GetFormattedText(),
+            new LocString("combat_messages", "USE_EFFECT_ERROR.title").GetFormattedText());
+    }
+
+    protected static LocString RightClickError(string reason) =>
+        new("combat_messages", $"USE_EFFECT_ERROR_{reason}.body");
 
     protected virtual Task OnYgoRightClick(ModRightClickExecutionContext context) { return Task.CompletedTask; }
 }

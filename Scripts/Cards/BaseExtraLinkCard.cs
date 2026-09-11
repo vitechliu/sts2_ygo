@@ -40,6 +40,8 @@ public abstract class BaseExtraLinkCard(
         return Math.Max(1, coreCard.LinkCount ?? GetLinkMaterialCount(coreCard));
     }
 
+    public virtual Task AfterLinkSummoned(SummonPostPlayContext context) => Task.CompletedTask;
+
     public virtual bool CanUseLinkMaterial(SummonMaterial material) {
         return true;
     }

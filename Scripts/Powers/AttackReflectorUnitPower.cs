@@ -54,19 +54,13 @@ public class AttackReflectorUnitPower : BaseActionPower {
     public override bool CanExecuteRightClick(ModRightClickExecutionContext context) {
         Data data = GetInternalData<Data>();
         return base.CanExecuteRightClick(context)
-            && data.SourceCard != null
             && context.Player.PlayerCombatState.TurnNumber > data.SetTurnNumber
             && context.Player.MinionCount() < context.Player.GetMaxMinionCount();
     }
 
     protected override async Task<bool> OnAction(ModRightClickExecutionContext context) {
         if (context.PlayerChoiceContext == null) return false;
-
-        Data data = GetInternalData<Data>();
-        if (data.SourceCard == null) return false;
-
         Flash();
-        await CardCmd.Exhaust(context.PlayerChoiceContext, data.SourceCard);
         await PowerCmd.Remove(this);
 
         for (int i = 0;

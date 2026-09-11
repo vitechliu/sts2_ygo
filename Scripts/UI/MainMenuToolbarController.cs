@@ -5,8 +5,10 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Nodes.Screens.MainMenu;
 using MegaCrit.Sts2.Core.Saves;
+using STS2RitsuLib.Settings;
 using FileAccess = Godot.FileAccess;
 using STS2RitsuLib.Settings.Patches;
+using VYgo.Core;
 
 namespace VYgo.Scripts.UI;
 
@@ -65,20 +67,29 @@ internal sealed class MainMenuToolbarController {
         ConfigureToolbarButton(_patchNotesButton, IconRoot + "patch_notes.png", "N");
         ConfigureToolbarButton(_compendiumButton, IconRoot + "wiki.png", "C");
         ConfigureToolbarButton(_settingsButton, IconRoot + "settings.png", "S");
-        
-        AddToolbarButton("RitsuLibButton", IconRoot + "ritsulib.png", "RitsuLib", button => {
-            Type internalClassType = AccessTools.TypeByName("STS2RitsuLib.Settings.Patches.MainMenuModSettingsButtonPatch");
-            if (internalClassType != null) {
-                Traverse.Create(internalClassType).Method("OpenModSettings", _mainMenu).GetValue();
-            }
-            else {
-                Entry.Logger.Warn("Cannot Find RitsuType");
-            }
-            
+        var ritsuName = LoadModCaption("RITSU_SETTINGS", "Mod Setting");
+        AddToolbarButton("RitsuLibButton", IconRoot + "ritsulib.png", ritsuName, button => {
+            OpenYgoModSettings();
         }, "R");
         RefreshCaptions();
         RefreshToolbarSize();
         UpdateFocusNavigation(force: true);
+    }
+
+    void OpenYgoModSettings() {
+        try {
+            Type internalClassType = AccessTools.TypeByName("STS2RitsuLib.Settings.RitsuLibModSettingsBootstrap");
+            if (internalClassType == null) return;
+            Traverse.Create(internalClassType).Method("EnsureFrameworkPagesRegistered").GetValue();
+            ModSettingsOpenResult settingsOpenResult =
+                ModSettingsNavigator.RequestOpenByIds(Entry.ModId, (string)null, (string)null,
+                    (string)null);
+            if (!settingsOpenResult.Success)
+                Entry.Logger.Warn("OpenYgoModSettingsFailed: NotSuccess");
+        }
+        catch (Exception ex) {
+            Entry.Logger.Warn("OpenYgoModSettingsFailed:" + ex.Message);
+        }
     }
 
     void MoveReleaseInfo() {
@@ -334,8 +345,7 @@ internal sealed class MainMenuToolbarController {
     }
 
     private static string LoadModCaption(string key, string fallback) {
-        string locale = TranslationServer.GetLocale();
-        string language = locale.StartsWith("zh", StringComparison.OrdinalIgnoreCase) ? "zhs" : "eng";
+        string language = CommonUtil.Language;
         string path = $"res://VYgo/localization/{language}/main_menu.json";
         try {
             string json = FileAccess.GetFileAsString(path);

@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 标签页切换
 function initTabs() {
-    const navBtns = document.querySelectorAll('.nav-btn');
+    const navBtns = document.querySelectorAll('.nav-btn[data-tab]');
     const tabContents = document.querySelectorAll('.tab-content');
 
     navBtns.forEach(btn => {

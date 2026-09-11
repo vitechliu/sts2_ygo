@@ -21,6 +21,7 @@ public class CynetRegressionPower : ModPowerTemplate, IMonsterSummonHookListener
         public CardModel? SourceCard { get; set; }
         public decimal Damage { get; set; }
         public int Draw { get; set; }
+        public int SetTurn { get; set; }
     }
 
     public override PowerType Type => PowerType.Buff;
@@ -50,6 +51,7 @@ public class CynetRegressionPower : ModPowerTemplate, IMonsterSummonHookListener
         data.SourceCard = sourceCard;
         data.Damage = damage;
         data.Draw = draw;
+        data.SetTurn = Owner.Player?.PlayerCombatState.TurnNumber ?? 0;
     }
 
     public async Task AfterMonsterSummon(
@@ -66,7 +68,7 @@ public class CynetRegressionPower : ModPowerTemplate, IMonsterSummonHookListener
         }
 
         Data data = GetInternalData<Data>();
-        if (data.SourceCard == null) return;
+        if (data.SourceCard == null || player.PlayerCombatState.TurnNumber <= data.SetTurn) return;
 
         Flash();
         await CardCmd.Exhaust(choiceContext, data.SourceCard);

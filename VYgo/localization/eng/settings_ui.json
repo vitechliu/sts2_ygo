@@ -1,0 +1,21 @@
+{
+  "VYGO_SETTINGS_TITLE": "YuGiOh MasterDuel Settings",
+  "VYGO_SETTINGS_MOD_NAME": "YuGiOh MasterDuel",
+  "VYGO_SETTINGS_DESCRIPTION": "Basic settings for the Slay the Spire 2 YuGiOh MasterDuel Mod.",
+  "VYGO_SETTINGS_GENERAL": "General",
+  "VYGO_SETTINGS_EFFECT_ANIMATION_MODE": "Summon Animation Detail",
+  "VYGO_SETTINGS_EFFECT_ANIMATION_FULL": "Full Animation",
+  "VYGO_SETTINGS_EFFECT_ANIMATION_MINIMAL": "Quick Animation",
+  "VYGO_SETTINGS_EFFECT_ANIMATION_NONE": "No Animation",
+  "VYGO_SETTINGS_EFFECT_ANIMATION_DESCRIPTION": "Full animation plays all summon effects. Quick animation keeps only the material flashes and the summoned card flying out. No animation skips all summon effects.",
+  "VYGO_SETTINGS_PLACEHOLDER_NOTICE_TITLE": "Placeholder Settings",
+  "VYGO_SETTINGS_PLACEHOLDER_NOTICE_DESCRIPTION": "The following options are placeholders and currently do not affect gameplay.",
+  "VYGO_SETTINGS_PLACEHOLDER_TOGGLE_TITLE": "Placeholder Toggle",
+  "VYGO_SETTINGS_PLACEHOLDER_TOGGLE_DESCRIPTION": "A placeholder toggle with no effect yet.",
+  "VYGO_SETTINGS_PLACEHOLDER_VALUE_TITLE": "Placeholder Value",
+  "VYGO_SETTINGS_PLACEHOLDER_VALUE_DESCRIPTION": "A placeholder integer setting with no effect yet.",
+  "VYGO_SETTINGS_REPLACE_MAIN_MENU": "Replace Main Menu",
+  "VYGO_SETTINGS_REPLACE_MAIN_MENU_DESCRIPTION": "Use the VYgo main menu appearance and background music. Requires a game restart to take effect.",
+  "VYGO_SETTINGS_REPLACE_UI_SKIN": "Use VYgo UI skin",
+  "VYGO_SETTINGS_REPLACE_UI_SKIN_DESCRIPTION": "Apply configured appearances to common buttons, panels, and other UI components. Independent of the main menu replacement. Requires a game restart."
+}

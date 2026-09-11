@@ -25,6 +25,7 @@ app.use('/api/settings', require('./routes/settings'));
 app.use('/api/external-dirs', require('./routes/externalDirs'));
 app.use('/api/cards', require('./routes/cards'));
 app.use('/api/ui-audio', require('./routes/uiAudio'));
+app.use('/api/ui-skin', require('./routes/uiSkin'));
 
 // 根路径返回前端页面
 app.get('/', (req, res) => {

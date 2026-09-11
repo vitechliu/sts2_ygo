@@ -12,6 +12,8 @@ public readonly record struct YgoArchetypeCode(ushort Value) {
 /// Card membership itself is loaded from VYgo/db.json.
 /// </summary>
 public static class YgoArchetypes {
+    public static readonly YgoArchetypeCode CodeTalker = new(0x0101); // 码语者
+    public static readonly YgoArchetypeCode Cynet = new(0x0118); // 电脑网
     public static readonly YgoArchetypeCode Cyber = new(0x0093); // 电子
     public static readonly YgoArchetypeCode CyberDragon = new(0x1093); // 电子龙
     public static readonly YgoArchetypeCode Cyberdark = new(0x4093); // 电子暗黑

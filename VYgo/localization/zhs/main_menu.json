@@ -1,9 +1,12 @@
 {
   "PATCH_NOTES": "更新记录",
+  "RITSU_SETTINGS": "Mod设置",
   "NEWS_CAROUSEL_1_TITLE": "不要错过！",
   "NEWS_CAROUSEL_1_DETAIL": "「电子龙」系列现已加入大师决斗，组建属于你的机械族卡组。",
   "NEWS_CAROUSEL_2_TITLE": "卡牌聚焦",
   "NEWS_CAROUSEL_2_DETAIL": "电子龙三型整装待发，让机械族攻势衔接得更加顺畅。",
   "NEWS_CAROUSEL_3_TITLE": "本周推荐",
-  "NEWS_CAROUSEL_3_DETAIL": "特殊召唤电子恐龙，在关键时刻扭转决斗局势。"
+  "NEWS_CAROUSEL_3_DETAIL": "特殊召唤电子恐龙，在关键时刻扭转决斗局势。",
+  "NEWS_SAMPLE_TITLE": "VYgo · 公告示例",
+  "NEWS_SAMPLE_BODY": "[b]欢迎来到 VYgo[/b]\n\n这里是游戏内公告页面，采用原生更新日志的滚动正文与主菜单返回结构。\n\n[b]主菜单新闻[/b]\n\n每次启动游戏，进入主菜单后会尝试获取当前语言的在线新闻。连接失败时仍会显示本地内容，你可以直接开始游戏。\n\n[b]阅读与跳转[/b]\n\n点击新闻可以打开游戏内页面，或前往 Steam 浏览器中的相关链接。使用返回按钮即可回到主菜单。\n\n[b]多语言支持[/b]\n\n新闻和本页面支持中文、英文与日文。切换游戏语言后，主菜单会显示对应的内容。\n\n感谢你的游玩与反馈！"
 }
