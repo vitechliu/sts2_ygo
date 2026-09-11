@@ -80,6 +80,7 @@ public static class Entry {
         
         FmodStudioDeferredBankRegistration.RegisterBank("res://VYgo/banks/VYgo.bank");
         FmodStudioDeferredBankRegistration.RegisterStudioGuidMappings("res://VYgo/banks/VYgo.guids.txt");
+        UiAudioReplacements.Initialize();
         _mainMenuAudioReadySubscription ??=
             RitsuLibFramework.SubscribeLifecycleOnce<DeferredInitializationCompletedEvent>(
                 _ => MainMenuPatches.NotifyDeferredAudioReady(),

@@ -55,6 +55,9 @@
     <ItemGroup>
         <Content Remove="Scripts\**\*.uid"/>
         <Compile Remove="External\**\*.cs;Web\**\*.cs"/>
+        <!-- 将后台映射嵌入 DLL，避免本机 Godot 导出过滤器遗漏普通 JSON。 -->
+        <EmbeddedResource Include="VYgo/audio/ui-events.json" LogicalName="VYgo.Audio.Catalog" />
+        <EmbeddedResource Include="VYgo/audio/ui-replacements.json" LogicalName="VYgo.Audio.Replacements" />
     </ItemGroup>
     <ItemGroup>
         <Folder Include=".context\" />

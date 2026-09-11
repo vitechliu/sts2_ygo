@@ -1,0 +1,21 @@
+[
+  {"group":"通用按钮","path":"event:/sfx/ui/clicks/ui_hover","label":"按钮悬停"},
+  {"group":"通用按钮","path":"event:/sfx/ui/clicks/ui_click","label":"通用点击（含卡牌选择）"},
+  {"group":"通用按钮","path":"event:/sfx/ui/clicks/ui_back","label":"返回按钮"},
+  {"group":"通用按钮","path":"event:/sfx/ui/clicks/ui_checkbox_on","label":"勾选复选框"},
+  {"group":"通用按钮","path":"event:/sfx/ui/clicks/ui_checkbox_off","label":"取消勾选复选框"},
+  {"group":"通用按钮","path":"event:/sfx/ui/pause_open","label":"打开暂停菜单"},
+  {"group":"通用按钮","path":"event:/sfx/ui/pause_close","label":"关闭暂停菜单"},
+  {"group":"地图","path":"event:/sfx/ui/map/map_open","label":"打开地图"},
+  {"group":"地图","path":"event:/sfx/ui/map/map_close","label":"关闭地图"},
+  {"group":"地图","path":"event:/sfx/ui/map/map_select","label":"选择地图节点"},
+  {"group":"地图","path":"event:/sfx/ui/map/map_erase","label":"擦除地图标记"},
+  {"group":"地图","path":"event:/sfx/ui/wipe_map","label":"清空地图涂画"},
+  {"group":"时间线","path":"event:/sfx/ui/timeline/ui_timeline_hover","label":"悬停时间线条目"},
+  {"group":"时间线","path":"event:/sfx/ui/timeline/ui_timeline_hover_locked","label":"悬停未解锁条目"},
+  {"group":"时间线","path":"event:/sfx/ui/timeline/ui_timeline_click","label":"点击时间线条目"},
+  {"group":"时间线","path":"event:/sfx/ui/timeline/ui_timeline_open_epoch","label":"展开时代详情"},
+  {"group":"时间线","path":"event:/sfx/ui/timeline/ui_timeline_close_epoch","label":"关闭时代详情"},
+  {"group":"时间线","path":"event:/sfx/ui/timeline/ui_timeline_open","label":"打开时间线"},
+  {"group":"时间线","path":"event:/sfx/ui/timeline/ui_timeline_unlock","label":"解锁时间线内容"}
+]

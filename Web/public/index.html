@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VYgo 卡牌管理后台</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/ui-audio.css">
 </head>
 <body>
     <div class="container">
@@ -14,10 +15,45 @@
                 <button class="nav-btn active" data-tab="cards">卡牌管理</button>
                 <button class="nav-btn" data-tab="library">卡牌列表</button>
                 <button class="nav-btn" data-tab="config">配置中心</button>
+                <button class="nav-btn" data-tab="audio">音效替换</button>
             </nav>
         </header>
 
         <main>
+            <section id="audio-tab" class="tab-content">
+                <h2>UI 音效替换</h2>
+                <p>同一原版事件的所有调用位置统一替换。保存后重新发布 Mod 并重启游戏生效。</p>
+                <details class="audio-setup">
+                    <summary>试听环境</summary>
+                    <form id="audio-settings-form" class="audio-form">
+                        <label>游戏目录（含 fmod.dll、fmodstudio.dll）<input name="dllDir" required></label>
+                        <label>原版 bank 目录（含 Master、Master.strings、sfx）<input name="originalBankDir" required></label>
+                        <label>64 位 Python 3 程序<input name="python" value="python" required></label>
+                        <button type="submit">保存试听环境</button>
+                    </form>
+                    <p>本机 FMOD 将事件渲染为短音频，由网页播放器播放；试听使用事件默认参数，最长约八秒。</p>
+                </details>
+                <details class="audio-setup">
+                    <summary>新建 / 更新替换工程</summary>
+                    <form id="audio-profile-form" class="audio-form">
+                        <label>选择工程<select name="profileId" id="audio-profile-choice"><option value="">新建工程</option></select></label>
+                        <label>工程名称<input name="name" required placeholder="例如：清脆按钮音效"></label>
+                        <label>已打包的 bank 目录<input name="bankDir" required></label>
+                        <label>导入的 bank 文件名（逗号分隔，包含样本依赖）<input name="bankFiles" required placeholder="UI.bank"></label>
+                        <label>导出的 GUIDs.txt 完整路径（已有 strings bank 时可留空）<input name="guidFile"></label>
+                        <button type="submit">导入并保存工程</button>
+                    </form>
+                    <p>请先在 FMOD Studio 中创建事件并构建 bank。导入会复制资源到 Mod；重新打包后选择已有工程更新，保留仍存在的事件映射。</p>
+                </details>
+                <div class="audio-toolbar">
+                    <label><input id="audio-configured-only" type="checkbox"> 仅看已配置</label>
+                    <button id="audio-refresh" type="button" class="btn-secondary">刷新</button>
+                    <button id="audio-stop" type="button" class="btn-secondary">停止试听</button>
+                    <audio id="audio-player" controls preload="none"></audio>
+                </div>
+                <p id="audio-message" role="status" aria-live="polite"></p>
+                <div id="audio-event-groups"></div>
+            </section>
             <!-- 卡牌管理模块 -->
             <section id="cards-tab" class="tab-content active">
                 <div class="card-search">
@@ -234,5 +270,6 @@
     </dialog>
 
     <script src="/js/app.js"></script>
+    <script src="/js/ui-audio.js"></script>
 </body>
 </html>

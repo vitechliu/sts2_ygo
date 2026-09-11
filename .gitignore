@@ -68,6 +68,8 @@ env.props
 
 .claude
 /Web/node_modules
+/Web/audio-settings.local.json
+/Web/.audio-cache/
 /docs
 /addons
 
