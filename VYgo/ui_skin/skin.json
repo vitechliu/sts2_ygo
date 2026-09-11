@@ -1,4 +1,300 @@
 {
-  "schemaVersion": 1,
-  "rules": []
+    "schemaVersion": 1,
+    "fingerprint": "c85fc9c5b901ee2a2e94a0731e1e103e85ceed198503de6c4713fbf40231f7cb",
+    "rules": [
+        {
+            "id": "confirm-outline-1",
+            "componentId": "confirm",
+            "componentScene": "res://scenes/ui/confirm_button.tscn",
+            "adapter": "button",
+            "property": "texture",
+            "nodePath": "Outline",
+            "selectors": [
+                {
+                    "scene": "res://scenes/ui/confirm_button.tscn",
+                    "nodePath": "Outline"
+                },
+                {
+                    "scene": "res://scenes/combat/player_hand.tscn",
+                    "nodePath": "SelectModeConfirmButton/Outline"
+                },
+                {
+                    "scene": "res://scenes/combat/combat_ui.tscn",
+                    "nodePath": "Hand/SelectModeConfirmButton/Outline"
+                },
+                {
+                    "scene": "res://scenes/rooms/combat_room.tscn",
+                    "nodePath": "CombatUi/Hand/SelectModeConfirmButton/Outline"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/choose_a_bundle_selection_screen.tscn",
+                    "nodePath": "BundlePreviewContainer/Confirm/Outline"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/combat_pile_card_select_screen.tscn",
+                    "nodePath": "Confirm/Outline"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/deck_card_select_screen.tscn",
+                    "nodePath": "Confirm/Outline"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/deck_card_select_screen.tscn",
+                    "nodePath": "PreviewContainer/PreviewConfirm/Outline"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/deck_enchant_select_screen.tscn",
+                    "nodePath": "Confirm/Outline"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/deck_enchant_select_screen.tscn",
+                    "nodePath": "EnchantMultiPreviewContainer/Confirm/Outline"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/deck_enchant_select_screen.tscn",
+                    "nodePath": "EnchantSinglePreviewContainer/Confirm/Outline"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/deck_transform_select_screen.tscn",
+                    "nodePath": "Confirm/Outline"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/deck_transform_select_screen.tscn",
+                    "nodePath": "PreviewContainer/Confirm/Outline"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/deck_upgrade_select_screen.tscn",
+                    "nodePath": "UpgradeMultiPreviewContainer/Confirm/Outline"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/deck_upgrade_select_screen.tscn",
+                    "nodePath": "UpgradeSinglePreviewContainer/Confirm/Outline"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/simple_card_select_screen.tscn",
+                    "nodePath": "Confirm/Outline"
+                },
+                {
+                    "scene": "res://scenes/screens/character_select_screen.tscn",
+                    "nodePath": "ConfirmButton/Outline"
+                },
+                {
+                    "scene": "res://scenes/screens/custom_run/custom_run_load_screen.tscn",
+                    "nodePath": "ConfirmButton/Outline"
+                },
+                {
+                    "scene": "res://scenes/screens/custom_run/custom_run_screen.tscn",
+                    "nodePath": "ConfirmButton/Outline"
+                },
+                {
+                    "scene": "res://scenes/screens/daily_run/daily_run_load_screen.tscn",
+                    "nodePath": "ConfirmButton/Outline"
+                },
+                {
+                    "scene": "res://scenes/screens/daily_run/daily_run_screen.tscn",
+                    "nodePath": "ConfirmButton/Outline"
+                },
+                {
+                    "scene": "res://scenes/screens/multiplayer_load_game_screen.tscn",
+                    "nodePath": "ConfirmButton/Outline"
+                },
+                {
+                    "scene": "res://scenes/screens/simple_cards_view_screen.tscn",
+                    "nodePath": "ConfirmButton/Outline"
+                }
+            ],
+            "priority": 0,
+            "expectedType": "TextureRect",
+            "textureVariant": false,
+            "texture": {
+                "path": "res://images/atlases/compressed.sprites/confirm_button_outline.tres",
+                "atlas": "res://images/atlases/compressed_0.png",
+                "region": [
+                    1085,
+                    1011,
+                    259,
+                    137
+                ],
+                "margin": [
+                    41,
+                    22,
+                    41,
+                    65
+                ]
+            },
+            "states": {
+                "normal": "res://VYgo/ui_skin/generated/7f095acd5cf04842bc711e5b8fa9a731fb5663105c52b1a153d3775621dac0cd.png"
+            },
+            "mode": "contain",
+            "border": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "neutralize": false,
+            "layout": {},
+            "original": {
+                "region": [
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "border": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "id": "confirm-image-2",
+            "componentId": "confirm",
+            "componentScene": "res://scenes/ui/confirm_button.tscn",
+            "adapter": "button",
+            "property": "texture",
+            "nodePath": "Image",
+            "selectors": [
+                {
+                    "scene": "res://scenes/ui/confirm_button.tscn",
+                    "nodePath": "Image"
+                },
+                {
+                    "scene": "res://scenes/combat/player_hand.tscn",
+                    "nodePath": "SelectModeConfirmButton/Image"
+                },
+                {
+                    "scene": "res://scenes/combat/combat_ui.tscn",
+                    "nodePath": "Hand/SelectModeConfirmButton/Image"
+                },
+                {
+                    "scene": "res://scenes/rooms/combat_room.tscn",
+                    "nodePath": "CombatUi/Hand/SelectModeConfirmButton/Image"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/choose_a_bundle_selection_screen.tscn",
+                    "nodePath": "BundlePreviewContainer/Confirm/Image"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/combat_pile_card_select_screen.tscn",
+                    "nodePath": "Confirm/Image"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/deck_card_select_screen.tscn",
+                    "nodePath": "Confirm/Image"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/deck_card_select_screen.tscn",
+                    "nodePath": "PreviewContainer/PreviewConfirm/Image"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/deck_enchant_select_screen.tscn",
+                    "nodePath": "Confirm/Image"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/deck_enchant_select_screen.tscn",
+                    "nodePath": "EnchantMultiPreviewContainer/Confirm/Image"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/deck_enchant_select_screen.tscn",
+                    "nodePath": "EnchantSinglePreviewContainer/Confirm/Image"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/deck_transform_select_screen.tscn",
+                    "nodePath": "Confirm/Image"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/deck_transform_select_screen.tscn",
+                    "nodePath": "PreviewContainer/Confirm/Image"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/deck_upgrade_select_screen.tscn",
+                    "nodePath": "UpgradeMultiPreviewContainer/Confirm/Image"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/deck_upgrade_select_screen.tscn",
+                    "nodePath": "UpgradeSinglePreviewContainer/Confirm/Image"
+                },
+                {
+                    "scene": "res://scenes/screens/card_selection/simple_card_select_screen.tscn",
+                    "nodePath": "Confirm/Image"
+                },
+                {
+                    "scene": "res://scenes/screens/character_select_screen.tscn",
+                    "nodePath": "ConfirmButton/Image"
+                },
+                {
+                    "scene": "res://scenes/screens/custom_run/custom_run_load_screen.tscn",
+                    "nodePath": "ConfirmButton/Image"
+                },
+                {
+                    "scene": "res://scenes/screens/custom_run/custom_run_screen.tscn",
+                    "nodePath": "ConfirmButton/Image"
+                },
+                {
+                    "scene": "res://scenes/screens/daily_run/daily_run_load_screen.tscn",
+                    "nodePath": "ConfirmButton/Image"
+                },
+                {
+                    "scene": "res://scenes/screens/daily_run/daily_run_screen.tscn",
+                    "nodePath": "ConfirmButton/Image"
+                },
+                {
+                    "scene": "res://scenes/screens/multiplayer_load_game_screen.tscn",
+                    "nodePath": "ConfirmButton/Image"
+                },
+                {
+                    "scene": "res://scenes/screens/simple_cards_view_screen.tscn",
+                    "nodePath": "ConfirmButton/Image"
+                }
+            ],
+            "priority": 0,
+            "expectedType": "TextureRect",
+            "textureVariant": false,
+            "texture": {
+                "path": "res://images/atlases/ui_atlas.sprites/confirm_button.tres",
+                "atlas": "res://images/atlases/ui_atlas_1.png",
+                "region": [
+                    371,
+                    693,
+                    257,
+                    132
+                ],
+                "margin": [
+                    43,
+                    25,
+                    43,
+                    70
+                ]
+            },
+            "states": {
+                "normal": "res://VYgo/ui_skin/generated/c5b6e3dbc182e3f168a015cbdefa1dd1aeb97520ca35d8676633df0f39a2191a.png"
+            },
+            "mode": "contain",
+            "border": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "neutralize": false,
+            "layout": {},
+            "original": {
+                "region": [
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "border": [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        }
+    ]
 }
