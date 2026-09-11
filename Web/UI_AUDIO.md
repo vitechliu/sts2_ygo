@@ -4,7 +4,7 @@
 
 ## 使用
 
-1. 启动原有后台：在 `Web` 中执行 `npm install`、`npm start`。
+1. 启动原有后台：克隆仓库后，在 `Web` 中执行 `npm install`（或 `npm ci`）、`npm start`。安装依赖时会自动准备固定版本的 FMOD 网页运行库；克隆本身不执行脚本。
 2. 在「试听环境」填写游戏目录、原版 desktop bank 目录和 64 位 Python 3 程序。原版目录需包含 `Master.bank`、`Master.strings.bank` 和 `sfx.bank`。也可以通过 `FMOD_DLL_DIR`、`FMOD_ORIGINAL_BANK_DIR`、`FMOD_PYTHON` 提供初始值。机器路径仅保存在忽略提交的 `Web/audio-settings.local.json`。
 3. 在 FMOD Studio 创建自定义事件，构建 desktop bank 并导出 `GUIDs.txt`。在「新建 / 更新替换工程」填写名称、打包目录、需要导入的 bank 文件名以及 GUID 文件路径。没有 GUID 文件时，需导入该工程的 strings bank。
 4. 选取原版事件对应的自定义事件，试听后保存。修改对应关系可直接重新选择保存；「撤销编辑」丢弃尚未保存的选择，「取消替换」恢复原版。
@@ -54,6 +54,16 @@ Python 只使用标准库，无需额外安装音频 Python 包。游戏原版 b
 
 ### 运行库依赖形式与 Git 边界
 
-本次使用的是配套的 `fmodstudio.js`（131,434 字节，JavaScript 加载和接口绑定）与 `fmodstudio.wasm`（2,656,574 字节，编译后的运行库），从官方公开示例取得，并非通过 npm 安装，也没有引入或假定存在某个官方 npm 包。
+运行库由配套的 `fmodstudio.js`（131,434 字节，JavaScript 加载和接口绑定）与 `fmodstudio.wasm`（2,656,574 字节，编译后的运行库）组成。这两个文件不是独立的 npm 包；`postinstall` 调用本项目准备脚本，从官方公开示例的明确来源取得文件，没有引入或假定存在某个官方 npm 包。
 
-验证文件保存在 `Web/.audio-cache/`，该目录已由 Git 忽略，两个文件均未追踪、未提交。未来正式集成的依赖目录预留为 `Web/vendor/fmod/`，同样已加入忽略规则。仓库只应保存版本、来源配置、准备脚本和说明；如用 npm 包装准备过程，应提供用户显式执行的命令，不自动下载或提交运行库。公开可下载不等于允许任意再分发。
+运行库安装在 `Web/vendor/fmod/2.03.08/`，整个 `Web/vendor/fmod/` 已由 Git 忽略。早期验证文件所在的 `Web/.audio-cache/` 也已忽略。仓库仅保存 `fmod-runtime.json` 中的版本、来源、大小和 SHA-256，以及准备脚本、测试和说明；第三方 JS/WASM 均不追踪、不提交。公开可下载不等于允许任意再分发。
+
+```powershell
+cd Web
+npm ci                   # 自动执行 postinstall，准备运行库
+npm run prepare:fmod     # 手动准备、校验或失败后重试
+```
+
+准备过程会先校验本地两个文件，完全匹配时直接复用，不访问网络。缺失或损坏时下载到临时目录，校验整套文件后再替换版本目录；下载或校验失败会清理临时目录并保留此前版本，npm 返回失败并给出重试提示。官方示例 URL 不含版本号，因此固定摘要用于拒绝静默升级；若上游内容变化，需先重新实测版本并有意更新配置，不会绕过校验自动接受新文件。使用 `npm install --ignore-scripts` 会跳过自动准备，之后应手动运行上述命令。
+
+这一步仅准备已验证可用的 WASM 依赖，尚未将当前试听页面切换为 WASM，也不会替代当前原生试听所需的 Python 和游戏 DLL。

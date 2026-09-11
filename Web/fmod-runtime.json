@@ -1,0 +1,20 @@
+{
+  "version": "2.03.08",
+  "verifiedAt": "2026-09-12",
+  "sourcePage": "https://www.fmod.com/assets/html5/studio_api/load_banks.html",
+  "note": "官方公开示例没有固定版本 URL；按已实测版本的摘要锁定，拒绝静默漂移。本配置不声明再分发授权。",
+  "files": [
+    {
+      "name": "fmodstudio.js",
+      "url": "https://www.fmod.com/assets/html5/studio_api/fmodstudio.js",
+      "bytes": 131434,
+      "sha256": "7497a63744b940b2d5c9ff494e5017bf991aee8dd26739edcf86e1954f6e93e9"
+    },
+    {
+      "name": "fmodstudio.wasm",
+      "url": "https://www.fmod.com/assets/html5/studio_api/fmodstudio.wasm",
+      "bytes": 2656574,
+      "sha256": "38007e3792e111b265af6c5499f8453c5e83809b13c200522b794efee8ad213e"
+    }
+  ]
+}
