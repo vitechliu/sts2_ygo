@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>UI 皮肤工作台 · VYgo</title><link rel="stylesheet" href="/css/ui-skin.css"></head>
+<body>
+<header><a href="/">VYgo /</a><h1>UI 皮肤工作台</h1><span class="badge">本地资源</span><div class="grow"></div><button id="export">导出游戏皮肤</button></header>
+<section class="scanbar"><label class="grow">原版导出工程目录<input id="root" placeholder="包含 images 和 scenes 的目录；可使用 STS2_VANILLA_ROOT"></label><button id="scan">扫描 / 刷新目录</button><label class="file-button">导入拾取记录<input id="capture" type="file" accept="application/json,.json"></label></section>
+<div id="message" role="status">先扫描原版资源，再为组件添加替换图。导出后需重新打包并重启游戏。</div>
+<main>
+<aside><div class="section-title">组件目录 <small id="stats"></small></div><input id="search" placeholder="搜索组件、场景或规则名称"><select id="category"><option value="">全部类别</option></select><div id="components"></div><details><summary>已保存的映射 <span id="rule-count"></span></summary><div id="rules"></div></details><details><summary>原版图片目录</summary><input id="asset-search" placeholder="搜索切片名称"><div id="assets"></div></details></aside>
+<section class="preview-column">
+<div class="section-title"><h2 id="title">选择一个组件</h2><small id="subtitle">原图、尺寸和使用位置将在这里显示。</small></div>
+<label>组件图层<select id="slot"></select></label>
+<div class="toolbar"><label>状态<select id="state"><option value="normal">正常</option><option value="hover">悬停 / 聚焦</option><option value="pressed">按下</option><option value="disabled">禁用</option><option value="selected">选中</option><option value="selected_hover">选中 + 聚焦</option><option value="selected_pressed">选中 + 按下</option><option value="selected_disabled">选中 + 禁用</option></select></label><label>预览宽<input id="preview-width" type="number" min="1" max="4096" value="300"></label><label>高<input id="preview-height" type="number" min="1" max="4096" value="120"></label><button id="preview">刷新预览</button></div>
+<div class="comparisons"><figure><figcaption>原版图层 <small id="original-size"></small></figcaption><div class="checker"><img id="original" alt="原版图层"></div></figure><figure><figcaption>替换图层 <small id="preview-state"></small></figcaption><div class="checker"><img id="replacement" alt="替换预览"></div></figure></div>
+<p class="hint">九宫格可改变预览宽高检查四角。普通适配输出保持原版画布尺寸。浏览器不模拟原版 Shader 与动画。</p>
+<details id="composition"><summary>组合预览：检查底图、阴影与描边对齐</summary><div class="comparisons"><figure><figcaption>原版组合</figcaption><canvas class="checker" id="composition-before" width="500" height="300"></canvas></figure><figure><figcaption>替换组合</figcaption><canvas class="checker" id="composition-after" width="500" height="300"></canvas></figure></div><p class="hint">按场景锚点和图层叠放生成结构预览；容器排版、Shader 与运行中动画以游戏为准。</p></details>
+<details open><summary>使用位置与替换影响 <span id="usage-count"></span></summary><div id="usage"></div></details>
+<details><summary>原版属性 / 图层对齐参考</summary><pre id="props"></pre><div id="layer-gallery"></div></details>
+<details><summary>扫描诊断</summary><pre id="warnings"></pre></details>
+</section>
+<section class="editor-column">
+<div class="section-title">替换素材与适配</div>
+<label>规则名称<input id="rule-id" placeholder="例如 confirm-background"></label>
+<label>替换范围<select id="scope"><option value="component">组件共用替换</option><option value="scene">指定场景替换</option></select></label><label id="target-label" hidden>使用位置<select id="target"></select></label>
+<label>当前状态的素材<select id="source"><option value="">未提供，沿用基础图与原版反馈</option></select></label><label class="file-button">＋ 导入 PNG / 素材图集<input id="upload" type="file" accept="image/png"></label><button id="clear-state" class="secondary">移除当前状态图</button>
+<label>适配方式<select id="mode"><option value="contain">等比缩放 + 留白</option><option value="cover">等比覆盖 + 裁剪</option><option value="nine">九宫格</option><option value="tile">平铺</option><option value="stretch">自由拉伸</option></select></label>
+<div class="toolbar"><label>画布编辑<select id="canvas-mode"><option value="crop">框选素材裁剪区</option><option value="border">拖动九宫格边界</option></select></label><button id="reset-crop" class="secondary">使用整张图</button></div>
+<div class="source-canvas checker"><canvas id="source-canvas" width="420" height="220"></canvas></div>
+<fieldset><legend>素材裁剪区域</legend><div class="grid4" id="crop-fields"></div></fieldset>
+<fieldset><legend>透明画布留白（左 / 上 / 右 / 下）</legend><div class="grid4" id="padding-fields"></div></fieldset>
+<fieldset><legend>九宫格固定边框（左 / 上 / 右 / 下）</legend><div class="grid4" id="border-fields"></div></fieldset>
+<div class="toolbar"><label>水平对齐<select id="align-x"><option value="0">左</option><option value="0.5" selected>中</option><option value="1">右</option></select></label><label>垂直对齐<select id="align-y"><option value="0">上</option><option value="0.5" selected>中</option><option value="1">下</option></select></label><label>X 偏移<input id="offset-x" type="number" value="0"></label><label>Y 偏移<input id="offset-y" type="number" value="0"></label></div>
+<label class="checkbox"><input id="neutralize" type="checkbox">独立视觉层：隔离原版染色与 Shader</label><p class="hint">保留位置、缩放、可见性和点击行为。完整状态图可启用；缺少状态图时建议保留原版反馈。</p>
+<details id="layout-details"><summary>局部布局调整（指定场景）</summary><p class="hint">节点路径相对于所选场景；偏移为锚点到四边的距离。容器托管节点可能被布局系统重新定位，需游戏内校验。</p><div id="layout-fields"></div></details>
+<div class="toolbar sticky"><button id="save" class="primary">保存此映射</button><button id="new-rule" class="secondary">新建映射</button><button id="delete" class="danger">删除</button></div>
+</section>
+</main><script src="/js/ui-skin.js"></script>
+</body></html>

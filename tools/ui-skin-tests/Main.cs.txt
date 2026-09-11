@@ -1,0 +1,107 @@
+using System.Text.Json;
+using Godot;
+using VYgo.Core.UiSkin;
+
+public partial class Main : Node {
+    private int _checks;
+    private Texture2D _original = null!;
+    private static string Skin(string state) => $"res://VYgo/ui_skin/generated/{state}.png";
+    private void Check(bool condition, string label) { if (!condition) throw new Exception(label); _checks++; GD.Print("PASS " + label); }
+    private async Task Frames() { await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame); await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame); await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame); }
+    private UiSkinRule Rule(string id, string scene, int priority = 0, string mode = "contain") => new() {
+        Id = id, ComponentId = "test", ComponentScene = scene, NodePath = "Image", ExpectedType = "TextureRect", Priority = priority, Mode = mode,
+        Texture = UiSkinTextureIdentity.From(_original), Border = [2, 2, 2, 2],
+        Selectors = [new() { Scene = scene, NodePath = "Image" }],
+        States = new() { ["normal"] = Skin("normal"), ["hover"] = Skin("hover"), ["pressed"] = Skin("pressed") }
+    };
+    private (Button, TextureRect) Component(string scene) {
+        var button = new Button { Name = "Button", SceneFilePath = scene, Size = new Vector2(240, 90) };
+        var image = new TextureRect { Name = "Image", Texture = _original, Size = new Vector2(240, 90), ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize };
+        button.AddChild(image); AddChild(button); return (button, image);
+    }
+    public override async void _Ready() {
+        try {
+            _original = GD.Load<Texture2D>("res://original.png");
+            if (OS.GetCmdlineUserArgs().Contains("skin-disabled")) {
+                UiSkinService.Initialize(); var disabledInstance = Component("res://test/common.tscn"); await Frames();
+                Check(disabledInstance.Item2.Texture == _original, "Startup-disabled setting does not modify existing or new UI");
+                Check(UiSkinService.MatchingRules(disabledInstance.Item2).Length == 0, "Startup-disabled setting installs no bindings");
+                GD.Print($"UI_SKIN_DISABLED_TESTS_PASSED {_checks}"); GetTree().Quit(); return;
+            }
+            var atlas = new AtlasTexture { Atlas = _original, Region = new Rect2(1, 2, 6, 4), Margin = new Rect2(2, 1, 3, 2) };
+            Check(atlas.GetSize() == new Vector2(9, 6), "Atlas logical size includes trim margin");
+            var identity = UiSkinTextureIdentity.From(atlas); identity.Path = "";
+            Check(identity.Matches(atlas), "Anonymous atlas identity matches region and margin");
+            Check(!identity.Matches(new AtlasTexture { Atlas = _original, Region = new Rect2(2, 2, 6, 4) }), "Different atlas regions remain isolated");
+            var rules = new List<UiSkinRule> { Rule("common", "res://test/common.tscn"), Rule("nine", "res://test/nine.tscn", mode: "nine"), Rule("local-base", "res://test/local.tscn"), Rule("local-override", "res://test/local.tscn", 1), Rule("broken", "res://test/broken.tscn") };
+            rules[3].States["normal"] = Skin("hover");
+            rules[4].States["normal"] = "res://VYgo/ui_skin/generated/missing.png";
+            var neutralRule = Rule("neutral", "res://test/neutral.tscn"); neutralRule.Neutralize = true; rules.Add(neutralRule);
+            var layoutRule = Rule("invalid-layout", "res://test/layout.tscn", 1); layoutRule.Layout.Visual = new() { NodePath = "Missing", Offsets = [1, 2, 3, 4] }; rules.Add(layoutRule);
+            var styleRule = Rule("style", "res://test/style.tscn"); styleRule.Property = "theme_override_styles/panel"; styleRule.ExpectedType = "Panel"; rules.Add(styleRule);
+            var colorRule = Rule("color", "res://test/color.tscn", mode: "nine"); colorRule.ExpectedType = "ColorRect"; colorRule.Property = "color"; colorRule.Texture = new() { Color = [0.2f, 0.4f, 0.6f, 0.5f] }; rules.Add(colorRule);
+            var variantA = Rule("variant-a", "res://test/variant.tscn"); variantA.TextureVariant = true; rules.Add(variantA);
+            var variantB = Rule("variant-b", "res://test/variant.tscn"); variantB.TextureVariant = true; variantB.Texture = UiSkinTextureIdentity.From(GD.Load<Texture2D>(Skin("pressed"))); variantB.States["normal"] = Skin("hover"); rules.Add(variantB);
+            System.IO.File.WriteAllText(ProjectSettings.GlobalizePath(UiSkinService.ManifestPath), JsonSerializer.Serialize(new UiSkinManifest { SchemaVersion = 1, Rules = rules }, UiSkinManifest.JsonOptions));
+            var before = Component("res://test/common.tscn");
+            UiSkinService.Initialize(); await Frames();
+            Check(before.Item2.Texture.ResourcePath == Skin("normal"), "Existing instance receives skin");
+            Check(before.Item2.Size == new Vector2(240, 90), "Default layout preserved");
+            before.Item1.EmitSignal(Control.SignalName.MouseEntered); await Frames();
+            Check(before.Item2.Texture.ResourcePath == Skin("hover"), "Hover texture");
+            before.Item1.EmitSignal(BaseButton.SignalName.ButtonDown); await Frames();
+            Check(before.Item2.Texture.ResourcePath == Skin("pressed"), "Pressed texture");
+            before.Item1.EmitSignal(BaseButton.SignalName.ButtonUp); before.Item1.EmitSignal(Control.SignalName.MouseExited); await Frames();
+            Check(before.Item2.Texture.ResourcePath == Skin("normal"), "Release and unfocus restore base");
+            before.Item1.Disabled = true; UiSkinService.Refresh(before.Item1);
+            Check(before.Item2.Texture.ResourcePath == Skin("normal"), "Missing disabled image falls back");
+            before.Item1.Disabled = false; before.Item1.ToggleMode = true; before.Item1.ButtonPressed = true; await Frames();
+            Check(before.Item2.Texture.ResourcePath == Skin("normal"), "Missing selected image falls back");
+            var added = Component("res://test/common.tscn"); await Frames();
+            Check(added.Item2.Texture.ResourcePath == Skin("normal"), "Dynamically added instance receives skin");
+            var local = Component("res://test/local.tscn"); await Frames();
+            Check(local.Item2.Texture.ResourcePath == Skin("hover"), "Local rule takes priority over common");
+            var untouched = Component("res://test/unmapped.tscn"); await Frames();
+            Check(untouched.Item2.Texture == _original, "Unmapped instance retains shared original");
+            var broken = Component("res://test/broken.tscn"); await Frames();
+            Check(broken.Item2.Texture == _original, "Missing skin file only disables its own rule");
+            var nine = Component("res://test/nine.tscn"); await Frames();
+            Check(nine.Item2.GetNodeOrNull<UiSkinVisual>("VYgoSkinVisual") != null, "Nine-patch drawing layer installed");
+            nine.Item2.Size = new Vector2(450, 160); await Frames();
+            Check(nine.Item2.Size == new Vector2(450, 160), "Dynamic dimensions preserved for nine-patch");
+            var neutral = Component("res://test/neutral.tscn"); await Frames();
+            neutral.Item1.Modulate = Colors.Red; neutral.Item2.Position = new Vector2(30, 15); neutral.Item1.Scale = new Vector2(1.2f, 1.2f); await Frames();
+            var visual = neutral.Item2.GetNode<UiSkinVisual>("VYgoSkinVisual");
+            Check(!visual.TopLevel && visual.Material is ShaderMaterial && visual.GlobalTransform.IsEqualApprox(neutral.Item2.GetGlobalTransform()), "Neutral renderer preserves parent clipping and transforms with its own shader");
+            Check(neutral.Item2.SelfModulate.A == 0 && neutral.Item2.Texture == _original, "Neutral renderer hides only original drawing, retains original texture");
+            var invalidLayout = Component("res://test/layout.tscn"); await Frames();
+            Check(invalidLayout.Item2.Texture == _original && invalidLayout.Item2.Size == new Vector2(240, 90), "Invalid layout falls back before any visual mutation");
+            var sharedStyle = new StyleBoxTexture { Texture = _original };
+            var skinPanel = new Panel { Name = "Image" }; skinPanel.AddThemeStyleboxOverride("panel", sharedStyle);
+            var plainPanel = new Panel(); plainPanel.AddThemeStyleboxOverride("panel", sharedStyle);
+            var styleRoot = new Control { SceneFilePath = "res://test/style.tscn" }; styleRoot.AddChild(skinPanel); AddChild(styleRoot); AddChild(plainPanel); await Frames();
+            Check(((StyleBoxTexture)skinPanel.GetThemeStylebox("panel")).Texture.ResourcePath == Skin("normal"), "StyleBoxTexture override receives skin");
+            Check(((StyleBoxTexture)plainPanel.GetThemeStylebox("panel")).Texture == _original, "Shared StyleBox remains unchanged for other controls");
+            var colorRoot = new Control { SceneFilePath = "res://test/color.tscn" };
+            var colorPanel = new ColorRect { Name = "Image", Color = new Color(0.2f, 0.4f, 0.6f, 0.5f), Size = new Vector2(288, 720) };
+            colorRoot.AddChild(colorPanel); AddChild(colorRoot); await Frames();
+            Check(colorPanel.GetNodeOrNull<UiSkinVisual>("VYgoSkinVisual") is { ShowBehindParent: true }, "ColorRect receives image behind its child content");
+            Check(colorPanel.Color.IsEqualApprox(new Color(0.2f, 0.4f, 0.6f, 0.5f)) && colorPanel.Size == new Vector2(288, 720), "Color background keeps original color and layout");
+            var changedRoot = new Control { SceneFilePath = "res://test/color.tscn" };
+            var changedPanel = new ColorRect { Name = "Image", Color = Colors.Black }; changedRoot.AddChild(changedPanel); AddChild(changedRoot); await Frames();
+            Check(changedPanel.GetNodeOrNull<UiSkinVisual>("VYgoSkinVisual") == null, "Changed background identity falls back individually");
+            var variantOne = Component("res://test/variant.tscn"); await Frames();
+            Check(variantOne.Item2.Texture.ResourcePath == Skin("normal"), "Dynamic icon variant matches its own original");
+            var variantTwo = Component("res://test/variant.tscn"); variantTwo.Item2.Texture = GD.Load<Texture2D>(Skin("pressed")); await Frames();
+            Check(variantTwo.Item2.Texture.ResourcePath == Skin("hover"), "Second dynamic icon variant does not conflict at the same node path");
+            var variantUnknown = Component("res://test/variant.tscn"); variantUnknown.Item2.Texture = GD.Load<Texture2D>(Skin("hover")); await Frames();
+            Check(UiSkinService.MatchingRules(variantUnknown.Item2).Length == 0, "Unknown dynamic icon remains untouched");
+            before.Item2.QueueFree(); await Frames();
+            before.Item1.EmitSignal(Control.SignalName.MouseEntered); UiSkinService.Refresh(before.Item1);
+            Check(true, "Removed visual node does not leave unsafe refresh references");
+            GD.Print($"UI_SKIN_TESTS_PASSED {_checks}"); GetTree().Quit();
+        } catch (Exception e) { GD.PrintErr(e); GetTree().Quit(1); }
+    }
+}
+namespace VYgo.Core.Settings { public static class VYgoModSettings { public static bool ReplaceUiSkinOnStartup => !OS.GetCmdlineUserArgs().Contains("skin-disabled"); } }
+namespace VYgo.Scripts { public static class Entry { public static TestLogger Logger { get; } = new(); } public sealed class TestLogger { public void Warn(string text) => GD.Print("EXPECTED_DIAGNOSTIC " + text); } }
