@@ -12,6 +12,7 @@ namespace VYgo.Core.Settings;
 /// </summary>
 public sealed class VYgoSettingsData {
     public bool ReplaceMainMenu { get; set; } = true;
+    public bool ReplaceUiSkin { get; set; } = true;
 
     public bool PlaceholderToggle { get; set; }
     public int PlaceholderValue { get; set; } = 50;
@@ -53,6 +54,8 @@ public static class VYgoModSettings {
     /// 启动时固定的主菜单设置；设置页修改仅在下次启动时生效。
     /// </summary>
     public static bool ReplaceMainMenuOnStartup { get; private set; } = true;
+    /// <summary>启动时固定的通用 UI 皮肤开关，与主菜单替换独立。</summary>
+    public static bool ReplaceUiSkinOnStartup { get; private set; } = true;
 
     /// <summary>
     /// 获取指定玩家在本机应使用的召唤动画模式。
@@ -88,8 +91,15 @@ public static class VYgoModSettings {
     /// 在设置数据注册完成后注册设置页面。
     /// </summary>
     public static void RegisterPage() {
+        ReplaceUiSkinOnStartup = RitsuLibFramework.GetDataStore(Entry.ModId)
+            .Get<VYgoSettingsData>(DataKey).ReplaceUiSkin;
         ReplaceMainMenuOnStartup = RitsuLibFramework.GetDataStore(Entry.ModId)
             .Get<VYgoSettingsData>(DataKey).ReplaceMainMenu;
+
+        var replaceUiSkinBinding = new ModSettingsValueBinding<VYgoSettingsData, bool>(
+            Entry.ModId, DataKey, SaveScope.Global,
+            settings => settings.ReplaceUiSkin,
+            (settings, value) => settings.ReplaceUiSkin = value);
 
         var replaceMainMenuBinding = new ModSettingsValueBinding<VYgoSettingsData, bool>(
             Entry.ModId,
@@ -125,6 +135,11 @@ public static class VYgoModSettings {
             .WithDescription(ModSettingsText.LocString("settings_ui", "VYGO_SETTINGS_DESCRIPTION", "杀戮尖塔 2 YGO Mod 的基础设置页面。"))
             .AddSection("general", section => section
                 .WithTitle(ModSettingsText.LocString("settings_ui", "VYGO_SETTINGS_GENERAL", "通用"))
+                .AddToggle(
+                    "replace_ui_skin",
+                    ModSettingsText.LocString("settings_ui", "VYGO_SETTINGS_REPLACE_UI_SKIN", "使用 VYgo UI 皮肤"),
+                    replaceUiSkinBinding,
+                    ModSettingsText.LocString("settings_ui", "VYGO_SETTINGS_REPLACE_UI_SKIN_DESCRIPTION", "替换已配置的通用按钮、面板等界面外观。与主菜单替换独立，需重启游戏才能生效。"))
                 .AddToggle(
                     "replace_main_menu",
                     ModSettingsText.LocString("settings_ui", "VYGO_SETTINGS_REPLACE_MAIN_MENU", "替换主菜单"),

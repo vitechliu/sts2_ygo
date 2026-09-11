@@ -1,0 +1,99 @@
+{
+    "schemaVersion": 1,
+    "fingerprint": "c85fc9c5b901ee2a2e94a0731e1e103e85ceed198503de6c4713fbf40231f7cb",
+    "rules": [
+        {
+            "id": "confirm-outline-1",
+            "componentId": "confirm",
+            "slotId": "Outline|texture",
+            "scope": "component",
+            "states": {
+                "normal": {
+                    "source": "ed1dccb495e3cf3611aa7c4f34126b7eb7587f41cd3ee0adeaa85d196536e60b.png",
+                    "crop": [
+                        0,
+                        0,
+                        300,
+                        202
+                    ],
+                    "padding": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "border": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "mode": "contain",
+                    "align": [
+                        0.5,
+                        0.5
+                    ],
+                    "offset": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            "layout": {},
+            "neutralize": false
+        },
+        {
+            "id": "confirm-image-2",
+            "componentId": "confirm",
+            "slotId": "Image|texture",
+            "scope": "component",
+            "states": {
+                "normal": {
+                    "source": "cd65048386e6ba2ac0bdccf7fa1760896e17e4236356ac777f7599da5809f163.png",
+                    "crop": [
+                        0,
+                        0,
+                        300,
+                        202
+                    ],
+                    "padding": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "border": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "mode": "contain",
+                    "align": [
+                        0.5,
+                        0.5
+                    ],
+                    "offset": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            "layout": {},
+            "neutralize": false
+        },
+        {
+            "id": "confirm-image-icon-3",
+            "componentId": "confirm",
+            "slotId": "Image/Icon|texture",
+            "scope": "component",
+            "states": {
+                "normal": {
+                    "blank": true
+                }
+            },
+            "layout": {},
+            "neutralize": false
+        }
+    ]
+}

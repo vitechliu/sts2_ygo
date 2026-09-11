@@ -15,5 +15,7 @@
   "VYGO_SETTINGS_PLACEHOLDER_VALUE_TITLE": "Placeholder Value",
   "VYGO_SETTINGS_PLACEHOLDER_VALUE_DESCRIPTION": "A placeholder integer setting with no effect yet.",
   "VYGO_SETTINGS_REPLACE_MAIN_MENU": "Replace Main Menu",
-  "VYGO_SETTINGS_REPLACE_MAIN_MENU_DESCRIPTION": "Use the VYgo main menu appearance and background music. Requires a game restart to take effect."
+  "VYGO_SETTINGS_REPLACE_MAIN_MENU_DESCRIPTION": "Use the VYgo main menu appearance and background music. Requires a game restart to take effect.",
+  "VYGO_SETTINGS_REPLACE_UI_SKIN": "Use VYgo UI skin",
+  "VYGO_SETTINGS_REPLACE_UI_SKIN_DESCRIPTION": "Apply configured appearances to common buttons, panels, and other UI components. Independent of the main menu replacement. Requires a game restart."
 }

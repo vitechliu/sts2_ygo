@@ -90,6 +90,7 @@ public static class Entry {
         
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
+        VYgo.Core.UiSkin.UiSkinService.Initialize();
         
         Logger.Info("VYgo initialized.");
     }
