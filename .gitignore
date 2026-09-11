@@ -70,6 +70,7 @@ env.props
 /Web/node_modules
 /Web/audio-settings.local.json
 /Web/.audio-cache/
+/Web/vendor/fmod/
 /docs
 /addons
 
