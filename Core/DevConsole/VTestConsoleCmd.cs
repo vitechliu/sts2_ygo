@@ -16,6 +16,7 @@ using MegaCrit.Sts2.Core.Nodes.Screens.Overlays;
 using MegaCrit.Sts2.Core.Runs;
 using VYgo.Core.Settings;
 using VYgo.Scripts;
+using VYgo.Scripts.Cards;
 using VYgo.Scripts.Cards.Category.ZaneTruesdale;
 using VYgo.Scripts.Characters;
 using VYgo.Utils;
@@ -28,45 +29,51 @@ public sealed class VTestConsoleCmd : AbstractConsoleCmd {
     private static bool _pendingActionStarted;
 
     public override string CmdName => "vtest";
-    public override string Args => "[help | xyz-infinity]";
+    public override string Args => "[help | xyz-infinity | xyz-nova | xyz-nova-slow]";
     public override string Description =>
         "VYgo 单机战斗测试。vtest xyz-infinity：自动准备电子龙新星，以其为素材完整超量召唤电子龙无限。" +
-        "需在 YGO 角色的玩家行动阶段执行，至少留一个随从空位；执行时自动关闭控制台。";
+        "vtest xyz-nova：准备两只电子龙，按正式规则双素材超量召唤新星。" +
+        "xyz-nova-slow 仅将素材展示段慢放五倍，供检查透视与飞出，其他流程相同。" +
+        "需在 YGO 角色的玩家行动阶段执行，无限需一个随从空位，新星需两个；执行时自动关闭控制台。";
     public override bool IsNetworked => false;
 
     public override CompletionResult GetArgumentCompletions(Player? player, string[] args) =>
         args.Length <= 1
-            ? CompleteArgument(["help", "xyz-infinity"], [], args.FirstOrDefault() ?? "")
+            ? CompleteArgument(["help", "xyz-infinity", "xyz-nova", "xyz-nova-slow"], [], args.FirstOrDefault() ?? "")
             : base.GetArgumentCompletions(player, args);
 
     public override CmdResult Process(Player? issuingPlayer, string[] args) {
         if (args.Length == 0 || (args.Length == 1 && args[0].Equals("help", StringComparison.OrdinalIgnoreCase))) {
             return new CmdResult(true, Description);
         }
-        if (args.Length != 1 || !args[0].Equals("xyz-infinity", StringComparison.OrdinalIgnoreCase)) {
+        bool slow = args.Length == 1 && args[0].Equals("xyz-nova-slow", StringComparison.OrdinalIgnoreCase);
+        bool dual = slow || args.Length == 1 && args[0].Equals("xyz-nova", StringComparison.OrdinalIgnoreCase);
+        if (args.Length != 1 || !(dual || args[0].Equals("xyz-infinity", StringComparison.OrdinalIgnoreCase))) {
             return new CmdResult(false, "未知测试参数。用法：" + InfinityCommand + "；帮助：vtest help。");
         }
 
         string? error = ValidateBattle(issuingPlayer);
         if (error != null) return new CmdResult(false, error);
+        if (dual && issuingPlayer!.GetMaxMinionCount() - issuingPlayer.MinionCount() < 2)
+            return new CmdResult(false, "双素材测试需要两个随从空位。");
 
         var run = RunManager.Instance;
         // 原版单机控制台默认直接执行；显式排入原版控制台动作后再执行异步结算。
         if (_pendingAction != null && !_pendingActionStarted
             && ReferenceEquals(run.ActionExecutor.CurrentlyRunningAction, _pendingAction)) {
             _pendingActionStarted = true;
-            return new CmdResult(ExecuteInfinity(issuingPlayer!, _pendingAction), true, "正在准备新星并执行完整超量召唤。");
+            return new CmdResult(ExecuteInfinity(issuingPlayer!, _pendingAction, dual, slow), true, "正在准备素材并执行完整超量召唤。");
         }
         if (_pendingAction != null || !run.ActionQueueSet.IsEmpty || run.ActionExecutor.IsRunning) {
             return new CmdResult(false, "当前仍有动作或选卡正在结算，请等待完成后再执行测试。");
         }
 
-        var action = new ConsoleCmdGameAction(issuingPlayer!, InfinityCommand, inCombat: true);
+        var action = new ConsoleCmdGameAction(issuingPlayer!, slow ? "vtest xyz-nova-slow" : dual ? "vtest xyz-nova" : InfinityCommand, inCombat: true);
         _pendingActionStarted = false;
         _pendingAction = action;
         try {
             run.ActionQueueSynchronizer.RequestEnqueue(action);
-            return new CmdResult(ObserveCompletion(action), true, "已提交电子龙无限测试；结算结果会写回控制台。");
+            return new CmdResult(ObserveCompletion(action), true, "已提交超量测试；结算结果会写回控制台。");
         }
         catch {
             _pendingAction = null;
@@ -111,7 +118,7 @@ public sealed class VTestConsoleCmd : AbstractConsoleCmd {
         }
     }
 
-    private static async Task ExecuteInfinity(Player player, ConsoleCmdGameAction action) {
+    private static async Task ExecuteInfinity(Player player, ConsoleCmdGameAction action, bool dual, bool slow) {
         try {
             // 让控制台先完成输入行清理，再隐藏，避免演出被遮挡。
             await Task.Yield();
@@ -139,47 +146,55 @@ public sealed class VTestConsoleCmd : AbstractConsoleCmd {
             await VYgoModSettings.RunWithFullAnimationForTest(player, async () => {
                 var context = new GameActionPlayerChoiceContext(action);
                 var combat = player.Creature.CombatState!;
-                var nova = combat.CreateCard<CyberDragonNova>(player);
-                var infinity = combat.CreateCard<CyberDragonInfinity>(player);
+                BaseExtraXyzCard target = dual ? combat.CreateCard<CyberDragonNova>(player) : combat.CreateCard<CyberDragonInfinity>(player);
+                BaseMonsterCard[] materials = dual
+                    ? [combat.CreateCard<CyberDragon>(player), combat.CreateCard<CyberDragon>(player)]
+                    : [combat.CreateCard<CyberDragonNova>(player)];
                 var extraPile = Entry.ExtraPile.GetPile(player);
-                if (!(await CardPileCmd.Add(nova, extraPile, skipVisuals: true)).success
-                    || !(await CardPileCmd.Add(infinity, extraPile, skipVisuals: true)).success) {
+                if (!(await CardPileCmd.Add(target, extraPile, skipVisuals: true)).success) {
                     Report(false, "测试失败：测试卡加入额外卡组失败，已生成的卡保留在当前战斗。");
                     return;
                 }
-                var summonedNova = await nova.AutoPlayAndCaptureSummonedCreature(
-                    context, null, skipCardPileVisuals: true,
-                    playSummonCardFly: false, playMonsterSummonVfx: false);
-                if (summonedNova is not { IsAlive: true }) {
-                    Report(false, "测试失败：新星未能登场，可能被当前战斗效果阻止；测试卡保留在当前战斗。");
-                    return;
+                foreach (var material in materials) {
+                    if (!(await CardPileCmd.Add(material, material is BaseExtraXyzCard ? extraPile : PileType.Hand.GetPile(player), skipVisuals: true)).success) {
+                        Report(false, "测试失败：素材加入牌堆失败。");
+                        return;
+                    }
+                    var summoned = await material.AutoPlayAndCaptureSummonedCreature(
+                        context, null, skipCardPileVisuals: true,
+                        playSummonCardFly: false, playMonsterSummonVfx: false);
+                    if (summoned is not { IsAlive: true }) {
+                        Report(false, "测试失败：素材未能登场，可能被当前战斗效果阻止；测试卡保留在当前战斗。");
+                        return;
+                    }
                 }
 
-                // 只允许本次生成的新星；沿用无限的正式素材规则与统一预留/挂载流程。
-                var spec = SummonUtil.CreateDirectXyzSummonSpec(infinity, player, (_, _) =>
-                    SummonUtil.GetFieldMonsterMaterials(player, material => material.Card == nova));
+                // 只允许本次生成的素材；沿用目标的正式规则与统一预留/挂载流程。
+                var spec = SummonUtil.CreateDirectXyzSummonSpec(target, player, (_, _) =>
+                    SummonUtil.GetFieldMonsterMaterials(player, material => materials.Contains(material.Card)));
                 bool animationCompleted = false;
                 var result = await SummonUtil.ExecuteSelectedExtraDeckSummon(new SelectedExtraDeckSummonRequest(
-                    SelectedExtraCard: infinity, Owner: player, ChoiceContext: context,
+                    SelectedExtraCard: target, Owner: player, ChoiceContext: context,
                     BuildMaterialSelection: spec.BuildMaterialSelection, SummonType: spec.SummonType,
                     PlayAnimation: async animation => {
-                        await ExtraDeckSummonAnimations.PlayXyzSummonAnimation(animation, reportFailure: true);
+                        await ExtraDeckSummonAnimations.PlayXyzSummonAnimation(animation, reportFailure: true, slowMaterials: slow);
                         animationCompleted = true;
                     },
                     ConsumeMaterials: spec.ConsumeMaterials, AfterAutoPlay: spec.AfterAutoPlay,
                     OnSummonFailedAfterConsumption: spec.OnSummonFailedAfterConsumption,
-                    FinalWaitSeconds: spec.FinalWaitSeconds), [nova]);
+                    FinalWaitSeconds: spec.FinalWaitSeconds), materials);
 
                 bool attached = result.SummonedCreature is { IsAlive: true } creature
-                    && XyzMaterialCmd.GetMaterials(creature).Contains(nova);
+                    && materials.All(material => XyzMaterialCmd.GetMaterials(creature).Contains(material));
                 if (!result.Success || !attached) {
                     Report(false, "测试失败：超量召唤或素材挂载未完成；已发生的结算保留，详情见游戏日志。");
                 }
                 else if (!animationCompleted) {
-                    Report(false, "电子龙无限已登场并挂载新星，但完整演出未完成，详情见游戏日志。");
+                    Report(false, "超量怪兽已登场并挂载素材，但完整演出未完成，详情见游戏日志。");
                 }
                 else {
-                    Report(true, "电子龙无限已登场，新星已挂载为超量素材；完整演出调用已完成，请目视核对效果。");
+                    Report(true, dual ? "电子龙新星已登场，两张电子龙已挂载为超量素材；完整演出调用已完成，请目视核对效果。"
+                        : "电子龙无限已登场，新星已挂载为超量素材；完整演出调用已完成，请目视核对效果。");
                 }
             });
         }

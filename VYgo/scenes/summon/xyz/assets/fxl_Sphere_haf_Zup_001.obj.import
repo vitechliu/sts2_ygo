@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://c0hdyx0r1gfvf"
+path="res://.godot/imported/fxl_Sphere_haf_Zup_001.obj-197ab70d07932eaae83f271b7cb5079d.mesh"
+
+[deps]
+
+files=["res://.godot/imported/fxl_Sphere_haf_Zup_001.obj-197ab70d07932eaae83f271b7cb5079d.mesh"]
+
+source_file="res://VYgo/scenes/summon/xyz/assets/fxl_Sphere_haf_Zup_001.obj"
+dest_files=["res://.godot/imported/fxl_Sphere_haf_Zup_001.obj-197ab70d07932eaae83f271b7cb5079d.mesh", "res://.godot/imported/fxl_Sphere_haf_Zup_001.obj-197ab70d07932eaae83f271b7cb5079d.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
