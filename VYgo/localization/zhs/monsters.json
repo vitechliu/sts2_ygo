@@ -154,5 +154,6 @@
     "DEGRADE_BUSTER_MINION.name": "退行手雷破坏者",
     "PROTECTCODE_TALKER_MINION.name": "保护码语者",
     "ACCESSCODE_TALKER_MINION.name": "访问码语者",
-    "CYBERSE_GADGET_TOKEN_MINION.name": "工具衍生物"
+    "CYBERSE_GADGET_TOKEN_MINION.name": "工具衍生物",
+    "BLACK_LUSTER_SOLDIER_MINION.name": "混沌战士"
 }

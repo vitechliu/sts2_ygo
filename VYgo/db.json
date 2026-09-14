@@ -1,5 +1,40 @@
 [
     {
+        "id": 169,
+        "card_id": 55761792,
+        "name": "",
+        "cn_name": "混沌的仪式",
+        "en_name": "BlackLusterRitual",
+        "types": "[魔法|仪式]",
+        "description": "「混沌战士」的降临必需。\r\n①：从自己的手卡·场上把等级合计直到8以上的怪兽解放，从手卡把「混沌战士」仪式召唤。",
+        "atk": 0,
+        "def": 0,
+        "level": 0,
+        "attribute": "",
+        "race": "",
+        "archetypes": [
+            207
+        ]
+    },
+    {
+        "id": 168,
+        "card_id": 5405694,
+        "name": "",
+        "cn_name": "混沌战士",
+        "en_name": "BlackLusterSoldier",
+        "types": "[怪兽|仪式] 战士/地\n[★8] 3000/2500",
+        "description": "「混沌的仪式」降临。",
+        "atk": 3000,
+        "def": 2500,
+        "level": 8,
+        "attribute": "地",
+        "race": "战士族",
+        "archetypes": [
+            207,
+            4303
+        ]
+    },
+    {
         "id": 167,
         "card_id": 7403341,
         "name": "",

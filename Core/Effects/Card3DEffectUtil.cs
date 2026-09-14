@@ -92,6 +92,7 @@ public static class Card3DEffectUtil {
                     continue;
                 }
 
+                flippers.Add(flipper);
                 await WaitFrames(flipper, 1);
 
                 NCard? sourceNode = NCard.FindOnTable(model);
@@ -103,7 +104,6 @@ public static class Card3DEffectUtil {
                 }
 
                 contexts.Add(await BuildContext(flipper, model, cardGlobalPos, scaleMultiplier, initialOpacity, hideCardShadow));
-                flippers.Add(flipper);
             }
 
             await animate(contexts, targetGlobalPos);

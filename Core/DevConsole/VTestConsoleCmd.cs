@@ -23,29 +23,31 @@ using VYgo.Utils;
 
 namespace VYgo.Core.DevConsole;
 
-public sealed class VTestConsoleCmd : AbstractConsoleCmd {
+public sealed partial class VTestConsoleCmd : AbstractConsoleCmd {
     private const string InfinityCommand = "vtest xyz-infinity";
     private static ConsoleCmdGameAction? _pendingAction;
     private static bool _pendingActionStarted;
 
     public override string CmdName => "vtest";
-    public override string Args => "[help | xyz-infinity | xyz-nova | xyz-nova-slow]";
+    public override string Args => "[help | xyz-infinity | xyz-nova | xyz-nova-slow | ritual-single | ritual-dual | ritual-dual-slow | ritual-minimal | ritual-none | ritual-prepare]";
     public override string Description =>
         "VYgo 单机战斗测试。vtest xyz-infinity：自动准备电子龙新星，以其为素材完整超量召唤电子龙无限。" +
         "vtest xyz-nova：准备两只电子龙，按正式规则双素材超量召唤新星。" +
         "xyz-nova-slow 仅将素材展示段慢放五倍，供检查透视与飞出，其他流程相同。" +
+        "仪式测试：ritual-single 单素材、ritual-dual 双素材、ritual-dual-slow 退出段慢放、ritual-minimal 快速、ritual-none 无动画、ritual-prepare 准备手动出牌。" +
         "需在 YGO 角色的玩家行动阶段执行，无限需一个随从空位，新星需两个；执行时自动关闭控制台。";
     public override bool IsNetworked => false;
 
     public override CompletionResult GetArgumentCompletions(Player? player, string[] args) =>
         args.Length <= 1
-            ? CompleteArgument(["help", "xyz-infinity", "xyz-nova", "xyz-nova-slow"], [], args.FirstOrDefault() ?? "")
+            ? CompleteArgument(["help", "xyz-infinity", "xyz-nova", "xyz-nova-slow", "ritual-single", "ritual-dual", "ritual-dual-slow", "ritual-minimal", "ritual-none", "ritual-prepare"], [], args.FirstOrDefault() ?? "")
             : base.GetArgumentCompletions(player, args);
 
     public override CmdResult Process(Player? issuingPlayer, string[] args) {
         if (args.Length == 0 || (args.Length == 1 && args[0].Equals("help", StringComparison.OrdinalIgnoreCase))) {
             return new CmdResult(true, Description);
         }
+        if (args.Length == 1 && args[0].StartsWith("ritual-", StringComparison.OrdinalIgnoreCase)) return ProcessRitual(issuingPlayer, args[0].ToLowerInvariant());
         bool slow = args.Length == 1 && args[0].Equals("xyz-nova-slow", StringComparison.OrdinalIgnoreCase);
         bool dual = slow || args.Length == 1 && args[0].Equals("xyz-nova", StringComparison.OrdinalIgnoreCase);
         if (args.Length != 1 || !(dual || args[0].Equals("xyz-infinity", StringComparison.OrdinalIgnoreCase))) {
