@@ -132,10 +132,5 @@
       ]
     }
   ],
-  "mappings": {
-    "event:/sfx/ui/clicks/ui_click": {
-      "profileId": "ff1893ee-6bdc-4cb1-b5af-d5cdc47071dd",
-      "event": "event:/vygo/sfx/material_shine"
-    }
-  }
+  "mappings": {}
 }
