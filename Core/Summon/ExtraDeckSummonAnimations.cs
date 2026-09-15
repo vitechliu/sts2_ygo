@@ -32,7 +32,6 @@ internal static class ExtraDeckSummonAnimations {
     private static readonly Color FusionRed = new("ff315e");
     private static readonly Color FusionBlue = new("3fb4ff");
     private static readonly Color FusionViolet = new("bd4cff");
-    private static readonly Color LinkMagenta = new("ff00ff");
     private static readonly Color XyzBlue = new("55bfff");
     private static readonly Color XyzViolet = new("8a63ff");
     private static readonly Color SynchroCyan = new("39eeff");
@@ -502,88 +501,46 @@ internal static class ExtraDeckSummonAnimations {
         );
     }
 
-    internal static async Task PlayLinkSummonAnimation(SummonAnimationContext context) {
+    internal static Task PlayLinkSummonAnimation(SummonAnimationContext context) => PlayLinkSummonAnimation(context, false);
+
+    internal static async Task PlayLinkSummonAnimation(SummonAnimationContext context, bool slowExit) {
         if (context.FinalCard is not BaseExtraLinkCard linkCard) return;
 
         CoreCard? coreCard = linkCard.YgoGetCore();
         if (coreCard?.Def == null || coreCard.LinkCount == null) {
             Entry.Logger.Error("Failed to get link marker data: " + linkCard.CardId);
-            return;
+            throw new InvalidOperationException("连接标记数据缺失：" + linkCard.CardId);
         }
-
-        SFXUtil.Play("event:/vygo/sfx/link_summon_00");
-        await PlayLinkPreviewAnimation(context.MaterialCards, context.ScreenCenterPos);
 
         var mainAnim2D = VFXUtil.GenVFXNode<NLinkSummon2D>(LinkSummon2DAssets);
         NCombatRoom.Instance.CombatVfxContainer.AddChild(mainAnim2D);
         mainAnim2D.GlobalPosition = context.ScreenCenterPos;
 
         try {
-            await mainAnim2D.manager.PlayAnimMain();
-            await PlayLinkMarkers(mainAnim2D, coreCard.Def.Value, coreCard.LinkCount.Value);
-            await VFXUtil.Wait(0.5f);
-            
-            mainAnim2D.manager.ShineFinal();
-            SFXUtil.Play("event:/vygo/sfx/link_summon_04");
-            await VFXUtil.Wait(0.1f);
-            SFXUtil.Play("event:/vygo/sfx/link_summon_05");
-            mainAnim2D.manager.PlayPostEffect();
-            await NLinkPostLinkCardVfx.Play(context.FinalCard, context.ScreenCenterPos);
+            // 提前完成全部实时卡面捕获，避免结果阶段因临时创建 Viewport 出现停顿。
+            var materials = context.MaterialCards.Take(8).ToArray();
+            await Card3DEffectUtil.RunMultipleCard3DEffect(materials.Append(context.FinalCard), async (cards, center) => {
+                if (cards.Count != materials.Length + 1) throw new InvalidOperationException("连接卡面捕获不完整。");
+                await LinkMaterialPreview.Play(cards.Take(materials.Length).ToArray(), center,
+                    () => { mainAnim2D.Visible = true; SFXUtil.Play("event:/vygo/sfx/link_summon_00"); },
+                    mainAnim2D.manager.StartMain, slowExit);
+                // 门环在素材退出前 0.15 秒开始；第一批光轨对应源 1.4833 秒。
+                await VFXUtil.Wait(0.15f);
+                await PlayLinkMarkers(mainAnim2D, coreCard.Def.Value, coreCard.LinkCount.Value);
+                await VFXUtil.Wait(0.7f);
+                mainAnim2D.manager.ShineFinal();
+                SFXUtil.Play("event:/vygo/sfx/link_summon_04");
+                await VFXUtil.Wait(0.116667f);
+                SFXUtil.Play("event:/vygo/sfx/link_summon_05");
+                await NLinkPostLinkCardVfx.PlayCaptured(cards[^1], center, mainAnim2D.manager.PlayPostEffect);
+            }, context.ScreenCenterPos, scaleMultiplier: 1.1f, horizontalSpacing: 0,
+                initialOpacity: 0, hideSourceNodes: false, hideCardShadow: true);
         }
         finally {
             if (GodotObject.IsInstanceValid(mainAnim2D)) {
                 mainAnim2D.QueueFreeSafely();
             }
         }
-    }
-
-    private static async Task PlayLinkPreviewAnimation(IReadOnlyList<CardModel> cardModels, Vector2 screenCenterPos) {
-        if (cardModels.Count <= 0) return;
-
-        try {
-            // 素材送墓触发可能已将同一卡片移回手牌；此时只播放素材克隆动画，
-            // 不隐藏新生成的手牌节点，避免卡片在动画期间消失后又恢复。
-            await Card3DEffectUtil.RunMultipleCard3DEffect(
-                cardModels,
-                AnimateLinkSummonPreview,
-                screenCenterPos,
-                scaleMultiplier: 1.1f,
-                horizontalSpacing: 380f,
-                initialOpacity: 0f,
-                hideSourceNodes: false
-            );
-        }
-        catch (Exception ex) {
-            Entry.Logger.Warn("PlaySummonPreviewAnimation exception: " + ex);
-        }
-    }
-
-    private static async Task AnimateLinkSummonPreview(IReadOnlyList<Card3DEffectContext> ctxs, Vector2 centerPos) {
-        if (ctxs.Count < 1) return;
-
-        foreach (Card3DEffectContext ctx in ctxs) {
-            ConfigureCardEffect(ctx, LinkMagenta, LinkMagenta, 1.2f, 0f);
-        }
-
-        const float HoverDuration = 1f;
-        const float FlyDuration = 0.15f;
-        const float FlyDistance = 1600f;
-        const float FlyZ = -1200f;
-
-        float[] yaws = DistributeYaws(ctxs.Count);
-        List<Tween> hoverTweens = new(ctxs.Count);
-        for (int i = 0; i < ctxs.Count; i++) {
-            hoverTweens.Add(CreateHoverTween(ctxs[i], yaws[i], -8f, HoverDuration, 0.72f));
-        }
-
-        await Task.WhenAll(Enumerable.Range(0, ctxs.Count).Select(i => hoverTweens[i].AwaitFinished(ctxs[i].Pivot)));
-
-        Tween fly = ctxs[0].Pivot.CreateTween().SetParallel();
-        foreach (Card3DEffectContext ctx in ctxs) {
-            AddFlyTween(fly, ctx, FlyDistance, FlyZ, FlyDuration);
-        }
-
-        await fly.AwaitFinished(ctxs[0].Pivot);
     }
 
     private static async Task PlayLinkMarkers(NLinkSummon2D mainAnim2D, int linkMarkers, int linkCount) {

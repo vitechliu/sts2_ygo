@@ -33,17 +33,19 @@ public enum EffectMode {
 /// 注册 VYgo 的持久化设置数据与 RitsuLib 设置页面。
 /// </summary>
 public static class VYgoModSettings {
-    private static readonly AsyncLocal<Player?> FullAnimationTestPlayer = new();
+    private static readonly AsyncLocal<(Player Player, EffectMode Mode)?> AnimationTestOverride = new();
 
     // 仅沿本次异步测试调用链覆盖，不改设置对象或写入设置文件。
-    internal static async Task RunWithFullAnimationForTest(Player player, Func<Task> test) {
-        Player? previous = FullAnimationTestPlayer.Value;
-        FullAnimationTestPlayer.Value = player;
+    internal static Task RunWithFullAnimationForTest(Player player, Func<Task> test) => RunWithAnimationForTest(player, EffectMode.full, test);
+
+    internal static async Task RunWithAnimationForTest(Player player, EffectMode mode, Func<Task> test) {
+        var previous = AnimationTestOverride.Value;
+        AnimationTestOverride.Value = (player, mode);
         try {
             await test();
         }
         finally {
-            FullAnimationTestPlayer.Value = previous;
+            AnimationTestOverride.Value = previous;
         }
     }
 
@@ -68,7 +70,7 @@ public static class VYgoModSettings {
             return EffectMode.none;
         }
 
-        if (FullAnimationTestPlayer.Value == effectPlayer) return EffectMode.full;
+        if (AnimationTestOverride.Value is { } test && test.Player == effectPlayer) return test.Mode;
 
         return RitsuLibFramework.GetDataStore(Entry.ModId)
             .Get<VYgoSettingsData>(DataKey)

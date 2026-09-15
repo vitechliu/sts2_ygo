@@ -20,6 +20,13 @@
 {d37e890c-f318-456e-8a15-6ace2f912363} event:/vygo/sfx/link_summon_05
 {5bd2d9ae-2146-4d7b-8fff-ae432a42f589} event:/vygo/sfx/material_01
 {0f2f2a84-616b-40bd-8794-9ba4231f7f57} event:/vygo/sfx/material_shine
+{e447a2b6-0f8b-403f-8170-63a608cc0ab1} event:/vygo/sfx/ritual_01
+{983cbb8e-8443-4c30-9049-c47082b73205} event:/vygo/sfx/ritual_02_01
+{015beb2d-348f-418e-87f6-974b7d259778} event:/vygo/sfx/ritual_02_02
+{66a105d2-00f2-4b05-b509-3e01b058cbb8} event:/vygo/sfx/ritual_02_03
+{e114a7ff-5e0c-4591-9b33-f7d0ca5c7638} event:/vygo/sfx/ritual_03
+{27172a4e-a5f2-484f-94d4-c444b9fe57c9} event:/vygo/sfx/ritual_04
+{7bf7150a-5f84-4e38-8034-fe77690222ca} event:/vygo/sfx/ritual_card
 {a69a0878-dbb1-451e-9b2e-4f2db71ed943} event:/vygo/sfx/synchro_01_01
 {d6e8a47d-4a76-481d-b803-81f51318e65d} event:/vygo/sfx/synchro_01_04
 {0955d199-8db3-49a4-951a-d652f82e2ddb} event:/vygo/sfx/synchro_02
@@ -34,6 +41,10 @@
 {12346148-7647-41f3-aa7e-3ff6ac7e4376} event:/vygo/sfx/synchro_05
 {68852085-3a46-41c5-ae5e-c8e1f0cd5623} event:/vygo/sfx/synchro_card_01
 {ce7a51fa-e9d0-4430-9be0-485cf134d25f} event:/vygo/sfx/synchro_card_02
+{59b2725e-8ef6-4f13-b9ee-add600f699e6} event:/vygo/sfx/ui/cancel_1
+{ac08cb1f-8624-4eac-b8a8-8be0ab65d263} event:/vygo/sfx/ui/click_1
+{5d98c7b6-279e-499f-b240-6ee5c4b1e511} event:/vygo/sfx/ui/hover_1
+{3cb5dc35-3f74-47c2-b28c-650b383eb964} event:/vygo/sfx/ui/hover_2
 {11261ea7-bae7-4dde-ab07-96ce2c30ab48} event:/vygo/sfx/xyz_01
 {dea32a72-8718-4ed1-803b-8b1f8ce94d90} event:/vygo/sfx/xyz_02_01
 {8dae6387-cd12-4b4b-be5e-7849f3f6a45a} event:/vygo/sfx/xyz_02_02

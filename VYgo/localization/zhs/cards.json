@@ -417,5 +417,10 @@
     "V_YGO_CARD_CYBERSE_GADGET_TOKEN.description": "召唤{Attack:diff()}/{Life:diff()}。",
     "V_YGO_CARD_CODE_GENERATOR.selectionScreenPrompt": "选择1张怪兽送去弃牌堆。",
     "V_YGO_CARD_DEGRADE_BUSTER.selectionScreenPrompt": "选择2只电子界族怪兽消耗。",
-    "V_YGO_CARD_PROTECTCODE_TALKER.selectionScreenPrompt": "选择连接数合计恰好为3的其他连接怪兽。"
+    "V_YGO_CARD_PROTECTCODE_TALKER.selectionScreenPrompt": "选择连接数合计恰好为3的其他连接怪兽。",
+    "V_YGO_CARD_BLACK_LUSTER_SOLDIER.title": "混沌战士",
+    "V_YGO_CARD_BLACK_LUSTER_SOLDIER.description": "不能通常打出。仪式召唤{Attack:diff()}/{Life:diff()}。通过[gold]混沌的仪式[/gold]从手牌[gold]仪式召唤[/gold]。",
+    "V_YGO_CARD_BLACK_LUSTER_RITUAL.title": "混沌的仪式",
+    "V_YGO_CARD_BLACK_LUSTER_RITUAL.description": "解放手牌或场上合计恰好[blue]8[/blue]星的怪兽，从手牌[gold]仪式召唤[/gold]1只[gold]混沌战士[/gold]。",
+    "V_YGO_CARD_BLACK_LUSTER_RITUAL.selectionScreenPrompt": "选择要仪式召唤的混沌战士。"
 }

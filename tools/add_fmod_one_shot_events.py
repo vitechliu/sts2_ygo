@@ -34,6 +34,11 @@ def new_guid() -> str:
 
 
 def probe(path: Path) -> tuple[float, float, int]:
+    if shutil.which("ffprobe") is None:
+        import av
+        with av.open(str(path)) as container:
+            stream = container.streams.audio[0]
+            return float(stream.duration * stream.time_base), stream.sample_rate / 1000.0, len(stream.layout.channels)
     result = subprocess.run(
         [
             "ffprobe",
@@ -149,7 +154,7 @@ def main() -> None:
     parser.add_argument("source_directory", type=Path)
     parser.add_argument(
         "--set",
-        choices=("xyz", "synchro", "all"),
+        choices=("xyz", "synchro", "ritual", "all"),
         default="xyz",
         help="要写入的事件组；默认保持旧脚本的 XYZ 行为。",
     )
@@ -189,7 +194,18 @@ def main() -> None:
         "synchro_card_01": "SE_SMN_CMN_CARD_01.ogg",
         "synchro_card_02": "SE_SMN_CMN_CARD_02.ogg",
     }
+    ritual_events = {
+        "ritual_card": "SE_SMN_CMN_CARD_01.ogg",
+        "ritual_01": "SE_SMN_RITUAL_01.ogg",
+        "ritual_02_01": "SE_SMN_RITUAL_02_01.ogg",
+        "ritual_02_02": "SE_SMN_RITUAL_02_02.ogg",
+        "ritual_02_03": "SE_SMN_RITUAL_02_03.ogg",
+        "ritual_03": "SE_SMN_RITUAL_03.ogg",
+        "ritual_04": "SE_SMN_RITUAL_04.ogg",
+    }
     events = {}
+    if args.set in ("ritual", "all"):
+        events.update(ritual_events)
     if args.set in ("xyz", "all"):
         events.update(xyz_events)
     if args.set in ("synchro", "all"):

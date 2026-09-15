@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://d2fjpds5gbunj"
+path="res://.godot/imported/4c1da294_SummonRitualTrail01.obj-e5009c5df019a022da6e9aeab0fc8eef.mesh"
+
+[deps]
+
+files=["res://.godot/imported/4c1da294_SummonRitualTrail01.obj-e5009c5df019a022da6e9aeab0fc8eef.mesh"]
+
+source_file="res://VYgo/scenes/summon/ritual/assets/4c1da294_SummonRitualTrail01.obj"
+dest_files=["res://.godot/imported/4c1da294_SummonRitualTrail01.obj-e5009c5df019a022da6e9aeab0fc8eef.mesh", "res://.godot/imported/4c1da294_SummonRitualTrail01.obj-e5009c5df019a022da6e9aeab0fc8eef.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

@@ -886,7 +886,7 @@ public static class SummonUtil {
         );
     }
 
-    private static bool CanSummonWithMaterials(
+    internal static bool CanSummonWithMaterials(
         Player owner,
         IReadOnlyList<SummonMaterial> materials
     ) {
@@ -997,7 +997,8 @@ public static class SummonUtil {
         Player owner,
         IReadOnlyList<SummonMaterial> materials,
         Func<SummonMaterial, PileType> getMaterialDestination,
-        ExtraDeckSummonType? summonType = null
+        ExtraDeckSummonType? summonType = null,
+        Color? materialAccent = null
     ) {
         if (materials.Count <= 0 || !CanSummonWithMaterials(owner, materials)) {
             return false;
@@ -1046,7 +1047,7 @@ public static class SummonUtil {
                 .ToList();
 
             await Task.WhenAll(fieldMoves.Select(move =>
-                MaterialSacrifice(move.Material.Creature!, effectMode, summonType)));
+                MaterialSacrifice(move.Material.Creature!, effectMode, summonType, materialAccent)));
 
             foreach ((SummonMaterial material, PileType destination) in fieldMoves) {
                 BaseMonster monster = (BaseMonster)material.Creature!.Monster;
@@ -1116,7 +1117,8 @@ public static class SummonUtil {
     internal static async Task MaterialSacrifice(
         Creature material,
         EffectMode effectMode,
-        ExtraDeckSummonType? summonType = null
+        ExtraDeckSummonType? summonType = null,
+        Color? materialAccent = null
     ) {
         var nCreature = material.GetCreatureNode();
         if (nCreature == null) {
@@ -1157,7 +1159,7 @@ public static class SummonUtil {
             try {
                 if (effectMode == EffectMode.minimal) {
                     await visuals.PlayQuickMaterialAnimation(
-                        ExtraDeckSummonAnimations.GetMinimalAccentColor(summonType)
+                        materialAccent ?? ExtraDeckSummonAnimations.GetMinimalAccentColor(summonType)
                     );
                 }
                 else {

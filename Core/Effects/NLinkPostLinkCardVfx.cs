@@ -17,7 +17,7 @@ public partial class NLinkPostLinkCardVfx : Node2D {
     private static readonly Color LinkBlue = new("45d9ff");
     private static readonly Color LinkViolet = new("d05cff");
 
-    private const float FlightDuration = 0.68f;
+    private const float FlightDuration = 0.783333f;
     private const float SettleDuration = 0.18f;
     private const int MaxTrailPoints = 14;
     private const float RectParticleTextureSize = 256f;
@@ -30,6 +30,7 @@ public partial class NLinkPostLinkCardVfx : Node2D {
     private Sprite2D _afterimageSprite = null!;
     private Texture2D _rectParticleTexture = null!;
     private CanvasItemMaterial _addMaterial = null!;
+    private Action? _onImpact;
 
     public override void _Ready() {
         base._Ready();
@@ -66,6 +67,17 @@ public partial class NLinkPostLinkCardVfx : Node2D {
                 vfx.QueueFreeSafely();
             }
         }
+    }
+
+    public static async Task PlayCaptured(Card3DEffectContext card, Vector2 center, Action onImpact) {
+        var vfx = VFXUtil.GenVFXNode<NLinkPostLinkCardVfx>(ScenePath);
+        NCombatRoom.Instance.CombatVfxContainer.AddChildSafely(vfx);
+        vfx._onImpact = onImpact;
+        try {
+            card.DisplaySprite.Scale = Vector2.One * (1.34f/1.1f);
+            await vfx.AnimatePostLinkCard(card,center);
+        }
+        finally { if (GodotObject.IsInstanceValid(vfx)) vfx.QueueFreeSafely(); }
     }
 
     private static Vector2 GetScreenCenter() {
@@ -123,6 +135,7 @@ public partial class NLinkPostLinkCardVfx : Node2D {
             .SetTrans(Tween.TransitionType.Cubic);
 
         await flyTween.AwaitFinished(ctx.Pivot);
+        _onImpact?.Invoke();
         await PlayImpact(ctx, arrival);
 
         Tween settleTween = ctx.Pivot.CreateTween().SetParallel();
@@ -137,7 +150,7 @@ public partial class NLinkPostLinkCardVfx : Node2D {
             .SetTrans(Tween.TransitionType.Sine);
 
         await Task.WhenAll(trailTask, settleTween.AwaitFinished(ctx.Pivot));
-        await VFXUtil.Wait(0.12f);
+        await VFXUtil.Wait(0.673334f);
     }
 
     private void ConfigureCard(Card3DEffectContext ctx) {
@@ -221,14 +234,20 @@ public partial class NLinkPostLinkCardVfx : Node2D {
         _impactRing.Visible = true;
 
         _impactFlash.GlobalPosition = position;
-        _impactFlash.Scale = Vector2.One * 0.4f;
-        _impactFlash.Modulate = new Color(1f, 0.9f, 1f, 0.85f);
+        _impactFlash.ZAsRelative = false;
+        _impactFlash.ZIndex = 1011;
+        _impactFlash.Texture = ctx.DisplaySprite.Texture;
+        _impactFlash.FlipH = ctx.DisplaySprite.FlipH;
+        _impactFlash.FlipV = ctx.DisplaySprite.FlipV;
+        _impactFlash.Material = new ShaderMaterial { Shader = GD.Load<Shader>("res://VYgo/scenes/summon/link/link_result_flash.gdshader") };
+        _impactFlash.Scale = ctx.DisplaySprite.Scale;
+        _impactFlash.Modulate = new Color(1f, 1f, 1f, 0.95f);
         _impactFlash.Visible = true;
 
         EmitImpactRectParticles(position, ctx.DisplaySize);
 
         Tween impactTween = CreateTween().SetParallel();
-        impactTween.TweenProperty(_afterimageSprite, "scale", ctx.DisplaySprite.Scale * 1.62f, 0.38f)
+        impactTween.TweenProperty(_afterimageSprite, "scale", ctx.DisplaySprite.Scale * 1.18f, 0.38f)
             .SetEase(Tween.EaseType.Out)
             .SetTrans(Tween.TransitionType.Cubic);
         impactTween.TweenProperty(_afterimageSprite, "modulate:a", 0f, 0.38f)
@@ -240,11 +259,11 @@ public partial class NLinkPostLinkCardVfx : Node2D {
         impactTween.TweenProperty(_impactRing, "modulate:a", 0f, 0.34f)
             .SetEase(Tween.EaseType.Out)
             .SetTrans(Tween.TransitionType.Quad);
-        impactTween.TweenProperty(_impactFlash, "scale", Vector2.One * 1.15f, 0.18f)
+        impactTween.TweenProperty(_impactFlash, "scale", ctx.DisplaySprite.Scale * 1.08f, 0.3f)
             .SetEase(Tween.EaseType.Out)
             .SetTrans(Tween.TransitionType.Cubic);
-        impactTween.TweenProperty(_impactFlash, "modulate:a", 0f, 0.18f)
-            .SetEase(Tween.EaseType.Out)
+        impactTween.TweenProperty(_impactFlash, "modulate:a", 0f, 0.3f)
+            .SetEase(Tween.EaseType.In)
             .SetTrans(Tween.TransitionType.Quad);
 
         await impactTween.AwaitFinished(this);

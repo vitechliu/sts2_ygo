@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode unshaded, cull_disabled, depth_draw_always, blend_add;
+render_mode unshaded, cull_disabled, depth_draw_never, blend_add;
 
 uniform sampler2D albedo_tex : source_color, filter_linear_mipmap;
 uniform vec2 uv_tiling = vec2(1.96, 1.0);
@@ -19,7 +19,7 @@ void fragment() {
     // 3. 正常采样纹理
     vec4 tex = texture(albedo_tex, uv);
     
-    ALBEDO = tex.rgb;
+    ALBEDO = tex.rgb * 1.6;
     // 4. 将头尾裁剪和两侧软裁剪叠加上去
     ALPHA = tex.a * COLOR.a * fade_x * fade_y;
 }
