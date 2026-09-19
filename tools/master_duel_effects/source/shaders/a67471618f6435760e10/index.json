@@ -1,0 +1,109 @@
+{
+  "shader_name": "VFX_Shader/Grave/fxs_GraveSoul_TC_001_b",
+  "platforms": [
+    4
+  ],
+  "programs": [
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 310,
+      "bytes": 1188,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "b86b44975c680eb09f1b2a75778e35c11a439dea00fcf16cedf8771e853fa10b",
+      "bytecode": "platform4_block0_program0.dxbc",
+      "assembly": "platform4_block0_program0.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 1702,
+      "bytes": 8784,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "49a04847a9821f3aac4e4724031d4877038b34874486c4200b12cd5c4594c37b",
+      "bytecode": "platform4_block0_program1.dxbc",
+      "assembly": "platform4_block0_program1.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 10646,
+      "bytes": 1664,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "2bccd94a5cdfdf0fec3bbca21de194dd1faa917d3a09a43170ab83df4477fdd9",
+      "bytecode": "platform4_block0_program2.dxbc",
+      "assembly": "platform4_block0_program2.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 12486,
+      "bytes": 716,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "aab410e4e52d13d4661845be974991dcfb59e21a79a27dbae7b60f0f8af42516",
+      "bytecode": "platform4_block0_program3.dxbc",
+      "assembly": "platform4_block0_program3.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 13310,
+      "bytes": 424,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "37645d780306fbcac051247163b8d6a61967b8f9633fa443f10411b4acd05040",
+      "bytecode": "platform4_block0_program4.dxbc",
+      "assembly": "platform4_block0_program4.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 13894,
+      "bytes": 1580,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "e2d397239fb0a22696db2268c2ab32d3dc491e6cbf127b920f2994dfb31b41c2",
+      "bytecode": "platform4_block0_program5.dxbc",
+      "assembly": "platform4_block0_program5.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 15594,
+      "bytes": 340,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "3c343b1cff0999ccef605a824b0b8722e8c56c8f466fc41db0beb7802b273111",
+      "bytecode": "platform4_block0_program6.dxbc",
+      "assembly": "platform4_block0_program6.asm.txt"
+    }
+  ],
+  "disassembly_failures": [],
+  "scope": "Compiled bytecode, instruction assembly, properties and render state only. No original HLSL/ShaderGraph or Godot shader restored.",
+  "api_reference": "https://learn.microsoft.com/en-us/windows/win32/api/d3dcompiler/nf-d3dcompiler-d3ddisassemble"
+}

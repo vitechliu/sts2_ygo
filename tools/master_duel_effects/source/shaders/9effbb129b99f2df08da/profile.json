@@ -1,0 +1,32 @@
+{
+  "id": "9effbb129b99f2df08da",
+  "name": "Timeline/SC/SC_Particle_Fog",
+  "programs": 8,
+  "disassembly_failures": [],
+  "platforms": [
+    4
+  ],
+  "uniforms": [
+    "$Globals",
+    "UnityPerDraw",
+    "UnityPerMaterial",
+    "_GlobalMipBias",
+    "_LightDirection",
+    "_MainTex",
+    "_NonJitteredViewProjMatrix",
+    "_PrevViewProjMatrix",
+    "_ShadowBias",
+    "_Speed",
+    "_TimeParameters",
+    "unity_MatrixPreviousM",
+    "unity_MatrixVP",
+    "unity_MotionVectorsParams",
+    "unity_ObjectToWorld",
+    "unity_WorldToObject"
+  ],
+  "feature_hints": [],
+  "status": "compiled_and_disassembled",
+  "source_restored": false,
+  "godot_ready": false,
+  "folder": "shaders/9effbb129b99f2df08da"
+}

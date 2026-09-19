@@ -1,0 +1,28 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3]
+
+[ext_resource type="Shader" path="res://VYgo/shaders/master_duel/generated/8d77e1acb48d57f89623_a77d0cfe6ec7.gdshader" id="s"]
+[ext_resource type="Texture2D" path="res://VYgo/images/vfx/master_duel/495f0effbf492f8608f0.png" id="t0"]
+
+[resource]
+shader = ExtResource("s")
+shader_parameter/p_Texture = ExtResource("t0")
+shader_parameter/p_Animator_Alpha = 1.0
+shader_parameter/p_IN_SIDE_MASK_Blur = 1.0
+shader_parameter/p_IN_SIDE_MASK_Scale = 0.0
+shader_parameter/p_OUT_MASK_Blur = 0.5809999704360962
+shader_parameter/p_OUT_MASK_Scale = 0.3930000066757202
+shader_parameter/p_Scroll_Speed_X = -0.20000000298023224
+shader_parameter/p_Scroll_Speed_Y = 0.10000000149011612
+shader_parameter/p_Smooth_Edge01 = 0.31700000166893005
+shader_parameter/p_Smooth_Edge02 = 0.5680000185966492
+shader_parameter/p_Soft_Particle = 0.0
+shader_parameter/p_Soft_Particle_Far = 0.0
+shader_parameter/p_Soft_Particle_Near = 0.0
+shader_parameter/p_Spherize = 5.0
+shader_parameter/p_TEXCOORD_All_SmoothSte = 0.0
+shader_parameter/p_Texture_Select_Channel = Vector4(0.0,0.0,1.0,0.0)
+shader_parameter/p_Tiling_X = 0.20000000298023224
+shader_parameter/p_Tiling_Y = 2.0
+shader_parameter/p_Twist = -5.0
+shader_parameter/p_truth_Color_01 = Vector4(50220.317988171606,17705.04126728504,0.0,0.0)
+shader_parameter/p_truth_Color_02 = Vector4(1.0,0.002866643754874959,0.0,0.0)

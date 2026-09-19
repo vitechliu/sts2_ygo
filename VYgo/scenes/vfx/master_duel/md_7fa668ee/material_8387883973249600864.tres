@@ -1,0 +1,28 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://VYgo/shaders/master_duel/generated/ba35c09195b7c29804f1_f62487eb0439.gdshader" id="s"]
+
+[resource]
+shader = ExtResource("s")
+shader_parameter/p_Alpha = 1.0
+shader_parameter/p_Edge_Sharp = 1.0
+shader_parameter/p_Glow_Intensity = 0.4339999854564667
+shader_parameter/p_Glow_Sharpness = 0.10300000011920929
+shader_parameter/p_Glow_Sharpness_Blur = 1.0
+shader_parameter/p_Main_Shape = 0.05700000002980232
+shader_parameter/p_Sharpness = 0.0
+shader_parameter/p_Sharpness_Blur = 0.5239999890327454
+shader_parameter/p_Soft_Particle = 0.0
+shader_parameter/p_Soft_Particle_Far = 0.0
+shader_parameter/p_Soft_Particle_Near = 0.0
+shader_parameter/p_Sub = 0.0
+shader_parameter/p_Sub_Angle = 45.0
+shader_parameter/p_Sub_Shape = 0.10000000149011612
+shader_parameter/p_Sub_Sharpness = 0.0
+shader_parameter/p_Sub_Sharpness_Blur = 1.0
+shader_parameter/p_Third = 0.0
+shader_parameter/p_Third_Angle = 60.0
+shader_parameter/p_Third_Shape = 0.10000000149011612
+shader_parameter/p_Third_Sharpness = 0.0
+shader_parameter/p_Third_Sharpness_Blur = 1.0
+shader_parameter/p_truth_Emissive = Vector4(4.168307676983809,0.03948478076742162,0.0,1.0)

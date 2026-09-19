@@ -1,0 +1,29 @@
+{
+  "id": "0c96502d799875ff9c2c",
+  "name": "Shader Graphs/fxs_UI_CardDecoder_Cared_Noise_01",
+  "programs": 10,
+  "disassembly_failures": [],
+  "platforms": [
+    4
+  ],
+  "uniforms": [
+    "$Globals",
+    "UnityPerDraw",
+    "_GlobalMipBias",
+    "_LightDirection",
+    "_NonJitteredViewProjMatrix",
+    "_PrevViewProjMatrix",
+    "_ShadowBias",
+    "_Texture2DAsset_1c4ab0c9f60f4c839a2e210662c5c573_Out_0_Texture2D",
+    "unity_MatrixPreviousM",
+    "unity_MatrixVP",
+    "unity_MotionVectorsParams",
+    "unity_ObjectToWorld",
+    "unity_WorldToObject"
+  ],
+  "feature_hints": [],
+  "status": "compiled_and_disassembled",
+  "source_restored": false,
+  "godot_ready": false,
+  "folder": "shaders/0c96502d799875ff9c2c"
+}

@@ -1,0 +1,45 @@
+{
+  "id": "2336786a22859eeb4a8e",
+  "name": "VFX_Shader/ATK/fxs_atkdve_HEAD_01_b",
+  "programs": 8,
+  "disassembly_failures": [],
+  "platforms": [
+    4
+  ],
+  "uniforms": [
+    "$Globals",
+    "UnityPerDraw",
+    "UnityPerMaterial",
+    "_Alpha_Smoothstep_Blur",
+    "_Color_01",
+    "_Color_02",
+    "_Direction",
+    "_GlobalMipBias",
+    "_LightDirection",
+    "_MASK_Rotate",
+    "_MASK_Texture",
+    "_NonJitteredViewProjMatrix",
+    "_Offset",
+    "_PrevViewProjMatrix",
+    "_Scroll",
+    "_ShadowBias",
+    "_Texture",
+    "_Texture_Tiling",
+    "_TimeParameters",
+    "_use_Ramp_Color_Offset",
+    "_use_Ramp_Color_Strength",
+    "unity_MatrixPreviousM",
+    "unity_MatrixVP",
+    "unity_MotionVectorsParams",
+    "unity_ObjectToWorld",
+    "unity_WorldToObject"
+  ],
+  "feature_hints": [
+    "UV\u6eda\u52a8",
+    "\u6eb6\u89e3\u6216\u9608\u503c\u906e\u7f69"
+  ],
+  "status": "compiled_and_disassembled",
+  "source_restored": false,
+  "godot_ready": false,
+  "folder": "shaders/2336786a22859eeb4a8e"
+}

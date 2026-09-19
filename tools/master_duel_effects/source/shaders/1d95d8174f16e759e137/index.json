@@ -1,0 +1,123 @@
+{
+  "shader_name": "Ygom/Effect/C_ParticleAdd",
+  "platforms": [
+    4
+  ],
+  "programs": [
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 766,
+      "bytes": 784,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "adcfcac439a69ac23136adb1cdfc5bad35bbc44d255c309ea4fda755f68fa505",
+      "bytecode": "platform4_block0_program0.dxbc",
+      "assembly": "platform4_block0_program0.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 1674,
+      "bytes": 1180,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "e26830fc2074933b76b404732da3a705cc9531ecaa6df81e1ce6a304e7e46549",
+      "bytecode": "platform4_block0_program1.dxbc",
+      "assembly": "platform4_block0_program1.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 3302,
+      "bytes": 444,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "55770c356595c34bc4462032442e1f7045c846cf4235cee3b2df555f005d21e3",
+      "bytecode": "platform4_block0_program2.dxbc",
+      "assembly": "platform4_block0_program2.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 3846,
+      "bytes": 784,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "69438c0a07c5d3a244ce8a4e35a922ea9be12dc8f0c1d2fe7225bce7d18e5a00",
+      "bytecode": "platform4_block0_program3.dxbc",
+      "assembly": "platform4_block0_program3.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 4822,
+      "bytes": 820,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "2f6593508fff1c18911c2db734aebb673cab7d53c9a85197ac653326f1c38c3e",
+      "bytecode": "platform4_block0_program4.dxbc",
+      "assembly": "platform4_block0_program4.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 5798,
+      "bytes": 508,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "947f830a1def7bcc077ab3935d0472c58e325c5b533362b7c07f4b9c58c8a14a",
+      "bytecode": "platform4_block0_program5.dxbc",
+      "assembly": "platform4_block0_program5.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 6498,
+      "bytes": 784,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "e929faa62dd708d700c80c3ae85386a683f88ed7c7e5823323c54db687418609",
+      "bytecode": "platform4_block0_program6.dxbc",
+      "assembly": "platform4_block0_program6.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 7414,
+      "bytes": 428,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "7f70b9d70a509414417f747d23ae54ca7b48753134f35cd1182cc7ec259c1f09",
+      "bytecode": "platform4_block0_program7.dxbc",
+      "assembly": "platform4_block0_program7.asm.txt"
+    }
+  ],
+  "disassembly_failures": [],
+  "scope": "Compiled bytecode, instruction assembly, properties and render state only. No original HLSL/ShaderGraph or Godot shader restored.",
+  "api_reference": "https://learn.microsoft.com/en-us/windows/win32/api/d3dcompiler/nf-d3dcompiler-d3ddisassemble"
+}

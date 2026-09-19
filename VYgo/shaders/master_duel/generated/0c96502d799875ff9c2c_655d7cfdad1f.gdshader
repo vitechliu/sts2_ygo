@@ -1,0 +1,94 @@
+shader_type spatial;
+render_mode unshaded, blend_mix, depth_draw_always, cull_back;
+// 按源 DXBC 前向程序逐指令生成；源文件和散列见迁移清单。
+uniform float md_time = 0.0;
+uniform float md_near = 0.1;
+uniform float md_far = 300.0;
+uniform float md_camera_size = 80.0;
+const mat4 md_flip = mat4(vec4(1,0,0,0),vec4(0,1,0,0),vec4(0,0,-1,0),vec4(0,0,0,1));
+uniform sampler2D p_Texture2DAsset_1c4ab0c9f60f4c839a2e210662c5c573_Out_0_Texture2D : source_color, filter_linear_mipmap, repeat_enable;
+varying vec4 md_vary_1;
+varying vec4 md_vary_2;
+varying vec4 md_vary_3;
+varying vec4 md_vary_4;
+varying vec4 md_vary_5;
+// platform4_block0_program0.asm.txt
+void vertex() {
+mat4 md_model=md_flip*MODEL_MATRIX*md_flip;
+mat4 md_inverse_model=inverse(md_model);
+mat4 md_vp=PROJECTION_MATRIX*VIEW_MATRIX*md_flip;
+mat4 md_inverse_vp=inverse(md_vp);
+mat4 md_view=VIEW_MATRIX*md_flip;
+vec4 o0=vec4(0.0);
+vec4 o1=vec4(0.0);
+vec4 o2=vec4(0.0);
+vec4 o3=vec4(0.0);
+vec4 o4=vec4(0.0);
+vec4 o5=vec4(0.0);
+vec4 r0=vec4(0.0);
+vec4 r1=vec4(0.0);
+vec4 v0=vec4(0.0);
+vec4 v1=vec4(0.0);
+vec4 v3=vec4(0.0);
+vec4 v4=vec4(0.0);
+vec4 v5=vec4(0.0);
+v0=vec4(VERTEX*vec3(1,1,-1),1.0);
+v1=vec4(NORMAL*vec3(1,1,-1),0.0);
+v3=vec4(UV,UV2);
+v4=CUSTOM0;
+v5=COLOR;
+r0.xyz = (((v0).yyyy*(vec4(md_model[1].x,md_model[1].y,md_model[1].z,md_model[1].w)).xyzx)).xyz;
+r0.xyz = (((vec4(md_model[0].x,md_model[0].y,md_model[0].z,md_model[0].w)).xyzx*(v0).xxxx+(r0).xyzx)).xyz;
+r0.xyz = (((vec4(md_model[2].x,md_model[2].y,md_model[2].z,md_model[2].w)).xyzx*(v0).zzzz+(r0).xyzx)).xyz;
+r0.xyz = (((r0).xyzx+(vec4(md_model[3].x,md_model[3].y,md_model[3].z,md_model[3].w)).xyzx)).xyz;
+r1.xyzw = (((r0).yyyy*(vec4(md_vp[1].x,md_vp[1].y,md_vp[1].z,md_vp[1].w)).xyzw)).xyzw;
+r1.xyzw = (((vec4(md_vp[0].x,md_vp[0].y,md_vp[0].z,md_vp[0].w)).xyzw*(r0).xxxx+(r1).xyzw)).xyzw;
+r1.xyzw = (((vec4(md_vp[2].x,md_vp[2].y,md_vp[2].z,md_vp[2].w)).xyzw*(r0).zzzz+(r1).xyzw)).xyzw;
+o4.xyz = ((r0).xyzx).xyz;
+o0.xyzw = (((r1).xyzw+(vec4(md_vp[3].x,md_vp[3].y,md_vp[3].z,md_vp[3].w)).xyzw)).xyzw;
+o1.xyzw = ((v3).xyzw).xyzw;
+o2.xyzw = ((v4).xyzw).xyzw;
+o3.xyzw = ((v5).xyzw).xyzw;
+r0.x = (vec4(dot(((v1).xyzx).xyz,((vec4(md_inverse_model[0].x,md_inverse_model[0].y,md_inverse_model[0].z,md_inverse_model[0].w)).xyzx).xyz))).x;
+r0.y = (vec4(dot(((v1).xyzx).xyz,((vec4(md_inverse_model[1].x,md_inverse_model[1].y,md_inverse_model[1].z,md_inverse_model[1].w)).xyzx).xyz))).y;
+r0.z = (vec4(dot(((v1).xyzx).xyz,((vec4(md_inverse_model[2].x,md_inverse_model[2].y,md_inverse_model[2].z,md_inverse_model[2].w)).xyzx).xyz))).z;
+r0.w = (vec4(dot(((r0).xyzx).xyz,((r0).xyzx).xyz))).w;
+r0.w = (max((r0).wwww,vec4(0.000000,0.000000,0.000000,0.000000))).w;
+r0.w = (inversesqrt((r0).wwww)).w;
+o5.xyz = (((r0).wwww*(r0).xyzx)).xyz;
+POSITION=o0;
+md_vary_1=o1;
+md_vary_2=o2;
+md_vary_3=o3;
+md_vary_4=o4;
+md_vary_5=o5;
+}
+// platform4_block0_program1.asm.txt
+void fragment() {
+mat4 md_model=md_flip*MODEL_MATRIX*md_flip;
+mat4 md_inverse_model=inverse(md_model);
+mat4 md_vp=PROJECTION_MATRIX*VIEW_MATRIX*md_flip;
+mat4 md_inverse_vp=inverse(md_vp);
+mat4 md_view=VIEW_MATRIX*md_flip;
+vec4 o0=vec4(0.0);
+vec4 r0=vec4(0.0);
+vec4 r1=vec4(0.0);
+vec4 v1=vec4(0.0);
+vec4 v2=vec4(0.0);
+vec4 v3=vec4(0.0);
+v1=md_vary_1;
+v2=md_vary_2;
+v3=md_vary_3;
+r0.xz = (((v2).zzwz*vec4(0.010000,0.000000,-0.010000,0.000000))).xz;
+r0.yw = (vec4(0.0,0.0,0.0,0.0)).yw;
+r0.xyzw = (((r0).xyzw+(v1).xyxy)).xyzw;
+r1.xyzw = ((texture(p_Texture2DAsset_1c4ab0c9f60f4c839a2e210662c5c573_Out_0_Texture2D,vec2((((r0).xyxx).xy).x,1.0-(((r0).xyxx).xy).y),((vec4((vec2(0.0)).x,(vec2(0.0)).y,0.0,0.0)).xxxx).x)).xyzw).xyzw;
+r0.xyzw = ((texture(p_Texture2DAsset_1c4ab0c9f60f4c839a2e210662c5c573_Out_0_Texture2D,vec2((((r0).zwzz).xy).x,1.0-(((r0).zwzz).xy).y),((vec4((vec2(0.0)).x,(vec2(0.0)).y,0.0,0.0)).xxxx).x)).xyzw).xyzw;
+r1.z = ((r0).zzzz).z;
+r0.xyzw = ((texture(p_Texture2DAsset_1c4ab0c9f60f4c839a2e210662c5c573_Out_0_Texture2D,vec2((((v1).xyxx).xy).x,1.0-(((v1).xyxx).xy).y),((vec4((vec2(0.0)).x,(vec2(0.0)).y,0.0,0.0)).xxxx).x)).xyzw).xyzw;
+r1.y = ((r0).yyyy).y;
+o0.xyz = (((r1).xyzx*(v3).xyzx)).xyz;
+o0.w = (vec4(1.000000,1.000000,1.000000,1.000000)).w;
+ALBEDO=o0.rgb;
+// 源 Pass 为不透明写入。
+}

@@ -72,7 +72,7 @@
     </PropertyGroup>
 
 
-    <Target Name="Copy Mod" AfterTargets="PostBuildEvent">
+    <Target Name="Copy Mod" AfterTargets="PostBuildEvent" Condition="'$(SkipModInstall)' != 'true'">
         <Message Text="Copying mod to Slay the Spire 2 mods folder..." Importance="high"/>
         <MakeDir Directories="$(Sts2Dir)\mods\"/>
         <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(Sts2ModDir)/VYgo/"/>

@@ -1,0 +1,21 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3]
+
+[ext_resource type="Shader" path="res://VYgo/shaders/master_duel/generated/a67471618f6435760e10_4429b1ae713a.gdshader" id="s"]
+[ext_resource type="Texture2D" path="res://VYgo/scenes/vfx/master_duel/default_white.tres" id="t0"]
+
+[resource]
+shader = ExtResource("s")
+shader_parameter/p_Texture = ExtResource("t0")
+shader_parameter/p_Add_Texture_Switch = 0.0
+shader_parameter/p_Direction = 180.0
+shader_parameter/p_Noise_Amount = 5.0
+shader_parameter/p_Noise_Speed = 0.30000001192092896
+shader_parameter/p_Noise_Tiling_X = 0.30000001192092896
+shader_parameter/p_Noise_Tiling_Y = 1.0
+shader_parameter/p_Soft_Particle = 0.0
+shader_parameter/p_Soft_Particle_Far = 5.0
+shader_parameter/p_Soft_Particle_Near = 0.0
+shader_parameter/p_Texture_Select_channel = Vector4(1.0,0.0,0.0,0.0)
+shader_parameter/p_Width = 0.625
+shader_parameter/p_Width_Squeeze = 0.0
+shader_parameter/p_truth_Color = Vector4(1.0,1.0,1.0,0.0)

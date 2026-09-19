@@ -1,0 +1,25 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3]
+
+[ext_resource type="Shader" path="res://VYgo/shaders/master_duel/generated/067392f8e2cc19a92843_55c1b394f47e.gdshader" id="s"]
+[ext_resource type="Texture2D" path="res://VYgo/images/vfx/master_duel/4fe98ac55eb5c58841f2.png" id="t0"]
+[ext_resource type="Texture2D" path="res://VYgo/images/vfx/master_duel/508e92238640e05034d4.png" id="t1"]
+
+[resource]
+shader = ExtResource("s")
+shader_parameter/p_Main_Texture = ExtResource("t0")
+shader_parameter/p_Mask_Texture = ExtResource("t1")
+shader_parameter/p_Color_01 = Vector4(2.2052569762005376,0.6307571554468565,0.002428216011992918,0.0)
+shader_parameter/p_Color_02 = Vector4(3.1168721349486903,2.468599957226704,0.29613829877445136,0.0)
+shader_parameter/p_Emissive = Vector4(3.489290409400289,3.489290409400289,3.489290409400289,0.0)
+shader_parameter/p_Main_Texture_Channel_Select = Vector4(1.0,0.0,0.0,0.0)
+shader_parameter/p_Mask_Texture_Rotate = 0.0
+shader_parameter/p_Offset_X = 0.0
+shader_parameter/p_Offset_Y = 0.0
+shader_parameter/p_Smoothstep = 0.0
+shader_parameter/p_Smoothstep_Bler = 0.5
+shader_parameter/p_Soft_Particle = 0.0
+shader_parameter/p_Soft_Particle_Far = 0.0
+shader_parameter/p_Soft_Particle_Near = 0.0
+shader_parameter/p_Tiling_X = 1.0
+shader_parameter/p_Tiling_Y = 2.0
+shader_parameter/p_use_Smoothstep = 0.0

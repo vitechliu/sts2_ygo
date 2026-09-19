@@ -1,0 +1,81 @@
+{
+  "shader_name": "VFX_Shader/Particle/fxs_SimpleHDR_MASKplus_01_v14_b",
+  "platforms": [
+    4
+  ],
+  "programs": [
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 306,
+      "bytes": 1748,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "bbfbee0ed188cbe18a5cd64df5e95054ec1641da4068c9a0d9c64b46542d08c0",
+      "bytecode": "platform4_block0_program0.dxbc",
+      "assembly": "platform4_block0_program0.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 2250,
+      "bytes": 4432,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "8b252a1dce3b7a9f683b6ae04a9f397c89dec1379b253f05c111760aebc61c37",
+      "bytecode": "platform4_block0_program1.dxbc",
+      "assembly": "platform4_block0_program1.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 6874,
+      "bytes": 2712,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "b20db147077499b98d9d2e470de6e2cf01bdef9dab84f8f542ae8017c3467c4f",
+      "bytecode": "platform4_block0_program2.dxbc",
+      "assembly": "platform4_block0_program2.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 9754,
+      "bytes": 692,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "e5a6c480d32bdf570c3ea0b8bb302895b137229921ce53b4ff2b3f5d1262693d",
+      "bytecode": "platform4_block0_program3.dxbc",
+      "assembly": "platform4_block0_program3.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 10554,
+      "bytes": 400,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "721ed57e5c24f425634ef479c3fe32d5dad5f41026530a34fd6c17f5f258f83d",
+      "bytecode": "platform4_block0_program4.dxbc",
+      "assembly": "platform4_block0_program4.asm.txt"
+    }
+  ],
+  "disassembly_failures": [],
+  "scope": "Compiled bytecode, instruction assembly, properties and render state only. No original HLSL/ShaderGraph or Godot shader restored.",
+  "api_reference": "https://learn.microsoft.com/en-us/windows/win32/api/d3dcompiler/nf-d3dcompiler-d3ddisassemble"
+}

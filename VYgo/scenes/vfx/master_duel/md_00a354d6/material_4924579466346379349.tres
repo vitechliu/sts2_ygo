@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://VYgo/shaders/master_duel/generated/c3fa0e0e7b65b3512169_86656cc0061d.gdshader" id="s"]
+
+[resource]
+shader = ExtResource("s")
+shader_parameter/p_Color = Vector4(1.0,1.0,1.0,1.0)
+shader_parameter/p_Color_out = Vector4(1.0,0.5028864818904007,0.0,0.0)
+shader_parameter/p_Line_Blur = 0.019999999552965164

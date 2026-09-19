@@ -1,0 +1,27 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://VYgo/shaders/master_duel/generated/1d7fa1cf0b6cb36855c7_b39c5448a714.gdshader" id="s"]
+
+[resource]
+shader = ExtResource("s")
+shader_parameter/p_Alpha = 1.0
+shader_parameter/p_Alpha_pow = 1.0
+shader_parameter/p_Base_Size = 1.0
+shader_parameter/p_Emissive = Vector4(0.8387990208591566,4.953845751592042,4.953845751592042,1.0)
+shader_parameter/p_Main_Glow = 0.009999999776482582
+shader_parameter/p_Main_Star_Blur = 0.8799999952316284
+shader_parameter/p_Main_Star_Scale = 0.04270000010728836
+shader_parameter/p_Soft_Particle = 0.0
+shader_parameter/p_Soft_Particle_Far = 0.0
+shader_parameter/p_Soft_Particle_Near = 0.0
+shader_parameter/p_Sub_Glow = 0.019999999552965164
+shader_parameter/p_Sub_Rotate = 45.0
+shader_parameter/p_Sub_Scale = 0.0
+shader_parameter/p_Sub_Star = 0.0
+shader_parameter/p_Sub_Star_Blur = 1.0
+shader_parameter/p_Sub_Star_Scale = 0.20000000298023224
+shader_parameter/p_Third_Scale = 0.0
+shader_parameter/p_Third_Star_Blur = 1.0
+shader_parameter/p_Third_Star_Glow = 0.019999999552965164
+shader_parameter/p_Third_Star_Rotate = 60.0
+shader_parameter/p_Third_Star_Scale = 0.20000000298023224

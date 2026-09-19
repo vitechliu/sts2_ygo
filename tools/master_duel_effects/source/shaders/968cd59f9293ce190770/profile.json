@@ -1,0 +1,43 @@
+{
+  "id": "968cd59f9293ce190770",
+  "name": "VFX_Shader/Exclusive/Exodia/fxs_ExodiaFire_TC_001_b_re",
+  "programs": 8,
+  "disassembly_failures": [],
+  "platforms": [
+    4
+  ],
+  "uniforms": [
+    "$Globals",
+    "UnityPerDraw",
+    "UnityPerMaterial",
+    "_Color_01",
+    "_Color_02",
+    "_Detail_Noise_Speed",
+    "_GlobalMipBias",
+    "_LightDirection",
+    "_MASK_Direction",
+    "_MASK_Smooth",
+    "_MASK_Smooth_Bler",
+    "_MASK_Texture",
+    "_Main_Alpha",
+    "_NonJitteredViewProjMatrix",
+    "_PrevViewProjMatrix",
+    "_ShadowBias",
+    "_Texture2DAsset_b3995bba6a78442da7c032aed218f175_Out_0_Texture2D",
+    "_TimeParameters",
+    "_UVDef_Main_Speed",
+    "_UVDef_sub_Speed",
+    "unity_MatrixPreviousM",
+    "unity_MatrixVP",
+    "unity_MotionVectorsParams",
+    "unity_ObjectToWorld",
+    "unity_WorldToObject"
+  ],
+  "feature_hints": [
+    "\u566a\u58f0\u8ba1\u7b97\u6216\u91c7\u6837"
+  ],
+  "status": "compiled_and_disassembled",
+  "source_restored": false,
+  "godot_ready": false,
+  "folder": "shaders/968cd59f9293ce190770"
+}

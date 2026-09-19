@@ -1,0 +1,151 @@
+{
+  "shader_name": "Shader Graphs/fxs_UI_CardDecoder_Cared_Noise_01",
+  "platforms": [
+    4
+  ],
+  "programs": [
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 346,
+      "bytes": 1188,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "b86b44975c680eb09f1b2a75778e35c11a439dea00fcf16cedf8771e853fa10b",
+      "bytecode": "platform4_block0_program0.dxbc",
+      "assembly": "platform4_block0_program0.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 1706,
+      "bytes": 728,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "3402c7a980df159e46d28a9f22ce3237368f62296f23e4cb59fdf77e649718f1",
+      "bytecode": "platform4_block0_program1.dxbc",
+      "assembly": "platform4_block0_program1.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 2514,
+      "bytes": 584,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "019a719ff26044ec2a7d47d9d021444070b00a914d9234ed46e66c32835c7106",
+      "bytecode": "platform4_block0_program2.dxbc",
+      "assembly": "platform4_block0_program2.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 3214,
+      "bytes": 216,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "65a382b97d874a27ab55996133273cb00d5b7a02daf453b99f189fa7889d354e",
+      "bytecode": "platform4_block0_program3.dxbc",
+      "assembly": "platform4_block0_program3.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 3590,
+      "bytes": 1324,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "e2540461c91d2e0161752b7dcd376a799c9ecc15d460d4166112920916e39bbd",
+      "bytecode": "platform4_block0_program4.dxbc",
+      "assembly": "platform4_block0_program4.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 5066,
+      "bytes": 616,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "6e46afa77dce69221248adebef7319225f7c91bfd7f6e398ca0b9cabc4ce5182",
+      "bytecode": "platform4_block0_program5.dxbc",
+      "assembly": "platform4_block0_program5.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 5762,
+      "bytes": 840,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "47506ccc65747f8a18a512a7b99db3f6ce71950cfa8b6c30958fe6650ac21de0",
+      "bytecode": "platform4_block0_program6.dxbc",
+      "assembly": "platform4_block0_program6.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 6698,
+      "bytes": 328,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "a675be44f4145cdf828b97684158b191b24920a7b3635f5e153eb4f66b579408",
+      "bytecode": "platform4_block0_program7.dxbc",
+      "assembly": "platform4_block0_program7.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 7186,
+      "bytes": 1232,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "f424c1313f57b5277b520e595cd701fb12597052c04e2d9b92d4dffaf6aaf888",
+      "bytecode": "platform4_block0_program8.dxbc",
+      "assembly": "platform4_block0_program8.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 8514,
+      "bytes": 244,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "93224841e12c1b4f39fc7a5210b51d4aadeb572bb833bdb3379de05920c6b905",
+      "bytecode": "platform4_block0_program9.dxbc",
+      "assembly": "platform4_block0_program9.asm.txt"
+    }
+  ],
+  "disassembly_failures": [],
+  "scope": "Compiled bytecode, instruction assembly, properties and render state only. No original HLSL/ShaderGraph or Godot shader restored.",
+  "api_reference": "https://learn.microsoft.com/en-us/windows/win32/api/d3dcompiler/nf-d3dcompiler-d3ddisassemble"
+}

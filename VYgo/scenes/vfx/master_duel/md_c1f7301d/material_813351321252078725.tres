@@ -1,0 +1,22 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://VYgo/shaders/master_duel/generated/a4f3e45a401881f58f59_8592ec6ba605.gdshader" id="s"]
+
+[resource]
+shader = ExtResource("s")
+shader_parameter/p_Alpha = 1.0
+shader_parameter/p_Alphapow = 3.0
+shader_parameter/p_Animator_Alpha = 1.0
+shader_parameter/p_BaseBlur = 3.9000000953674316
+shader_parameter/p_Camera_Offset = 0.0
+shader_parameter/p_Emission_truth = Vector4(0.010272799284979421,0.07027378641904491,101.57846121627892,1.0)
+shader_parameter/p_RING_Blur = 2.0
+shader_parameter/p_RING_ON = 1.0
+shader_parameter/p_RING_Radial = 0.18000000715255737
+shader_parameter/p_Radial_Scale = 1.2200000286102295
+shader_parameter/p_Soft_Particle = 0.0
+shader_parameter/p_Soft_Particle_Far = 0.0
+shader_parameter/p_Soft_Particle_Near = 0.0
+shader_parameter/p_Step = 0.0
+shader_parameter/p_Step_Minus = 0.0
+shader_parameter/p_Step_Slider = 1.0

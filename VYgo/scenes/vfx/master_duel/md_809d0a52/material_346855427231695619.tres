@@ -1,0 +1,28 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://VYgo/shaders/master_duel/generated/a4339cabc0d5620dd134_51cb9b628e46.gdshader" id="s"]
+
+[resource]
+shader = ExtResource("s")
+shader_parameter/p_ALL_MASK_Size = 1.0
+shader_parameter/p_ALL_MASK_Step = 0.5
+shader_parameter/p_Color_Noise_Amount = 3.0
+shader_parameter/p_Color_Noise_Scroll_X = 0.0
+shader_parameter/p_Color_Noise_Scroll_Y = 0.30000001192092896
+shader_parameter/p_Color_Step = 0.5139999985694885
+shader_parameter/p_Color_Value = 0.0
+shader_parameter/p_Distortion_Noise_Amount = 3.0
+shader_parameter/p_Distortion_Rotate = 0.0
+shader_parameter/p_Distortion_Scale = 0.20000000298023224
+shader_parameter/p_Distortion_Scroll_X = 0.0
+shader_parameter/p_Distortion_Scroll_Y = 0.0
+shader_parameter/p_MASK_Level = 0.1599999964237213
+shader_parameter/p_MASK_Level_Step = 0.0
+shader_parameter/p_Soft_Particle = 1.0
+shader_parameter/p_Soft_Particle_Far = 0.10000000149011612
+shader_parameter/p_Soft_Particle_Near = 0.0
+shader_parameter/p_UV_Rotate = 0.0
+shader_parameter/p_Voronoi_Amount = 1.0
+shader_parameter/p_Voronoi_Speed = 0.0
+shader_parameter/p_truth_Color_01 = Vector4(0.03310476749944876,0.0027317429774501374,0.000910580968455449,0.0)
+shader_parameter/p_truth_Color_02 = Vector4(1.0,0.003676507403618765,0.0,0.0)

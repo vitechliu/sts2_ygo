@@ -1,0 +1,19 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3]
+
+[ext_resource type="Shader" path="res://VYgo/shaders/master_duel/generated/968cd59f9293ce190770_a1c90e27a4de.gdshader" id="s"]
+[ext_resource type="Texture2D" path="res://VYgo/images/vfx/master_duel/b0e4ba8cdfb7f9448849.png" id="t0"]
+[ext_resource type="Texture2D" path="res://VYgo/images/vfx/master_duel/495f0effbf492f8608f0.png" id="t1"]
+
+[resource]
+shader = ExtResource("s")
+shader_parameter/p_MASK_Texture = ExtResource("t0")
+shader_parameter/p_Texture2DAsset_b3995bba6a78442da7c032aed218f175_Out_0_Texture2D = ExtResource("t1")
+shader_parameter/p_Color_01 = Vector4(2.529483962662364,0.7304607547001499,0.023153367463938437,0.0)
+shader_parameter/p_Color_02 = Vector4(1.0,0.0411652174819053,0.0,0.0)
+shader_parameter/p_Detail_Noise_Speed = 0.6000000238418579
+shader_parameter/p_MASK_Direction = 180.0
+shader_parameter/p_MASK_Smooth = -0.30300000309944153
+shader_parameter/p_MASK_Smooth_Bler = 1.0
+shader_parameter/p_Main_Alpha = 1.0
+shader_parameter/p_UVDef_Main_Speed = 0.10000000149011612
+shader_parameter/p_UVDef_sub_Speed = 0.10000000149011612

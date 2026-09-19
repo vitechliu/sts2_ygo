@@ -1,0 +1,51 @@
+{
+  "id": "4265fa42641734dc0239",
+  "name": "VFX_Shader/01_EFFECT/fxs_05740_RingNoise_TC_01_b",
+  "programs": 7,
+  "disassembly_failures": [],
+  "platforms": [
+    4
+  ],
+  "uniforms": [
+    "$Globals",
+    "UnityPerDraw",
+    "UnityPerMaterial",
+    "_CameraDepthTexture",
+    "_CameraDepthTexture_TexelSize",
+    "_Color_01",
+    "_Drection",
+    "_GlobalMipBias",
+    "_LightDirection",
+    "_Noise_Scale",
+    "_NonJitteredViewProjMatrix",
+    "_PrevViewProjMatrix",
+    "_ProjectionParams",
+    "_RTHandleScale",
+    "_Radial",
+    "_ScaledScreenParams",
+    "_ShadowBias",
+    "_Smooth",
+    "_SmoothBlur",
+    "_Soft_Particle",
+    "_Soft_Particle_Far",
+    "_Soft_Particle_Near",
+    "_Texture2DAsset_a2c8f60daf634ee9bbd1a4ad46ecd7db_Out_0_Texture2D",
+    "_ZBufferParams",
+    "unity_MatrixInvVP",
+    "unity_MatrixPreviousM",
+    "unity_MatrixV",
+    "unity_MatrixVP",
+    "unity_MotionVectorsParams",
+    "unity_ObjectToWorld",
+    "unity_OrthoParams",
+    "unity_WorldToObject"
+  ],
+  "feature_hints": [
+    "\u8bfb\u53d6\u573a\u666f\u6df1\u5ea6",
+    "\u566a\u58f0\u8ba1\u7b97\u6216\u91c7\u6837"
+  ],
+  "status": "compiled_and_disassembled",
+  "source_restored": false,
+  "godot_ready": false,
+  "folder": "shaders/4265fa42641734dc0239"
+}

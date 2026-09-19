@@ -1,0 +1,25 @@
+{
+  "id": "30460f4f3e4c7d3cc53a",
+  "name": "Universal Render Pipeline/Particles/Unlit",
+  "programs": 18,
+  "disassembly_failures": [],
+  "platforms": [
+    4
+  ],
+  "uniforms": [
+    "$Globals",
+    "UnityPerMaterial",
+    "_BaseColor",
+    "_GlobalMipBias",
+    "_Surface",
+    "_WorldSpaceCameraPos",
+    "unity_MatrixV",
+    "unity_MatrixVP",
+    "unity_OrthoParams"
+  ],
+  "feature_hints": [],
+  "status": "compiled_and_disassembled",
+  "source_restored": false,
+  "godot_ready": false,
+  "folder": "shaders/30460f4f3e4c7d3cc53a"
+}

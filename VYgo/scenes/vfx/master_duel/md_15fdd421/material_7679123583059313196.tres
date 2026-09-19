@@ -1,0 +1,38 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3]
+
+[ext_resource type="Shader" path="res://VYgo/shaders/master_duel/generated/c1f50da1bec8d987104b_19629fef3422.gdshader" id="s"]
+[ext_resource type="Texture2D" path="res://VYgo/images/vfx/master_duel/2ce1fc948398824dc26d.png" id="t0"]
+[ext_resource type="Texture2D" path="res://VYgo/images/vfx/master_duel/495f0effbf492f8608f0.png" id="t1"]
+
+[resource]
+shader = ExtResource("s")
+shader_parameter/p_MASK_Texture = ExtResource("t0")
+shader_parameter/p_sub_MASK_Texture = ExtResource("t1")
+shader_parameter/p_Color_01 = Vector4(2.529483962662364,0.7304607547001499,0.023153367463938437,0.0)
+shader_parameter/p_Color_02 = Vector4(1.0,0.040915197463101245,0.0,0.0)
+shader_parameter/p_Color_Noise_Speed = 0.30000001192092896
+shader_parameter/p_Color_Noise_Tiling = Vector2(2.0,0.5)
+shader_parameter/p_Color_Smoothstep = 0.03799999877810478
+shader_parameter/p_Color_Smoothstep_Bler = 0.48899999260902405
+shader_parameter/p_Detail_Noise_Scale = 5.0
+shader_parameter/p_Detail_Noise_Speed = 0.20000000298023224
+shader_parameter/p_Detail_Noise_Tiling = Vector2(2.0,0.5)
+shader_parameter/p_Emissive = Vector4(4.953845751592042,4.953845751592042,4.953845751592042,0.0)
+shader_parameter/p_MASK_Direction = 0.0
+shader_parameter/p_MASK_Smooth = 0.0
+shader_parameter/p_MASK_Smooth_Bler = 1.0
+shader_parameter/p_Main_Alpha = 1.0
+shader_parameter/p_Main_Smoothstep = 0.0
+shader_parameter/p_Main_Smoothstep_Bler = 1.0
+shader_parameter/p_UVDef_Main_Speed = 0.10000000149011612
+shader_parameter/p_UVDef_Tiling = Vector2(2.0,1.0)
+shader_parameter/p_UVDef_sub_Speed = 0.10000000149011612
+shader_parameter/p_sub_Color_Noise_Speed = 0.10000000149011612
+shader_parameter/p_sub_Color_Noise_Tiling = Vector2(2.0,0.5)
+shader_parameter/p_sub_Detail_Noise_Scale = 12.0
+shader_parameter/p_sub_Detail_Noise_Speed = 0.5
+shader_parameter/p_sub_Detail_Noise_Tiling = Vector2(2.0,0.5)
+shader_parameter/p_sub_MASK_Channel_Selection = Vector4(0.0,0.0,1.0,0.0)
+shader_parameter/p_sub_MASK_Speed = 0.5
+shader_parameter/p_sub_MASK_Tiling = Vector2(2.0,1.0)
+shader_parameter/p_use_sub_MASK_Texture = 1.0

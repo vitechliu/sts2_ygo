@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3]
+
+[ext_resource type="Shader" path="res://VYgo/shaders/master_duel/generated/3c797a9a04139e30a54e_b3b87b6ad2f2.gdshader" id="s"]
+[ext_resource type="Texture2D" path="res://VYgo/images/vfx/master_duel/8c7081ee37b32e564185.png" id="t0"]
+[ext_resource type="Texture2D" path="res://VYgo/images/vfx/master_duel/8c7081ee37b32e564185.png" id="t1"]
+
+[resource]
+shader = ExtResource("s")
+shader_parameter/p_BaseMap = ExtResource("t0")
+shader_parameter/p_EmissionMap = ExtResource("t1")
+shader_parameter/p_BaseColor = Vector4(1.0,1.0,1.0,1.0)
+shader_parameter/p_EmissionColor = Vector4(1.0,0.4335042941286445,0.0,1.0)
+shader_parameter/p_Surface = 1.0

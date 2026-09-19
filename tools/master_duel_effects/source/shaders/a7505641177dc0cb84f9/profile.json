@@ -1,0 +1,32 @@
+{
+  "id": "a7505641177dc0cb84f9",
+  "name": "Shader Graphs/fxs_dust_01_b",
+  "programs": 8,
+  "disassembly_failures": [],
+  "platforms": [
+    4
+  ],
+  "uniforms": [
+    "$Globals",
+    "UnityPerDraw",
+    "UnityPerMaterial",
+    "_Alpha",
+    "_Dust_Scale",
+    "_LightDirection",
+    "_NonJitteredViewProjMatrix",
+    "_PrevViewProjMatrix",
+    "_ShadowBias",
+    "_Tiling_Switch",
+    "_White_Ratio",
+    "unity_MatrixPreviousM",
+    "unity_MatrixVP",
+    "unity_MotionVectorsParams",
+    "unity_ObjectToWorld",
+    "unity_WorldToObject"
+  ],
+  "feature_hints": [],
+  "status": "compiled_and_disassembled",
+  "source_restored": false,
+  "godot_ready": false,
+  "folder": "shaders/a7505641177dc0cb84f9"
+}

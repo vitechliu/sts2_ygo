@@ -1,0 +1,47 @@
+{
+  "id": "d63945b7ea065b469ec7",
+  "name": "VFX_Shader/Summon/fxs_somldg_Fusion_imp_01_b",
+  "programs": 7,
+  "disassembly_failures": [],
+  "platforms": [
+    4
+  ],
+  "uniforms": [
+    "$Globals",
+    "UnityPerDraw",
+    "UnityPerMaterial",
+    "_Alpha_Strength",
+    "_Alpha_Texture",
+    "_CameraDepthTexture",
+    "_CameraDepthTexture_TexelSize",
+    "_Color_01",
+    "_Color_02",
+    "_GlobalMipBias",
+    "_LightDirection",
+    "_NonJitteredViewProjMatrix",
+    "_PrevViewProjMatrix",
+    "_ProjectionParams",
+    "_RTHandleScale",
+    "_ScaledScreenParams",
+    "_ShadowBias",
+    "_Soft_Particle",
+    "_Soft_Particle_Far",
+    "_Soft_Particle_Near",
+    "_ZBufferParams",
+    "unity_MatrixInvVP",
+    "unity_MatrixPreviousM",
+    "unity_MatrixV",
+    "unity_MatrixVP",
+    "unity_MotionVectorsParams",
+    "unity_ObjectToWorld",
+    "unity_OrthoParams",
+    "unity_WorldToObject"
+  ],
+  "feature_hints": [
+    "\u8bfb\u53d6\u573a\u666f\u6df1\u5ea6"
+  ],
+  "status": "compiled_and_disassembled",
+  "source_restored": false,
+  "godot_ready": false,
+  "folder": "shaders/d63945b7ea065b469ec7"
+}

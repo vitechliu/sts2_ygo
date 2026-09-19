@@ -1,0 +1,24 @@
+{
+  "id": "872e3ab7645042617f23",
+  "name": "Ygom/Effect/C_ParticleBlend",
+  "programs": 8,
+  "disassembly_failures": [],
+  "platforms": [
+    4
+  ],
+  "uniforms": [
+    "$Globals",
+    "UnityPerDraw",
+    "UnityPerFrame",
+    "_MainTex",
+    "_MainTex_ST",
+    "_TintColor",
+    "unity_MatrixVP",
+    "unity_ObjectToWorld"
+  ],
+  "feature_hints": [],
+  "status": "compiled_and_disassembled",
+  "source_restored": false,
+  "godot_ready": false,
+  "folder": "shaders/872e3ab7645042617f23"
+}

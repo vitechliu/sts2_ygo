@@ -1,0 +1,47 @@
+{
+  "id": "494467fca3d2364a4953",
+  "name": "VFX_Shader/ATK/fxs_atkdve_Trail_01_b",
+  "programs": 8,
+  "disassembly_failures": [],
+  "platforms": [
+    4
+  ],
+  "uniforms": [
+    "$Globals",
+    "UnityPerDraw",
+    "UnityPerMaterial",
+    "_Alpha_Smoothstep",
+    "_Alpha_Smoothstep_Blur",
+    "_Animation_Dissolve",
+    "_Color_01",
+    "_Color_02",
+    "_Direction",
+    "_Distortion",
+    "_Distortion_Offset",
+    "_Distortion_Scroll",
+    "_Distortion_Speed",
+    "_GlobalMipBias",
+    "_LightDirection",
+    "_Main_Scroll_Speed",
+    "_NonJitteredViewProjMatrix",
+    "_PrevViewProjMatrix",
+    "_ShadowBias",
+    "_Texture_Trail",
+    "_TimeParameters",
+    "_use_Ramp_Color_Offset",
+    "_use_Ramp_Color_Strength",
+    "unity_MatrixPreviousM",
+    "unity_MatrixVP",
+    "unity_MotionVectorsParams",
+    "unity_ObjectToWorld",
+    "unity_WorldToObject"
+  ],
+  "feature_hints": [
+    "UV\u6eda\u52a8",
+    "\u6eb6\u89e3\u6216\u9608\u503c\u906e\u7f69"
+  ],
+  "status": "compiled_and_disassembled",
+  "source_restored": false,
+  "godot_ready": false,
+  "folder": "shaders/494467fca3d2364a4953"
+}

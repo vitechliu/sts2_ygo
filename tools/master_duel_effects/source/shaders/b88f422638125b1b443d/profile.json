@@ -1,0 +1,47 @@
+{
+  "id": "b88f422638125b1b443d",
+  "name": "VFX_Shader/MEP/fxs_MEP08933_Fresnel_TC_01_b",
+  "programs": 7,
+  "disassembly_failures": [],
+  "platforms": [
+    4
+  ],
+  "uniforms": [
+    "$Globals",
+    "UnityPerDraw",
+    "UnityPerMaterial",
+    "_Alpha",
+    "_Color_IN",
+    "_Color_OUT",
+    "_GlobalMipBias",
+    "_IN_Smoothstep",
+    "_IN_SmoothstepBlur",
+    "_LightDirection",
+    "_NonJitteredViewProjMatrix",
+    "_OUT_Smoothstep",
+    "_OUT_SmoothstepBlur",
+    "_PrevViewProjMatrix",
+    "_ShadowBias",
+    "_Texture",
+    "_Texture_Channel",
+    "_Texture_Smoothstep",
+    "_Texture_SmoothstepBlur",
+    "_Texture_Speed",
+    "_TimeParameters",
+    "_WorldSpaceCameraPos",
+    "unity_MatrixPreviousM",
+    "unity_MatrixV",
+    "unity_MatrixVP",
+    "unity_MotionVectorsParams",
+    "unity_ObjectToWorld",
+    "unity_OrthoParams",
+    "unity_WorldToObject"
+  ],
+  "feature_hints": [
+    "\u6eb6\u89e3\u6216\u9608\u503c\u906e\u7f69"
+  ],
+  "status": "compiled_and_disassembled",
+  "source_restored": false,
+  "godot_ready": false,
+  "folder": "shaders/b88f422638125b1b443d"
+}

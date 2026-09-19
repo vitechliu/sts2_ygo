@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://VYgo/shaders/master_duel/generated/a7505641177dc0cb84f9_1fbfeb86f9b6.gdshader" id="s"]
+
+[resource]
+shader = ExtResource("s")
+shader_parameter/p_Alpha = 1.0
+shader_parameter/p_Dust_Scale = 30.0
+shader_parameter/p_Tiling_Switch = 1.0
+shader_parameter/p_White_Ratio = 1.0

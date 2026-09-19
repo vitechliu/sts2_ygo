@@ -1,0 +1,32 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3]
+
+[ext_resource type="Shader" path="res://VYgo/shaders/master_duel/generated/f41f591e85b2a77fa23b_fb0f63fa79a2.gdshader" id="s"]
+[ext_resource type="Texture2D" path="res://VYgo/scenes/vfx/master_duel/default_white.tres" id="t0"]
+[ext_resource type="Texture2D" path="res://VYgo/images/vfx/master_duel/44a7180e242a211df51a.png" id="t1"]
+
+[resource]
+shader = ExtResource("s")
+shader_parameter/p_MASK = ExtResource("t0")
+shader_parameter/p_Texture = ExtResource("t1")
+shader_parameter/p_Alpha = 1.0
+shader_parameter/p_Alpha_Smoothstep = 0.0
+shader_parameter/p_Alpha_SmoothstepBlur = 1.0
+shader_parameter/p_CameraOffset = 0.0
+shader_parameter/p_Channel_Selection = Vector4(1.0,0.0,0.0,0.0)
+shader_parameter/p_Color_01 = Vector4(1.0,0.055190069634406,0.0,0.0)
+shader_parameter/p_Color_02 = Vector4(1.0,0.055919126788365386,0.0,0.0)
+shader_parameter/p_Color_Smoothstep = 0.0
+shader_parameter/p_Color_SmoothstepBlur = 1.0
+shader_parameter/p_MASK_Alpha_Smoothstep = 0.0
+shader_parameter/p_MASK_Alpha_SmoothstepBlur = 1.0
+shader_parameter/p_MASK_Channel_Selection = Vector4(1.0,0.0,0.0,0.0)
+shader_parameter/p_MASK_Rotation = 0.0
+shader_parameter/p_MASK_Tiling_Y = 2.0
+shader_parameter/p_MASK_Tiling_Z = 2.0
+shader_parameter/p_MASK_switch_ON = 0.0
+shader_parameter/p_Rotation = 0.0
+shader_parameter/p_Soft_Particle = 0.0
+shader_parameter/p_Soft_Particle_Far = 0.0
+shader_parameter/p_Soft_Particle_Near = 0.0
+shader_parameter/p_Tiling_Y = 1.0
+shader_parameter/p_Tiling_Z = 1.0

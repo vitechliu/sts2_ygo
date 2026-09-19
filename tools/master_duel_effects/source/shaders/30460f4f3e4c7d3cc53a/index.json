@@ -1,0 +1,263 @@
+{
+  "shader_name": "Universal Render Pipeline/Particles/Unlit",
+  "platforms": [
+    4
+  ],
+  "programs": [
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 1582,
+      "bytes": 1492,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "41b29a42a9b9ea8e7dd9a05b4f0b36c3827b4c7477e538e5875e25baf361cfbe",
+      "bytecode": "platform4_block0_program0.dxbc",
+      "assembly": "platform4_block0_program0.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 3226,
+      "bytes": 1696,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "889975b0803278042f966ceb3cf1e40fad32f9c28a0dbddf3761f446f3fcafb2",
+      "bytecode": "platform4_block0_program1.dxbc",
+      "assembly": "platform4_block0_program1.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 5062,
+      "bytes": 3028,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHEX"
+      ],
+      "sha256": "e499542887bf1e77f76ac5c08212b13fdc9852f871f96f5cb49b217b997e0c71",
+      "bytecode": "platform4_block0_program2.dxbc",
+      "assembly": "platform4_block0_program2.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 8270,
+      "bytes": 3204,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHEX"
+      ],
+      "sha256": "025b436a4fed69bfb5ee4a9737181a9da518a0510d75e91653c168124944a5d5",
+      "bytecode": "platform4_block0_program3.dxbc",
+      "assembly": "platform4_block0_program3.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 12714,
+      "bytes": 628,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "94f21fae266b33fed7e88b611028fcda2576a4800dd064b7b5e6892cf5dba0eb",
+      "bytecode": "platform4_block0_program4.dxbc",
+      "assembly": "platform4_block0_program4.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 13454,
+      "bytes": 628,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "94f21fae266b33fed7e88b611028fcda2576a4800dd064b7b5e6892cf5dba0eb",
+      "bytecode": "platform4_block0_program5.dxbc",
+      "assembly": "platform4_block0_program5.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 14234,
+      "bytes": 1628,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "a1fdf947c52b8e28025b1cc0a92b6060ce37310f6ec6a4c05a2beb3e4985d33b",
+      "bytecode": "platform4_block0_program6.dxbc",
+      "assembly": "platform4_block0_program6.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 15970,
+      "bytes": 680,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHEX"
+      ],
+      "sha256": "b6574393384133f3f1a0aaf5977a4d3de2033afa92634743e028989398615d59",
+      "bytecode": "platform4_block0_program7.dxbc",
+      "assembly": "platform4_block0_program7.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 16790,
+      "bytes": 680,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHEX"
+      ],
+      "sha256": "b6574393384133f3f1a0aaf5977a4d3de2033afa92634743e028989398615d59",
+      "bytecode": "platform4_block0_program8.dxbc",
+      "assembly": "platform4_block0_program8.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 17650,
+      "bytes": 1688,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHEX"
+      ],
+      "sha256": "d4581d08d03bbf1fb06fdec2b0d4c293021af73c36b318969f24400ddee5d00b",
+      "bytecode": "platform4_block0_program9.dxbc",
+      "assembly": "platform4_block0_program9.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 19790,
+      "bytes": 524,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "df07897db8c0c43c6c56b02688085aa64a87a05522a2c5cbd5c183db07ff10a1",
+      "bytecode": "platform4_block0_program10.dxbc",
+      "assembly": "platform4_block0_program10.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 20430,
+      "bytes": 1056,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHEX"
+      ],
+      "sha256": "acc27b96fd11db787f24b5c59195a0cb9d8e1b9f78d6708a01a2a07a0160826d",
+      "bytecode": "platform4_block0_program11.dxbc",
+      "assembly": "platform4_block0_program11.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 21602,
+      "bytes": 216,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "343f38272e4af4f38bb95402ec6ef46ef56783ec238a140b11e1dc740a6d3d74",
+      "bytecode": "platform4_block0_program12.dxbc",
+      "assembly": "platform4_block0_program12.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 21926,
+      "bytes": 260,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHEX"
+      ],
+      "sha256": "51a1fadb55b37b41b2a2fcaef1691acc1e08a14e5ebed6140b814fea3cb641f5",
+      "bytecode": "platform4_block0_program13.dxbc",
+      "assembly": "platform4_block0_program13.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 22266,
+      "bytes": 1144,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "c14d029f35a99637a9d5bc48314a4b0479b05a35e5ac4000fac00abacdbdc883",
+      "bytecode": "platform4_block0_program14.dxbc",
+      "assembly": "platform4_block0_program14.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 23534,
+      "bytes": 2000,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHEX"
+      ],
+      "sha256": "c51277547c2648c0cece1bc848fc9fb67ffa9ae698ab82c320a5a6ad87a2c2f7",
+      "bytecode": "platform4_block0_program15.dxbc",
+      "assembly": "platform4_block0_program15.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 25630,
+      "bytes": 356,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHDR"
+      ],
+      "sha256": "b16bfe92fb5adbab84040525f8efaa83d4fe678d6d1513d20b4da0823b814db6",
+      "bytecode": "platform4_block0_program16.dxbc",
+      "assembly": "platform4_block0_program16.asm.txt"
+    },
+    {
+      "platform": 4,
+      "block": 0,
+      "offset": 26094,
+      "bytes": 396,
+      "chunks": [
+        "ISGN",
+        "OSGN",
+        "SHEX"
+      ],
+      "sha256": "c2cc5a82e7b67839f952f2f3ab29977ca6315a207139af1859889661328eeea3",
+      "bytecode": "platform4_block0_program17.dxbc",
+      "assembly": "platform4_block0_program17.asm.txt"
+    }
+  ],
+  "disassembly_failures": [],
+  "scope": "Compiled bytecode, instruction assembly, properties and render state only. No original HLSL/ShaderGraph or Godot shader restored.",
+  "api_reference": "https://learn.microsoft.com/en-us/windows/win32/api/d3dcompiler/nf-d3dcompiler-d3ddisassemble"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "b57716edd04343b601a7",
+  "name": "VFX_Shader/Dissolve/fxs_BlockDissolve_TC_001_b",
+  "programs": 8,
+  "disassembly_failures": [],
+  "platforms": [
+    4
+  ],
+  "uniforms": [
+    "$Globals",
+    "UnityPerDraw",
+    "UnityPerMaterial",
+    "_Block_Size",
+    "_Block_Tiling_X",
+    "_Block_Tiling_Y",
+    "_Color",
+    "_Emissive",
+    "_GlobalMipBias",
+    "_Gradient_Map_Texture",
+    "_LightDirection",
+    "_Noise_Scale",
+    "_NonJitteredViewProjMatrix",
+    "_PrevViewProjMatrix",
+    "_ShadowBias",
+    "_use_Noise",
+    "unity_MatrixPreviousM",
+    "unity_MatrixVP",
+    "unity_MotionVectorsParams",
+    "unity_ObjectToWorld",
+    "unity_WorldToObject"
+  ],
+  "feature_hints": [
+    "\u566a\u58f0\u8ba1\u7b97\u6216\u91c7\u6837"
+  ],
+  "status": "compiled_and_disassembled",
+  "source_restored": false,
+  "godot_ready": false,
+  "folder": "shaders/b57716edd04343b601a7"
+}

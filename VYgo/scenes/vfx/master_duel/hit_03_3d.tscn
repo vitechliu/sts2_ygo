@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Core/Effects/MasterDuel/NMdEffect3D.cs" id="s"]
+[ext_resource type="Resource" path="res://VYgo/scenes/vfx/master_duel/hit_03/source.tres" id="d"]
+
+[node name="hit_03" type="Node3D"]
+script = ExtResource("s")
+Source = ExtResource("d")

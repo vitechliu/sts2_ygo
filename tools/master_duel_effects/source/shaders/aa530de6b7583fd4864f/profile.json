@@ -1,0 +1,23 @@
+{
+  "id": "aa530de6b7583fd4864f",
+  "name": "Ygom/SelectableVertexTransparent",
+  "programs": 2,
+  "disassembly_failures": [],
+  "platforms": [
+    4
+  ],
+  "uniforms": [
+    "$Globals",
+    "UnityPerDraw",
+    "UnityPerFrame",
+    "_MainTex",
+    "_MainTex_ST",
+    "unity_MatrixVP",
+    "unity_ObjectToWorld"
+  ],
+  "feature_hints": [],
+  "status": "compiled_and_disassembled",
+  "source_restored": false,
+  "godot_ready": false,
+  "folder": "shaders/aa530de6b7583fd4864f"
+}

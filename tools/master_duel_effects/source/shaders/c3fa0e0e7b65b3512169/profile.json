@@ -1,0 +1,31 @@
+{
+  "id": "c3fa0e0e7b65b3512169",
+  "name": "Shader Graphs/fxs_UI_CardDecoder_line_01_b",
+  "programs": 8,
+  "disassembly_failures": [],
+  "platforms": [
+    4
+  ],
+  "uniforms": [
+    "$Globals",
+    "UnityPerDraw",
+    "UnityPerMaterial",
+    "_Color",
+    "_Color_out",
+    "_LightDirection",
+    "_Line_Blur",
+    "_NonJitteredViewProjMatrix",
+    "_PrevViewProjMatrix",
+    "_ShadowBias",
+    "unity_MatrixPreviousM",
+    "unity_MatrixVP",
+    "unity_MotionVectorsParams",
+    "unity_ObjectToWorld",
+    "unity_WorldToObject"
+  ],
+  "feature_hints": [],
+  "status": "compiled_and_disassembled",
+  "source_restored": false,
+  "godot_ready": false,
+  "folder": "shaders/c3fa0e0e7b65b3512169"
+}

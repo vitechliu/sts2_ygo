@@ -1,0 +1,49 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3]
+
+[ext_resource type="Shader" path="res://VYgo/shaders/master_duel/generated/a0578f2ad79ae592f540_1857421d8947.gdshader" id="s"]
+[ext_resource type="Texture2D" path="res://VYgo/images/vfx/master_duel/6acd3b28286939e00901.png" id="t0"]
+[ext_resource type="Texture2D" path="res://VYgo/images/vfx/master_duel/c2233eef6bcd66cc0656.png" id="t1"]
+
+[resource]
+shader = ExtResource("s")
+shader_parameter/p_MASK_Texture = ExtResource("t0")
+shader_parameter/p_Main_Texture = ExtResource("t1")
+shader_parameter/p_ADD_Gradient_Noise = 1.0
+shader_parameter/p_ADD_Noise_Switch = 1.0
+shader_parameter/p_ADD_Simple_Noise = 0.0
+shader_parameter/p_ADD_Voronoi = 0.0
+shader_parameter/p_Animation_Alpha = 1.0
+shader_parameter/p_Camera_Offset = 0.0
+shader_parameter/p_Edge1 = 0.0
+shader_parameter/p_Edge2 = 1.0
+shader_parameter/p_Emissive_truth = Vector4(41.066617910261336,0.09115629008947565,0.0,0.0)
+shader_parameter/p_Gradient_Noise = 0.0
+shader_parameter/p_MAIN_Noise_Amount = 30.0
+shader_parameter/p_MASK_Add_Noise_Amount = 3.0
+shader_parameter/p_MASK_Add_Noise_Scroll_X = 0.0
+shader_parameter/p_MASK_Add_Noise_Scroll_Y = 0.0
+shader_parameter/p_MASK_Add_Noise_Thickness_black = 1.0
+shader_parameter/p_MASK_Add_Noise_Thickness_white = 0.0
+shader_parameter/p_MASK_Add_Noise_Tile_X = 1.0
+shader_parameter/p_MASK_Add_Noise_Tile_Y = 1.0
+shader_parameter/p_MASK_Smoothstep_Switch = 0.0
+shader_parameter/p_MASK_Texture_Rotation = 0.0
+shader_parameter/p_Main_Edge1 = 0.05999999865889549
+shader_parameter/p_Main_Edge2 = 1.0
+shader_parameter/p_Main_Noise_Scroll_X = 0.0
+shader_parameter/p_Main_Noise_Scroll_Y = 0.0
+shader_parameter/p_Main_Smoothstep_Switch = 1.0
+shader_parameter/p_Main_Texture_Channel_Select = Vector4(1.0,0.0,0.0,0.0)
+shader_parameter/p_Main_Thickness_black = 1.0
+shader_parameter/p_Main_Thickness_white = 0.0
+shader_parameter/p_Main_Tile_X = 1.0
+shader_parameter/p_Main_Tile_Y = 1.0
+shader_parameter/p_Mask_Channel_Select = Vector4(1.0,0.0,0.0,0.0)
+shader_parameter/p_Offset_X = 0.0
+shader_parameter/p_Offset_Y = 0.0
+shader_parameter/p_Simple_Noise = 1.0
+shader_parameter/p_Soft_Particle = 0.0
+shader_parameter/p_Soft_Particle_Far = 0.0
+shader_parameter/p_Soft_Particle_Near = 0.0
+shader_parameter/p_Textur_Switch = 0.0
+shader_parameter/p_Voronoi = 0.0

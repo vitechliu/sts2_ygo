@@ -1,0 +1,2018 @@
+{
+  "hash": "138f1dcd",
+  "name": "Duel/Effects/MonsterEffectProcess/tcg/Ef08933/fxp_MEP08933_01",
+  "category": "06_卡牌片段",
+  "selected": true,
+  "selection": "结构独立的粒子入口",
+  "particle_count": 4,
+  "root_types": {
+    "GameObject": 4,
+    "Transform": 4,
+    "ParticleSystem": 4,
+    "ParticleSystemRenderer": 4,
+    "Mesh": 2,
+    "AssetBundle": 1
+  },
+  "control_components": {},
+  "script_classes": [],
+  "dependency_hashes": [
+    "138f1dcd",
+    "1f7b5d2b",
+    "b09ab206",
+    "c90f550b"
+  ],
+  "dependency_count": 3,
+  "missing_dependencies": {},
+  "incomplete_exports": {},
+  "builtin_dependencies": [],
+  "context_note": "原目录属于卡牌/演出片段，单独复用仍需指定位置、尺度与触发时机。",
+  "pack": "packs/06_卡牌片段/fxp_MEP08933_01__138f1dcd",
+  "materials": [
+    {
+      "bundle": "c90f550b",
+      "serialized_file": "CAB-a5b67a20069250d204a1fe26e745d9e8",
+      "path_id": -3438030743954411414,
+      "type": "Material",
+      "name": "fxm_MEP08933_ple_01_b",
+      "files": [
+        "bundles/c90f550b/Material/fxm_MEP08933_ple_01_b__s0_-3438030743954411414.json"
+      ],
+      "shader": {
+        "bundle": "c90f550b",
+        "serialized_file": "CAB-a5b67a20069250d204a1fe26e745d9e8",
+        "path_id": 7534208208988684205,
+        "type": "Shader",
+        "name": "Shader",
+        "files": [
+          "bundles/c90f550b/Shader/Shader__s0_7534208208988684205.json"
+        ]
+      },
+      "properties": {
+        "m_TexEnvs": [
+          [
+            "unity_Lightmaps",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ],
+          [
+            "unity_LightmapsInd",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ],
+          [
+            "unity_ShadowMasks",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ]
+        ],
+        "m_Ints": [],
+        "m_Floats": [
+          [
+            "_Alpha",
+            0.699999988079071
+          ],
+          [
+            "_AlphaClip",
+            0.0
+          ],
+          [
+            "_AlphaToMask",
+            0.0
+          ],
+          [
+            "_Alphapow",
+            3.0
+          ],
+          [
+            "_Animator_Alpha",
+            1.0
+          ],
+          [
+            "_BaseBlur",
+            0.5899999737739563
+          ],
+          [
+            "_Blend",
+            0.0
+          ],
+          [
+            "_Camera_Offset",
+            0.0
+          ],
+          [
+            "_CastShadows",
+            0.0
+          ],
+          [
+            "_Cull",
+            0.0
+          ],
+          [
+            "_DstBlend",
+            10.0
+          ],
+          [
+            "_Emission_truth_on",
+            1.0
+          ],
+          [
+            "_MainTex",
+            0.0
+          ],
+          [
+            "_QueueControl",
+            0.0
+          ],
+          [
+            "_QueueOffset",
+            0.0
+          ],
+          [
+            "_RING_Blur",
+            5.0
+          ],
+          [
+            "_RING_ON",
+            0.0
+          ],
+          [
+            "_RING_Radial",
+            0.0
+          ],
+          [
+            "_Radial_Scale",
+            1.0
+          ],
+          [
+            "_Soft_Particle",
+            0.0
+          ],
+          [
+            "_Soft_Particle_Far",
+            1.0
+          ],
+          [
+            "_Soft_Particle_Near",
+            0.0
+          ],
+          [
+            "_SrcBlend",
+            5.0
+          ],
+          [
+            "_Step",
+            0.0
+          ],
+          [
+            "_Step_Minus",
+            0.0
+          ],
+          [
+            "_Step_Slider",
+            0.5
+          ],
+          [
+            "_Surface",
+            1.0
+          ],
+          [
+            "_ZTest",
+            4.0
+          ],
+          [
+            "_ZWrite",
+            0.0
+          ],
+          [
+            "_ZWriteControl",
+            0.0
+          ]
+        ],
+        "m_Colors": [
+          [
+            "_Emission",
+            {
+              "r": 0.47940492630004883,
+              "g": 1.4574499130249023,
+              "b": 2.241924285888672,
+              "a": 1.0
+            }
+          ],
+          [
+            "_Emission_truth",
+            {
+              "r": 0.15384118258953094,
+              "g": 1.1788817644119263,
+              "b": 2.9649388790130615,
+              "a": 1.0
+            }
+          ]
+        ]
+      },
+      "keywords": [],
+      "render_queue": -1,
+      "texture_bindings": [
+        {
+          "property": "unity_Lightmaps",
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "texture": null
+        },
+        {
+          "property": "unity_LightmapsInd",
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "texture": null
+        },
+        {
+          "property": "unity_ShadowMasks",
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "texture": null
+        }
+      ],
+      "shader_profile": "a4f3e45a401881f58f59"
+    },
+    {
+      "bundle": "1f7b5d2b",
+      "serialized_file": "CAB-743075a5f884f91e96028ccb30b8ea47",
+      "path_id": -4346270812146610033,
+      "type": "Material",
+      "name": "fxm_MEP08933_ring_noise_01_b",
+      "files": [
+        "bundles/1f7b5d2b/Material/fxm_MEP08933_ring_noise_01_b__s0_-4346270812146610033.json"
+      ],
+      "shader": {
+        "bundle": "1f7b5d2b",
+        "serialized_file": "CAB-743075a5f884f91e96028ccb30b8ea47",
+        "path_id": -1595923418995139990,
+        "type": "Shader",
+        "name": "Shader",
+        "files": [
+          "bundles/1f7b5d2b/Shader/Shader__s0_-1595923418995139990.json"
+        ]
+      },
+      "properties": {
+        "m_TexEnvs": [
+          [
+            "_Texture2DAsset_a2c8f60daf634ee9bbd1a4ad46ecd7db_Out_0_Texture2D",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": -3230677161569464101
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ],
+          [
+            "unity_Lightmaps",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ],
+          [
+            "unity_LightmapsInd",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ],
+          [
+            "unity_ShadowMasks",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ]
+        ],
+        "m_Ints": [],
+        "m_Floats": [
+          [
+            "_Drection",
+            90.0
+          ],
+          [
+            "_Noise_Scale",
+            8.0
+          ],
+          [
+            "_QueueControl",
+            0.0
+          ],
+          [
+            "_QueueOffset",
+            0.0
+          ],
+          [
+            "_Radial",
+            0.949999988079071
+          ],
+          [
+            "_Smooth",
+            0.8999999761581421
+          ],
+          [
+            "_SmoothBlur",
+            0.30000001192092896
+          ],
+          [
+            "_Soft_Particle",
+            1.0
+          ],
+          [
+            "_Soft_Particle_Far",
+            0.5
+          ],
+          [
+            "_Soft_Particle_Near",
+            0.0
+          ]
+        ],
+        "m_Colors": [
+          [
+            "_Color_01",
+            {
+              "r": 0.47940492630004883,
+              "g": 1.4574499130249023,
+              "b": 2.241924285888672,
+              "a": 1.0
+            }
+          ]
+        ]
+      },
+      "keywords": [],
+      "render_queue": -1,
+      "texture_bindings": [
+        {
+          "property": "_Texture2DAsset_a2c8f60daf634ee9bbd1a4ad46ecd7db_Out_0_Texture2D",
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "texture": {
+            "bundle": "1f7b5d2b",
+            "serialized_file": "CAB-743075a5f884f91e96028ccb30b8ea47",
+            "path_id": -3230677161569464101,
+            "type": "Texture2D",
+            "name": "fxt_msk_003",
+            "files": [
+              "bundles/1f7b5d2b/Texture2D/fxt_msk_003__s0_-3230677161569464101.json",
+              "bundles/1f7b5d2b/Texture2D/fxt_msk_003__s0_-3230677161569464101.png"
+            ]
+          }
+        },
+        {
+          "property": "unity_Lightmaps",
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "texture": null
+        },
+        {
+          "property": "unity_LightmapsInd",
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "texture": null
+        },
+        {
+          "property": "unity_ShadowMasks",
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "texture": null
+        }
+      ],
+      "shader_profile": "f7702eaf34c4b20175ba"
+    },
+    {
+      "bundle": "b09ab206",
+      "serialized_file": "CAB-9e9586a06ad2bd4e15dbb440b1fe106f",
+      "path_id": -2289073413677254244,
+      "type": "Material",
+      "name": "fxm_MEP08933_Mesh_01_b",
+      "files": [
+        "bundles/b09ab206/Material/fxm_MEP08933_Mesh_01_b__s0_-2289073413677254244.json"
+      ],
+      "shader": {
+        "bundle": "b09ab206",
+        "serialized_file": "CAB-9e9586a06ad2bd4e15dbb440b1fe106f",
+        "path_id": -2560807416194956520,
+        "type": "Shader",
+        "name": "Shader",
+        "files": [
+          "bundles/b09ab206/Shader/Shader__s0_-2560807416194956520.json"
+        ]
+      },
+      "properties": {
+        "m_TexEnvs": [
+          [
+            "_Texture",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": 6918126561789238743
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ],
+          [
+            "unity_Lightmaps",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ],
+          [
+            "unity_LightmapsInd",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ],
+          [
+            "unity_ShadowMasks",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ]
+        ],
+        "m_Ints": [],
+        "m_Floats": [
+          [
+            "_Alpha",
+            1.0
+          ],
+          [
+            "_IN_Smoothstep",
+            0.6370000243186951
+          ],
+          [
+            "_IN_SmoothstepBlur",
+            0.4729999899864197
+          ],
+          [
+            "_OUT_Smoothstep",
+            0.0
+          ],
+          [
+            "_OUT_SmoothstepBlur",
+            0.6010000109672546
+          ],
+          [
+            "_QueueControl",
+            0.0
+          ],
+          [
+            "_QueueOffset",
+            0.0
+          ],
+          [
+            "_Texture_Smoothstep",
+            0.0
+          ],
+          [
+            "_Texture_SmoothstepBlur",
+            1.0
+          ],
+          [
+            "_Texture_Speed",
+            -0.30000001192092896
+          ]
+        ],
+        "m_Colors": [
+          [
+            "_Color_IN",
+            {
+              "r": 1.143221139907837,
+              "g": 1.7389274835586548,
+              "b": 2.2167341709136963,
+              "a": 0.0
+            }
+          ],
+          [
+            "_Color_OUT",
+            {
+              "r": 0.47940492630004883,
+              "g": 1.4574499130249023,
+              "b": 2.241924285888672,
+              "a": 0.0
+            }
+          ],
+          [
+            "_Texture_Channel",
+            {
+              "r": 1.0,
+              "g": 0.0,
+              "b": 0.0,
+              "a": 0.0
+            }
+          ]
+        ]
+      },
+      "keywords": [],
+      "render_queue": -1,
+      "texture_bindings": [
+        {
+          "property": "_Texture",
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "texture": {
+            "bundle": "b09ab206",
+            "serialized_file": "CAB-9e9586a06ad2bd4e15dbb440b1fe106f",
+            "path_id": 6918126561789238743,
+            "type": "Texture2D",
+            "name": "fxt_hitwtr_spl_001",
+            "files": [
+              "bundles/b09ab206/Texture2D/fxt_hitwtr_spl_001__s0_6918126561789238743.json",
+              "bundles/b09ab206/Texture2D/fxt_hitwtr_spl_001__s0_6918126561789238743.png"
+            ]
+          }
+        },
+        {
+          "property": "unity_Lightmaps",
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "texture": null
+        },
+        {
+          "property": "unity_LightmapsInd",
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "texture": null
+        },
+        {
+          "property": "unity_ShadowMasks",
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "texture": null
+        }
+      ],
+      "shader_profile": "b88f422638125b1b443d"
+    }
+  ],
+  "textures": [
+    {
+      "bundle": "1f7b5d2b",
+      "serialized_file": "CAB-743075a5f884f91e96028ccb30b8ea47",
+      "path_id": -3230677161569464101,
+      "type": "Texture2D",
+      "name": "fxt_msk_003",
+      "files": [
+        "bundles/1f7b5d2b/Texture2D/fxt_msk_003__s0_-3230677161569464101.json",
+        "bundles/1f7b5d2b/Texture2D/fxt_msk_003__s0_-3230677161569464101.png"
+      ]
+    },
+    {
+      "bundle": "b09ab206",
+      "serialized_file": "CAB-9e9586a06ad2bd4e15dbb440b1fe106f",
+      "path_id": 6918126561789238743,
+      "type": "Texture2D",
+      "name": "fxt_hitwtr_spl_001",
+      "files": [
+        "bundles/b09ab206/Texture2D/fxt_hitwtr_spl_001__s0_6918126561789238743.json",
+        "bundles/b09ab206/Texture2D/fxt_hitwtr_spl_001__s0_6918126561789238743.png"
+      ]
+    }
+  ],
+  "particles": [
+    {
+      "path_id": -6461949506632354213,
+      "serialized_file": "CAB-24d94e01615415b317b326f9a6d1876b",
+      "type": "ParticleSystem",
+      "name": "Ring_Noise",
+      "length_seconds": 2.0,
+      "looping": false,
+      "play_on_awake": true,
+      "simulation_speed": 1.0,
+      "simulation_space": 0,
+      "custom_simulation_space": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      },
+      "start_delay": {
+        "minMaxState": 0,
+        "scalar": 0.0,
+        "minScalar": 0.0,
+        "maxCurve": {
+          "m_Curve": [],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        },
+        "minCurve": {
+          "m_Curve": [],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        }
+      },
+      "start_lifetime": {
+        "minMaxState": 0,
+        "scalar": 0.6000000238418579,
+        "minScalar": 5.0,
+        "maxCurve": {
+          "m_Curve": [],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        },
+        "minCurve": {
+          "m_Curve": [],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        }
+      },
+      "enabled_modules": [
+        "InitialModule",
+        "EmissionModule",
+        "SizeModule",
+        "ColorModule",
+        "CustomDataModule"
+      ],
+      "source": "bundles/138f1dcd/ParticleSystem/ParticleSystem__s0_-6461949506632354213.json"
+    },
+    {
+      "path_id": -3936145337127781805,
+      "serialized_file": "CAB-24d94e01615415b317b326f9a6d1876b",
+      "type": "ParticleSystem",
+      "name": "Mesh_Veil",
+      "length_seconds": 2.0,
+      "looping": false,
+      "play_on_awake": true,
+      "simulation_speed": 1.0,
+      "simulation_space": 0,
+      "custom_simulation_space": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      },
+      "start_delay": {
+        "minMaxState": 0,
+        "scalar": 0.0,
+        "minScalar": 0.0,
+        "maxCurve": {
+          "m_Curve": [],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        },
+        "minCurve": {
+          "m_Curve": [],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        }
+      },
+      "start_lifetime": {
+        "minMaxState": 0,
+        "scalar": 1.5,
+        "minScalar": 5.0,
+        "maxCurve": {
+          "m_Curve": [],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        },
+        "minCurve": {
+          "m_Curve": [],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        }
+      },
+      "enabled_modules": [
+        "InitialModule",
+        "EmissionModule",
+        "SizeModule",
+        "ColorModule",
+        "CustomDataModule"
+      ],
+      "source": "bundles/138f1dcd/ParticleSystem/ParticleSystem__s0_-3936145337127781805.json"
+    },
+    {
+      "path_id": -2904694068211079980,
+      "serialized_file": "CAB-24d94e01615415b317b326f9a6d1876b",
+      "type": "ParticleSystem",
+      "name": "fxp_MEP08933_01",
+      "length_seconds": 2.0,
+      "looping": false,
+      "play_on_awake": true,
+      "simulation_speed": 1.0,
+      "simulation_space": 0,
+      "custom_simulation_space": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      },
+      "start_delay": {
+        "minMaxState": 0,
+        "scalar": 0.0,
+        "minScalar": 0.0,
+        "maxCurve": {
+          "m_Curve": [],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        },
+        "minCurve": {
+          "m_Curve": [],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        }
+      },
+      "start_lifetime": {
+        "minMaxState": 0,
+        "scalar": 1.0,
+        "minScalar": 5.0,
+        "maxCurve": {
+          "m_Curve": [],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        },
+        "minCurve": {
+          "m_Curve": [],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        }
+      },
+      "enabled_modules": [
+        "InitialModule"
+      ],
+      "source": "bundles/138f1dcd/ParticleSystem/ParticleSystem__s0_-2904694068211079980.json"
+    },
+    {
+      "path_id": 4714479017093809996,
+      "serialized_file": "CAB-24d94e01615415b317b326f9a6d1876b",
+      "type": "ParticleSystem",
+      "name": "Particle",
+      "length_seconds": 2.0,
+      "looping": false,
+      "play_on_awake": true,
+      "simulation_speed": 1.0,
+      "simulation_space": 0,
+      "custom_simulation_space": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      },
+      "start_delay": {
+        "minMaxState": 0,
+        "scalar": 0.8999999761581421,
+        "minScalar": 0.0,
+        "maxCurve": {
+          "m_Curve": [],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        },
+        "minCurve": {
+          "m_Curve": [],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        }
+      },
+      "start_lifetime": {
+        "minMaxState": 3,
+        "scalar": 1.0,
+        "minScalar": 0.800000011920929,
+        "maxCurve": {
+          "m_Curve": [],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        },
+        "minCurve": {
+          "m_Curve": [],
+          "m_PreInfinity": 2,
+          "m_PostInfinity": 2,
+          "m_RotationOrder": 4
+        }
+      },
+      "enabled_modules": [
+        "InitialModule",
+        "ShapeModule",
+        "EmissionModule",
+        "ColorModule",
+        "ClampVelocityModule",
+        "NoiseModule"
+      ],
+      "source": "bundles/138f1dcd/ParticleSystem/ParticleSystem__s0_4714479017093809996.json"
+    }
+  ],
+  "transforms": [
+    {
+      "path_id": -6851783845034906030,
+      "serialized_file": "CAB-24d94e01615415b317b326f9a6d1876b",
+      "type": "Transform",
+      "data": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 5467539520312231021
+        },
+        "m_LocalRotation": {
+          "x": -0.7071068286895752,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.7071068286895752
+        },
+        "m_LocalPosition": {
+          "x": 0.0,
+          "y": 1.0,
+          "z": 0.0
+        },
+        "m_LocalScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "m_Children": [],
+        "m_Father": {
+          "m_FileID": 0,
+          "m_PathID": -3204263525998139802
+        }
+      }
+    },
+    {
+      "path_id": -3204263525998139802,
+      "serialized_file": "CAB-24d94e01615415b317b326f9a6d1876b",
+      "type": "Transform",
+      "data": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 7530489822525248635
+        },
+        "m_LocalRotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "m_LocalPosition": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "m_LocalScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "m_Children": [
+          {
+            "m_FileID": 0,
+            "m_PathID": 6557106495973878133
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": 8833877121922421645
+          },
+          {
+            "m_FileID": 0,
+            "m_PathID": -6851783845034906030
+          }
+        ],
+        "m_Father": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        }
+      }
+    },
+    {
+      "path_id": 6557106495973878133,
+      "serialized_file": "CAB-24d94e01615415b317b326f9a6d1876b",
+      "type": "Transform",
+      "data": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": -2402965662647891574
+        },
+        "m_LocalRotation": {
+          "x": 0.7071068286895752,
+          "y": -0.0,
+          "z": -0.0,
+          "w": 0.7071068286895752
+        },
+        "m_LocalPosition": {
+          "x": 0.0,
+          "y": 1.0,
+          "z": 0.0
+        },
+        "m_LocalScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "m_Children": [],
+        "m_Father": {
+          "m_FileID": 0,
+          "m_PathID": -3204263525998139802
+        }
+      }
+    },
+    {
+      "path_id": 8833877121922421645,
+      "serialized_file": "CAB-24d94e01615415b317b326f9a6d1876b",
+      "type": "Transform",
+      "data": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": -9002768886530394535
+        },
+        "m_LocalRotation": {
+          "x": 0.7071068286895752,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.7071068286895752
+        },
+        "m_LocalPosition": {
+          "x": 0.0,
+          "y": 1.0,
+          "z": 0.0
+        },
+        "m_LocalScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 0.5
+        },
+        "m_Children": [],
+        "m_Father": {
+          "m_FileID": 0,
+          "m_PathID": -3204263525998139802
+        }
+      }
+    }
+  ],
+  "renderers": [
+    {
+      "path_id": -5129358975844154710,
+      "serialized_file": "CAB-24d94e01615415b317b326f9a6d1876b",
+      "type": "ParticleSystemRenderer",
+      "data": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 5467539520312231021
+        },
+        "m_Enabled": true,
+        "m_CastShadows": 0,
+        "m_ReceiveShadows": 0,
+        "m_DynamicOccludee": 1,
+        "m_StaticShadowCaster": 0,
+        "m_MotionVectors": 1,
+        "m_LightProbeUsage": 0,
+        "m_ReflectionProbeUsage": 0,
+        "m_RayTracingMode": 0,
+        "m_RayTraceProcedural": 0,
+        "m_RayTracingAccelStructBuildFlagsOverride": 0,
+        "m_RayTracingAccelStructBuildFlags": 1,
+        "m_SmallMeshCulling": 1,
+        "m_RenderingLayerMask": 1,
+        "m_RendererPriority": 0,
+        "m_LightmapIndex": 65535,
+        "m_LightmapIndexDynamic": 65535,
+        "m_LightmapTilingOffset": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "m_LightmapTilingOffsetDynamic": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "m_Materials": [
+          {
+            "m_FileID": 1,
+            "m_PathID": -3438030743954411414
+          }
+        ],
+        "m_StaticBatchInfo": {
+          "firstSubMesh": 0,
+          "subMeshCount": 0
+        },
+        "m_StaticBatchRoot": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_ProbeAnchor": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_LightProbeVolumeOverride": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_SortingLayerID": 2088754885,
+        "m_SortingLayer": 7,
+        "m_SortingOrder": 0,
+        "m_RenderMode": 0,
+        "m_MeshDistribution": 0,
+        "m_SortMode": 0,
+        "m_MinParticleSize": 0.0,
+        "m_MaxParticleSize": 0.5,
+        "m_CameraVelocityScale": 0.0,
+        "m_VelocityScale": 0.0,
+        "m_LengthScale": 2.0,
+        "m_SortingFudge": 0.0,
+        "m_NormalDirection": 1.0,
+        "m_ShadowBias": 1.0,
+        "m_RenderAlignment": 0,
+        "m_Pivot": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "m_Flip": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "m_EnableGPUInstancing": true,
+        "m_ApplyActiveColorSpace": true,
+        "m_AllowRoll": true,
+        "m_FreeformStretching": false,
+        "m_RotateWithStretchDirection": true,
+        "m_UseCustomVertexStreams": false,
+        "m_VertexStreams": [
+          0,
+          1,
+          3,
+          4
+        ],
+        "m_UseCustomTrailVertexStreams": false,
+        "m_TrailVertexStreams": [
+          0,
+          1,
+          3,
+          4
+        ],
+        "m_Mesh": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Mesh1": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Mesh2": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Mesh3": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_MeshWeighting": 1.0,
+        "m_MeshWeighting1": 1.0,
+        "m_MeshWeighting2": 1.0,
+        "m_MeshWeighting3": 1.0,
+        "m_MaskInteraction": 0
+      }
+    },
+    {
+      "path_id": 1994937321051382964,
+      "serialized_file": "CAB-24d94e01615415b317b326f9a6d1876b",
+      "type": "ParticleSystemRenderer",
+      "data": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": -2402965662647891574
+        },
+        "m_Enabled": true,
+        "m_CastShadows": 0,
+        "m_ReceiveShadows": 0,
+        "m_DynamicOccludee": 1,
+        "m_StaticShadowCaster": 0,
+        "m_MotionVectors": 1,
+        "m_LightProbeUsage": 0,
+        "m_ReflectionProbeUsage": 0,
+        "m_RayTracingMode": 0,
+        "m_RayTraceProcedural": 0,
+        "m_RayTracingAccelStructBuildFlagsOverride": 0,
+        "m_RayTracingAccelStructBuildFlags": 1,
+        "m_SmallMeshCulling": 1,
+        "m_RenderingLayerMask": 1,
+        "m_RendererPriority": 0,
+        "m_LightmapIndex": 65535,
+        "m_LightmapIndexDynamic": 65535,
+        "m_LightmapTilingOffset": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "m_LightmapTilingOffsetDynamic": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "m_Materials": [
+          {
+            "m_FileID": 2,
+            "m_PathID": -4346270812146610033
+          }
+        ],
+        "m_StaticBatchInfo": {
+          "firstSubMesh": 0,
+          "subMeshCount": 0
+        },
+        "m_StaticBatchRoot": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_ProbeAnchor": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_LightProbeVolumeOverride": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_SortingLayerID": 2088754885,
+        "m_SortingLayer": 7,
+        "m_SortingOrder": 0,
+        "m_RenderMode": 0,
+        "m_MeshDistribution": 0,
+        "m_SortMode": 0,
+        "m_MinParticleSize": 0.0,
+        "m_MaxParticleSize": 10.0,
+        "m_CameraVelocityScale": 0.0,
+        "m_VelocityScale": 0.0,
+        "m_LengthScale": 2.0,
+        "m_SortingFudge": 0.0,
+        "m_NormalDirection": 1.0,
+        "m_ShadowBias": 0.0,
+        "m_RenderAlignment": 2,
+        "m_Pivot": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "m_Flip": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "m_EnableGPUInstancing": true,
+        "m_ApplyActiveColorSpace": true,
+        "m_AllowRoll": true,
+        "m_FreeformStretching": false,
+        "m_RotateWithStretchDirection": true,
+        "m_UseCustomVertexStreams": true,
+        "m_VertexStreams": [
+          0,
+          1,
+          3,
+          4,
+          24,
+          34
+        ],
+        "m_UseCustomTrailVertexStreams": false,
+        "m_TrailVertexStreams": [
+          0,
+          1,
+          3,
+          4
+        ],
+        "m_Mesh": {
+          "m_FileID": 0,
+          "m_PathID": 3892500614699578243
+        },
+        "m_Mesh1": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Mesh2": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Mesh3": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_MeshWeighting": 1.0,
+        "m_MeshWeighting1": 1.0,
+        "m_MeshWeighting2": 1.0,
+        "m_MeshWeighting3": 1.0,
+        "m_MaskInteraction": 0
+      }
+    },
+    {
+      "path_id": 5733644987054281718,
+      "serialized_file": "CAB-24d94e01615415b317b326f9a6d1876b",
+      "type": "ParticleSystemRenderer",
+      "data": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 7530489822525248635
+        },
+        "m_Enabled": false,
+        "m_CastShadows": 0,
+        "m_ReceiveShadows": 0,
+        "m_DynamicOccludee": 1,
+        "m_StaticShadowCaster": 0,
+        "m_MotionVectors": 1,
+        "m_LightProbeUsage": 0,
+        "m_ReflectionProbeUsage": 0,
+        "m_RayTracingMode": 0,
+        "m_RayTraceProcedural": 0,
+        "m_RayTracingAccelStructBuildFlagsOverride": 0,
+        "m_RayTracingAccelStructBuildFlags": 1,
+        "m_SmallMeshCulling": 1,
+        "m_RenderingLayerMask": 1,
+        "m_RendererPriority": 0,
+        "m_LightmapIndex": 65535,
+        "m_LightmapIndexDynamic": 65535,
+        "m_LightmapTilingOffset": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "m_LightmapTilingOffsetDynamic": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "m_Materials": [
+          {
+            "m_FileID": 0,
+            "m_PathID": 0
+          }
+        ],
+        "m_StaticBatchInfo": {
+          "firstSubMesh": 0,
+          "subMeshCount": 0
+        },
+        "m_StaticBatchRoot": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_ProbeAnchor": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_LightProbeVolumeOverride": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_SortingLayerID": 0,
+        "m_SortingLayer": 0,
+        "m_SortingOrder": 0,
+        "m_RenderMode": 5,
+        "m_MeshDistribution": 0,
+        "m_SortMode": 0,
+        "m_MinParticleSize": 0.0,
+        "m_MaxParticleSize": 0.5,
+        "m_CameraVelocityScale": 0.0,
+        "m_VelocityScale": 0.0,
+        "m_LengthScale": 2.0,
+        "m_SortingFudge": 0.0,
+        "m_NormalDirection": 1.0,
+        "m_ShadowBias": 0.0,
+        "m_RenderAlignment": 0,
+        "m_Pivot": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "m_Flip": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "m_EnableGPUInstancing": true,
+        "m_ApplyActiveColorSpace": true,
+        "m_AllowRoll": true,
+        "m_FreeformStretching": false,
+        "m_RotateWithStretchDirection": true,
+        "m_UseCustomVertexStreams": false,
+        "m_VertexStreams": [
+          0,
+          1,
+          3,
+          4
+        ],
+        "m_UseCustomTrailVertexStreams": false,
+        "m_TrailVertexStreams": [
+          0,
+          1,
+          3,
+          4
+        ],
+        "m_Mesh": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Mesh1": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Mesh2": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Mesh3": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_MeshWeighting": 1.0,
+        "m_MeshWeighting1": 1.0,
+        "m_MeshWeighting2": 1.0,
+        "m_MeshWeighting3": 1.0,
+        "m_MaskInteraction": 0
+      }
+    },
+    {
+      "path_id": 5973218555047612515,
+      "serialized_file": "CAB-24d94e01615415b317b326f9a6d1876b",
+      "type": "ParticleSystemRenderer",
+      "data": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": -9002768886530394535
+        },
+        "m_Enabled": true,
+        "m_CastShadows": 0,
+        "m_ReceiveShadows": 0,
+        "m_DynamicOccludee": 1,
+        "m_StaticShadowCaster": 0,
+        "m_MotionVectors": 1,
+        "m_LightProbeUsage": 0,
+        "m_ReflectionProbeUsage": 0,
+        "m_RayTracingMode": 0,
+        "m_RayTraceProcedural": 0,
+        "m_RayTracingAccelStructBuildFlagsOverride": 0,
+        "m_RayTracingAccelStructBuildFlags": 1,
+        "m_SmallMeshCulling": 1,
+        "m_RenderingLayerMask": 1,
+        "m_RendererPriority": 0,
+        "m_LightmapIndex": 65535,
+        "m_LightmapIndexDynamic": 65535,
+        "m_LightmapTilingOffset": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "m_LightmapTilingOffsetDynamic": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "m_Materials": [
+          {
+            "m_FileID": 3,
+            "m_PathID": -2289073413677254244
+          }
+        ],
+        "m_StaticBatchInfo": {
+          "firstSubMesh": 0,
+          "subMeshCount": 0
+        },
+        "m_StaticBatchRoot": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_ProbeAnchor": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_LightProbeVolumeOverride": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_SortingLayerID": 2088754885,
+        "m_SortingLayer": 7,
+        "m_SortingOrder": 1,
+        "m_RenderMode": 4,
+        "m_MeshDistribution": 0,
+        "m_SortMode": 0,
+        "m_MinParticleSize": 0.0,
+        "m_MaxParticleSize": 0.5,
+        "m_CameraVelocityScale": 0.0,
+        "m_VelocityScale": 0.0,
+        "m_LengthScale": 2.0,
+        "m_SortingFudge": 0.0,
+        "m_NormalDirection": 1.0,
+        "m_ShadowBias": 0.0,
+        "m_RenderAlignment": 0,
+        "m_Pivot": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "m_Flip": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "m_EnableGPUInstancing": true,
+        "m_ApplyActiveColorSpace": true,
+        "m_AllowRoll": true,
+        "m_FreeformStretching": false,
+        "m_RotateWithStretchDirection": true,
+        "m_UseCustomVertexStreams": true,
+        "m_VertexStreams": [
+          0,
+          3,
+          1,
+          4,
+          32,
+          34
+        ],
+        "m_UseCustomTrailVertexStreams": false,
+        "m_TrailVertexStreams": [
+          0,
+          1,
+          3,
+          4
+        ],
+        "m_Mesh": {
+          "m_FileID": 0,
+          "m_PathID": -3612525119697129218
+        },
+        "m_Mesh1": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Mesh2": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Mesh3": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_MeshWeighting": 1.0,
+        "m_MeshWeighting1": 1.0,
+        "m_MeshWeighting2": 1.0,
+        "m_MeshWeighting3": 1.0,
+        "m_MaskInteraction": 0
+      }
+    }
+  ],
+  "shader_profiles": [
+    {
+      "id": "a4f3e45a401881f58f59",
+      "name": "VFX_Shader/Particle/fxs_ParticleRing_01_v14_b",
+      "programs": 5,
+      "disassembly_failures": [],
+      "platforms": [
+        4
+      ],
+      "uniforms": [
+        "$Globals",
+        "UnityPerDraw",
+        "UnityPerMaterial",
+        "_Alpha",
+        "_Alphapow",
+        "_Animator_Alpha",
+        "_BaseBlur",
+        "_CameraDepthTexture",
+        "_CameraDepthTexture_TexelSize",
+        "_Camera_Offset",
+        "_Emission_truth",
+        "_GlobalMipBias",
+        "_NonJitteredViewProjMatrix",
+        "_PrevViewProjMatrix",
+        "_ProjectionParams",
+        "_RING_Blur",
+        "_RING_ON",
+        "_RING_Radial",
+        "_RTHandleScale",
+        "_Radial_Scale",
+        "_ScaledScreenParams",
+        "_Soft_Particle",
+        "_Soft_Particle_Far",
+        "_Soft_Particle_Near",
+        "_Step",
+        "_Step_Minus",
+        "_Step_Slider",
+        "_WorldSpaceCameraPos",
+        "_ZBufferParams",
+        "unity_MatrixInvVP",
+        "unity_MatrixPreviousM",
+        "unity_MatrixV",
+        "unity_MatrixVP",
+        "unity_MotionVectorsParams",
+        "unity_ObjectToWorld",
+        "unity_OrthoParams",
+        "unity_WorldToObject"
+      ],
+      "feature_hints": [
+        "读取场景深度"
+      ],
+      "status": "compiled_and_disassembled",
+      "source_restored": false,
+      "godot_ready": false,
+      "folder": "shaders/a4f3e45a401881f58f59"
+    },
+    {
+      "id": "f7702eaf34c4b20175ba",
+      "name": "VFX_Shader/MEP/fxs_MEP08933_RingNoise_TC_01_b",
+      "programs": 7,
+      "disassembly_failures": [],
+      "platforms": [
+        4
+      ],
+      "uniforms": [
+        "$Globals",
+        "UnityPerDraw",
+        "UnityPerMaterial",
+        "_CameraDepthTexture",
+        "_CameraDepthTexture_TexelSize",
+        "_Color_01",
+        "_Drection",
+        "_GlobalMipBias",
+        "_LightDirection",
+        "_Noise_Scale",
+        "_NonJitteredViewProjMatrix",
+        "_PrevViewProjMatrix",
+        "_ProjectionParams",
+        "_RTHandleScale",
+        "_Radial",
+        "_ScaledScreenParams",
+        "_ShadowBias",
+        "_Smooth",
+        "_SmoothBlur",
+        "_Soft_Particle",
+        "_Soft_Particle_Far",
+        "_Soft_Particle_Near",
+        "_Texture2DAsset_a2c8f60daf634ee9bbd1a4ad46ecd7db_Out_0_Texture2D",
+        "_ZBufferParams",
+        "unity_MatrixInvVP",
+        "unity_MatrixPreviousM",
+        "unity_MatrixV",
+        "unity_MatrixVP",
+        "unity_MotionVectorsParams",
+        "unity_ObjectToWorld",
+        "unity_OrthoParams",
+        "unity_WorldToObject"
+      ],
+      "feature_hints": [
+        "读取场景深度",
+        "噪声计算或采样"
+      ],
+      "status": "compiled_and_disassembled",
+      "source_restored": false,
+      "godot_ready": false,
+      "folder": "shaders/f7702eaf34c4b20175ba"
+    },
+    {
+      "id": "b88f422638125b1b443d",
+      "name": "VFX_Shader/MEP/fxs_MEP08933_Fresnel_TC_01_b",
+      "programs": 7,
+      "disassembly_failures": [],
+      "platforms": [
+        4
+      ],
+      "uniforms": [
+        "$Globals",
+        "UnityPerDraw",
+        "UnityPerMaterial",
+        "_Alpha",
+        "_Color_IN",
+        "_Color_OUT",
+        "_GlobalMipBias",
+        "_IN_Smoothstep",
+        "_IN_SmoothstepBlur",
+        "_LightDirection",
+        "_NonJitteredViewProjMatrix",
+        "_OUT_Smoothstep",
+        "_OUT_SmoothstepBlur",
+        "_PrevViewProjMatrix",
+        "_ShadowBias",
+        "_Texture",
+        "_Texture_Channel",
+        "_Texture_Smoothstep",
+        "_Texture_SmoothstepBlur",
+        "_Texture_Speed",
+        "_TimeParameters",
+        "_WorldSpaceCameraPos",
+        "unity_MatrixPreviousM",
+        "unity_MatrixV",
+        "unity_MatrixVP",
+        "unity_MotionVectorsParams",
+        "unity_ObjectToWorld",
+        "unity_OrthoParams",
+        "unity_WorldToObject"
+      ],
+      "feature_hints": [
+        "溶解或阈值遮罩"
+      ],
+      "status": "compiled_and_disassembled",
+      "source_restored": false,
+      "godot_ready": false,
+      "folder": "shaders/b88f422638125b1b443d"
+    }
+  ],
+  "looping_particle_count": 0,
+  "play_on_awake_count": 4,
+  "playback_note": "粒子 duration 不等于整体演出时长；循环、延迟与粒子寿命需一起读取。",
+  "copied_artifacts": [
+    {
+      "path": "bundles/138f1dcd/source.unity3d",
+      "bytes": 50955,
+      "sha256": "1eb25ef4274bfd3413927d9a92c26ec6eb976a45ea31426cbe18a28ff67d64aa"
+    },
+    {
+      "path": "bundles/138f1dcd/GameObject/Mesh_Veil__s0_-9002768886530394535.json",
+      "bytes": 626,
+      "sha256": "c71d74dc23028799e4e6216027ee07f7d9d812e07307a48296ae0fbe8a03ee3f"
+    },
+    {
+      "path": "bundles/138f1dcd/Transform/Transform__s0_-6851783845034906030.json",
+      "bytes": 637,
+      "sha256": "b6322eca1a96adaa919a99bd18bbad4070be65acc52c94c28eb44234bad5936c"
+    },
+    {
+      "path": "bundles/138f1dcd/ParticleSystem/ParticleSystem__s0_-6461949506632354213.json",
+      "bytes": 68910,
+      "sha256": "1e989cb934c299fb3862841c07717cad56c8e94eabfcfec9acfd6b3a9a8569cb"
+    },
+    {
+      "path": "bundles/138f1dcd/ParticleSystemRenderer/ParticleSystemRenderer__s0_-5129358975844154710.json",
+      "bytes": 2793,
+      "sha256": "7df96539b542ab95cf6fa888433b3f8c97b7d540d45dae182124781c5ec4ab2a"
+    },
+    {
+      "path": "bundles/138f1dcd/ParticleSystem/ParticleSystem__s0_-3936145337127781805.json",
+      "bytes": 68585,
+      "sha256": "cf3848e34ccfa3903dea3256db504f2dac05f2b3feb941b569157873e1b92d1a"
+    },
+    {
+      "path": "bundles/138f1dcd/Mesh/fxl_Sphere_Zminus_haf_002__s0_-3612525119697129218.json",
+      "bytes": 86694,
+      "sha256": "a81034194da7943896e2f8a83f69bf4c1ea8596188f83b3258d5c58918de02f4"
+    },
+    {
+      "path": "bundles/138f1dcd/Mesh/fxl_Sphere_Zminus_haf_002__s0_-3612525119697129218.geometry.json",
+      "bytes": 182409,
+      "sha256": "c517b03eec50770ea251e504218a3b87a9144a6b05de5c81c4b69a0e3bc6ad15"
+    },
+    {
+      "path": "bundles/138f1dcd/Mesh/fxl_Sphere_Zminus_haf_002__s0_-3612525119697129218.obj",
+      "bytes": 88538,
+      "sha256": "09547e581948bcb40b9e9c834274447241662afa0f64968a4efc739f857d73ad"
+    },
+    {
+      "path": "bundles/138f1dcd/Transform/Transform__s0_-3204263525998139802.json",
+      "bytes": 832,
+      "sha256": "96389b28e538ed1f17b1437ef01c9b094003d53173f3510a79f2bf9bbe50360e"
+    },
+    {
+      "path": "bundles/138f1dcd/ParticleSystem/ParticleSystem__s0_-2904694068211079980.json",
+      "bytes": 66855,
+      "sha256": "8163b8a58b53aa436e2d2de334f9b00fbd001af3efec088d838e94ce4ad0f506"
+    },
+    {
+      "path": "bundles/138f1dcd/GameObject/Ring_Noise__s0_-2402965662647891574.json",
+      "bytes": 628,
+      "sha256": "b1d5cdf1eef246d86a15812eb4b4b3765ec0096b6e1423bc3774642b0d6857a7"
+    },
+    {
+      "path": "bundles/138f1dcd/AssetBundle/13_138f1dcd__s0_1.json",
+      "bytes": 2665,
+      "sha256": "90fce05a4fecc8a41f379a8f2fa805a900b04dd523ad8bde684477425fa9edb8"
+    },
+    {
+      "path": "bundles/138f1dcd/ParticleSystemRenderer/ParticleSystemRenderer__s0_1994937321051382964.json",
+      "bytes": 2831,
+      "sha256": "74d41a2c8003214c045391cc28f1c17ca5b6690e1fad6c614549feb15bb1b420"
+    },
+    {
+      "path": "bundles/138f1dcd/Mesh/fxl_Circle_ogcUV_Zup_003__s0_3892500614699578243.json",
+      "bytes": 7903,
+      "sha256": "9039bc378b906fcc703e6b2bb856e73710dd3c1f9b91607cf31ff0d2bb2dcda9"
+    },
+    {
+      "path": "bundles/138f1dcd/Mesh/fxl_Circle_ogcUV_Zup_003__s0_3892500614699578243.geometry.json",
+      "bytes": 8739,
+      "sha256": "12699dd5c011e49db97fc506ffa8874ac3f4f2f6b847e7d5336bde3c3459cf2e"
+    },
+    {
+      "path": "bundles/138f1dcd/Mesh/fxl_Circle_ogcUV_Zup_003__s0_3892500614699578243.obj",
+      "bytes": 3329,
+      "sha256": "28258506439a4cf5915bcaf1a645a4682834ea1fb03a57c3ff4ed5ab9dcdf279"
+    },
+    {
+      "path": "bundles/138f1dcd/ParticleSystem/ParticleSystem__s0_4714479017093809996.json",
+      "bytes": 67480,
+      "sha256": "4f4b7e2218af7e01716173b4e89285c3cb249bf108b0431802e839daa0523489"
+    },
+    {
+      "path": "bundles/138f1dcd/GameObject/Particle__s0_5467539520312231021.json",
+      "bytes": 624,
+      "sha256": "d525f95a0b6e1b83317433913723043ead0c46f1abd2d6c60ab2e5b27b7af31d"
+    },
+    {
+      "path": "bundles/138f1dcd/ParticleSystemRenderer/ParticleSystemRenderer__s0_5733644987054281718.json",
+      "bytes": 2765,
+      "sha256": "b04e49791cbe9667a3da9fb558a88abeece0e77d59d130d73e7391dcee25352d"
+    },
+    {
+      "path": "bundles/138f1dcd/ParticleSystemRenderer/ParticleSystemRenderer__s0_5973218555047612515.json",
+      "bytes": 2831,
+      "sha256": "547feeac0008171e428463359d83e84a42dce21432e2e8dda3b426479e058920"
+    },
+    {
+      "path": "bundles/138f1dcd/Transform/Transform__s0_6557106495973878133.json",
+      "bytes": 638,
+      "sha256": "bfc71996508d2572ea660dd34b230a9b371f98908774080171bd594d4736ece7"
+    },
+    {
+      "path": "bundles/138f1dcd/GameObject/fxp_MEP08933_01__s0_7530489822525248635.json",
+      "bytes": 638,
+      "sha256": "6f5805a7249dca85147a29bd04278247922d9fce03641831a1e728ab87d200f2"
+    },
+    {
+      "path": "bundles/138f1dcd/Transform/Transform__s0_8833877121922421645.json",
+      "bytes": 636,
+      "sha256": "12f022dd60f1a67744106f2d5d31a458e7dccb9e73c2776cdec6174f6f41649e"
+    },
+    {
+      "path": "bundles/1f7b5d2b/source.unity3d",
+      "bytes": 26279,
+      "sha256": "115dcf5853bf3d0cec1232cbf98f295aa1e18194c1c0376c7efa7b39bc3b8d14"
+    },
+    {
+      "path": "bundles/1f7b5d2b/Material/fxm_MEP08933_ring_noise_01_b__s0_-4346270812146610033.json",
+      "bytes": 3066,
+      "sha256": "d00945ac89018f21826313bac50c71487d86c27ea31a6664e4950c058b045aca"
+    },
+    {
+      "path": "bundles/1f7b5d2b/Texture2D/fxt_msk_003__s0_-3230677161569464101.json",
+      "bytes": 1109,
+      "sha256": "c5079abc90c41c6efa3625dc11ae752c2af1ce2dc6c28ac98a579225d6ec551a"
+    },
+    {
+      "path": "bundles/1f7b5d2b/Texture2D/fxt_msk_003__s0_-3230677161569464101.png",
+      "bytes": 996,
+      "sha256": "226205d8343c9f12261dee75ceb6453cea2cf9400ae3be7afaed9ef9c482e1f7"
+    },
+    {
+      "path": "bundles/1f7b5d2b/Shader/Shader__s0_-1595923418995139990.json",
+      "bytes": 144685,
+      "sha256": "862659b9c226dd62fe4308c18acfc90c57a87032bb04767bda2f6d6a7bc3bd46"
+    },
+    {
+      "path": "bundles/1f7b5d2b/AssetBundle/1f_1f7b5d2b__s0_1.json",
+      "bytes": 1239,
+      "sha256": "1138bf97c5312645fb1b5ed5fb08a87af9d7437e66f63217f28ba4352e61b61f"
+    },
+    {
+      "path": "bundles/1f7b5d2b/Shader/Shader__s0_6034231041006315562.json",
+      "bytes": 25826,
+      "sha256": "b6d22f9c749572a5ff21305d1d1c8a07ad6208513032840af516cfe5f64d1cf1"
+    },
+    {
+      "path": "bundles/b09ab206/source.unity3d",
+      "bytes": 262703,
+      "sha256": "88c3aff0e0efcaf5b321d2c9973503b0ac2c5be24c5208ab8a79df384d8a2564"
+    },
+    {
+      "path": "bundles/b09ab206/Shader/Shader__s0_-2560807416194956520.json",
+      "bytes": 154770,
+      "sha256": "b070a66128909bf156bc716bc38ddc72bd7f9f7d3bee956e9453c5f958f7ac1d"
+    },
+    {
+      "path": "bundles/b09ab206/Material/fxm_MEP08933_Mesh_01_b__s0_-2289073413677254244.json",
+      "bytes": 3406,
+      "sha256": "02b6c84a020741aecea7d56f450227d903d0ca1889fdd69f21acc0c9723a7861"
+    },
+    {
+      "path": "bundles/b09ab206/AssetBundle/b0_b09ab206__s0_1.json",
+      "bytes": 1232,
+      "sha256": "2bbc3e6708e1e4dfcd69616a346a08c351c6113521cb61ab2665c32c1960a8a4"
+    },
+    {
+      "path": "bundles/b09ab206/Shader/Shader__s0_6034231041006315562.json",
+      "bytes": 25826,
+      "sha256": "2c94a466aa27059afa5b5fa52f0511e75feb97288d750af65e48b052ed8162d3"
+    },
+    {
+      "path": "bundles/b09ab206/Texture2D/fxt_hitwtr_spl_001__s0_6918126561789238743.json",
+      "bytes": 1125,
+      "sha256": "15889b7df857a5b239f69777aacfe1ea2bcaf2a313cb6e30955337cefdb59722"
+    },
+    {
+      "path": "bundles/b09ab206/Texture2D/fxt_hitwtr_spl_001__s0_6918126561789238743.png",
+      "bytes": 312207,
+      "sha256": "bd49d3a87b01b265a451b735bf7c3c870bb80597565a13a033526c53acbf1a8d"
+    },
+    {
+      "path": "bundles/c90f550b/source.unity3d",
+      "bytes": 23603,
+      "sha256": "36b7f70b81b85aa972081b9331b64b97540a515af7236b61d8b0ec4ef16ca224"
+    },
+    {
+      "path": "bundles/c90f550b/Material/fxm_MEP08933_ple_01_b__s0_-3438030743954411414.json",
+      "bytes": 4048,
+      "sha256": "2b0ccc1ecebc1ab288dcfb2c63d5cb5435d50defa63cf5b009ac22b0f80bf947"
+    },
+    {
+      "path": "bundles/c90f550b/AssetBundle/c9_c90f550b__s0_1.json",
+      "bytes": 1150,
+      "sha256": "85ab5960557f34bef95175790a5066fbf1f5c774ea354245f17cb79ddfc3931b"
+    },
+    {
+      "path": "bundles/c90f550b/Shader/Shader__s0_6034231041006315562.json",
+      "bytes": 25826,
+      "sha256": "cf474eff1b72aa13578fee9d85a89e1b2ea570f8420a827a5d786c87e7ce5094"
+    },
+    {
+      "path": "bundles/c90f550b/Shader/Shader__s0_7534208208988684205.json",
+      "bytes": 124042,
+      "sha256": "457a136f2989048eb2bc4636a5f14ec05ae5e40f85218eb341c1747c55043135"
+    }
+  ],
+  "texture_count": 2,
+  "package_bytes": 1862679,
+  "migration_limits": [
+    "静态结构独立，不等于已验证独立播放。",
+    "Shader 只有编译程序和分析资料，未还原成 Godot Shader。",
+    "必须保留父子变换、粒子曲线、UV、顶点色、自定义顶点流和材质参数。",
+    "Unity 内置资源只记录引用，目标项目需补齐对应资源。"
+  ]
+}

@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://VYgo/shaders/master_duel/generated/bca817063dffe83a2aae_b51b1bdfdabc.gdshader" id="s"]
+
+[resource]
+shader = ExtResource("s")
+shader_parameter/p_Emissive = Vector4(5.203880189163164,2.918073216243157,0.15762282316606352,1.0)

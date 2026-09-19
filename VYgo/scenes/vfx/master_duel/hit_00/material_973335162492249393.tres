@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3]
+
+[ext_resource type="Shader" path="res://VYgo/shaders/master_duel/generated/aa530de6b7583fd4864f_e531815733db.gdshader" id="s"]
+[ext_resource type="Texture2D" path="res://VYgo/images/vfx/master_duel/b39470e3c8d1d0733b29.png" id="t0"]
+
+[resource]
+shader = ExtResource("s")
+shader_parameter/p_MainTex = ExtResource("t0")
+shader_parameter/p_MainTex_ST = Vector4(1.0,1.0,0.0,0.0)

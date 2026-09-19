@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3]
+
+[ext_resource type="Shader" path="res://VYgo/shaders/master_duel/generated/2336786a22859eeb4a8e_2b3365ada7af.gdshader" id="s"]
+[ext_resource type="Texture2D" path="res://VYgo/images/vfx/master_duel/e8419987e802df366c83.png" id="t0"]
+[ext_resource type="Texture2D" path="res://VYgo/images/vfx/master_duel/495f0effbf492f8608f0.png" id="t1"]
+
+[resource]
+shader = ExtResource("s")
+shader_parameter/p_MASK_Texture = ExtResource("t0")
+shader_parameter/p_Texture = ExtResource("t1")
+shader_parameter/p_Alpha_Smoothstep_Blur = 0.029999999329447746
+shader_parameter/p_Color_01 = Vector4(1.0,0.44581080947772167,0.016710516815506674,1.0)
+shader_parameter/p_Color_02 = Vector4(4.8635770306121415,2.879937699233898,0.7304607547001499,1.0)
+shader_parameter/p_Direction = -90.0
+shader_parameter/p_MASK_Rotate = 90.0
+shader_parameter/p_Offset = 0.0
+shader_parameter/p_Scroll = -1.0
+shader_parameter/p_Texture_Tiling = Vector2(0.5,3.0)
+shader_parameter/p_use_Ramp_Color_Offset = -0.22599999606609344
+shader_parameter/p_use_Ramp_Color_Strength = 0.8299999833106995

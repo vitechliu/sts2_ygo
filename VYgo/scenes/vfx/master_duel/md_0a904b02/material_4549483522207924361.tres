@@ -1,0 +1,28 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3]
+
+[ext_resource type="Shader" path="res://VYgo/shaders/master_duel/generated/a257255ff232a4199d38_e1a5df351a9c.gdshader" id="s"]
+[ext_resource type="Texture2D" path="res://VYgo/scenes/vfx/master_duel/default_white.tres" id="t0"]
+[ext_resource type="Texture2D" path="res://VYgo/images/vfx/master_duel/9cd3e79d252a30369a6d.png" id="t1"]
+
+[resource]
+shader = ExtResource("s")
+shader_parameter/p_MASK_Texture = ExtResource("t0")
+shader_parameter/p_Texture = ExtResource("t1")
+shader_parameter/p_Alpha = 1.0
+shader_parameter/p_Alpha_Channel = Vector4(0.0,0.0,0.0,1.0)
+shader_parameter/p_Camera_Offset = 0.0
+shader_parameter/p_MASK_Channel = Vector4(1.0,0.0,0.0,0.0)
+shader_parameter/p_MASK_Offset = Vector2(0.0,0.0)
+shader_parameter/p_MASK_Rotat = 0.0
+shader_parameter/p_MASK_Texture_Clamp = 0.0
+shader_parameter/p_MASK_Tilig = Vector2(1.0,1.0)
+shader_parameter/p_Offset = Vector2(0.0,0.0)
+shader_parameter/p_Rotat = 0.0
+shader_parameter/p_Soft_Particle = 0.0
+shader_parameter/p_Soft_Particle_Far = 1.0
+shader_parameter/p_Soft_Particle_Near = 0.0
+shader_parameter/p_Texture_Clamp = 0.0
+shader_parameter/p_Tiling = Vector2(1.0,1.0)
+shader_parameter/p_TintColor = Vector4(0.21404114048223255,0.21404114048223255,0.21404114048223255,0.5)
+shader_parameter/p_useTintColor = 0.0
+shader_parameter/p_use_MASK_Texture = 0.0

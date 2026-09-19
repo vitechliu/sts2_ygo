@@ -1,0 +1,34 @@
+{
+  "id": "30137cb7bdc330cfb618",
+  "name": "Shader Graphs/fxs_CardFile_star_01",
+  "programs": 8,
+  "disassembly_failures": [],
+  "platforms": [
+    4
+  ],
+  "uniforms": [
+    "$Globals",
+    "UnityPerDraw",
+    "UnityPerMaterial",
+    "_Color_01",
+    "_Color_02",
+    "_GlobalMipBias",
+    "_LightDirection",
+    "_NonJitteredViewProjMatrix",
+    "_PrevViewProjMatrix",
+    "_ShadowBias",
+    "_Sizeminmax",
+    "_Texture2DAsset_2d1451289ec24e6cab979c0c07604e3e_Out_0_Texture2D",
+    "_minmax",
+    "unity_MatrixPreviousM",
+    "unity_MatrixVP",
+    "unity_MotionVectorsParams",
+    "unity_ObjectToWorld",
+    "unity_WorldToObject"
+  ],
+  "feature_hints": [],
+  "status": "compiled_and_disassembled",
+  "source_restored": false,
+  "godot_ready": false,
+  "folder": "shaders/30137cb7bdc330cfb618"
+}

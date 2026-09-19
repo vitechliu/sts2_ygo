@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Core/Effects/MasterDuel/NMdEffect2D.cs" id="s"]
+[ext_resource type="PackedScene" path="res://VYgo/scenes/vfx/master_duel/md_a4d9fee8_3d.tscn" id="d"]
+
+[node name="md_a4d9fee8" type="Node2D"]
+script = ExtResource("s")
+EffectScene = ExtResource("d")

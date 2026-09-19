@@ -1,0 +1,36 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3]
+
+[ext_resource type="Shader" path="res://VYgo/shaders/master_duel/generated/8899143221caf6fa0321_04f0d3d76953.gdshader" id="s"]
+[ext_resource type="Texture2D" path="res://VYgo/images/vfx/master_duel/ac3f059d12544fa78028.png" id="t0"]
+
+[resource]
+shader = ExtResource("s")
+shader_parameter/p_Texture2DAsset_3e4e754e8e574f9bab9bd1c9a475f786_Out_0_Texture2D = ExtResource("t0")
+shader_parameter/p_Alpha = 1.0
+shader_parameter/p_Alpha_Blur = 0.3240000009536743
+shader_parameter/p_Circle_Scale = 0.9890000224113464
+shader_parameter/p_Circle_Scale_Blur = 0.4050000011920929
+shader_parameter/p_Color_01 = Vector4(1.0,0.13243056345985194,0.0,1.0)
+shader_parameter/p_Color_02 = Vector4(1.0,0.5634460199594552,0.0917269717483452,1.0)
+shader_parameter/p_Color_Step = 1.0
+shader_parameter/p_Color_Step_Blur = 0.5
+shader_parameter/p_Emissive = Vector4(66.05673134048031,66.05673134048031,66.05673134048031,0.0)
+shader_parameter/p_Flare_Ray_Amount = 60.0
+shader_parameter/p_Flare_Ray_Amplitude = 0.0
+shader_parameter/p_Flare_Ray_Move = 0.10000000149011612
+shader_parameter/p_Flare_Rotation = 0.0
+shader_parameter/p_Flare_Scale = 1.0
+shader_parameter/p_Gradient_Noise_Scale = 1.100000023841858
+shader_parameter/p_Hole_Scale = 0.7400000095367432
+shader_parameter/p_Hole_Scale_Blur = 0.6389999985694885
+shader_parameter/p_Noise_Combine = Vector3(0.10000000149011612,0.800000011920929,0.5)
+shader_parameter/p_Rainbow_Add_Whit = Vector4(0.0,0.0,0.0,0.0)
+shader_parameter/p_Rainbow_Blur = 0.5
+shader_parameter/p_Rainbow_Scale = 0.5
+shader_parameter/p_Simple_Noise_Scale = 1.399999976158142
+shader_parameter/p_Soft_Particle = 0.0
+shader_parameter/p_Soft_Particle_Far = 1.0
+shader_parameter/p_Soft_Particle_Near = 0.0
+shader_parameter/p_Voronoi_Scale = 2.299999952316284
+shader_parameter/p_rainbow_invert = 0.0
+shader_parameter/p_use_Rainbow = 0.0

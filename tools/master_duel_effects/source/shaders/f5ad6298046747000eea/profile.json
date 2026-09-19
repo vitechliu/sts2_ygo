@@ -1,0 +1,35 @@
+{
+  "id": "f5ad6298046747000eea",
+  "name": "VFX_Shader/Dissolve/fxs_UI_CardDecoder_Dissolve_01_b",
+  "programs": 7,
+  "disassembly_failures": [],
+  "platforms": [
+    4
+  ],
+  "uniforms": [
+    "$Globals",
+    "UnityPerDraw",
+    "UnityPerMaterial",
+    "_Color",
+    "_Emissive",
+    "_GlobalMipBias",
+    "_LightDirection",
+    "_NonJitteredViewProjMatrix",
+    "_PrevViewProjMatrix",
+    "_SampleTexture2D_7cbfb93f7e744351a1f45a6d24c149e7_Texture_1_Texture2D",
+    "_ShadowBias",
+    "_TimeParameters",
+    "_UV_Method",
+    "_line_Alpha",
+    "unity_MatrixPreviousM",
+    "unity_MatrixVP",
+    "unity_MotionVectorsParams",
+    "unity_ObjectToWorld",
+    "unity_WorldToObject"
+  ],
+  "feature_hints": [],
+  "status": "compiled_and_disassembled",
+  "source_restored": false,
+  "godot_ready": false,
+  "folder": "shaders/f5ad6298046747000eea"
+}
