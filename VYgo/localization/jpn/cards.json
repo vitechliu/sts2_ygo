@@ -389,5 +389,7 @@
     "V_YGO_CARD_ACCESSCODE_TALKER.title": "アクセスコード・トーカー",
     "V_YGO_CARD_CYNET_CODEC.title": "サイバネット・コーデック",
     "V_YGO_CARD_CYNET_MINING.title": "サイバネット・マイニング",
-    "V_YGO_CARD_CYNET_CONFLICT.title": "サイバネット・コンフリクト"
+    "V_YGO_CARD_CYNET_CONFLICT.title": "サイバネット・コンフリクト",
+    "V_YGO_CARD_MICRO_CODER.title": "マイクロ・コーダー",
+    "V_YGO_CARD_MICRO_CODER.description": "[gold]召喚[/gold] {Attack:diff()}/{Life:diff()}。\n[blue]コード・トーカー[/blue]モンスターをリンク召喚する場合、手札のこのカードもリンク素材にできる。\n[blue]コード・トーカー[/blue]モンスターのリンク素材として墓地へ送られた時、3枚の{IfUpgraded:show:[gold]アップグレード済み[/gold]の|}[blue]サイバネット[/blue]魔法・罠カードから1枚を選び、手札に加える。"
 }

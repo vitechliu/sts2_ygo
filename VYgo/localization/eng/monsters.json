@@ -150,5 +150,6 @@
     "CODE_GENERATOR_MINION.name": "Code Generator",
     "DEGRADE_BUSTER_MINION.name": "Degrade Buster",
     "PROTECTCODE_TALKER_MINION.name": "Protectcode Talker",
-    "ACCESSCODE_TALKER_MINION.name": "Accesscode Talker"
+    "ACCESSCODE_TALKER_MINION.name": "Accesscode Talker",
+    "MICRO_CODER_MINION.name": "Micro Coder"
 }

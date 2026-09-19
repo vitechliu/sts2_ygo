@@ -422,5 +422,7 @@
     "V_YGO_CARD_BLACK_LUSTER_SOLDIER.description": "不能通常打出。仪式召唤{Attack:diff()}/{Life:diff()}。通过[gold]混沌的仪式[/gold]从手牌[gold]仪式召唤[/gold]。",
     "V_YGO_CARD_BLACK_LUSTER_RITUAL.title": "混沌的仪式",
     "V_YGO_CARD_BLACK_LUSTER_RITUAL.description": "解放手牌或场上合计恰好[blue]8[/blue]星的怪兽，从手牌[gold]仪式召唤[/gold]1只[gold]混沌战士[/gold]。",
-    "V_YGO_CARD_BLACK_LUSTER_RITUAL.selectionScreenPrompt": "选择要仪式召唤的混沌战士。"
+    "V_YGO_CARD_BLACK_LUSTER_RITUAL.selectionScreenPrompt": "选择要仪式召唤的混沌战士。",
+    "V_YGO_CARD_MICRO_CODER.title": "微码编码员",
+    "V_YGO_CARD_MICRO_CODER.description": "[gold]召唤[/gold] {Attack:diff()}/{Life:diff()}。\n连接召唤[blue]码语者[/blue]怪兽时，这张卡在手牌也能作为连接素材。\n作为[blue]码语者[/blue]怪兽的连接素材送墓时，从3张{IfUpgraded:show:[gold]升级后的[/gold]|}[blue]电脑网[/blue]魔陷中选择1张加入手牌。"
 }

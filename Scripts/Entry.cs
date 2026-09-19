@@ -42,6 +42,7 @@ public static class Entry {
     public static PileType ExtraPile;
     //场上的怪兽
     public static PileType MonsterPile;
+    public static PileType SetTrapPile;
     //装备中的魔法卡
     public static PileType EquipPile;
     //附着在超量怪兽下方的素材卡
@@ -213,6 +214,13 @@ public static class Entry {
         }).PileType;
         
         MonsterPile = registry.RegisterOwned("monster_pile", new ModCardPileSpec {
+            Scope = ModCardPileScope.CombatOnly,
+            Style = ModCardPileUiStyle.Headless,
+            Anchor = ModCardPileAnchor.Default
+        }).PileType;
+
+        // 盖伏中的技能陷阱保留战斗卡身份，触发后才能正常弃置或消耗。
+        SetTrapPile = registry.RegisterOwned("set_trap_pile", new ModCardPileSpec {
             Scope = ModCardPileScope.CombatOnly,
             Style = ModCardPileUiStyle.Headless,
             Anchor = ModCardPileAnchor.Default

@@ -3261,6 +3261,26 @@
       "source_field": "official source card effect",
       "evidence": "「ガジェット・トークン」（サイバース族・光・星２・攻／守０）",
       "queried_on": "2026-09-09"
+    },
+    {
+      "card_id": 2347477,
+      "localization_keys": [
+        "cards:V_YGO_CARD_MICRO_CODER.title",
+        "monsters:MICRO_CODER_MINION.name"
+      ],
+      "eng": "Micro Coder",
+      "english_source": "VYgo/db.json en_name 分词",
+      "jpn": "マイクロ・コーダー",
+      "cid": 13872,
+      "mapping_basis": [
+        "Scripts/Cards/Category/Playmaker/MicroCoder.cs",
+        "Scripts/Monsters/YGO/MicroCoderMinion.cs"
+      ],
+      "source_url": "https://ygocdb.com/api/v0/card/2347477",
+      "source_field": "text.jp_name",
+      "official_url": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=13872&request_locale=ja",
+      "queried_on": "2026-09-16",
+      "referencing_keys": []
     }
   ]
 }

@@ -13,7 +13,9 @@ public sealed class TemporaryExtraAttackAction : TargetingAttackAction {
         PlayerChoiceContext choiceContext,
         CombatSide side,
         IEnumerable<Creature> participants) {
-        if (participants.Contains(Owner)) {
+        // 玩家回合结束的参与者只有玩家本体，随从需要通过持有者判断。
+        if (side == Owner.Side && (participants.Contains(Owner)
+            || Owner.PetOwner is { } player && participants.Contains(player.Creature))) {
             _grantExtraAttacks = false;
         }
         return Task.CompletedTask;

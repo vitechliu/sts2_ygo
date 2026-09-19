@@ -389,5 +389,7 @@
     "V_YGO_CARD_ACCESSCODE_TALKER.title": "Accesscode Talker",
     "V_YGO_CARD_CYNET_CODEC.title": "Cynet Codec",
     "V_YGO_CARD_CYNET_MINING.title": "Cynet Mining",
-    "V_YGO_CARD_CYNET_CONFLICT.title": "Cynet Conflict"
+    "V_YGO_CARD_CYNET_CONFLICT.title": "Cynet Conflict",
+    "V_YGO_CARD_MICRO_CODER.title": "Micro Coder",
+    "V_YGO_CARD_MICRO_CODER.description": "[gold]Summon[/gold] {Attack:diff()}/{Life:diff()}.\nThis card in your hand can be used as Link Material for a [blue]Code Talker[/blue] monster.\nWhen sent to the GY as Link Material for a [blue]Code Talker[/blue] monster, choose 1 of 3 {IfUpgraded:show:[gold]Upgraded[/gold] |}[blue]Cynet[/blue] Spell/Trap Cards to add to your hand."
 }

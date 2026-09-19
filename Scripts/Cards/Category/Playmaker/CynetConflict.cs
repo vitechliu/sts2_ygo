@@ -13,7 +13,7 @@ public class CynetConflict() : BaseTrapCard(0, CardType.Skill, CardRarity.Token,
     public override int CardId => 7403341;
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Banish", 10)];
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [YgoHoverTipConst.SetCard(), YgoHoverTipConst.PowerAction(), HoverTipFactory.FromPower<NegatingPower>()];
-    protected override CardLocation GetResultLocationForCardPlay() => new(Owner, PileType.None, CardPilePosition.Bottom);
+    protected override CardLocation GetResultLocationForCardPlay() => new(Owner, Entry.SetTrapPile, CardPilePosition.Bottom);
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         var power = await PowerCmd.Apply<CynetConflictPower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
         if (power != null) power.DynamicVars["Banish"].BaseValue = DynamicVars["Banish"].BaseValue;

@@ -27,7 +27,7 @@ public class CynetRegression() : BaseTrapCard(0, CardType.Skill, CardRarity.Comm
         YgoHoverTipConst.SpecialSummon()
     ];
 
-    protected override CardLocation GetResultLocationForCardPlay() => new(Owner, PileType.None, CardPilePosition.Bottom);
+    protected override CardLocation GetResultLocationForCardPlay() => new(Owner, Entry.SetTrapPile, CardPilePosition.Bottom);
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) {
         CynetRegressionPower? power = await PowerCmd.Apply<CynetRegressionPower>(

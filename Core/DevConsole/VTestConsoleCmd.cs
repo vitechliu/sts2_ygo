@@ -29,8 +29,9 @@ public sealed partial class VTestConsoleCmd : AbstractConsoleCmd {
     private static bool _pendingActionStarted;
 
     public override string CmdName => "vtest";
-    public override string Args => "[help | xyz-infinity | xyz-nova | xyz-nova-slow | ritual-single | ritual-dual | ritual-dual-slow | ritual-minimal | ritual-none | ritual-prepare | link-single | link-sieger | link-sieger-slow | link-sieger-upgraded | link-minimal | link-none | link-prepare]";
+    public override string Args => "[help | playmaker <all/类名/list/status/stop> | xyz-infinity | xyz-nova | xyz-nova-slow | ritual-single | ritual-dual | ritual-dual-slow | ritual-minimal | ritual-none | ritual-prepare | link-single | link-sieger | link-sieger-slow | link-sieger-upgraded | link-minimal | link-none | link-prepare]";
     public override string Description =>
+        "卡池回归：vtest playmaker all 测试藤木游作待测试卡；playmaker list / status / stop 查看列表、进度或停止。" +
         "VYgo 单机战斗测试。vtest xyz-infinity：自动准备电子龙新星，以其为素材完整超量召唤电子龙无限。" +
         "vtest xyz-nova：准备两只电子龙，按正式规则双素材超量召唤新星。" +
         "xyz-nova-slow 仅将素材展示段慢放五倍，供检查透视与飞出，其他流程相同。" +
@@ -41,10 +42,13 @@ public sealed partial class VTestConsoleCmd : AbstractConsoleCmd {
 
     public override CompletionResult GetArgumentCompletions(Player? player, string[] args) =>
         args.Length <= 1
-            ? CompleteArgument(["help", "xyz-infinity", "xyz-nova", "xyz-nova-slow", "ritual-single", "ritual-dual", "ritual-dual-slow", "ritual-minimal", "ritual-none", "ritual-prepare", ..LinkCommands], [], args.FirstOrDefault() ?? "")
+            ? CompleteArgument(["help", "playmaker", "xyz-infinity", "xyz-nova", "xyz-nova-slow", "ritual-single", "ritual-dual", "ritual-dual-slow", "ritual-minimal", "ritual-none", "ritual-prepare", ..LinkCommands], [], args.FirstOrDefault() ?? "")
             : base.GetArgumentCompletions(player, args);
 
     public override CmdResult Process(Player? issuingPlayer, string[] args) {
+        if (args.FirstOrDefault()?.Equals("playmaker", StringComparison.OrdinalIgnoreCase) == true)
+            return ProcessPlaymaker(issuingPlayer, args.Skip(1).ToArray());
+        if (_playmakerRunner != null) return new CmdResult(false, "卡池测试正在运行，请先 vtest playmaker stop。");
         if (args.Length == 0 || (args.Length == 1 && args[0].Equals("help", StringComparison.OrdinalIgnoreCase))) {
             return new CmdResult(true, Description);
         }
